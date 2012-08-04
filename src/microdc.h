@@ -363,6 +363,7 @@ extern ByteQ *hub_sendq;
 extern HMap *hub_users;
 extern HMap *user_conns;
 extern struct sockaddr_in local_addr;
+extern struct in_addr force_remote_addr;
 extern struct in_addr force_listen_addr;
 extern int hub_socket;
 extern bool running;

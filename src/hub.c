@@ -1051,8 +1051,8 @@ hub_now_writable(void)
             hub_disconnect();
             return;
         }
-        if (force_listen_addr.s_addr != INADDR_NONE)
-            local_addr.sin_addr = force_listen_addr;
+        if (force_remote_addr.s_addr != INADDR_NONE)
+            local_addr.sin_addr = force_remote_addr;
 
         screen_putf(_("Connected to hub from %s.\n"), sockaddr_in_str(&local_addr));
         update_hub_activity();

@@ -77,6 +77,8 @@ static char *var_get_string(DCVariable *var);
 static char *var_get_bool(DCVariable *var);
 static void var_set_active(DCVariable *var, int argc, char **argv);
 static void var_set_auto_reconnect(DCVariable *var, int argc, char **argv);
+static char *var_get_remote_addr(DCVariable *var);
+static void var_set_remote_addr(DCVariable *var, int argc, char **argv);
 static char *var_get_listen_addr(DCVariable *var);
 static void var_set_listen_addr(DCVariable *var, int argc, char **argv);
 static char *var_get_listen_port(DCVariable *var);
@@ -119,6 +121,7 @@ bool auto_reconnect = 0;
 uint64_t my_share_size = 0;
 uint32_t display_flags = ~(DC_DF_DEBUG); /* All flags except debug set */
 uint32_t log_flags = ~(DC_DF_DEBUG);
+struct in_addr force_remote_addr = { INADDR_NONE };
 struct in_addr force_listen_addr = { INADDR_NONE };
 
 /* This list must be sorted according to strcmp. */
@@ -217,7 +220,7 @@ static DCVariable variables[] = {
         var_get_listen_addr, var_set_listen_addr, &force_listen_addr,
         NULL,
         NULL,
-        "Address to send to clients"
+        "Address to bind to for incomming connections"
     },
     {
         "listenport",
@@ -267,6 +270,13 @@ static DCVariable variables[] = {
         NULL,
         NULL,
         "The optional password to pass to the hub."
+    },
+    {
+        "remoteaddr",
+        var_get_remote_addr, var_set_remote_addr, &force_remote_addr,
+        NULL,
+        NULL,
+        "Address to send to clients"
     },
     /*
         {
@@ -592,6 +602,49 @@ var_set_auto_reconnect(DCVariable *var, int argc, char **argv)
     }
     auto_reconnect = state;
 }
+
+static char *
+var_get_remote_addr(DCVariable *var)
+{
+    if (force_remote_addr.s_addr == INADDR_NONE)
+        return NULL;
+    return xstrdup(in_addr_str(force_remote_addr));
+}
+
+static void
+var_set_remote_addr(DCVariable *var, int argc, char **argv)
+{
+    struct sockaddr_in addr;
+
+    if (argc > 2) {
+        warn(_("too many arguments\n"));
+        return;
+    }
+    if (argv[1][0] == '\0') {
+        force_remote_addr.s_addr = INADDR_NONE;
+        screen_putf(_("Removing remoteing address.\n"));
+        return;
+    }
+
+    if (!inet_aton(argv[1], &addr.sin_addr)) {
+        screen_putf(_("%s: Specify remote address as an IP address\n"), quotearg(argv[1]));
+        /* XXX: fix this in the future... */
+        /*struct hostent *he;
+
+        screen_putf(_("Looking up IP address for %s\n"), quotearg(argv[1]));
+        he = gethostbyname(argv[1]);
+        if (he == NULL) {
+            screen_putf(_("%s: Cannot look up address - %s\n"), quotearg(argv[1]), hstrerror(h_errno));
+            return;
+        }
+
+        addr.sin_addr = *(struct in_addr *) he->h_addr;*/
+    }
+
+    force_remote_addr = addr.sin_addr;
+    screen_putf(_("Remote address set to %s.\n"), inet_ntoa(force_remote_addr));
+}
+
 
 static char *
 var_get_listen_addr(DCVariable *var)
