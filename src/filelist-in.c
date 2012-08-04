@@ -395,7 +395,7 @@ parse_request_fd_writable(void)
 
     res = msgq_write(parse_request_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, true, "parse request pipe");
+        warn_socket_error(0, res, true, "parse request pipe");
         running = false;
         return;
     }
@@ -410,7 +410,7 @@ parse_result_fd_readable(void)
 
     res = msgq_read(parse_result_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, false, "parse result pipe");
+        warn_socket_error(0, res, false, "parse result pipe");
         running = false;
         return;
     }

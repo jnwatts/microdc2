@@ -91,6 +91,7 @@ static void cmd_shell(int argc, char **argv);
 static void cmd_lookup(int argc, char **argv);
 static void cmd_share(int argc, char **argv);
 static void cmd_unshare(int argc, char **argv);
+//static void cmd_ban(int argc, char **argv);
 static void shell_command_completion_selector(DCCompletionInfo *ci);
 static void executable_completion_generator(DCCompletionInfo *ci);
 static void alias_completion_generator(DCCompletionInfo *ci);
@@ -321,6 +322,9 @@ command_init(void)
     add_builtin_command("unshare", cmd_unshare, local_path_completion_generator,
                         _("unshare DIR"),
                         _("Remove share directory from the processing list\n"));
+//    add_builtin_command("ban", cmd_ban, user_completion_generator,
+//   	_("ban USER"),
+//	_("Add USER to ban lits"));
 
     add_alias_command("ll", "ls -l");
 }
@@ -755,8 +759,19 @@ cmd_status(int argc, char **argv)
 
     if (hub_state >= DC_HUB_LOGGED_IN) {
         screen_putf(_("Hub users: %s\n"), uint32_str(hmap_size(hub_users)));
+        uint64_t hub_total = 0;
+        HMapIterator it;
+        hmap_iterator(hub_users, &it);
+        while(it.has_next(&it)) {
+            DCUserInfo *ui = it.next(&it);
+            hub_total += ui->share_size;
+        }
+        hub_total /= (1024*1024*1024);
+        screen_putf(_("Hub total: %" PRIu64 " GB (%" PRIu64 " TB)\n"),
+                    hub_total, hub_total/1024);
     } else {
         screen_putf(_("Hub users: %s\n"), _("(not logged in)"));
+        screen_putf(_("Hub total: %s\n"), _("(not logged in)"));
     }
 
     /*
@@ -1591,7 +1606,12 @@ user_info_compare(const void *i1, const void *i2)
     const DCUserInfo *f1 = *(const DCUserInfo **) i1;
     const DCUserInfo *f2 = *(const DCUserInfo **) i2;
 
-    return strcoll(f1->nick, f2->nick);
+    if (f1->share_size > f2->share_size)
+        return 1;
+    else if (f1->share_size < f2->share_size)
+        return -1;
+    return 0;
+    //return strcoll(f1->nick, f2->nick);
 }
 
 #define IFNULL(a,x) ((a) == NULL ? (x) : (a))
@@ -1622,13 +1642,14 @@ cmd_who(int argc, char **argv)
             } else {
                 char *fmt1 = ngettext("byte", "bytes", ui->share_size);
                 screen_putf(_("Nick: %s\n"), quotearg(ui->nick));
+                screen_putf(_("IP: %s\n"), sockaddr_in_str(&(ui->remote_addr)));
                 screen_putf(_("Description: %s\n"), quotearg(IFNULL(ui->description, "")));
                 screen_putf(_("Speed: %s\n"), quotearg(IFNULL(ui->speed, "")));
                 screen_putf(_("Level: %d\n"), ui->level);
                 screen_putf(_("E-mail: %s\n"), quotearg(IFNULL(ui->email, "")));
                 screen_putf(_("Operator: %d\n"), ui->is_operator);
-                screen_putf(_("Share Size: %" PRIu64 " %s (%" PRIu64 " MB)\n"), /* " */
-                            ui->share_size, fmt1, ui->share_size/(1024*1024));
+                screen_putf(_("Share Size: %" PRIu64 " MB (%" PRIu64 " GB)\n"), /* " */
+                            ui->share_size/(1024*1024), ui->share_size/(1024*1024*1024));
             }
         }
         return;
@@ -1657,7 +1678,7 @@ cmd_who(int argc, char **argv)
         strbuf_clear(out);
         strbuf_append(out, nick);
         strbuf_append_char_n(out, maxlen+1-strlen(nick), ' ');
-        strbuf_appendf(out, "  %7" PRIu64 "M", ui->share_size / (1024*1024)); /* " */
+        strbuf_appendf(out, "  %7" PRIu64 "G", ui->share_size / (1024*1024*1024)); /* " */
         strbuf_append(out, ui->is_operator ? " op" : "   ");
         if (ui->download_queue->cur > 0)
             strbuf_appendf(out, " (%3d)", ui->download_queue->cur);
@@ -2138,3 +2159,83 @@ cmd_unshare(int argc, char **argv)
     }
     free(dir_fs);
 }
+
+/*
+static void
+cmd_ban(int argc, char **argv)
+{
+    uint32_t maxlen;
+    HMapIterator it;
+    uint32_t c;
+    DCUserInfo **items;
+    uint32_t count;
+    int cols;
+    StrBuf *out;
+
+    if (hub_state < DC_HUB_LOGGED_IN) {
+    	screen_putf(_("Not connected.\n"));
+	return;
+    }
+
+    if (argc > 1) {
+        for (c = 1; c < argc; c++) {
+            DCUserInfo *ui;
+
+            ui = hmap_get(hub_users, argv[c]);
+            if (ui == NULL) {
+                screen_putf(_("%s: No such user on this hub\n"), quotearg(argv[c]));
+            } else {
+		// argv[c] is the user in question, who supposedly exists
+		// Hrm.. need to get IP of person?
+                char *fmt1 = ngettext("byte", "bytes", ui->share_size);
+                screen_putf(_("Nick: %s\n"), quotearg(ui->nick));
+                screen_putf(_("Description: %s\n"), quotearg(IFNULL(ui->description, "")));
+                screen_putf(_("Speed: %s\n"), quotearg(IFNULL(ui->speed, "")));
+                screen_putf(_("Level: %d\n"), ui->level);
+                screen_putf(_("E-mail: %s\n"), quotearg(IFNULL(ui->email, "")));
+                screen_putf(_("Operator: %d\n"), ui->is_operator);
+                screen_putf(_("Share Size: %" PRIu64 " %s (%" PRIu64 " MB)\n"),
+                    ui->share_size, fmt1, ui->share_size/(1024*1024));
+            }
+        }
+    	return;
+    }
+
+    maxlen = 0;
+    for (hmap_iterator(hub_users, &it); it.has_next(&it); ) {
+    	DCUserInfo *ui = it.next(&it);
+	maxlen = max(maxlen, strlen(quotearg(ui->nick)));
+    }
+
+    count = hmap_size(hub_users);
+    items = xmalloc(count * sizeof(DCUserInfo *));
+    hmap_iterator(hub_users, &it);
+    for (c = 0; c < count; c++)
+	items[c] = it.next(&it);
+    qsort(items, count, sizeof(DCUserInfo *), user_info_compare);
+
+    screen_get_size(NULL, &cols);
+
+    out = strbuf_new();
+    for (c = 0; c < count; c++) {
+    	DCUserInfo *ui = items[c];
+	char *nick = quotearg(ui->nick);
+
+	strbuf_clear(out);
+	strbuf_append(out, nick);
+	strbuf_append_char_n(out, maxlen+1-strlen(nick), ' ');
+	strbuf_appendf(out, "  %7" PRIu64 "M", ui->share_size / (1024*1024));
+	strbuf_append(out, ui->is_operator ? " op" : "   ");
+	if (ui->download_queue->cur > 0)
+	    strbuf_appendf(out, " (%3d)", ui->download_queue->cur);
+	else
+	    strbuf_append(out, "      ");
+	strbuf_appendf(out, " %s", quotearg(ui->description ? ui->description : ""));
+	if (strbuf_length(out) > cols)
+	    strbuf_set_length(out, cols);
+	screen_putf("%s\n", strbuf_buffer(out));
+    }
+    free(items);
+    strbuf_free(out);
+}
+*/

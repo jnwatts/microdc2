@@ -205,6 +205,7 @@ user_info_new(const char *nick)
     info->is_operator = false;
     info->info_quered = false;
     info->conn_count = 0;
+    memset(&(info->remote_addr), 0, sizeof(info->remote_addr));
 
     /* XXX Find existing connections to this user... */
     ucname = xasprintf("%s|%s", nick, _("UL"));
@@ -273,7 +274,7 @@ hub_putf(const char *format, ...)
 
     res = byteq_write(hub_sendq, hub_socket);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, true, _("hub"));
+        warn_socket_error(0, res, true, _("hub"));
         hub_disconnect();
         return false;
     }
@@ -669,18 +670,24 @@ hub_handle_command(char *buf, uint32_t len)
         char *head;
         char *tail;
         char *msg;
+        char timestamp[30];
         bool first = true;
         /*
-        int scrwidth;
-        size_t firstlen;
-        size_t otherlen;
+           int scrwidth;
+           size_t firstlen;
+           size_t otherlen;
 
-        screen_get_size(NULL, &scrwidth);
-        firstlen = scrwidth - strlen(_("Public:"));
-        otherlen = scrwidth - strlen(_(" | "));
-        */
+           screen_get_size(NULL, &scrwidth);
+           firstlen = scrwidth - strlen(_("Public:"));
+           otherlen = scrwidth - strlen(_(" | "));
+           */
 
         msg = prepare_chat_string_for_display(buf);
+
+        time_t theTime;
+        time(&theTime);
+        strftime(timestamp, 30, "%H:%M", localtime(&theTime));
+        timestamp[29] = '\0';
 
         for (head = msg; (tail = strchr(head, '\n')) != NULL; head = tail+1) {
             /*PtrV *wrapped;*/
@@ -691,14 +698,15 @@ hub_handle_command(char *buf, uint32_t len)
                 tail[0] = '\0';
 
             /*wrapped = wordwrap(quotearg(buf), first ? firstlen : otherlen, otherlen);
-            for (c = 0; c < wrapped->cur; c++)
-            flag_putf(DC_DF_PUBLIC_CHAT, first ? _("Public: %s\n") : _(" | %s\n"), );
-            ptrv_foreach(wrapped, free);
-            ptrv_free(wrapped);*/
-            flag_putf(DC_DF_PUBLIC_CHAT, first ? _("Public: %s\n") : _(" | %s\n"), quotearg(head));
+              for (c = 0; c < wrapped->cur; c++)
+              flag_putf(DC_DF_PUBLIC_CHAT, first ? _("Public: %s\n") : _(" | %s\n"), );
+              ptrv_foreach(wrapped, free);
+              ptrv_free(wrapped);*/
+            flag_putf(DC_DF_PUBLIC_CHAT, first ? _("[%s] Public: \e[1m%s\e[22m\n") : _(" | %s\e[1m%s\e[22m\n"), first?timestamp:"", quotearg(head));
             first = false;
         }
-        flag_putf(DC_DF_PUBLIC_CHAT, first ? _("Public: %s\n") : _(" | %s\n"), quotearg(head));
+        flag_putf(DC_DF_PUBLIC_CHAT, first ? _("[%s] Public: \e[1m%s\e[22m\n") : _(" | %s\e[1m%s\e[22m\n"), first?timestamp:"", quotearg(head));
+        //flag_putf(DC_DF_PUBLIC_CHAT, first ? _("[%s] Public: %s\n") : _(" | %s%s\n"), first?timestamp:"", quotearg(head));
         free(msg);
     }
     else if (len >= 5 && strncmp(buf, "$To: ", 5) == 0) {
@@ -729,16 +737,17 @@ hub_handle_command(char *buf, uint32_t len)
             else
                 tail[0] = '\0';
             if (first) {
-                screen_putf(_("Private: [%s] %s\n"), quotearg_n(0, frm), quotearg_n(1, head));
+                screen_putf(_("Private: [%s] \e[1m%s\e[22m\n"), quotearg_n(0, frm), quotearg_n(1, head));
                 first = false;
             } else {
-                screen_putf(_(" | %s\n"), quotearg(head));
+                screen_putf(_(" | \e[1m%s\e[22m\n"), quotearg(head));
             }
         }
         if (first) {
-            screen_putf(_("Private: [%s] %s\n"), quotearg_n(0, frm), quotearg_n(1, head));
+            screen_putf(_("Private: [%s] \e[1m%s\e[22m\n"), quotearg_n(0, frm), quotearg_n(1, head));
+            first = false;
         } else {
-            screen_putf(_(" | %s\n"), quotearg(head));
+            screen_putf(_(" | \e[1m%s\e[22m\n"), quotearg(head));
         }
         free(msg);
         free(frm);
@@ -986,7 +995,7 @@ hub_input_available(void)
 
     res = byteq_read(hub_recvq, hub_socket);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, false, _("hub"));
+        warn_socket_error(0, res, false, _("hub"));
         hub_disconnect();
         return;
     }
@@ -1053,7 +1062,7 @@ hub_now_writable(void)
         if (hub_sendq->cur > 0) {
             res = byteq_write(hub_sendq, hub_socket);
             if (res == 0 || (res < 0 && errno != EAGAIN)) {
-                warn_socket_error(res, true, _("hub"));
+                warn_socket_error(0, res, true, _("hub"));
                 hub_disconnect();
                 return;
             }

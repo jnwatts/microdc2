@@ -125,7 +125,7 @@ warn_file_error(int res, bool write, const char *filename)
 }
 
 void
-warn_socket_error(int res, bool write, const char *format, ...)
+warn_socket_error(int flag, int res, bool write, const char *format, ...)
 {
     char *subject;
     va_list args;
@@ -134,12 +134,15 @@ warn_socket_error(int res, bool write, const char *format, ...)
     subject = xvasprintf(format, args);
     va_end(args);
     if (write) {
-        warn("Cannot send to %s - %s\n", subject, errstr);
+        flag_putf(flag, "Cannot send to %s - %s\n", subject, errstr);
+        //warn("Cannot send to %s - %s\n", subject, errstr);
     } else {
         if (res < 0) {
-            warn("Cannot receive from %s - %s\n", subject, errstr);
+            flag_putf(flag, "Cannot receive from %s - %s\n", subject, errstr);
+            //warn("Cannot receive from %s - %s\n", subject, errstr);
         } else {
-            warn("Disconnected from %s.\n", subject);
+            flag_putf(flag, "Disconnected from %s.\n", subject);
+            //warn("Disconnected from %s.\n", subject);
         }
     }
     free(subject);
@@ -197,6 +200,7 @@ validate_nick(DCUserConn *uc, const char *nick)
             hmap_remove(pending_userinfo, ui->nick);
             user_info_free(ui);
             update_user_connection_name(uc, "%s|", uc->info->nick);
+            uc->info->remote_addr = uc->remote_addr; /* I wanted IP info, so I hacked it - jnw */
             return true;
         }
         warn(_("No more connections to user %s allowed.\n"), quotearg(nick));
@@ -211,6 +215,7 @@ validate_nick(DCUserConn *uc, const char *nick)
             uc->info->refcount++;
             uc->info->conn[uc->info->conn_count++] = uc;
             update_user_connection_name(uc, "%s|", uc->info->nick);
+            uc->info->remote_addr = uc->remote_addr; /* I wanted IP info, so I hacked it - jnw */
             return true;
         }
         warn(_("No more connections to user %s allowed.\n"), quotearg(nick));
@@ -429,6 +434,7 @@ user_connection_new(struct sockaddr_in *addr, int user_socket)
     uc->queue_pos = 0;
     uc->queued_valid = false;
     /* uc->we_connected = (user_socket < 0); */
+    uc->remote_addr = *addr; /* I wanted IP info, so I hacked it - jnw */
     uc->get_mq = msgq_new(get_fd[0]);
     uc->put_mq = msgq_new(put_fd[1]);
     FD_SET(uc->get_mq->fd, &read_fds);
@@ -541,7 +547,7 @@ user_request_fd_writable(DCUserConn *uc)
 
     res = msgq_write(uc->put_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, true, _("user process %s"), quote(uc->name));
+        warn_socket_error(0, res, true, _("user process %s"), quote(uc->name));
         user_disconnect(uc); /* MSG: socket error above */
         return;
     }
@@ -556,7 +562,7 @@ user_result_fd_readable(DCUserConn *uc)
 
     res = msgq_read(uc->get_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, false, _("user process %s"), quote(uc->name));
+        warn_socket_error(0, res, false, _("user process %s"), quote(uc->name));
         user_disconnect(uc); /* MSG: socket error above */
         return;
     }
@@ -916,7 +922,7 @@ add_search_result(struct sockaddr_in *addr, char *results, uint32_t resultlen)
     if (search_udpmsg_out->cur == 0) {
     	res = sendto(search_socket, results, resultlen, 0, (struct sockaddr *) addr, sizeof(struct sockaddr_in));
         if (res == 0 || (res < 0 && errno != EAGAIN)) {
-            warn_socket_error(res, true, _("user (search result)"));
+            warn_socket_error(0, res, true, _("user (search result)"));
             return;
         }
         if (res == resultlen)
@@ -948,7 +954,7 @@ search_input_available(void)
     addrlen = sizeof(addr);
     res = byteq_recvfrom(search_recvq, search_socket, 0, (struct sockaddr *) &addr, &addrlen);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, false, _("user (search result)"));
+        warn_socket_error(0, res, false, _("user (search result)"));
         return;
     }
 
@@ -972,7 +978,7 @@ search_now_writable(void)
 
         res = sendto(search_socket, msg->data, msg->len, 0, (struct sockaddr *) &msg->addr, sizeof(struct sockaddr_in));
         if (res == 0 || (res < 0 && errno != EAGAIN))
-            warn_socket_error(res, true, _("user (search result)"));
+            warn_socket_error(0, res, true, _("user (search result)"));
         if (res < 0 && errno == EAGAIN)
             break;
 
@@ -1064,11 +1070,16 @@ enable_active(uint16_t port)
     if (port != 0) {
         addr.sin_family = AF_INET;
         addr.sin_port = htons(port);
-        if (force_listen_addr.s_addr != INADDR_NONE) {
-            addr.sin_addr.s_addr = force_listen_addr.s_addr;
-        } else {
-            addr.sin_addr.s_addr = htonl(INADDR_ANY);
-        }
+        /* Modified by Josh Watts to allow for NAT traversal */
+        addr.sin_addr.s_addr = htonl(INADDR_ANY);
+        /* If behind NAT, we obviously can't bind to the external IP!
+         * Quick fix, just listen to any interface.
+            if (force_listen_addr.s_addr != INADDR_NONE) {
+                addr.sin_addr.s_addr = force_listen_addr.s_addr;
+            } else {
+                addr.sin_addr.s_addr = htonl(INADDR_ANY);
+            }
+        */
         if (bind(listen_socket, (struct sockaddr *) &addr, addr_len) < 0) {
             warn(_("Cannot bind to address - %s\n"), errstr);
             disable_active();

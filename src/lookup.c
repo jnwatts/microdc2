@@ -238,7 +238,7 @@ lookup_request_fd_writable(void)
 
     res = msgq_write(lookup_request_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, true, "lookup request pipe");
+        warn_socket_error(0, res, true, "lookup request pipe");
         running = false;
         return;
     }
@@ -253,7 +253,7 @@ lookup_result_fd_readable(void)
 
     res = msgq_read(lookup_result_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, false, "lookup result pipe");
+        warn_socket_error(0, res, false, "lookup result pipe");
         running = false;
         return;
     }

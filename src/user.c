@@ -132,7 +132,7 @@ fatal_error(DCUserConnLocal *ucl, int res, bool writing) /* XXX: rename communic
      * msgq_put.
      */
     if (res != 0 && !(writing && res < 0 && errno == EPIPE))
-        warn_socket_error(res, writing, _("main process"));
+        warn_socket_error(0, res, writing, _("main process"));
     ucl->user_running = false;
 }
 
@@ -217,7 +217,7 @@ user_putf(DCUserConnLocal *ucl, const char *format, ...)
 
     res = byteq_write(ucl->user_sendq, ucl->user_socket);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, true, _("user"));
+        warn_socket_error(DC_DF_CONNECTIONS, res, true, _("user"));
         terminate_process(ucl); /* MSG: socket error above */
         return false;
     }
@@ -1200,7 +1200,7 @@ user_input_available(DCUserConnLocal *ucl)
     alarm(0); /* cannot fail */
     res = byteq_read(ucl->user_recvq, ucl->user_socket);
     if (res == 0 || (res < 0 && errno != EAGAIN && errno != EINTR)) {
-        warn_socket_error(res, false, _("user"));
+        warn_socket_error(DC_DF_CONNECTIONS, res, false, _("user"));
         terminate_process(ucl); /* MSG: socket error above */
         return;
     }
@@ -1298,7 +1298,7 @@ user_now_writable(DCUserConnLocal *ucl)
         assert(ucl->user_sendq->cur != 0);
         res = byteq_write(ucl->user_sendq, ucl->user_socket);
         if (res == 0 || (res < 0 && errno != EAGAIN && errno != EINTR)) {
-            warn_socket_error(res, true, _("user"));
+            warn_socket_error(DC_DF_CONNECTIONS, res, true, _("user"));
             end_upload(ucl, false, _("communication error"));
             terminate_process(ucl); /* MSG: communication error */
             return;
@@ -1318,7 +1318,7 @@ user_now_writable(DCUserConnLocal *ucl)
         if (ucl->user_sendq->cur > 0) {
             res = byteq_write(ucl->user_sendq, ucl->user_socket);
             if (res == 0 || (res < 0 && errno != EAGAIN && errno != EINTR)) {
-                warn_socket_error(res, true, _("user"));
+                warn_socket_error(DC_DF_CONNECTIONS, res, true, _("user"));
                 terminate_process(ucl); /* MSG: socket error above */
                 return;
             }

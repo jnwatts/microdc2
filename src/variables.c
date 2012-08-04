@@ -77,6 +77,8 @@ static char *var_get_string(DCVariable *var);
 static char *var_get_bool(DCVariable *var);
 static void var_set_active(DCVariable *var, int argc, char **argv);
 static void var_set_auto_reconnect(DCVariable *var, int argc, char **argv);
+//static char *var_get_extern_addr(DCVariable *var);
+//static void var_set_extern_addr(DCVariable *var, int argc, char **argv);
 static char *var_get_listen_addr(DCVariable *var);
 static void var_set_listen_addr(DCVariable *var, int argc, char **argv);
 static char *var_get_listen_port(DCVariable *var);

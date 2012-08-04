@@ -211,7 +211,7 @@ int write_xml_filelist_document(xmlOutputBufferPtr output, DCFileList* root)
 {
     size_t written = 0;
     xmlTextWriterPtr writer = xmlNewTextWriter(output);
-    xmlTextWriterSetIndent(writer, 0);
+    xmlTextWriterSetIndent(writer, 4);
 
     written += xmlTextWriterStartDocumentNew(writer, "1.0", "utf-8", NULL);
 

@@ -315,6 +315,8 @@ struct _DCUserInfo {
 
     DCUserConn *conn[DC_USER_MAX_CONN];	/* valid elements: conn[0..conn_count-1] */
     int conn_count; /* valid range: 0 <= conn_count <= DC_USER_MAX_CONN */
+
+    struct sockaddr_in remote_addr; /* Remote IP of connection */
 };
 
 struct _DCUserConn {
@@ -341,6 +343,8 @@ struct _DCUserConn {
     uint64_t transfer_total;	/* total number of bytes to transfer */
     time_t transfer_time;
     /*bool we_connected;*/
+
+    struct sockaddr_in remote_addr; /* Remote IP of connection */
 };
 
 struct _DCVariable {
@@ -475,7 +479,7 @@ bool get_package_file(const char *name, char **outname);
 void transfer_completion_generator(DCCompletionInfo *ci);
 void user_conn_cancel(DCUserConn *uc);
 void warn_file_error(int res, bool write, const char *filename);
-void warn_socket_error(int res, bool write, const char *subject, ...);
+void warn_socket_error(int flag, int res, bool write, const char *subject, ...);
 void add_search_result(struct sockaddr_in *addr, char *results, uint32_t resultlen);
 void free_queued_file(DCQueuedFile *qf); /* XXX: move transfer.c? */
 DCUserConn *user_connection_new(struct sockaddr_in *addr, int socket);

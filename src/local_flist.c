@@ -52,7 +52,7 @@ typedef enum {
     FILELIST_UPDATE_HUB_CHARSET,        /* REQUEST ONLY       main application informs about hub_charset change */
     FILELIST_UPDATE_FS_CHARSET,         /* REQUEST ONLY       main application informs about fs_charset change */
     FILELIST_UPDATE_REFRESH_INTERVAL,   /* REQUEST ONLY       main application informs about filelist_refresh_timeout change */
-
+    FILELIST_UPDATE_REFRESH_NOW,		/* REQUEST ONLY       main application informs about needs to refresh filelist */
     FILELIST_UPDATE_INSERT,	            /* RESPONSE ONLY NOT USED     add new entries to the existing filelist */
     FILELIST_UPDATE_DELETE,             /* RESPONSE ONLY NOT USED     delete the entries from the existing filelist */
 } UpdateType;
@@ -908,7 +908,7 @@ bool local_file_list_init(void)
     }
 
     if (res <= 0) {
-        warn_socket_error(res, false, "update result pipe");
+        warn_socket_error(0, res, false, "update result pipe");
         return false;
     }
     if (update_type != FILELIST_UPDATE_COMPLETE) {
@@ -995,7 +995,7 @@ update_request_fd_writable(void)
 
     res = msgq_write(update_request_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, true, "update request pipe");
+        warn_socket_error(0, res, true, "update request pipe");
         running = false;
         return;
     }
@@ -1010,7 +1010,7 @@ update_result_fd_readable(void)
 
     res = msgq_read(update_result_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-        warn_socket_error(res, false, "update result pipe");
+        warn_socket_error(0, res, false, "update result pipe");
         running = false;
         return;
     }
