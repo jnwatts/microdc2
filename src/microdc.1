@@ -1,0 +1,64 @@
+.\"                                      -*- nroff -*-
+.\" microdc.1 - Manual page for microdc.
+.\"
+.\" Copyright (C) 2004, 2005 Oskar Liljeblad
+.\"
+.\" This program is free software; you can redistribute it and/or modify
+.\" it under the terms of the GNU General Public License as published by
+.\" the Free Software Foundation; either version 2 of the License, or
+.\" (at your option) any later version.
+.\"
+.\" This program is distributed in the hope that it will be useful,
+.\" but WITHOUT ANY WARRANTY; without even the implied warranty of
+.\" MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+.\" GNU Library General Public License for more details.
+.\"
+.\" You should have received a copy of the GNU General Public License along
+.\" with this program; if not, write to the Free Software Foundation,
+.\" Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+.\"
+.TH MICRODC "1" "September 17, 2005" "microdc"
+.SH NAME
+microdc - A command-line based Direct Connect client
+.SH SYNOPSIS
+.B microdc
+.RI [ OPTION ]...
+.SH DESCRIPTION
+microdc is a command-line based Direct Connect client that uses the GNU
+Readline library for user interaction. It was developed from ground up and
+does not depend on any other program. Despite the command-line user
+interface, microdc was designed to be user friendly and simple to use.
+.SH OPTIONS
+This program follows the usual GNU command line syntax, with long
+options starting with two dashes (`--').
+.TP
+\fB\-c, \-\-config\fR=\fIFILE\fR
+Read configuration script from FILE rather than ~/.microdc/config.
+.TP
+\fB\-n, \-\-no\-config\fR
+Do not read config file on startup.
+.TP
+\fB\-\-help\fR
+Show summary of options.
+.TP
+\fB\-\-version\fR
+Output version information and exit.
+.SH FILES
+The following files are used by microdc (~ represents the current user's home directory):
+.TP
+\fB~/.microdc/config\fR
+This file is loaded on startup. It contains commands, one per line, that will be executed
+on startup. You can override loading of this file with --config and --no-config.
+.TP
+\fB~/.microdc/history\fR
+This is the command history file. It contains a list of commands that were typed and
+executed from the microdc prompt. It can safely be removed.
+.SH REPORTING BUGS
+Report bugs to <\fIoskar@osk.mine.nu\fP>.
+.SH AUTHOR
+The author of \fBmicrodc\fP and this manual page is Oskar Liljeblad <\fIoskar@osk.mine.nu\fP>.
+.SH COPYRIGHT
+Copyright \(co 2004, 2005 Oskar Liljeblad
+
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

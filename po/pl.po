@@ -1,0 +1,2120 @@
+# Polish translation for microdc.
+# Copyright (C) 2005 Jakub Jankowski
+# This file is distributed under the same license as the microdc package.
+# Jakub Jankowski <shasta@atn.pl>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: microdc 0.11.0\n"
+"Report-Msgid-Bugs-To: oskar@osk.mine.nu\n"
+"POT-Creation-Date: 2005-10-18 08:31+0200\n"
+"PO-Revision-Date: 2005-10-13 22:11+0200\n"
+"Last-Translator: Jakub Jankowski <shasta@atn.pl>\n"
+"Language-Team: Polish <pl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural= n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
+
+#: lib/argmatch.c:137
+#, c-format
+msgid "invalid argument %s for %s"
+msgstr "nieprawid³owy parametr %s dla %s"
+
+#: lib/argmatch.c:138
+#, c-format
+msgid "ambiguous argument %s for %s"
+msgstr "niejednoznaczny parametr %s dla %s"
+
+#: lib/argmatch.c:157
+#, c-format
+msgid "Valid arguments are:"
+msgstr "Poprawne parametry to:"
+
+#: lib/error.c:121
+msgid "Unknown system error"
+msgstr "Nieznany b³±d systemowy"
+
+#: lib/gai_strerror.c:45
+msgid "Address family for hostname not supported"
+msgstr "Rodzina adresów dla tej nazwy hosta nie jest obs³ugiwana"
+
+#: lib/gai_strerror.c:46
+msgid "Temporary failure in name resolution"
+msgstr "Odwzorowanie nazwy jest chwilowo niemo¿liwe"
+
+#: lib/gai_strerror.c:47
+msgid "Bad value for ai_flags"
+msgstr "B³êdna warto¶æ dla ai_flags"
+
+#: lib/gai_strerror.c:48
+msgid "Non-recoverable failure in name resolution"
+msgstr "Wyst±pi³ krytyczny b³±d w odwzorowaniu nazw"
+
+#: lib/gai_strerror.c:49
+msgid "ai_family not supported"
+msgstr "ai_family zawiera nie obs³ugiwan± rodzinê protoko³ów"
+
+#: lib/gai_strerror.c:50
+msgid "Memory allocation failure"
+msgstr "Wyst±pi³ b³±d przydzielania pamiêci"
+
+#: lib/gai_strerror.c:51
+msgid "No address associated with hostname"
+msgstr "Brak adresu zwi±zanego z nazw± hosta"
+
+#: lib/gai_strerror.c:52
+msgid "Name or service not known"
+msgstr "Ta nazwa lub us³uga jest nieznana"
+
+#: lib/gai_strerror.c:53
+msgid "Servname not supported for ai_socktype"
+msgstr "Nazwa nie obs³ugiwana dla ai_socktype"
+
+#: lib/gai_strerror.c:54
+msgid "ai_socktype not supported"
+msgstr "ai_socktype zawiera nie obs³ugiwany typ gniazda"
+
+#: lib/gai_strerror.c:55
+msgid "System error"
+msgstr "B³±d systemowy"
+
+#: lib/gai_strerror.c:57
+msgid "Processing request in progress"
+msgstr "¯±danie przetworzenia jest ju¿ wykonywane"
+
+#: lib/gai_strerror.c:58
+msgid "Request canceled"
+msgstr "¯±danie anulowane"
+
+#: lib/gai_strerror.c:59
+msgid "Request not canceled"
+msgstr "¯±danie nie anulowane"
+
+#: lib/gai_strerror.c:60
+msgid "All requests done"
+msgstr "Wszystkie ¿±dania wykonane"
+
+#: lib/gai_strerror.c:61
+msgid "Interrupted by a signal"
+msgstr "Przerwane przez sygna³"
+
+#: lib/gai_strerror.c:62
+msgid "Parameter string not correctly encoded"
+msgstr "£añcuch parametru niepoprawnie zakodowany"
+
+#: lib/gai_strerror.c:74
+msgid "Unknown error"
+msgstr "Nieznany b³±d"
+
+#: lib/getopt.c:551 lib/getopt.c:570
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: opcja `%s' jest niejednoznaczna\n"
+
+#: lib/getopt.c:603 lib/getopt.c:607
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: opcja `--%s' nie zezwala na argument\n"
+
+#: lib/getopt.c:616 lib/getopt.c:621
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: opcja `%c%s' nie zezwala na argument\n"
+
+#: lib/getopt.c:667 lib/getopt.c:689 lib/getopt.c:1020 lib/getopt.c:1042
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: opcja `%s' wymaga argumentu\n"
+
+#: lib/getopt.c:727 lib/getopt.c:730
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: nierozpoznana opcja `--%s'\n"
+
+#: lib/getopt.c:738 lib/getopt.c:741
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: nierozpoznana opcja `%c%s'\n"
+
+#: lib/getopt.c:796 lib/getopt.c:799
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: niedozwolona opcja -- %c\n"
+
+#: lib/getopt.c:805 lib/getopt.c:808
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: nieprawid³owa opcja -- %c\n"
+
+#: lib/getopt.c:863 lib/getopt.c:882 lib/getopt.c:1095 lib/getopt.c:1116
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: opcja wymaga argumentu -- %c\n"
+
+#: lib/getopt.c:935 lib/getopt.c:954
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: opcja `-W %s' jest niejednoznaczna\n"
+
+#: lib/getopt.c:978 lib/getopt.c:999
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: opcja `-W %s' nie zezwala na argument\n"
+
+#: lib/human.c:486
+msgid "block size"
+msgstr "wielko¶æ bloku"
+
+#. TRANSLATORS:
+#. Get translations for open and closing quotation marks.
+#.
+#. The message catalog should translate "`" to a left
+#. quotation mark suitable for the locale, and similarly for
+#. "'".  If the catalog has no translation,
+#. locale_quoting_style quotes `like this', and
+#. clocale_quoting_style quotes "like this".
+#.
+#. For example, an American English Unicode locale should
+#. translate "`" to U+201C (LEFT DOUBLE QUOTATION MARK), and
+#. should translate "'" to U+201D (RIGHT DOUBLE QUOTATION
+#. MARK).  A British English Unicode locale should instead
+#. translate these to U+2018 (LEFT SINGLE QUOTATION MARK) and
+#. U+2019 (RIGHT SINGLE QUOTATION MARK), respectively.
+#.
+#. If you don't know what to put here, please see
+#. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
+#. and use glyphs suitable for your language.
+#: lib/quotearg.c:245
+msgid "`"
+msgstr ",,"
+
+#: lib/quotearg.c:246
+msgid "'"
+msgstr "''"
+
+#. TRANSLATORS: Translate "(C)" to the copyright symbol
+#. (C-in-a-circle), if this symbol is available in the user's
+#. locale.  Otherwise, do not translate "(C)"; leave it as-is.
+#: lib/version-etc.c:72
+msgid "(C)"
+msgstr "(C)"
+
+#: lib/version-etc.c:74
+msgid ""
+"\n"
+"This is free software.  You may redistribute copies of it under the terms "
+"of\n"
+"the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+"\n"
+msgstr ""
+"\n"
+"To jest wolne oprogramowanie. Mo¿esz rozpowszechniaæ jego kopie na zasadach\n"
+"Powszechnej Licencji Publicznej GNU <http://www.gnu.org/licenses/gpl.html>.\n"
+"Nie ma ¯ADNEJ GWARANCJI, w granicach dozwolonych przez prawo.\n"
+"\n"
+
+#. TRANSLATORS: %s denotes an author name.
+#: lib/version-etc.c:90
+#, c-format
+msgid "Written by %s.\n"
+msgstr "Autorem jest %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#: lib/version-etc.c:94
+#, c-format
+msgid "Written by %s and %s.\n"
+msgstr "Autorami s± %s oraz %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#: lib/version-etc.c:98
+#, c-format
+msgid "Written by %s, %s, and %s.\n"
+msgstr "Autorami s± %s, %s oraz %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:104
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"and %s.\n"
+msgstr ""
+"Autorami s± %s, %s, %s\n"
+"oraz %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:110
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, and %s.\n"
+msgstr ""
+"Autorami s± %s, %s, %s,\n"
+"%s oraz %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:116
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, and %s.\n"
+msgstr ""
+"Autorami s± %s, %s, %s,\n"
+"%s, %s oraz %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:123
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, and %s.\n"
+msgstr ""
+"Autorami s± %s, %s, %s,\n"
+"%s, %s, %s oraz %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:130
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"and %s.\n"
+msgstr ""
+"Autorami s± %s, %s, %s,\n"
+"%s, %s, %s, %s\n"
+"oraz %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:138
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, and %s.\n"
+msgstr ""
+"Autorami s± %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s oraz %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:148
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, %s, and others.\n"
+msgstr ""
+"Autorami s± %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, %s i inni.\n"
+
+#: lib/xalloc-die.c:38
+msgid "memory exhausted"
+msgstr "pamiêæ wyczerpana"
+
+#: src/command.c:177
+msgid "browse [USER]"
+msgstr "browse [U¯YTKOWNIK]"
+
+#: src/command.c:178
+msgid ""
+"If USER is specified, queue the file list for that user for download and "
+"start browsing the user's files as soon as the list is downloaded. With no "
+"arguments, stop browsing.\n"
+msgstr ""
+"Je¶li podano parametr U¯YTKOWNIK, umieszcza w kolejce do pobrania listê "
+"plików tego u¿ytkownika i rozpoczyna przegl±danie jego plików jak tylko "
+"lista zostanie pobrana. Bez parametrów -- koñczy przegl±danie.\n"
+
+#: src/command.c:182
+msgid "cancel CONNECTION ..."
+msgstr "cancel PO£¡CZENIE ..."
+
+#: src/command.c:183
+msgid ""
+"Close a user connection. Use the `transfers' command to get a list of "
+"connections.\n"
+msgstr ""
+"Zamyka po³±czenie z u¿ytkownikiem. Skorzystaj z komendy `transfers' aby "
+"uzyskaæ listê po³±czeñ.\n"
+
+#: src/command.c:186
+msgid "cd [DIRECTORY]"
+msgstr "cd [KATALOG]"
+
+#: src/command.c:187
+msgid ""
+"Change directory when browsing another user's files. If DIRECTORY is not "
+"specified, change to the root directory (`/').\n"
+msgstr ""
+"Zmienia katalog podczas przegl±dania plików innego u¿ytkownika. Je¶li nie "
+"podano parametru KATALOG, przechodzi do katalogu g³ównego (`/').\n"
+
+#: src/command.c:190
+msgid "connect HOST[:PORT]"
+msgstr "connect HOST[:PORT]"
+
+#: src/command.c:191
+msgid "Connect to a hub. If PORT is not specified, assume port 411.\n"
+msgstr ""
+"Ustanawia po³±czenie z hubem. Je¶li nie podano parametru PORT, u¿ywa portu "
+"411.\n"
+
+#: src/command.c:193
+msgid "disconnect"
+msgstr "disconnect"
+
+#: src/command.c:194
+msgid "Disconnect from the hub.\n"
+msgstr "Przerywa po³±czenie z hubem.\n"
+
+#: src/command.c:196
+msgid "exit"
+msgstr "exit"
+
+#: src/command.c:197
+msgid "Quit the program.\n"
+msgstr "Koñczy dzia³anie programu.\n"
+
+#: src/command.c:199
+msgid "find [FILE ...]"
+msgstr "find [PLIK ...]"
+
+#: src/command.c:200
+msgid ""
+"List files and directories recursively. Assume current directory if FILE is "
+"not specified. Must be browsing a user's files to use this command.\n"
+msgstr ""
+"Listuje rekursywnie pliki i katalogi. Je¶li parametr PLIK nie zosta³ podany, "
+"rozpoczyna od katalogu bie¿±cego. U¿ycie tego polecenia jest mo¿liwe tylko "
+"przy przegl±daniu plików u¿ytkownika.\n"
+
+#: src/command.c:203
+msgid "get FILE ..."
+msgstr "get PLIK ..."
+
+#: src/command.c:204
+msgid ""
+"Queue file for download. Must be browsing a user's files to use this "
+"command.\n"
+msgstr ""
+"Kolejkuje plik do pobrania. U¿ycie tego polecenia jest mo¿liwe tylko przy "
+"przegl±daniu plików u¿ytkownika.\n"
+
+#: src/command.c:207
+msgid "grantslot [USER ...]"
+msgstr "grantslot [U¯YTKOWNIK ...]"
+
+#: src/command.c:208
+msgid ""
+"Grant a download slot for the specified users, or remove granted slot if the "
+"user was already granted one. Without arguments, display a list of users "
+"with granted slots.\n"
+msgstr ""
+"Przydziela slot pobierania podanym u¿ytkownikom, lub usuwa przydzielony "
+"slot, je¶li u¿ytkownikowi slot taki zosta³ przydzielony wcze¶niej. Bez "
+"podanych parametrów, wy¶wietla listê u¿ytkowników z przydzielonymi slotami.\n"
+
+#: src/command.c:212
+msgid "help [COMMAND ...]"
+msgstr "help [POLECENIE ...]"
+
+#: src/command.c:213
+msgid ""
+"If COMMAND is specified, display help for that command. Otherwise list all "
+"available commands.\n"
+msgstr ""
+"Je¶li podano parametr POLECENIE, wy¶wietla tekst pomocy dotycz±cy tego "
+"polecenie. W przeciwnym wypadku wy¶wietla listê wszystkich dostêpnych "
+"poleceñ.\n"
+
+#: src/command.c:216
+msgid "ls [OPTION...] [FILE...]"
+msgstr "ls [OPCJA...] [PLIK...]"
+
+#: src/command.c:217
+msgid ""
+"List files and directories. Assume current directory if FILE is not\n"
+"specified.\n"
+"\n"
+"Options:\n"
+"  -l, --long    use a long listing format\n"
+msgstr ""
+"Listuje pliki i katalogi. Je¶li nie podano parametru PLIK, \n"
+"domy¶lnie u¿ywa bie¿±cego katalogu.\n"
+"\n"
+"Opcje:\n"
+"  -l, --long    u¿ywa obszernego formatu wy¶wietlania\n"
+
+#: src/command.c:223
+msgid "retry USER ..."
+msgstr "retry U¯YTKOWNIK ..."
+
+#: src/command.c:224
+msgid "Try to connect and download files from the specified users.\n"
+msgstr "Próbuje po³±czyæ siê i pobraæ pliki od podanych u¿ytkowników.\n"
+
+#: src/command.c:226
+msgid "msg USER MESSAGE..."
+msgstr "msg U¯YTKOWNIK WIADOMO¦Æ.."
+
+#: src/command.c:227
+msgid ""
+"Send a private message to USER. Note that characters such as semicolon "
+"(`;'), double quote (`\"') and number sign (`#') in MESSAGE need to be "
+"escaped or quoted. Therefore it is recommended to put MESSAGE in double "
+"quotes.\n"
+"\n"
+"Example:\n"
+"  msg some_user \"hello, how are you?\"\n"
+msgstr ""
+"Wysy³a prywatn± wiadomo¶æ do U¯YTKOWNIK. Nale¿y pamiêtaæ, ¿e znaki takie jak "
+"¶rednik (`;'), cudzys³ów (`\"') oraz krzy¿yk (`#') w WIADOMO¦Æ musz± byæ "
+"eskejpowane lub brane w apostrofy. Z tego wzglêdu zalecane jest umieszczanie "
+"WIADOMO¦Æ w cudzys³owach.\n"
+"\n"
+"Przyk³ad:\n"
+"  msg jaki¶_u¿ytkownik \"cze¶æ, co s³ychaæ?\"\n"
+
+#: src/command.c:235
+msgid "pwd"
+msgstr "pwd"
+
+#: src/command.c:236
+msgid "Display user being browsed and current directory.\n"
+msgstr "Wy¶wietla aktualnie przegl±danego u¿ytkownika i bie¿±cy katalog.\n"
+
+#: src/command.c:238
+msgid "queue [USER ...]"
+msgstr "queue [U¯YTKOWNIK ...]"
+
+#: src/command.c:239
+msgid ""
+"Display files queued for download from the specified users. Without "
+"arguments, display a list of users we have queued files for.\n"
+msgstr ""
+"Wy¶wietla listê plików oczekuj±cych na pobranie od podanych u¿ytkowników. "
+"Bez podanych parametrów, wy¶wietla listê u¿ytkowników, których pliki "
+"oczekuj± w kolejce.\n"
+
+#: src/command.c:242
+msgid "raw DATA..."
+msgstr "raw DANE..."
+
+#: src/command.c:243
+msgid ""
+"Send some raw data to the hub. Note that characters such as semicolon (`;'), "
+"double quote (`\"') and number sign (`#') in DATA need to be escaped or "
+"quoted. Therefore it is recommended to put DATA in double quotes.\n"
+msgstr ""
+"Wysy³a surowe dane do huba. Nale¿y pamiêtaæ, ¿e znaki takie jak ¶rednik "
+"(`;'), cudzys³ów (`\"') oraz krzy¿yk (`#') w DANE musz± byæ eskejpowane lub "
+"brane w apostrofy. Z tego wzglêdu zalecane jest umieszczanie DANE w "
+"cudzys³owach.\n"
+
+#: src/command.c:248
+msgid "results [INDEX ...]"
+msgstr "results [INDEKS ...]"
+
+#: src/command.c:249
+msgid ""
+"If INDEX is specified, display results for the search by that index. "
+"Otherwise, display a list of searches and statistics over those searches.\n"
+msgstr ""
+"Je¶li podano parametr INDEKS, wy¶wietla wyniki wyszukiwania dla tegoindeksu. "
+"W przeciwnym wypadku wy¶wietla listê wyszukiwañ i ich statystyki.\n"
+
+#: src/command.c:252
+msgid "say MESSAGE..."
+msgstr "say WIADOMO¦Æ.."
+
+#: src/command.c:253
+msgid ""
+"Send a public message to users on the hub. Note that characters such as "
+"semicolon (`;'), double quote (`\"') and number sign (`#') in MESSAGE need "
+"to be escaped or quoted. Therefore it is recommended to put MESSAGE in "
+"double quotes.\n"
+"\n"
+"Example:\n"
+"  say \"hi everyone!\"\n"
+msgstr ""
+"Wysy³a publiczn± wiadomo¶æ do u¿ytkowników na hubie. Nale¿y pamiêtaæ, ¿e "
+"znaki takie jak ¶rednik (`;'), cudzys³ów (`\"') oraz krzy¿yk (`#') w "
+"WIADOMO¦Æ musz± byæ eskejpowane lub brane w apostrofy. Z tego wzglêdu "
+"zalecane jest umieszczanie WIADOMO¦Æ w cudzys³owach.\n"
+"\n"
+"Przyk³ad:\n"
+"  msg \"siemanko wszystkim!\"\n"
+
+#: src/command.c:261
+msgid "search WORD..."
+msgstr "search WYRA¯ENIE..."
+
+#: src/command.c:262
+msgid "Issue a search for the specified search words.\n"
+msgstr "Rozpoczyna wyszukiwanie podanego wyra¿enia.\n"
+
+#: src/command.c:264
+msgid "set [NAME [VALUE...]]"
+msgstr "set [NAZWA [WARTO¦Æ...]]"
+
+#: src/command.c:265
+msgid ""
+"Without arguments, display a list of variables and their current values. "
+"With only NAME argument, display the value of that variable. With NAME and "
+"VALUE arguments, change the value of a variable.\n"
+msgstr ""
+"Bez podanych parametrów, wy¶wietla listê zmiennych i ich aktualne warto¶ci. "
+"Je¶li podany zosta³ jedynie parametr NAZWA, wy¶wietla warto¶æ tej zmiennej. "
+"Je¶li podane zosta³y parametry NAZWA i WARTO¦Æ, zmienia warto¶æ zmiennej.\n"
+
+#: src/command.c:269
+msgid "status"
+msgstr "status"
+
+#: src/command.c:270
+msgid "Display status information and some statistics.\n"
+msgstr "Wy¶wietla informacje o stanie i parê statystyk.\n"
+
+#: src/command.c:272
+msgid "transfers"
+msgstr "transfers"
+
+#: src/command.c:273
+msgid "Display a list of user connections.\n"
+msgstr "Wy¶wietla listê po³±czeñ z u¿ytkownikami.\n"
+
+#: src/command.c:275
+msgid "unqueue USER [RANGE]"
+msgstr "unqueue U¯YTKOWNIK [ZAKRES]"
+
+#: src/command.c:276
+msgid ""
+"Remove all or a range of queued files for USER. If RANGE is not specified, "
+"remove all files from the queue. Use dash (`-') and comma (`,') in RANGE. "
+"Open ranges are accepted (e.g. `1-' or `-2').\n"
+msgstr ""
+"Usuwa pliki z kolejki dla U¯YTKOWNIK. Je¶li parametr ZAKRES nie zosta³ "
+"podany, usuwa wszystkie pliki z kolejki. W parametrze ZAKRES mo¿na u¿ywaæ "
+"my¶lnika (`-') i przecinka (`,'). Dozwolone s± niedomkniête zakresy (np. "
+"`1-' czy `-2').\n"
+
+#: src/command.c:280
+msgid "unsearch INDEX ..."
+msgstr "unsearch INDEKS ..."
+
+#: src/command.c:281
+msgid "Remove a previously issued search and all results for that search.\n"
+msgstr "Usuwa wcze¶niej wykonane wyszukiwanie oraz wszystkie jego wyniki.\n"
+
+#: src/command.c:283
+msgid "who [USER ...]"
+msgstr "who [U¯YTKOWNIK ...]"
+
+#: src/command.c:284
+msgid ""
+"If USER is specified, display information on that user. Otherwise, display a "
+"table of users with some user details.\n"
+msgstr ""
+"Je¶li podany zosta³ parametr U¯YTKOWNIK, wy¶wietla informacje o tym "
+"u¿ytkowniku. W przeciwnym wypadku wy¶wietla tabelkê z u¿ytkownikami i kilka "
+"informacji o nich.\n"
+
+#: src/command.c:287
+msgid "alias [NAME[=VALUE] ...]"
+msgstr "alias [NAZWA[=WARTO¦Æ] ...]"
+
+#: src/command.c:288
+msgid ""
+"Without arguments, display the list of aliases. With NAME argument, display "
+"what value (command) that alias is set to. With both NAME and VALUE "
+"argument, change alias. Note that VALUE is a single argument - you need to "
+"use quotes for more complex commands.\n"
+"\n"
+"Example:\n"
+"  alias ll \"ls -l\"\n"
+msgstr ""
+"Bez podanych parametrów, wy¶wietla aktualn± listê aliasów. Je¶li podano "
+"parametr NAZWA, wy¶wietla jak± warto¶æ (polecenie) ma przypisany alias. "
+"Je¶li podano parametry NAZWA i WARTO¦Æ, zmienia alias. Nale¿y pamiêtaæ, ¿e "
+"WARTO¦Æ jest pojedynczym argumentem -- nale¿y u¿yæ cudzys³owów dla bardziej "
+"z³o¿onych poleceñ.\n"
+"\n"
+"Przyk³ad:\n"
+"  alias ll \"ls -l\"\n"
+
+#: src/command.c:296
+msgid "unalias NAME ..."
+msgstr "unalias NAZWA ..."
+
+#: src/command.c:297
+msgid "Remove aliases.\n"
+msgstr "Usuwa aliasy.\n"
+
+#: src/command.c:299
+msgid "shell [COMMAND [ARGUMENTS...]]"
+msgstr "shell [POLECENIE [ARGUMENTY...]]"
+
+#: src/command.c:300
+msgid ""
+"Execute a system command. If no arguments are specified, the current shell "
+"will be started (SHELL environment variable or `/bin/sh' if that is not "
+"set). microdc will continue in the background while the command is "
+"executing.\n"
+msgstr ""
+"Wykonuje polecenie pow³oki. Je¶li nie zostan± podane ¿adne parametry, "
+"uruchomiona bêdzie aktualna pow³oka (ze zmiennej ¶rodowiskowej SHELL, lub `/"
+"bin/sh', gdy zmienna ta nie jest ustawiona). microdc bêdzie dzia³aæ w tle "
+"podczas gdy polecenie bêdzie wykonywane.\n"
+
+#: src/command.c:305
+msgid "lookup HOST ..."
+msgstr "lookup HOST ..."
+
+#: src/command.c:306
+msgid "Lookup the IP address of specified hosts.\n"
+msgstr "Wyszukuje adres IP podanych hostów\n"
+
+#: src/command.c:496
+#, c-format
+msgid "%s: Unknown command.\n"
+msgstr "%s: Nieznana komenda.\n"
+
+#: src/command.c:678
+#, c-format
+msgid "Cannot create child process - %s\n"
+msgstr "Nie mo¿na utworzyæ procesu potomnego - %s\n"
+
+#: src/command.c:693 src/command.c:696
+#, c-format
+msgid "%s: cannot execute - %s\n"
+msgstr "%s: nie mo¿na wykonaæ - %s\n"
+
+#: src/command.c:711 src/command.c:714 src/command.c:717 src/command.c:720
+#: src/command.c:723 src/command.c:726
+#, c-format
+msgid "Hub state: %s\n"
+msgstr "Stan huba: %s\n"
+
+#: src/command.c:711
+msgid "Not connected"
+msgstr "Brak po³±czenia"
+
+#: src/command.c:714
+msgid "Looking up IP address"
+msgstr "Wyszukiwanie adresu IP"
+
+#: src/command.c:717
+msgid "Waiting for complete connection"
+msgstr "Oczekiwanie na zakoñczenie po³±czenia"
+
+#: src/command.c:720
+msgid "Waiting for $Lock"
+msgstr "Oczekiwanie na $Lock"
+
+#
+#: src/command.c:723
+msgid "Waiting for $Hello"
+msgstr "Oczekiwanie na $Hello"
+
+#: src/command.c:726
+msgid "Logged in"
+msgstr "Zalogowany"
+
+#: src/command.c:731 src/command.c:733
+#, c-format
+msgid "Hub users: %s\n"
+msgstr "U¿ytkownicy huba: %s\n"
+
+#: src/command.c:733
+msgid "(not logged in)"
+msgstr "(niezalogowany)"
+
+#
+#: src/command.c:736
+msgid "Pending user connections:\n"
+msgstr "Oczekuj±ce po³±czenia u¿ytkowników:\n"
+
+#: src/command.c:741
+msgid "  (none)\n"
+msgstr "  (brak)\n"
+
+#: src/command.c:743
+#, c-format
+msgid "Share size: %<PRIu64> %s (%s)\n"
+msgstr "Udostêpnianych zasobów: %<PRIu64> %s (%s)\n"
+
+#: src/command.c:745 src/command.c:749 src/command.c:753 src/command.c:1501
+#: src/command.c:1898 src/main.c:616 src/main.c:623 src/main.c:860
+#: src/user.c:421
+msgid "byte"
+msgid_plural "bytes"
+msgstr[0] "bajt"
+msgstr[1] "bajty"
+msgstr[2] "bajtów"
+
+#: src/command.c:747
+#, c-format
+msgid "Bytes received: %<PRIu64> %s (%s)\n"
+msgstr "Otrzymanych bajtów: %<PRIu64> %s (%s)\n"
+
+#: src/command.c:751
+#, c-format
+msgid "Bytes sent: %<PRIu64> %s (%s)\n"
+msgstr "Wys³anych bajtów: %<PRIu64> %s (%s)\n"
+
+#: src/command.c:774
+#, c-format
+msgid "Usage: %s MESSAGE..\n"
+msgstr "U¿ycie: %s WIADOMO¦Æ..\n"
+
+#: src/command.c:778 src/command.c:806 src/command.c:839 src/command.c:881
+#: src/command.c:894 src/command.c:1267 src/command.c:1298 src/command.c:1414
+#: src/command.c:1489 src/command.c:1619
+msgid "Not connected.\n"
+msgstr "Brak po³±czenia.\n"
+
+#: src/command.c:802
+#, c-format
+msgid "Usage: %s USER MESSAGE..\n"
+msgstr "U¿ycie: %s U¯YTKOWNIK WIADOMO¦Æ..\n"
+
+#: src/command.c:811 src/command.c:913 src/command.c:1010 src/command.c:1276
+#: src/command.c:1319 src/command.c:1419 src/command.c:1499
+#, c-format
+msgid "%s: No such user on this hub\n"
+msgstr "%s: Nie ma takiego u¿ytkownika na tym hubie\n"
+
+#: src/command.c:835
+#, c-format
+msgid "Usage: %s DATA...\n"
+msgstr "U¿ycie: %s DANE...\n"
+
+#: src/command.c:855
+#, c-format
+msgid "Usage: %s HOST[:PORT]\n"
+msgstr "U¿ycie: %s HOST[:PORT]\n"
+
+#: src/command.c:859
+msgid "Connection in progress, disconnect first.\n"
+msgstr "Po³±czenie w trakcie nawi±zywania, najpierw siê roz³±cz.\n"
+
+#: src/command.c:867
+#, c-format
+msgid "Invalid port number %s\n"
+msgstr "Nieprawid³owy numer portu %s\n"
+
+#: src/command.c:883
+msgid "Disconnecting from hub.\n"
+msgstr "Roz³±czanie.\n"
+
+#: src/command.c:917
+#, c-format
+msgid "%s has been granted a slot.\n"
+msgstr "Przydzielono slot dla %s.\n"
+
+#: src/command.c:919
+#, c-format
+msgid "%s is no longer granted a slot.\n"
+msgstr "%s nie posiada ju¿ przydzielonego slotu.\n"
+
+#: src/command.c:971
+#, c-format
+msgid "Now browsing %s.\n"
+msgstr "Przegl±dasz teraz %s.\n"
+
+#: src/command.c:989 src/command.c:1062 src/command.c:1078 src/command.c:1141
+#: src/command.c:1213 src/command.c:1854
+msgid "Not browsing any user.\n"
+msgstr "Nie przegl±dasz ¿adnego u¿ytkownika.\n"
+
+#: src/command.c:1017 src/filelist-in.c:240 src/fs.c:393 src/fs.c:470
+#: src/main.c:1344 src/main.c:1362 src/user.c:531 src/util.c:109
+#: src/variables.c:407 src/variables.c:427 src/variables.c:448
+#, c-format
+msgid "%s: Cannot get file status - %s\n"
+msgstr "%s: Nie mo¿na wykonaæ operacji stat - %s\n"
+
+#: src/command.c:1036
+msgid "No free connections. Queued file for download.\n"
+msgstr "Brak wolnych po³±czeñ. Plik zakolejkowano do pobrania.\n"
+
+#: src/command.c:1064
+#, c-format
+msgid "(%s) Waiting for file list.\n"
+msgstr "(%s) Oczekiwanie na listê plików.\n"
+
+#: src/command.c:1067
+#, c-format
+msgid "(%s) %s\n"
+msgstr "(%s) %s\n"
+
+#: src/command.c:1089
+msgid "No previous path.\n"
+msgstr "Brak poprzedniej ¶cie¿ki.\n"
+
+#: src/command.c:1118
+#, c-format
+msgid "%s: not a directory\n"
+msgstr "%s: nie jest katalogiem\n"
+
+#: src/command.c:1182 src/command.c:1255
+#, c-format
+msgid "%s: No such file or directory\n"
+msgstr "%s: Nie ma takiego pliku ani katalogu\n"
+
+#: src/command.c:1282
+#, c-format
+msgid "%s: Already connected to user.\n"
+msgstr "%s: Po³±czenie z u¿ytkownikiem ju¿ istnieje.\n"
+
+#: src/command.c:1402
+#, c-format
+msgid "Usage: %s USER [RANGE]\n"
+msgstr "U¿ycie: %s U¯YTKOWNIK [ZAKRES]\n"
+
+#: src/command.c:1423
+#, c-format
+msgid "%s: Invalid range, or index out of range (1-%d)\n"
+msgstr "%s: Nieprawid³owy zakres, lub indeks poza zakresem (1-%d)\n"
+
+#: src/command.c:1502
+#, c-format
+msgid "Nick: %s\n"
+msgstr "Nick: %s\n"
+
+#: src/command.c:1503
+#, c-format
+msgid "Description: %s\n"
+msgstr "Opis: %s\n"
+
+#: src/command.c:1504
+#, c-format
+msgid "Speed: %s\n"
+msgstr "Prêdko¶æ: %s\n"
+
+#: src/command.c:1505
+#, c-format
+msgid "Level: %d\n"
+msgstr "Poziom: %d\n"
+
+#: src/command.c:1506
+#, c-format
+msgid "E-mail: %s\n"
+msgstr "Adres e-mail: %s\n"
+
+#: src/command.c:1507
+#, c-format
+msgid "Operator: %d\n"
+msgstr "Operator: %d\n"
+
+#: src/command.c:1508
+#, c-format
+msgid "Share Size: %<PRIu64> %s (%<PRIu64> MB)\n"
+msgstr "Udostêpnianych zasobów: %<PRIu64> %s (%<PRIu64> MB)\n"
+
+#: src/command.c:1570 src/command.c:1637 src/main.c:262 src/main.c:629
+#: src/search.c:523 src/search.c:567
+#, c-format
+msgid "Cannot get current time - %s\n"
+msgstr "Nie mo¿na uzyskaæ aktualnego czasu - %s\n"
+
+#: src/command.c:1582
+#, c-format
+msgid "Upload slots: %d/%d  Download slots: %d/unlimited\n"
+msgstr "Sloty upload: %d/%d  Sloty download: %d/nieograniczone\n"
+
+#: src/command.c:1592
+#, c-format
+msgid "Usage: %s CONNECTION ...\n"
+msgstr "U¿ycie: %s PO£¡CZENIE ...\n"
+
+#: src/command.c:1601
+#, c-format
+msgid "%s: No such user connection.\n"
+msgstr "%s: Nie ma takiego po³±czenia z u¿ytkownikiem.\n"
+
+#: src/command.c:1615
+#, c-format
+msgid "Usage: %s STRING...\n"
+msgstr "U¿ycie: %s WZORZEC...\n"
+
+#: src/command.c:1648
+msgid "Closed"
+msgstr "Zamkniête"
+
+#: src/command.c:1648
+msgid "Open"
+msgstr "Otwarte"
+
+#: src/command.c:1649
+#, c-format
+msgid "%d. %s (%s) Results: %d\n"
+msgstr "%d. %s (%s) Wyników: %d\n"
+
+#: src/command.c:1660 src/command.c:1695
+#, c-format
+msgid "%s: Invalid search index.\n"
+msgstr "%s: Nieprawid³owy indeks wyszukiwania.\n"
+
+#: src/command.c:1664
+#, c-format
+msgid "Search %d:\n"
+msgstr "Wyszukiwanie %d:\n"
+
+#: src/command.c:1687
+#, c-format
+msgid "Usage: %s INDEX\n"
+msgstr "U¿ycie: %s INDEKS\n"
+
+#: src/command.c:1735 src/command.c:1775
+#, c-format
+msgid "%s: No such alias.\n"
+msgstr "%s: Nie ma takiego aliasu.\n"
+
+#: src/command.c:1741
+#, c-format
+msgid "%s: Invalid alias name\n"
+msgstr "%s: Nieprawid³owa nazwa aliasu\n"
+
+#: src/command.c:1756
+#, c-format
+msgid "%s: Cannot override built-in command.\n"
+msgstr "%s: Nie mo¿na nadpisaæ wewnêtrznej komendy.\n"
+
+#: src/command.c:1768
+#, c-format
+msgid "Usage: %s NAME ...\n"
+msgstr "U¿ycie: %s NAZWA ...\n"
+
+#: src/command.c:1812
+msgid "Queue already contains this file, ignoring\n"
+msgstr "Ten plik jest ju¿ w kolejce, pomijam\n"
+
+#: src/command.c:1850
+#, c-format
+msgid "Usage: %s FILE ...\n"
+msgstr "U¿ycie: %s PLIK ...\n"
+
+#: src/command.c:1888
+#, c-format
+msgid "Matched %s\n"
+msgstr "Dopasowano %s\n"
+
+#: src/command.c:1897
+#, c-format
+msgid "Downloading %<PRIu64> %s in %<PRIu32> %s\n"
+msgstr "Pobieranie %<PRIu64> %s (%<PRIu32> %s)\n"
+
+#: src/command.c:1899
+msgid "file"
+msgid_plural "files"
+msgstr[0] "plik"
+msgstr[1] "pliki"
+msgstr[2] "plików"
+
+#: src/command.c:1902
+#, c-format
+msgid "%s: No files to download.\n"
+msgstr "%s: Brak plików do pobrania.\n"
+
+#: src/command.c:1910
+msgid "No free connections. Queued files for download.\n"
+msgstr "Brak wolnych po³±czeñ. Pliki zakolejkowano do pobrania.\n"
+
+#: src/command.c:1940
+msgid "missing host argument\n"
+msgstr "brak parametru host\n"
+
+#: src/connection.c:44
+msgid "Invalid $Lock message: Key to short\n"
+msgstr "Nieprawid³owy komunikat $Lock: Zbyt krótki klucz\n"
+
+#: src/filelist-in.c:250 src/user.c:544
+#, c-format
+msgid "%s: Cannot open file for reading - %s\n"
+msgstr "%s: Nie mo¿na otworzyæ pliku do czytania - %s\n"
+
+#: src/filelist-in.c:256 src/main.c:117 src/main.c:836
+#, c-format
+msgid "%s: Cannot read from file - %s\n"
+msgstr "%s: Nie mo¿na czytaæ z pliku - %s\n"
+
+#: src/filelist-in.c:258 src/main.c:119
+#, c-format
+msgid "%s: Premature end of file\n"
+msgstr "%s: Przedwczesny koniec pliku\n"
+
+#: src/filelist-in.c:261 src/filelist-in.c:265 src/fs.c:498 src/main.c:838
+#: src/main.c:842 src/screen.c:125 src/user.c:314
+#, c-format
+msgid "%s: Cannot close file - %s\n"
+msgstr "%s: Nie mo¿na zamkn±æ pliku - %s\n"
+
+#: src/filelist-in.c:269
+#, c-format
+msgid "%s: Invalid data, cannot decode\n"
+msgstr "%s: Nieprawid³owe dane, nie mo¿na dekodowaæ\n"
+
+#: src/filelist-in.c:426 src/lookup.c:308 src/main.c:373 src/main.c:1146
+#: src/user.c:1058
+#, c-format
+msgid "Cannot create pipe pair - %s\n"
+msgstr "Nie mo¿na utworzyæ pary potoków - %s\n"
+
+#: src/filelist-in.c:431 src/hub.c:291 src/lookup.c:313 src/main.c:389
+#: src/main.c:966 src/main.c:1007 src/user.c:1104
+#, c-format
+msgid "Cannot set non-blocking flag - %s\n"
+msgstr "Nie mo¿na ustawiæ opcji nieblokowania - %s\n"
+
+#: src/filelist-in.c:437 src/lookup.c:319 src/main.c:379
+#, c-format
+msgid "Cannot create process - %s\n"
+msgstr "Nie mo¿na utworzyæ procesu - %s\n"
+
+#: src/fs.c:379
+#, c-format
+msgid "%s: Cannot open directory - %s\n"
+msgstr "%s: Nie mo¿na otworzyæ katalogu - %s\n"
+
+#: src/fs.c:408
+#, c-format
+msgid "%s: Not a regular file or directory, ignoring\n"
+msgstr "%s: Nie jest zwyk³ym plikiem ani katalogiem, pomijam\n"
+
+#: src/fs.c:413
+#, c-format
+msgid "%s: Cannot read directory - %s\n"
+msgstr "%s: Nie mo¿na przeczytaæ katalogu - %s\n"
+
+#: src/fs.c:415
+#, c-format
+msgid "%s: Cannot close directory - %s\n"
+msgstr "%s: Nie mo¿na zamkn±æ katalogu - %s\n"
+
+#: src/fs.c:456
+#, c-format
+msgid "Scanning directory %s\n"
+msgstr "Przeszukujê katalog %s\n"
+
+#: src/fs.c:473 src/main.c:1349 src/main.c:1367
+#, c-format
+msgid "%s: Cannot remove file - %s\n"
+msgstr "%s: Nie mo¿na usun±æ pliku - %s\n"
+
+#: src/fs.c:481 src/user.c:436
+#, c-format
+msgid "%s: Cannot open file for writing - %s\n"
+msgstr "%s: Nie mo¿na otworzyæ pliku do pisania - %s\n"
+
+#: src/fs.c:491 src/main.c:114
+#, c-format
+msgid "%s: Cannot write to file - %s\n"
+msgstr "%s: Nie mo¿na pisaæ do pliku - %s\n"
+
+#: src/hub.c:166 src/main.c:230
+msgid "UL"
+msgstr "UL"
+
+#: src/hub.c:171 src/main.c:230
+msgid "DL"
+msgstr "DL"
+
+#: src/hub.c:223
+#, c-format
+msgid "Cannot append to hub send queue - %s\n"
+msgstr "Nie mo¿na dodaæ do kolejki wysy³ania do huba - %s\n"
+
+#: src/hub.c:228 src/user.c:205
+msgid "-->"
+msgstr "-->"
+
+#: src/hub.c:232 src/hub.c:823 src/hub.c:888
+msgid "hub"
+msgstr "hub"
+
+#: src/hub.c:250
+#, c-format
+msgid "%s: Cannot look up address - %s\n"
+msgstr "%s: Nieudane wyszukiwanie adresu - %s\n"
+
+#: src/hub.c:273
+#, c-format
+msgid "Looking up IP address for %s\n"
+msgstr "Wyszukiwanie adresu IP dla %s\n"
+
+#: src/hub.c:284 src/main.c:961 src/main.c:1000 src/user.c:1093
+#, c-format
+msgid "Cannot create socket - %s\n"
+msgstr "Nie mo¿na utworzyæ gniazda - %s\n"
+
+#: src/hub.c:296
+#, c-format
+msgid "Connecting to hub on %s.\n"
+msgstr "£±czenie z hubem na %s.\n"
+
+#: src/hub.c:299
+#, c-format
+msgid "%s: Cannot connect - %s\n"
+msgstr "%s: Nieudane po³±czenie - %s\n"
+
+#: src/hub.c:313
+msgid "Shutting down hub connection.\n"
+msgstr "Zamykanie po³±czenia z hubem.\n"
+
+#: src/hub.c:322 src/main.c:392 src/main.c:946 src/main.c:1064
+#, c-format
+msgid "Cannot close socket - %s\n"
+msgstr "Nie mo¿na zamkn±æ gniazda - %s\n"
+
+#: src/hub.c:348 src/user.c:149 src/user.c:754
+#, c-format
+msgid "Received %s message in wrong state.\n"
+msgstr "Otrzymano komunikat %s w z³ym stanie.\n"
+
+#: src/hub.c:389 src/user.c:654
+msgid "Invalid $Lock message: Missing Pk value\n"
+msgstr "Nieprawid³owy komunikat $Lock: Brak warto¶ci Pk\n"
+
+#: src/hub.c:421
+msgid "Hub requires password.\n"
+msgstr "Hub wymaga has³a.\n"
+
+#: src/hub.c:425
+msgid "Sending password to hub.\n"
+msgstr "Wysy³anie has³a do huba.\n"
+
+#: src/hub.c:430
+msgid "Password not accepted.\n"
+msgstr "Has³o odrzucone.\n"
+
+#: src/hub.c:434
+msgid "You have received operator status.\n"
+msgstr "Otrzyma³e¶ status operatora.\n"
+
+#: src/hub.c:439
+#, c-format
+msgid "Hub name is %s.\n"
+msgstr "Nazwa huba: %s.\n"
+
+#: src/hub.c:451
+msgid "Hub did not accept nick. Nick may be in use.\n"
+msgstr "Hub odrzuci³ Twój nick. Ten nick mo¿e juz byæ zajêty.\n"
+
+#: src/hub.c:459
+msgid "Nick accepted. You are now logged in.\n"
+msgstr "Nick zaakceptowany. Jeste¶ zalogowany.\n"
+
+#: src/hub.c:464
+#, c-format
+msgid "Nick accepted but modified to %s. You are now logged in.\n"
+msgstr "Nick zaakceptowany ale zmieniony na %s. Jeste¶ zalogowany.\n"
+
+#: src/hub.c:479
+#, c-format
+msgid "User %s logged in.\n"
+msgstr "U¿ytkownik %s zalogowa³ siê.\n"
+
+#: src/hub.c:497
+msgid "Invalid $MyINFO message: Missing $ALL parameter, ignoring\n"
+msgstr "Nieprawid³owy komunikat $MyINFO: Brak parametru $ALL, pomijam\n"
+
+#: src/hub.c:503
+msgid "Invalid $MyINFO message: Missing nick parameter, ignoring\n"
+msgstr "Nieprawid³owy komunikat $MyINFO: Brak parametru nick, pomijam\n"
+
+#: src/hub.c:516
+msgid "Invalid $MyINFO message: Missing description parameter, ignoring\n"
+msgstr "Nieprawid³owy komunikat $MyINFO: Brak parametru description, pomijam\n"
+
+#: src/hub.c:524
+msgid "Invalid $MyINFO message: Missing description separator, ignoring\n"
+msgstr "Nieprawid³owy komunikat $MyINFO: Brak separatora opisu, pomijam\n"
+
+#: src/hub.c:530
+msgid "Invalid $MyINFO message: Missing connection speed, ignoring\n"
+msgstr ""
+"Nieprawid³owy komunikat $MyINFO: Brak informacji o prêdko¶ci po³±czenia, "
+"pomijam\n"
+
+#: src/hub.c:545
+msgid "Invalid $MyINFO message: Missing e-mail address, ignoring\n"
+msgstr "Nieprawid³owy komunikat $MyINFO: Brak adresu e-mail, pomijam\n"
+
+#: src/hub.c:553
+msgid "Invalid $MyINFO message: Missing share size, ignoring\n"
+msgstr ""
+"Nieprawid³owy komunikat $MyINFO: Brak informacji o ilo¶ci udostepnianych "
+"zasobów, pomijam\n"
+
+#: src/hub.c:557
+msgid "Invalid $MyINFO message: Invalid share size, ignoring\n"
+msgstr ""
+"Nieprawid³owy komunikat $MyINFO: Nieprawid³owa informacja o ilo¶ci "
+"udostêpnianych zasobów, pomijam\n"
+
+#: src/hub.c:567
+msgid "Hub is full.\n"
+msgstr "Hub jest pe³ny.\n"
+
+#: src/hub.c:598 src/hub.c:601
+#, c-format
+msgid "Public: %s\n"
+msgstr "Publicznie: %s\n"
+
+#: src/hub.c:598 src/hub.c:601 src/hub.c:634 src/hub.c:640
+#, c-format
+msgid " | %s\n"
+msgstr " | %s\n"
+
+#: src/hub.c:613
+msgid "Invalid $To message: Missing text separator, ignoring\n"
+msgstr "Nieprawid³owy komunikat $To: Brak separatora tekstu, pomijam\n"
+
+#: src/hub.c:631 src/hub.c:638
+#, c-format
+msgid "Private: [%s] %s\n"
+msgstr "Prywatnie: [%s] %s\n"
+
+#: src/hub.c:649
+msgid "Invalid $ConnectToMe message: Missing or invalid nick\n"
+msgstr ""
+"Nieprawid³owy komunikat $ConnectToMe: Brakuj±cy lub nieprawid³owy nick\n"
+
+#: src/hub.c:653
+msgid "Invalid $ConnectToMe message: Invalid address specification.\n"
+msgstr "Nieprawid³owy komunikat $ConnectToMe: Nieprawid³owa postaæ adresu.\n"
+
+#: src/hub.c:657
+#, c-format
+msgid "Connecting to user on %s\n"
+msgstr "£±czenie z u¿ytkownikiem na %s\n"
+
+#: src/hub.c:666
+msgid "Invalid $RevConnectToMe message: Missing nick parameter\n"
+msgstr "Nieprawid³owy komunikat $RevConnectToMe: Brak parametru nick\n"
+
+#: src/hub.c:670
+msgid "Invalid $RevConnectToMe message: Remote nick is our nick\n"
+msgstr "Nieprawid³owy komunikat $RevConnectToMe: Zdalny nick to nasz nick\n"
+
+#: src/hub.c:675
+#, c-format
+msgid "Invalid $RevConnectToMe message: Unknown user %s, ignoring\n"
+msgstr ""
+"Nieprawid³owy komunikat $RevConnectToMe: Nieznany u¿ytkownik %s, pomijam\n"
+
+#: src/hub.c:680 src/main.c:199 src/main.c:213
+#, c-format
+msgid "No more connections to user %s allowed.\n"
+msgstr "Wyczerpany limit po³±czeñ z u¿ytkownikiem %s.\n"
+
+#: src/hub.c:686
+#, c-format
+msgid "User %s is also passive. Cannot establish connection.\n"
+msgstr ""
+"U¿ytkownik %s równie¿ pracuje w trybie pasywnym. Nie mo¿na nawi±zaæ "
+"po³±czenia.\n"
+
+#: src/hub.c:761
+#, c-format
+msgid "Invalid $Quit message: Unknown user %s.\n"
+msgstr "Nieprawid³owy komunikat $Quit: Nieznany u¿ytkownik %s\n"
+
+#: src/hub.c:773
+msgid "Invalid $Search message: Missing source specification.\n"
+msgstr "Nieprawid³owy komunikat $Search: Brak wyszczególnienia ¼ród³a.\n"
+
+#: src/hub.c:777
+msgid "Invalid $Search message: Invalid search specification.\n"
+msgstr "Nieprawid³owy komunikat $Search: Nieprawid³owa postaæ wyszukiwania.\n"
+
+#: src/hub.c:783
+#, c-format
+msgid "Invalid $Search message: Unknown user %s.\n"
+msgstr "Nieprawid³owy komunikat $Search: Nieznany u¿ytkownik %s.\n"
+
+#: src/hub.c:793
+msgid "Invalid $Search message: Invalid address specification.\n"
+msgstr "Nieprawid³owy komunikat $Search: Nieprawid³owa postaæ adresu.\n"
+
+#: src/hub.c:832 src/user.c:848
+msgid "<--"
+msgstr "<--"
+
+#: src/hub.c:856 src/user.c:873
+#, c-format
+msgid "Cannot get error status - %s\n"
+msgstr "Nie mo¿na uzyskaæ informacji o b³êdzie - %s\n"
+
+#: src/hub.c:861 src/user.c:878 src/user.c:1115
+#, c-format
+msgid "Cannot connect - %s\n"
+msgstr "Nieudane po³±czenie - %s\n"
+
+#: src/hub.c:869 src/main.c:1039
+#, c-format
+msgid "Cannot get socket address - %s\n"
+msgstr "Nie mo¿na uzyskaæ adresu gniazda - %s\n"
+
+#: src/hub.c:876
+#, c-format
+msgid "Connected to hub from %s.\n"
+msgstr "Pod³±czono do huba z %s.\n"
+
+#: src/hub.c:916
+#, c-format
+msgid "ConnectToMe already sent to user %s. Waiting.\n"
+msgstr "ConnectToMe zosta³o ju¿ wys³ane do u¿ytkownika %s. Oczekiwanie.\n"
+
+#: src/hub.c:927
+#, c-format
+msgid "RevConnectToMe already sent to user %s. Waiting.\n"
+msgstr "RevConnectToMe zosta³o ju¿ wys³ane do u¿ytkownika %s. Oczekiwanie.\n"
+
+#: src/hub.c:931
+#, c-format
+msgid "User %s is also passive. Cannot communicate.\n"
+msgstr ""
+"U¿ytkownik %s równie¿ pracuje w trybie pasywnym. Brak mo¿liwo¶ci "
+"komunikacji.\n"
+
+#: src/huffman.c:332
+msgid "Incorrect parity, ignoring\n"
+msgstr "Nieprawid³owa parzysto¶æ, pomijam\n"
+
+#: src/main.c:174
+#, c-format
+msgid "User connection %s renamed to %s.\n"
+msgstr "Po³±czenie u¿ytkownika %s przemianowane na %s.\n"
+
+#: src/main.c:265
+#, c-format
+msgid " in %s (%s/s)"
+msgstr " %s (%s/s)"
+
+#: src/main.c:279
+#, c-format
+msgid "%s: %s of %s %s%s. %s %s%s.\n"
+msgstr "%s: %s %s %s%s. %s %s%s.\n"
+
+#: src/main.c:281
+msgid "Upload"
+msgstr "Wysy³anie"
+
+#: src/main.c:281
+msgid "Download"
+msgstr "Pobieranie"
+
+#: src/main.c:283
+msgid "succeeded"
+msgstr "powiod³o siê"
+
+#: src/main.c:283
+msgid "failed"
+msgstr "nie powiod³o siê"
+
+#: src/main.c:286
+msgid "transferred"
+msgid_plural "transferred"
+msgstr[0] "przes³ano"
+msgstr[1] "przes³ano"
+msgstr[2] "przes³ano"
+
+#: src/main.c:342
+#, c-format
+msgid "%s: Cannot rename file to %s - %s\n"
+msgstr "%s: Nie mo¿na zmieniæ nazwy pliku na %s - %s\n"
+
+#: src/main.c:343
+msgid "cannot rename file"
+msgstr "nie mo¿na zmieniæ nazwy pliku"
+
+#: src/main.c:386 src/main.c:469 src/user.c:1055 src/user.c:1168
+#: src/user.c:1170
+#, c-format
+msgid "Cannot close pipe - %s\n"
+msgstr "Nie mo¿na zamkn±æ potoku - %s\n"
+
+#. TRANSLATORS: This represents the connection name used when
+#. * the user name is not yet known. It must not contains '|',
+#. * because that's used to distinguish between 'unknown' and
+#. * (perhaps partially) identified connections.
+#.
+#: src/main.c:419
+#, c-format
+msgid "unknown%<PRIu32>"
+msgstr "nieznany%<PRIu32>"
+
+#: src/main.c:440
+#, c-format
+msgid "Shutting down user connection process for %s.\n"
+msgstr "Zamykanie procesu po³±czenia z u¿ytkownikiem dla %s.\n"
+
+#: src/main.c:494
+#, c-format
+msgid "Downloading %3d%% (at %5d kb/s) %s"
+msgstr "Pobieranie %3d%% (z prêdko¶ci± %5d kb/s) %s"
+
+#: src/main.c:495
+#, c-format
+msgid "Uploading   %3d%% (at %5d kb/s) %s"
+msgstr "Wysy³anie   %3d%% (z prêdko¶ci± %5d kb/s) %s"
+
+#: src/main.c:498
+msgid "Idle"
+msgstr "Bezczynny"
+
+#: src/main.c:520 src/main.c:535
+#, c-format
+msgid "user process %s"
+msgstr "proces u¿ytkownika %s"
+
+#: src/main.c:549
+#, c-format
+msgid "User %s: %s"
+msgstr "U¿ytkownik %s: %s"
+
+#: src/main.c:610
+#, c-format
+msgid "%s: Starting %s of %s (%<PRIu64> of %<PRIu64> %s).\n"
+msgstr "%s: Rozpoczêto %s pliku %s (%<PRIu64> z %<PRIu64> %s).\n"
+
+#: src/main.c:612 src/main.c:620
+msgid "upload"
+msgstr "wysy³anie"
+
+#: src/main.c:612 src/main.c:620
+msgid "download"
+msgstr "pobieranie"
+
+#: src/main.c:618
+#, c-format
+msgid "%s: Starting %s of %s (%<PRIu64> %s).\n"
+msgstr "%s: Rozpoczêto %s pliku %s (%<PRIu64> bajtów %s).\n"
+
+#: src/main.c:702
+#, c-format
+msgid "Received unknown message %d from user process, shutting down process.\n"
+msgstr ""
+"Otrzymano nieznany komunikat %d od procesu u¿ytkownika, zamykanie procesu.\n"
+
+#: src/main.c:746 src/main.c:747 src/user.c:968 src/user.c:969
+#, c-format
+msgid "Cannot write to signal pipe - %s\n"
+msgstr "Nie mo¿na pisaæ do potoku sygna³owego - %s\n"
+
+#: src/main.c:762 src/user.c:984
+#, c-format
+msgid "Cannot read from signal pipe - %s\n"
+msgstr "Nie mo¿na czytaæ z potoku sygna³owego - %s\n"
+
+#: src/main.c:768 src/user.c:990
+msgid "Received TERM signal, shutting down.\n"
+msgstr "Otrzymano sygna³ TERM, zamykanie.\n"
+
+#: src/main.c:784
+msgid "Shell process"
+msgstr "Proces pow³oki"
+
+#: src/main.c:786
+msgid "Lookup process"
+msgstr "Proces rozwi±zywania nazw"
+
+#: src/main.c:789
+msgid "Parse process"
+msgstr "Proces parsowania"
+
+#: src/main.c:793
+msgid "User process"
+msgstr "Proces u¿ytkownika"
+
+#: src/main.c:796
+#, c-format
+msgid "%s exited with return code %d.\n"
+msgstr "%s zakoñczy³ siê w stanie %d.\n"
+
+#: src/main.c:802
+#, c-format
+msgid "%s terminated by signal %s.\n"
+msgstr "%s zosta³ przerwany sygna³em %s.\n"
+
+#: src/main.c:806
+#, c-format
+msgid "Cannot wait for processes - %s\n"
+msgstr "Nieudane oczekiwanie na proces - %s\n"
+
+#: src/main.c:825
+#, c-format
+msgid "%s: Cannot open file - %s\n"
+msgstr "%s: Nie mo¿na otworzyæ pliku - %s\n"
+
+#: src/main.c:858
+#, c-format
+msgid "Sharing %<PRIu64> %s (%s) totally\n"
+msgstr "Udostêpniono ³±cznie %<PRIu64> %s (%s)\n"
+
+#: src/main.c:875 src/main.c:906 src/main.c:928
+msgid "user (search result)"
+msgstr "u¿ytkownik (wynik wyszukiwania)"
+
+#: src/main.c:910
+msgid "<=="
+msgstr "<=="
+
+#: src/main.c:932
+msgid "==>"
+msgstr "==>"
+
+#: src/main.c:972 src/main.c:1015
+#, c-format
+msgid "Cannot enable address reusing - %s\n"
+msgstr "Nie mo¿na zastosowaæ ponownego u¿ywania adresu - %s\n"
+
+#: src/main.c:980 src/main.c:1024
+#, c-format
+msgid "Cannot bind to address - %s\n"
+msgstr "Nie mo¿na dowi±zaæ adresu - %s\n"
+
+#: src/main.c:1032
+#, c-format
+msgid "Cannot listen - %s\n"
+msgstr "Nie mo¿na nas³uchiwaæ - %s\n"
+
+#: src/main.c:1044
+#, c-format
+msgid "Listening on %s.\n"
+msgstr "Nas³uchiwanie na %s.\n"
+
+#: src/main.c:1083
+#, c-format
+msgid "Cannot accept user connection - %s\n"
+msgstr "Nie mo¿na przyj±æ po³±czenia u¿ytkownika - %s\n"
+
+#: src/main.c:1087
+#, c-format
+msgid "User from %s connected.\n"
+msgstr "U¿ytkownik z %s po³±czony.\n"
+
+#: src/main.c:1103
+#, c-format
+msgid "%s: Cannot set locale: %s\n"
+msgstr "%s: Nie mo¿na ustawiæ lokalizacji: %s\n"
+
+#: src/main.c:1106
+#, c-format
+msgid "%s: Cannot bind message domain: %s\n"
+msgstr "%s: Nie mo¿na dowi±zaæ dziedziny komunikatów: %s\n"
+
+#: src/main.c:1108
+#, c-format
+msgid "%s: Cannot set message domain: %s\n"
+msgstr "%s: Nie mo¿na ustawiæ dziedziny komunikatów: %s\n"
+
+#: src/main.c:1130
+#, c-format
+msgid "Usage: %s [OPTION]...\n"
+msgstr "U¿ycie: %s [OPCJA]...\n"
+
+#: src/main.c:1131
+msgid "Start microdc, a command-line based Direct Connect client.\n"
+msgstr "Uruchamia microdc, klienta Direct Connect z interfejsem tekstowym.\n"
+
+#: src/main.c:1132
+#, c-format
+msgid "  -n, --no-config  do not read config file on startup\n"
+msgstr "  -n, --no-config  nie czytaj pliku konfiguracyjnego przy starcie\n"
+
+#: src/main.c:1133
+#, c-format
+msgid "      --help       display this help and exit\n"
+msgstr "      --help       wy¶wietla ten tekst i koñczy program\n"
+
+#: src/main.c:1134
+#, c-format
+msgid "      --version    output version information and exit\n"
+msgstr "      --version    wy¶wietla informacjê o wersji i koñczy program\n"
+
+#: src/main.c:1135
+#, c-format
+msgid ""
+"\n"
+"Report bugs to <%s>.\n"
+msgstr ""
+"\n"
+"B³êdy proszê zg³aszaæ na adres <%s>.\n"
+
+#: src/main.c:1153 src/user.c:1063
+#, c-format
+msgid "Cannot empty signal set - %s\n"
+msgstr "Nie mo¿na opró¿niæ zbioru sygna³ów - %s\n"
+
+#: src/main.c:1164 src/main.c:1168 src/main.c:1172 src/main.c:1176
+#: src/main.c:1181 src/user.c:1076 src/user.c:1083
+#, c-format
+msgid "Cannot register signal handler - %s\n"
+msgstr "Nie mo¿na zarejestrowaæ odbiornika sygna³ów - %s\n"
+
+#: src/main.c:1210
+#, c-format
+msgid "Cannot find directory for temporary files - %s\n"
+msgstr "Nie mo¿na odnale¼æ katalogu na pliki tymczasowe - %s\n"
+
+#: src/main.c:1251 src/user.c:1133
+#, c-format
+msgid "Cannot select - %s\n"
+msgstr "Nie mo¿na wykonaæ select - %s\n"
+
+#: src/main.c:1333 src/main.c:1335 src/variables.c:311 src/variables.c:313
+#, c-format
+msgid "cannot close character convertor - %s\n"
+msgstr "nie mo¿na zamkn±æ konwertera znaków - %s\n"
+
+#: src/main.c:1374
+#, c-format
+msgid "Cannot close search results socket - %s\n"
+msgstr "Nie mo¿na zamkn±æ gniazda wyników wyszukiwania - %s\n"
+
+#: src/main.c:1376
+#, c-format
+msgid "Cannot close user connections socket - %s\n"
+msgstr "Nie mo¿na zamkn±æ gniazda po³±czeñ u¿ytkowników - %s\n"
+
+#: src/main.c:1378 src/main.c:1380 src/user.c:1164 src/user.c:1166
+#, c-format
+msgid "Cannot close signal pipe - %s\n"
+msgstr "Nie mo¿na zamkn±æ potoku sygna³owego - %s\n"
+
+#: src/screen.c:132
+msgid "No longer logging to file.\n"
+msgstr "Zaprzestano logowania do pliku.\n"
+
+#: src/screen.c:137
+#, c-format
+msgid "%s: Cannot open file for appending - %s\n"
+msgstr "%s: Nie mo¿na otworzyæ pliku do dopisywania - %s\n"
+
+#: src/screen.c:142
+#, c-format
+msgid "Logging to `%s'.\n"
+msgstr "Logowanie do `%s'.\n"
+
+#: src/screen.c:369
+#, c-format
+msgid "%s: Cannot write history - %s\n"
+msgstr "%s: Nie mo¿na zapisaæ historii - %s\n"
+
+#: src/screen.c:568
+#, c-format
+msgid "%s: Cannot read history - %s\n"
+msgstr "%s: Nie mo¿na odczytaæ historii - %s\n"
+
+#: src/search.c:322 src/search.c:324
+#, c-format
+msgid "Sent %d/%d search results to %s.\n"
+msgstr "Wys³ano %d/%d wyników wyszukiwania do %s.\n"
+
+#: src/search.c:327
+msgid "No search results.\n"
+msgstr "Brak wyników wyszukiwania.\n"
+
+#: src/search.c:512
+msgid "No pattern to match.\n"
+msgstr "Brak wzorca do porównywania.\n"
+
+#: src/search.c:529
+#, c-format
+msgid "Reissuing search %d.\n"
+msgstr "Powtarzanie wyszukiwania %d.\n"
+
+#: src/search.c:533
+#, c-format
+msgid "Issuing new search with index %d.\n"
+msgstr "Wykonanie nowego wyszukiwania z indeksem %d.\n"
+
+#: src/search.c:573
+#, c-format
+msgid "Unterminated or invalid $SR, discarding: %s\n"
+msgstr "Niezakoñczone lub nieprawid³owe $SR, odrzucam: %s\n"
+
+#: src/search.c:590
+#, c-format
+msgid "Result has been added earlier to search %d.\n"
+msgstr "Wynik wyszukiwania zosta³ wcze¶niej dodany do wyszukiwania %d.\n"
+
+#: src/search.c:596
+#, c-format
+msgid "Added result to search %d (now %d result).\n"
+msgid_plural "Added result to search %d (now %d results).\n"
+msgstr[0] "Dodano wynik do wyszukiwania %d (aktualnie %d wynik).\n"
+msgstr[1] "Dodano wynik do wyszukiwania %d (aktualnie %d wyniki).\n"
+msgstr[2] "Dodano wynik do wyszukiwania %d (aktualnie %d wyników).\n"
+
+#: src/user.c:124
+msgid "main process"
+msgstr "proces g³ówny"
+
+#: src/user.c:209 src/user.c:828 src/user.c:922 src/user.c:942
+msgid "user"
+msgstr "u¿ytkownik"
+
+#: src/user.c:255
+msgid "Too many connections to user, or no free slots.\n"
+msgstr "Zbyt wiele po³±czeñ z u¿ytkownikiem, lub brak wolnych slotów.\n"
+
+#: src/user.c:297
+#, c-format
+msgid "User %s not on hub, or too many connections to user.\n"
+msgstr "U¿ytkownik %s poza hubem, lub zbyt wiele po³±czeñ z u¿ytkownikiem.\n"
+
+#: src/user.c:365
+msgid "No more files to download.\n"
+msgstr "Brak innych plików do pobrania.\n"
+
+#: src/user.c:377
+#, c-format
+msgid "%s: Cannot get file status: %s\n"
+msgstr "%s: Nie mo¿na wykonaæ operacji stat: %s\n"
+
+#: src/user.c:378 src/user.c:387 src/user.c:437 src/user.c:443 src/user.c:533
+#: src/user.c:546 src/user.c:552 src/user.c:611 src/user.c:912
+msgid "local error"
+msgstr "b³±d lokalny"
+
+#: src/user.c:386
+#, c-format
+msgid "%s: File exists and is not a regular file\n"
+msgstr "%s: Plik istnieje i nie jest zwyczajnym plikiem\n"
+
+#: src/user.c:397 src/user.c:449 src/user.c:557 src/user.c:923
+msgid "communication error"
+msgstr "b³±d komunikacji"
+
+#: src/user.c:420
+#, c-format
+msgid ""
+"remote file is smaller than local (expected %<PRIu64>, got %<PRIu64> %s)"
+msgstr ""
+"zdalny plik jest mniejszy ni¿ lokalny (spodziewane %<PRIu64>, uzyskano %"
+"<PRIu64> %s)"
+
+#: src/user.c:442
+#, c-format
+msgid "%s: Cannot seek to resume position - %s\n"
+msgstr "%s: Nie mo¿na przewin±æ pliku do pozycji wznowienia - %s\n"
+
+#: src/user.c:462 src/user.c:584
+msgid "no data to transfer"
+msgstr "brak danych do przes³ania"
+
+#: src/user.c:525
+#, c-format
+msgid "%s: No such shared file\n"
+msgstr "%s: Nie ma takiego pliku wspó³dzielonego\n"
+
+#: src/user.c:527
+msgid "no such shared file"
+msgstr "nie ma takiego udostêpnianego pliku"
+
+#: src/user.c:537
+#, c-format
+msgid "%s: Resume offset %<PRIu64> outside file\n"
+msgstr "%s: Offset wznowienia %<PRIu64> jest poza plikiem\n"
+
+#: src/user.c:539
+msgid "resume offset out of range"
+msgstr "offset wznowienia jest poza zakresem"
+
+#: src/user.c:550
+#, c-format
+msgid "%s: Cannot seek in file - %s\n"
+msgstr "%s: Nie mo¿na wyszukiwaæ w pliku - %s\n"
+
+#: src/user.c:620 src/user.c:932
+msgid "transfer complete"
+msgstr "przesy³anie ukoñczone"
+
+#: src/user.c:682
+msgid "Invalid $Direction message: Missing direction parameter\n"
+msgstr "Nieprawid³owy komunikat $Direction: Brak parametru direction\n"
+
+#: src/user.c:691
+msgid "Invalid $Direction message: Invalid direction parameter\n"
+msgstr "Nieprawid³owy komunikat $Direction: Nieprawid³owy parametr direction\n"
+
+#: src/user.c:698
+msgid "Invalid $Direction message: Missing challenge parameter\n"
+msgstr "Nieprawid³owy komunikat $Direction: Brak parametru challenge\n"
+
+#: src/user.c:703
+msgid "Invalid $Direction message: Invalid challenge parameter\n"
+msgstr "Nieprawid³owy komunikat $Direction: Nieprawid³owy parametr challenge\n"
+
+#: src/user.c:724
+msgid "User does not want to download, nor do we.\n"
+msgstr "U¿ytkownik nie chce pobieraæ, my równie¿.\n"
+
+#: src/user.c:741
+msgid "Invalid $Key message: Incorrect key, ignoring\n"
+msgstr "Nieprawid³owy komunikat $Key: Niew³a¶ciwy klucz, pomijam\n"
+
+#: src/user.c:760
+msgid "Invalid $Get message: Missing offset, assuming start\n"
+msgstr "Nieprawid³owy komunikat $Get: Brak offsetu, zak³adam pocz±tek\n"
+
+#: src/user.c:765
+msgid "Invalid $Get message: Offset not integer\n"
+msgstr "Nieprawid³owy komunikat $Get: Offset nie jest liczb± ca³kowit±\n"
+
+#: src/user.c:775
+msgid "remote did not want file"
+msgstr "zdalny u¿ytkownik nie przyj±³ pliku"
+
+#: src/user.c:782
+msgid "remote is maxed out"
+msgstr "zdalny u¿ytkownik jest wymaksowany"
+
+#: src/user.c:791
+msgid "protocol error: invalid $FileLength message"
+msgstr "b³±d protoko³u: nieprawid³owy komunikat $FileLength"
+
+#: src/user.c:800
+msgid "file not available on remote"
+msgstr "plik niedostêpny u zdalnego u¿ytkownika"
+
+# fixme
+#: src/user.c:802
+#, c-format
+msgid "remote error: %s"
+msgstr "b³±d zdalny: %s"
+
+#: src/user.c:807
+#, c-format
+msgid "Received error from user: %s\n"
+msgstr "Otrzymano b³±d od u¿ytkownika: %s\n"
+
+#: src/user.c:892
+msgid "Connected to user.\n"
+msgstr "Po³±czono z u¿ytkownikiem.\n"
+
+#: src/user.c:993
+#, c-format
+msgid "Idle timeout (%d seconds)\n"
+msgstr "Limit czasu bezczynno¶ci (%d sekund)\n"
+
+#: src/user.c:1024
+msgid "Received unknown message from main process, shutting down process.\n"
+msgstr "Otrzymano nieznany komunikat od procesu g³ównego, zamykanie procesu.\n"
+
+#: src/user.c:1162
+#, c-format
+msgid "Cannot close transfer file - %s\n"
+msgstr "Nie mo¿na zamkn±æ przesy³anego pliku - %s\n"
+
+#: src/user.c:1172
+#, c-format
+msgid "Cannot close user connection - %s\n"
+msgstr "Nie mo¿na zamkn±æ po³±czenia z u¿ytkownikiem - %s\n"
+
+#: src/util.c:113
+#, c-format
+msgid "%s: Cannot create directory - %s\n"
+msgstr "%s: Nie mo¿na utworzyæ katalogu - %s\n"
+
+#. TRANSLATORS: This comma-separated list specifies
+#. * all strings which are considered negative boolean
+#. * values for variables such as `active'.
+#. * Retain the default English strings and add the
+#. * localized ones.
+#.
+#: src/variables.c:52
+msgid "0,off,no,false"
+msgstr "0,off,no,false,wy³±czone,nie,fa³sz"
+
+#. TRANSLATORS: This comma-separated list specifies
+#. * all strings which are considered positive boolean
+#. * values for variables such as `active'.
+#. * Retain the default English strings and add the
+#. * localized ones.
+#.
+#: src/variables.c:59
+msgid "1,on,yes,true"
+msgstr "1,on,yes,true,w³±czone,tak,prawda"
+
+#: src/variables.c:288 src/variables.c:324 src/variables.c:359
+#: src/variables.c:388 src/variables.c:403 src/variables.c:423
+#: src/variables.c:444 src/variables.c:464 src/variables.c:546
+#: src/variables.c:571 src/variables.c:690 src/variables.c:709
+#: src/variables.c:733
+msgid "too many arguments\n"
+msgstr "zbyt wiele argumentów\n"
+
+#: src/variables.c:296
+msgid "cannot get current character set"
+msgstr "nie mo¿na uzyskaæ aktualnego zestawu znaków"
+
+#: src/variables.c:301 src/variables.c:306
+#, c-format
+msgid "cannot create character set convertor - %s\n"
+msgstr "mie mo¿na utworzyæ konwertera zestawu znaków - %s\n"
+
+#: src/variables.c:326
+msgid "Nick cannot be empty.\n"
+msgstr "Nick nie mo¿e byæ pusty.\n"
+
+#: src/variables.c:328
+msgid "Nick is too long - max length is 35 characters.\n"
+msgstr "Zbyt d³ugi nick - maksymalna d³ugo¶æ to 35 znaków.\n"
+
+#: src/variables.c:330
+msgid "Nick may not contain `$', `|' or space characters.\n"
+msgstr "Nick nie mo¿e zawieraæ znaków `$', `|', ani spacji.\n"
+
+#: src/variables.c:343
+msgid "Description may not contain `$' or `|' characters.\n"
+msgstr "Opis nie mo¿e zawieraæ znaków `$' ani `|'.\n"
+
+#: src/variables.c:346
+msgid "Description is too long - max length is 35 characters.\n"
+msgstr "Zbyt d³ugi opis - maksymalna d³ugo¶æ to 35 znaków.\n"
+
+#: src/variables.c:361
+msgid "E-mail may not contain `$' or `|' characters.\n"
+msgstr "Adres e-mail nie mo¿e zawieraæ znaków `$' ani `|'.\n"
+
+#: src/variables.c:363
+msgid "E-mail is too long - max length is 35 characters.\n"
+msgstr "Zbyt d³ugi adres e-mail - maksymalna d³ugo¶æ to 35 znaków.\n"
+
+#: src/variables.c:376
+msgid "Tag may not contain `$' or `|' characters.\n"
+msgstr "Tag nie mo¿e zawieraæ znaków `$' ani `|'.\n"
+
+#: src/variables.c:390
+msgid "Speed may not contain `$' or `|' characters.\n"
+msgstr "Prêdko¶æ nie mo¿e zawieraæ znaków `$' ani `|'.\n"
+
+#: src/variables.c:411 src/variables.c:431 src/variables.c:452
+#, c-format
+msgid "%s: Not a directory\n"
+msgstr "%s: Nie jest katalogiem\n"
+
+#: src/variables.c:468
+#, c-format
+msgid "Invalid slot number `%s'\n"
+msgstr "Nieprawid³owa liczba slotów `%s'\n"
+
+#: src/variables.c:550
+msgid "Specify active as `0', `no', `off', `1', `yes', or `on'.\n"
+msgstr ""
+"Warto¶ci± zmiennej active musi byæ `0', `nie', `wy³±czone', `1', `tak' lub "
+"`w³±czone'.\n"
+
+#: src/variables.c:554 src/variables.c:702
+msgid "Active setting not changed.\n"
+msgstr "Zmienna active nie zosta³a zmieniona.\n"
+
+#: src/variables.c:576
+msgid "Removing listening address.\n"
+msgstr "Usuwam adres nas³uchiwania.\n"
+
+#: src/variables.c:581
+#, c-format
+msgid "%s: Specify listen address as an IP address\n"
+msgstr "%s: Podaj adres nas³uchiwania w postaci adresu IP\n"
+
+#: src/variables.c:596
+#, c-format
+msgid "Listening address set to %s.\n"
+msgstr "Adres nas³uchiwania ustawiony na %s.\n"
+
+#: src/variables.c:661
+#, c-format
+msgid "No flag by the name %s, display flags not changed.\n"
+msgstr "Brak flagi o nazwie %s, flagi wy¶wietlania pozosta³y nie zmienione.\n"
+
+#: src/variables.c:668
+msgid "Cannot set and add or delete flags at the same time.\n"
+msgstr "Nie mo¿na jednocze¶nie ustawiaæ oraz dodawaæ i kasowaæ flag.\n"
+
+#: src/variables.c:697
+#, c-format
+msgid "Invalid value `%s' for port number.\n"
+msgstr "Nieprawid³owa warto¶æ `%s' dla numeru portu.\n"
+
+#: src/variables.c:726
+msgid "on"
+msgstr "w³±czone"
+
+#: src/variables.c:726
+msgid "off"
+msgstr "wy³±czone"
+
+#: src/variables.c:737
+msgid "Removing current password.\n"
+msgstr "Usuwam obecne has³o.\n"
+
+#: src/variables.c:741
+msgid "Password may not contain `|' characters.\n"
+msgstr "Has³o nie mo¿e zawieraæ znaków `|'.\n"
+
+#: src/variables.c:843
+#, c-format
+msgid "No value is set for `%s'.\n"
+msgstr "Brak ustawionej warto¶ci dla `%s'.\n"
+
+#: src/variables.c:845
+#, c-format
+msgid ""
+"Current value for `%s':\n"
+"%s\n"
+msgstr ""
+"Aktualna warto¶æ dla `%s':\n"
+"%s\n"
+
+#: src/common/optparser.c:93
+#, c-format
+msgid "option `--%s' is ambiguous"
+msgstr "opcja `--%s' jest niejednoznaczna"
+
+#: src/common/optparser.c:101
+#, c-format
+msgid "unrecognized option `--%s'"
+msgstr "nierozpoznana opcja `--%s'"
+
+#: src/common/optparser.c:181 src/common/optparser.c:186
+#, c-format
+msgid "invalid option -- %c"
+msgstr "nieprawid³owa opcja -- %c"
+
+#: src/common/optparser.c:206
+#, c-format
+msgid "option requires an argument -- %c"
+msgstr "opcja wymaga argumentu -- %c"
+
+#: src/common/optparser.c:258
+#, c-format
+msgid "option `--%s' doesn't allow an argument"
+msgstr "opcja `--%s' nie zezwala na argument"
+
+#: src/common/optparser.c:266
+#, c-format
+msgid "option `--%s' requires an argument"
+msgstr "opcja `--%s' wymaga argumentu"

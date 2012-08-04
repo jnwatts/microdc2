@@ -1,0 +1,657 @@
+in hub&user, replace strncmp with strleftcmp
+
+automatic hub reconnects in case of disconnection. what is needed?
+hub into data structure - please
+  multiple hub connections.
+    rethink design about receiving user connections and detecting nick.
+     connect: refuse to connect to a hub already connected to. without args, connects to current disconnected hub.
+     disconnect: optionally takes hub address-spec or index
+     hub: change between hubs, index, "-" (for last), or address-spec (addr[:port])
+     need a command to remove a hub connection entirely
+
+share file metadata caching  ("sharecache")
+  controlled by separate process entirely ("sharelist" process)
+  kept in .microdc/sharecache
+    loaded on startup or "sharecache load"
+    saved when completely updated or "sharecache save"
+  caches info on dirs and files
+    stores info on ALL files once shared, including mtime, size, and possibly checksums
+  cleanup modes:
+    check if entries in cache have been modified. rescan&reread if so. ("sharecache update")
+    zero cache entirely. ("sharecache clear")
+  other commands
+    "sharecache show"
+hourly or automatic rescanning/update of share list
+recreate file list automaticly when there's new files? need to monitor files somehow.
+
+user DC++ extended protocol: needs bzip2
+support DC++ features for file lists
+
+help for variables! how? 'set help foo' or 'help set bar' (then 'help ls find' wouldn't work).
+perhaps 'help variable foo'
+
+[test] run through valgrind
+[test] PRIVATE msg again
+[test] hub disconnection and connection in various stages, error messages
+
+timeout outgoing revconnecttome/connecttome messages
+
+[research] non-blocking and search socket in main.c?
+[style] revamp error messages in hub, as if there were multiple hub connections?
+[intstyle] rename DCUserConn put_mq,get_mq to result_mq,request_mq?
+
+replace select loop! better lookup etc. automated functions? call the mainloop replacement "eventsys"?
+get rid of select(FD_SETSIZE, use maxfd+1 instead
+
+add 'raw -u CONNECTION' argument to raw. optparser must be modified to allow returning of all remaining args. or add userraw
+
+queue USER should display 'processing'/'downloading n%' when downloading
+complete error messages in queue (e.g. for rename failed, including errstr). would need queue -v for more info plus updated QueuedFile structure.
+
+decide which completion is case sensitive and which is not! [is completion for username case sensitive?]
+really use display comparison for files? better input (but must NOT be quoted..)?
+  [move quoting to fixup_..., not before. ptrv_sort on input before quoting input entries]
+
+alias completion. think how it should be done.
+de-html-entity *input* msg & say?
+
+add exec/script/load/run/whatever to execute a script of commands
+
+need even more detailed error message passed to end_download/end_upload
+
+serialization for queues, grantslot. [implement download queue saving (Jan Hata)]
+
+bug: ctrl+r - cannot ctrl+c out
+resume control: get --resume=auto/no/yes (or global option)
+
+free may clobber errno! check errstr as well. (don't worry about quotearg or quote)
+
+cleanup: put quoter function in DCCompletionInfo and get rid of DCCompletionEntry.quoted?
+
+completion: implement alias completion
+
+clean up quoting functions. document how quoting works (\a,\g,..\001,.. etc?)
+
+fix set command, so that it accepts a single argument.
+set command should use format  set active=0 downloaddir=... log=?
+
+implement 'unget' *WILD* - match wild against queue, not file system
+
+improve help for tabled/formatted output ("Example:", "Options:")
+
+save config automaticly? or `save' command. or `config -s'
+
+for next version: move screen into separate process
+  main.main: screen_init, register ipc handling
+  screen.screen_init: set up ipc, fork, return ipc, child pid
+  screen.ipc message to suspend: end readline, don't read anything from stdin
+  screen.ipc message to print on screen: if suspended, enqueue message (maybe with a maxlimit)
+  screen.ipc message to wakeup: print queued messages on screen, clear queue, start readline
+clean up screen: merge finish/prepare/suspend/clear etc to a single function? screen_set_state. rename states
+
+add support for filtering results in results command: "results 1 foo" or maybe second arg is display range?
+
+maybe: add pipe support, e.g. `results 1|grep ...'?
+
+better search management: how to handle `search "foo bar" baz'?
+
+later: make inet_aton module for Gnulib, using glibc
+
+reformat private messages ($To) so that [nick] part isn't visible? need to check if coming from right user!
+
+Known problem: Cannot easily complete inside an octal sequence
+Known feature: Bash completes wildcards inside double quotes, but don't expand them in double quotes. microdc does not expand or complete wildcards inside double quotes.
+Known problem: Make note that this won't work:  sya don't try this at home; shell exec rm -rf /. It would execute 'shell exec rm -rf /' unless microdc will fail on first invalid command!
+
+in transfers, see more info on users (how much each is sharing etc)
+
+GET RID OF ALL `Usage: stuff' in command.c - refer to "help %s",cmd instead!
+CLEAN up error messages: "foo: No such alias" vs "No such alias `foo'"
+DESIGN all commands: multiple arguments? e.g. unalias
+
+implement ! and different major modes:
+  set commandintroducer "/"
+  chat-mode: !shell /cmd   or /!shell /cmd ?
+  is alias lls "!ls -l" possible? or must we use alias lls "shell ls -l"?
+
+try to reduce the number of printed messages when a client quits
+(main should only print unexpected client shutdown)
+
+make list of standard references, POSIX.1 etc
+
+use gnulib human readable sizes for 'ls'? perhaps '-h' option?
+
+also check http://www.neo-modus.com/?page=News
+
+Tiger Tree Hash (http://open-content.net/specs/draft-jchapweske-thex-02.html)
+automaticly find other sources for a file in queue, based on TTH
+data verification when saving to disk for TTH
+ZLib - GetZBlock, GetTestZBlock
+
+handle word wrap in hub/user say output? considering screen width. implement word wrap somehow.
+  problem: don't wrap quoted text. so we need to quotearg and wrap at the same time...!
+    call quotearg for each word.
+for each word in line.
+  quotearg.
+    does the word fit in current line? push to current line. next.
+    does the word fit in new line? write current line. push to current line. next.
+    otherwise, fit as many characters as possible, but count escaped characters as one.
+    (for each char, quotearg, if fits, then print).
+
+new status info:
+  number of ops on hub
+  total number of shared files, size of listing file
+
+what happens to queues when disconnected? they're gone!
+  solution: serialize to ~/.microdc/queues on exit
+  (set queues-save 0/1)
+  allows queue management (queue + unqueue + browse + get + unget) when offline?
+requires: support for automatic queue retrying. requires timer framework
+download fails - .part file is still there?!?! resume? overwrite? fail?
+requires: queue retrying
+move stuff from command.c to queue.c?
+
+move to thread design?
+  question: is select() appropriate?
+
+new commands:
+  wait filelist    # wait until local filelist has been generated (must be able to ctrl+c)
+  wait browse      # wait until file list downloaded and browsed (must be able to ctrl+c)
+  wait download    # wait until downloads finished (what about failed?)
+  wait upload      # wait until uploads finished (should close slots automaticly, but how!?)
+  exit wait	   # exit when fully downloaded and uploaded
+
+try to print less in user process - why though?
+
+add more verbosity flags
+  user connection events		now: DC_DF_CONNECTIONS
+  incoming searches			now: DC_DF_DEBUG
+  outgoing searches			now: DC_DF_DEBUG
+  outgoing search results		now: DC_DF_DEBUG
+
+get file..
+  -t timespec	Retry time
+  -o file	Download file/dir
+  -C		no resume, skip
+  -c		continue (resume), default
+  -f		force overwrite (never default)
+  -r		recursive (default)
+unget file..
+  -r		recursive
+ls user:file [file]..
+  -l		long
+  -h		human readable
+  -H		human readable --si
+  -s field	sorting
+queue user
+  -R range	limit to range
+  -r		display recursively, showing contents of dirs
+unqueue [user] range
+cd [user:]path
+
+backlog publicchat|private
+set backlogsize=n
+
+feature: listen on demand. listen only when remote wants to connect.
+  one port per client sending $RevConnectToMe.
+  PRO: hub identify?
+  CON: code + coding + security?
+
+results: extra argument for user name?
+command to display search results for a certain user? assume '.' is current user? same for unqueue.
+there's resizing window weirdness?
+better searching (file types, etc)
+better ls sorting (order?)
+better who sorting (order?)
+'get' wildcards, file completion wildcards (wow)
+multiple share directories
+get from search results: "get <search> <result>"
+color scheme for regular output? put in .po file.
+"clear" command (implement by shell)
+Ctrl+X hub switching?
+
+apply iconv to search results as well? and file lists?
+in search, use locale to determine what's a-z (not to replace with $). See vlad mail
+
+debug print IPC? debug levels for IPC?
+
+what happens if we download and local file already exists?
+
+can change active while connected! this shouldn't affect user states.
+  improve {set,enable,disable}_{active,search} to perfection!
+  test thorougly
+    initial passive : we_initiate => active
+    initial passive : we_initiate => passive
+    initial passive : they_initiate (active) => us (passive)
+    initial passive : they_initiate (passive) => us (passive)
+    initial active : we_initiate => active
+    initial active : we_initiate => passive
+    initial active : they_initiate (active) => us (active)
+    initial active : they_initiate (passive) => us (active)
+
+add "get user:/" support
+
+on request to download, must check the download file versus our file list first?
+  not 100% necessary - but would decrease the number of weird local file stats.
+
+unsure if keeping connections in UserInfo is good? esp code in user_info_new
+
+sending user status too often. call time to check? at 10 MB per second we would repeat approx 160 times per second.
+
+move over to gnu99 standard?
+
+DC++ 0.401 doesn't seem to send search results to passive clients! what's wrong?
+
+some search results to passive clients are discarded. must be the hub.
+
+search like DC++ does: return hit on file if directory name matches?
+
+put listen_port into local_addr? name it listen_addr instead?
+
+cleanup after forking child?
+
+get rid of hub_last_* -- know implicitly in read function!
+
+get rid of my_share_size in favour of our_filelist? must make sure our_filelist is not NULL!
+
+debug more with valgrind --tool=memcheck --log-socket=127.0.0.1 --show-reachable=yes --leak-check=no --suppressions=/home/usel/supr microdc
+
+translation of bad local filenames!
+
+rethink reporting, must happen with *no* latency!
+
+clean up listen-port mess
+
+forced ip to send in listen?
+
+if extreme, we could get rid of user_running and use returns of bool instead
+
+remember IP-address for users?
+
+"Disconnected from user [process]" is printed twice (first from user, then main)
+
+used_slots management:
+  decrease when remote downloading finishes.
+  increase when remote downloading starts.
+  decrease when user disconnects, iff remote was downloading
+
+for best compatibility, don't attempt to download
+  empty dirs (naturally - can't)
+  empty files (check!)
+
+fix tag x/y/z line (H:?)
+
+total number of users calculation
+
+'who -l' and normal 'who'
+
+better error messages (reasons) in debug 0 mode
+
+support reusing idle download connections
+
+download to X.part first, then rename to X. on TERM, remove .part
+
+create state overview in user and hub. what states translates to other states? what global variables are valid in a state?
+
+better characters in filename ends (@=symlink etc) for local completion
+
+add optional argument to transfers
+
+improve status messages and status management
+
+when there's an error on a user in main.c, prefix error message with uc->name?
+
+exec or ! for subshell support
+
+get_node_type_char in fs.c
+
+allow user argument to be passed along completors in command.c, merging {remote,local}_*_completion_generators
+
+quoting in completion+dequoting by backslash in command input
+
+when to redownload user list? option to browse to force it (-f)?
+
+who: parsing of tag, to show active/passive, slots etc
+who: sortable who
+
+human readable sizes everywhere - in who etc
+
+wildcard download with get, cd with cd etc
+filename completion (always needs completion for \n and such)
+hub aliases just like lftp
+remoting interface (unix socket, ...)
+put close download file code in separate function
+retink handling of file_name/*DL*/ in user.c. when to free? on all fatal errors too?
+download queue remembering
+document all functions
+figure out what in MyINFO we can change besides sharesize. tag details? support level?
+  if active/passive is changed of remote user, then every time we receive a
+  MyINFO for such a user we need reset active_state to DC_ACTIVE_UNKNOWN.
+improve queuing: QueueItem
+  NORMAL					NORMAL
+  RESUME					? automaticly resume?
+  USER_LIST					USER_LIST
+  	BROWSED (browse)			?
+            ZLIST (.bz2 compressed)		BZLIST
+  	    XML_BZLIST				XML_BZLIST
+  DIRECTORY_DOWNLOAD (recursive)		expand on get? EMPTY_DIRECTORY?
+  	CLIENT_VIEW (viewed in GUI)		?
+  SOURCE_UTF8 (filename in UTF-8)		?
+  FLAG_EXISTS (insert in front of queue because file exists on HDD)
+  FLAG_MATCH_QUEUE
+look into other DC++ features to implement
+bz2 support from ground up
+look into DC++ blocking, $Sending, $GetBlock etc
+better prompt 
+improve huffman error messages - check dctc
+datatype clean up: use LList for user_conns instead of PtrV?
+fs.c: filelist_scan_dir return failure?
+user.c: in open_upload_file, use file_name instead of filename. to remember. make sure to free!
+whenever printing user nicks, quote them propertly! look for %s
+send MyINFO on our update?
+recursive download. download to closes name, do not include all parent directories.
+improved completion: users, local files, remote files
+verbosity management
+uc->main_socket should be non-blocking?
+sort listing with ls
+make sure child processes die when main does!
+timers in DC++: ConnectionManager, DownloadManager, QueueManager
+timers in microdc:
+  main: time out pending_userinfo,
+  user: [DONE] time out idle=dead connections
+  main: when user is MaxedOut, timer for reconnects
+  main: [DONE] time out searches (when last viewed results and last received results)
+clean up:
+  don't use active_read_fds, force setting prior instead.
+  separate main global data into structure
+  data type fix up: determine datatype for each PtrV
+better user termination detection in main
+transfer management, cancelling
+hub: support GetInfo/MyInfo or whatever, for more info on users
+remove files in listing_dir on end
+option: -d, --dummy : console/daemon mode (no readline, better command output)
+log FILE command
+improved search command
+  -m minsize
+  -M maxsize
+  -t type (n or any|audio|compressed|documents|executables|pictures|video|folders)
+TTH support: http://www.open-content.net/specs/draft-jchapweske-thex-02.html
+Queuing errors and retry intervals:
+  a  was downloading but lost connection due to TCP error
+  b  was downloading but lost connection due to EOF (remote could have closed in purpose)
+  b  was connected but remote is maxed out
+  c  was connected but lost connection due to communication logic error
+  c  failed to connect to remote $ConnectToMe
+  c  remote ignored my $ConnectToMe
+  c  remote ignored my $RevConnectToMe
+  c  remote is also passive (RECEIVED_PASSIVE)
+  c  was downloading but lost connection due to file I/O error (bad/full disk?)
+
+  a=retry immediately or 5 sec (temporary error)
+  b=retry in 5-15 mins (remote terminated OR MaxedOut)
+  c=retry never (FATAL)
+
+  Retry count for same user: max 20 with exception of fatal errors
+verbosity/debug levels
+  verbosity:
+    user messaging
+      private			MESSAGE_PRIVATE privmsg
+      public			MESSAGE_PUBLIC pubmsg
+      kicking?
+    searching
+      my searches
+        requests		SEARCH_REQUESTS_OUT srchreqsout
+        results			SEARCH_RESULTS_IN srchresin		search_results_in_threshold (# results or time?)
+      remote searches
+        requests		SEARCH_REQUESTS_IN srchreqsin
+        results			SEARCH_RESULTS_OUT srchresout
+    transfers
+      uploads
+        completed		UPLOAD_COMPLETE uldone
+        progress		UPLOAD_PROGRESS	ulprog	upload_progress_threshold
+        failed/abandoned	UPLOAD_FAILED ulfail
+      downloads 
+        completed		DOWNLOAD_COMPLETE dldone
+        progress		DOWNLOAD_PROGRESS dlprog	download_progress_threshold
+        failed/abandoned	DOWNLOAD_FAILED dlfail
+    user connections
+      connection		USER_CONNECTED ucconn
+      	incoming
+      	outgoing
+      direction validation	USER_DIRECTION_VALIDATED ucdir
+      nick validated		USER_NICK_VALIDATED ucnick
+      closed			USER_CLOSED ucclose
+      errors			USER_ERROR ucerror
+    hub user activity
+      join			HUB_ACTIVITY_JOIN join
+      part			HUB_ACTIVITY_PART part
+      errors			HUB_ERROR huberror
+      connected			HUB_CONNECTED hcnew
+      closed			HUB_CLOSED hcclose
+  debug: user-hub ipc i/o	IPC_IO ipcio
+  debug: user i/o		USER_IO userio
+  debug: hub i/o		HUB_IO hubio
+
+multiprocess solution
+
+  main process
+    lookup process communication
+      => char hostname[], 0
+      <= struct LookupRequest
+    signal receiver for main, lookup process
+      <= int signal
+    hubs communication
+      DC protocol
+    user input, screen
+      readline (custom interface)
+    user connection TCP port listener
+      accept, user connection forker
+    
+  lookup process
+    gethostbyname execution
+
+  user connection process
+    user communication, file download
+      DC protocol
+    main process communication
+      commands
+        => get client nick		<= client nick: STR
+        => get connection user info	<= user info: UserInfo
+        => has other user connections	<= bool
+        => get next queued file		<= remote filename, local filename
+        <= ask status
+        => close connection
+        => cancel transfer
+      events
+        <- file downloaded completely
+        <- i'm terminating (with reason)
+        -> has new file queued/queue modified
+
+variables
+global
+	active				bool
+
+	fake/force/manual listen ip	ip
+	listen ip			ip
+	listen devices			set
+	listen ports same		bool
+	user listen port range		str		-- if unset, port picked at random
+	search listen port range	str		-- if unset, port picked at random
+
+	current user listen ip		ip (RO)
+	current user listen port	uint16 (RO)
+	current search listen ip	(RO)
+	current search listen port
+
+	ignore private address space connections (rfc1918)
+
+	nick
+	description
+	email
+	speed
+		away flag
+		server flag
+		fast/speedy/speed/fireball flag
+
+	send tag			bool
+	software tag			
+	hub password
+
+	download slots
+	upload slots
+	rate throttling
+	logic timeouts
+
+	hub reconnect max
+	hub reconnect timeout
+
+	share dir
+	share size
+	share file count
+	share directory count
+	download dir
+	listing dir
+
+	keep listings
+
+ui
+	display messages
+
+hub
+	name (RO)
+
+	follow redirection
+
+away message?
+
+curses:
+
+Upper Area
+  Search Query
+  Search Results Browser
+  Help
+  About
+  Settings
+  Hub List
+  Search Spy
+  Debug Messages
+  Private Chat
+  Public Chat
+  User List
+  File Browser
+  Queue Browser
+
+Lower Area
+  Connections/Transfers/Downloads/Uploads
+  Searches
+  Download/Upload Log
+  Queue Overview
+
+Window Operations
+  Increase Window Size		F4
+  Decrease Window Size		S+F4
+  Toggle Window Maximize/Normal	F3
+  Switch Window 		F2
+  Next View (Lower Area)
+  Previous View (Lower Area)
+
+keys:
+  user			array	nick
+  queued item		array	nick, index
+  transferred item		index
+  search		array	generated: query
+  file list			nick
+  user connection	array	generated: nick, direction -or- unknown index (ip, port)
+
+deletes:
+  user			automatic: on join, part
+  queued item		automatic: on completed
+  transferred item	automatic: on new transferred item
+  search		unsure
+  file list		never
+  user connection	automatic: on disconnection
+
+key management
+  allocate a string on return.
+  it is up to the application to free or keep.
+
+hub connection retries
+user connection retries
+hub logic timeout?
+user logic timeout?
+
+same user management:
+  trying to identify whether two users are the same is irrelevant.
+  mode 1. download queue tries all users on all hubs. first on original hub.
+  mode 2. download queue always tries on a single hub.
+  which one is simpler to implement? 2 is. we will start with that.
+
+// NOTE: just because the structure uses much space, doesn't mean we need to
+// send over that much space or allocate it permanently!
+
+user nick 		DCTC: 62 DC++: 35 NMDC: 35
+user description	DCTC: 63 DC++: 35+tag NMDB: 45
+			<++ V:0.vvv,M:A,X:nn/nn/nn,X:nn,X:nnnn> = ~40
+user email		DCTC: 63 DC++: unlimited NMDC: 35
+user speed		DCTC: 14 DC++: 9 (from list) NMDC: (from list)
+
+User struct:
+    // Implementation Private
+    UserActiveState active_state;
+
+QueuedItem struct:
+    //XXXbool downloading;	status - downloading or reason for not downloading?
+
+Hub connections are identified by key addr+index
+Hub reconnection methodology:
+  There's no way to determine if you have been disconnected on purpose.
+    EOF happens when remote closes legally.
+    if we get an error, try reconnect up to some 
+
+  EOF is legal disconnection - never try to reconnect.
+  error is temporary error - retry immediately until some count reached.
+  when is counter reset? when manually connecting again.
+
+  #Yes, do reconnect up to some limit on temporary failure.
+  #That limit should usually be 2.
+  #Is it reasonable to have two connections to the same hub? */
+
+//XXX how to tell it to attempt to connect to user
+//XXX how to set our settings, such as active etc?
+
+
+		// XXX: create a new engine?
+		// true if there was a complete event, false else
+
+User reconnection methodology:
+  Yes, do reconnect immediately on temporary failure (errno error),
+    until some count reached.
+
+Users are identified by their nickname
+
+// XXX: are a person X on hub Y1 considered to be the same as user X on hub Y2?
+// Answer: partially.
+
+Transferred items are identified by index. The 
+transferred items are kept in a circular array.
+When the array is full, new items are put at the
+beginning of the array.
+   uint64_t item_count; // total number of items in or out of list
+   TransferredItem items[TRANSFERRED_ITEMS_ARRAY_SIZE];
+
+// Searches are identified by some key
+// searches go out to all hubs.
+// assume 
+
+/* User connections are also identified by key, nick|<index> or unknown<index> */
+// XXX Problem: two connections at same time to user. pick at random: one upload, one download.
+
+// Implementation private flags
+UF_INFO_QUERIED,
+
+// void set_connection_max_rate(char *key, int32_t max_rate)
+
+searchquery match limit 	// <65535 according to DC++ StringSearch.h
+
+    //SearchSizeConstraintType size_constraint_type;
+    //uint64_t size;

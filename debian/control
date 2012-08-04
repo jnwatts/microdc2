@@ -1,0 +1,19 @@
+Source: microdc
+Section: utils
+Priority: optional
+Maintainer: Oskar Liljeblad <oskar@osk.mine.nu>
+Build-Depends: cdbs, debhelper (>> 4.1.0)
+Standards-Version: 3.6.1.1
+
+Package: microdc
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: A command-line based Direct Connect client
+ microdc is a command-line based Direct Connect client that uses the GNU
+ Readline library for user interaction. It was developed from ground up and
+ does not depend on any other program. Despite the command-line user
+ interface, microdc was designed to be user friendly and simple to use.
+ .
+ microdc is currently in beta state - there may be many bugs not yet
+ discovered. It also lacks some features that other clients support, such as
+ file hashing, multiple hub connections, and hub list support.

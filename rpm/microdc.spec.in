@@ -1,0 +1,49 @@
+%define package @PACKAGE@
+%define version @VERSION@
+%define release 1
+
+Summary:	A command-line based Direct Connect client
+Name:		%{package}
+Version:	%{version}
+Release:	%{release}
+License:	GPL
+Group:		Applications/Internet
+Source:		http://savannah.nongnu.org/download/%{package}/%{package}-%{version}.tar.gz
+URL:		http://www.nongnu.org/%{package}/
+Packager:	Oskar Liljeblad <oskar@osk.mine.nu>
+Vendor:		Oskar Liljeblad <oskar@osk.mine.nu>
+BuildRoot:	%{_tmppath}/%{package}-%{version}-%{release}-root
+
+%description
+microdc is a command-line based Direct Connect client that uses the GNU
+Readline library for user interaction. It was developed from ground up and
+does not depend on any other program. Despite the command-line user
+interface, microdc was designed to be user friendly and simple to use.
+
+microdc is currently in beta state - there may be many bugs not yet
+discovered. It also lacks some features that other clients support, such as
+file hashing, multiple hub connections, and hub list support.
+
+%prep
+%setup -q
+
+%build
+./configure --prefix=%{_prefix}
+# This hack is necessary on some Red Hat/Fedora systems where readline
+# doesn't link with a termcap library.
+# See https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=162023
+make LIBS=-lncurses
+
+%install
+rm -rf $RPM_BUILD_ROOT
+make DESTDIR=$RPM_BUILD_ROOT install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-,root,root)
+%doc README AUTHORS COPYING NEWS doc/TODO doc/INTERNALS
+%{_prefix}/bin/*
+%{_prefix}/man/*/*
+%{_prefix}/share/locale/*/*/*

@@ -1,0 +1,2156 @@
+# Swedish messages for microdc.
+# Copyright © 2005 Oskar Liljeblad
+# This file is distributed under the same license as the microdc package.
+#
+# Some messages may have been copied from the translations of GNU Core
+# Utilities and GNU C Library, especially the messages in files in the
+# lib directory. Such translations are
+# Copyright © 1997, 2002, 2003, 2004 Free Software Foundation, Inc.
+# See the files of those projects for author information.
+#
+# Oskar Liljeblad <oskar@osk.mine.nu>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: microdc 0.5.0\n"
+"Report-Msgid-Bugs-To: oskar@osk.mine.nu\n"
+"POT-Creation-Date: 2005-10-18 08:31+0200\n"
+"PO-Revision-Date: 2005-05-10 11:54+0200\n"
+"Last-Translator: Oskar Liljeblad <oskar@osk.mine.nu>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: lib/argmatch.c:137
+#, c-format
+msgid "invalid argument %s for %s"
+msgstr "felaktigt argument %s till %s"
+
+#: lib/argmatch.c:138
+#, c-format
+msgid "ambiguous argument %s for %s"
+msgstr "tvetydigt argument %s till %s"
+
+#: lib/argmatch.c:157
+#, c-format
+msgid "Valid arguments are:"
+msgstr "Giltiga argument är:"
+
+#: lib/error.c:121
+msgid "Unknown system error"
+msgstr "Okänt systemfel"
+
+#: lib/gai_strerror.c:45
+msgid "Address family for hostname not supported"
+msgstr "Adressfamilj för värdnamn stöds ej"
+
+#: lib/gai_strerror.c:46
+msgid "Temporary failure in name resolution"
+msgstr "Namnuppslagning misslyckades temporärt"
+
+#: lib/gai_strerror.c:47
+msgid "Bad value for ai_flags"
+msgstr "Otillåtet värde för ai_flags"
+
+#: lib/gai_strerror.c:48
+msgid "Non-recoverable failure in name resolution"
+msgstr "Oreparerbart fel i namnuppslagning"
+
+#: lib/gai_strerror.c:49
+msgid "ai_family not supported"
+msgstr "ai_family stöds ej"
+
+#: lib/gai_strerror.c:50
+msgid "Memory allocation failure"
+msgstr "Minnesallokeringsfel"
+
+#: lib/gai_strerror.c:51
+msgid "No address associated with hostname"
+msgstr "Ingen adress associerad med värdnamn"
+
+#: lib/gai_strerror.c:52
+msgid "Name or service not known"
+msgstr "Namn eller tjänst okänd"
+
+#: lib/gai_strerror.c:53
+msgid "Servname not supported for ai_socktype"
+msgstr "Servname stöds inte för ai_socktype"
+
+#: lib/gai_strerror.c:54
+msgid "ai_socktype not supported"
+msgstr "ai_socktype stöds ej"
+
+#: lib/gai_strerror.c:55
+msgid "System error"
+msgstr "Systemfel"
+
+#: lib/gai_strerror.c:57
+msgid "Processing request in progress"
+msgstr "Behandling av begäran pågår"
+
+#: lib/gai_strerror.c:58
+msgid "Request canceled"
+msgstr "Begäran avbruten"
+
+#: lib/gai_strerror.c:59
+msgid "Request not canceled"
+msgstr "Begäran inte avbruten"
+
+#: lib/gai_strerror.c:60
+msgid "All requests done"
+msgstr "Alla begäran utförda"
+
+#: lib/gai_strerror.c:61
+msgid "Interrupted by a signal"
+msgstr "Avbruten av en signal"
+
+#: lib/gai_strerror.c:62
+msgid "Parameter string not correctly encoded"
+msgstr "Parametersträngen inte korrekt kodad"
+
+#: lib/gai_strerror.c:74
+msgid "Unknown error"
+msgstr "Okänt fel"
+
+#: lib/getopt.c:551 lib/getopt.c:570
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: flaggan \"%s\" är tvetydig\n"
+
+#: lib/getopt.c:603 lib/getopt.c:607
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: flaggan \"--%s\" tar inget argument\n"
+
+#: lib/getopt.c:616 lib/getopt.c:621
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: flaggan \"%c%s\" tar inget argument\n"
+
+#: lib/getopt.c:667 lib/getopt.c:689 lib/getopt.c:1020 lib/getopt.c:1042
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: flaggan \"%s\" kräver ett argument\n"
+
+#: lib/getopt.c:727 lib/getopt.c:730
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: okänd flagga \"--%s\"\n"
+
+#: lib/getopt.c:738 lib/getopt.c:741
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: okänd flagga \"%c%s\"\n"
+
+#: lib/getopt.c:796 lib/getopt.c:799
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: otillåten flagga -- %c\n"
+
+#: lib/getopt.c:805 lib/getopt.c:808
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: ogiltig flagga -- %c\n"
+
+#: lib/getopt.c:863 lib/getopt.c:882 lib/getopt.c:1095 lib/getopt.c:1116
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: flaggan kräver ett argument -- %c\n"
+
+#: lib/getopt.c:935 lib/getopt.c:954
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: flaggan \"-W %s\" är tvetydig\n"
+
+#: lib/getopt.c:978 lib/getopt.c:999
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: flaggan \"-W %s\" tar inget argument\n"
+
+#: lib/human.c:486
+msgid "block size"
+msgstr "blockstorlek"
+
+#. TRANSLATORS:
+#. Get translations for open and closing quotation marks.
+#.
+#. The message catalog should translate "`" to a left
+#. quotation mark suitable for the locale, and similarly for
+#. "'".  If the catalog has no translation,
+#. locale_quoting_style quotes `like this', and
+#. clocale_quoting_style quotes "like this".
+#.
+#. For example, an American English Unicode locale should
+#. translate "`" to U+201C (LEFT DOUBLE QUOTATION MARK), and
+#. should translate "'" to U+201D (RIGHT DOUBLE QUOTATION
+#. MARK).  A British English Unicode locale should instead
+#. translate these to U+2018 (LEFT SINGLE QUOTATION MARK) and
+#. U+2019 (RIGHT SINGLE QUOTATION MARK), respectively.
+#.
+#. If you don't know what to put here, please see
+#. <http://en.wikipedia.org/wiki/Quotation_mark#Glyphs>
+#. and use glyphs suitable for your language.
+#: lib/quotearg.c:245
+msgid "`"
+msgstr "\""
+
+#: lib/quotearg.c:246
+msgid "'"
+msgstr "\""
+
+#. TRANSLATORS: Translate "(C)" to the copyright symbol
+#. (C-in-a-circle), if this symbol is available in the user's
+#. locale.  Otherwise, do not translate "(C)"; leave it as-is.
+#: lib/version-etc.c:72
+msgid "(C)"
+msgstr "©"
+
+#: lib/version-etc.c:74
+msgid ""
+"\n"
+"This is free software.  You may redistribute copies of it under the terms "
+"of\n"
+"the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+"\n"
+msgstr ""
+"\n"
+"Detta är fri programvara.  Du kan distribuera kopier av det under villkoren "
+"i GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n"
+"Det finns INGEN garanti, utom sådan garanti som måste ges enligt tillämplig "
+"lag.\n"
+"\n"
+
+#. TRANSLATORS: %s denotes an author name.
+#: lib/version-etc.c:90
+#, c-format
+msgid "Written by %s.\n"
+msgstr "Skrivet av %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#: lib/version-etc.c:94
+#, c-format
+msgid "Written by %s and %s.\n"
+msgstr "Skrivet av %s och %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#: lib/version-etc.c:98
+#, c-format
+msgid "Written by %s, %s, and %s.\n"
+msgstr "Skrivet av %s, %s och %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:104
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"and %s.\n"
+msgstr ""
+"Skrivet av %s, %s, %s\n"
+"och %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:110
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, and %s.\n"
+msgstr ""
+"Skrivet av %s, %s, %s,\n"
+"%s och %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:116
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, and %s.\n"
+msgstr ""
+"Skrivet av %s, %s, %s,\n"
+"%s, %s och %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:123
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, and %s.\n"
+msgstr ""
+"Skrivet av %s, %s, %s,\n"
+"%s, %s, %s och %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:130
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"and %s.\n"
+msgstr ""
+"Skrivet av %s, %s, %s,\n"
+"%s, %s, %s, %s\n"
+"och %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:138
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, and %s.\n"
+msgstr ""
+"Skrivet av %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s och %s.\n"
+
+#. TRANSLATORS: Each %s denotes an author name.
+#. You can use line breaks, estimating that each author name occupies
+#. ca. 16 screen columns and that a screen line has ca. 80 columns.
+#: lib/version-etc.c:148
+#, c-format
+msgid ""
+"Written by %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, %s, and others.\n"
+msgstr ""
+"Skrivet av %s, %s, %s,\n"
+"%s, %s, %s, %s,\n"
+"%s, %s med flera.\n"
+
+#: lib/xalloc-die.c:38
+msgid "memory exhausted"
+msgstr "minnet slut"
+
+#: src/command.c:177
+msgid "browse [USER]"
+msgstr "browse [ANVÄNDARE]"
+
+#: src/command.c:178
+msgid ""
+"If USER is specified, queue the file list for that user for download and "
+"start browsing the user's files as soon as the list is downloaded. With no "
+"arguments, stop browsing.\n"
+msgstr ""
+"Om ANVÄNDARE angavs, köa fillistan för användaren för nedladdning och börja "
+"utforska användarens filer så snart fillistan är nedladdad. Sluta utforksa "
+"om argument saknas.\n"
+
+#: src/command.c:182
+msgid "cancel CONNECTION ..."
+msgstr "cancel ANSLUTNING ..."
+
+#: src/command.c:183
+msgid ""
+"Close a user connection. Use the `transfers' command to get a list of "
+"connections.\n"
+msgstr ""
+"Stäng en användaranslutning. Använd \"transfers\"-kommandot för att få en "
+"lista över anslutningar.\n"
+
+#: src/command.c:186
+msgid "cd [DIRECTORY]"
+msgstr "cd [KATALOG]"
+
+#: src/command.c:187
+msgid ""
+"Change directory when browsing another user's files. If DIRECTORY is not "
+"specified, change to the root directory (`/').\n"
+msgstr ""
+"Ändra katalog när man utforskar en annan användares filer. Om KATALOG inte "
+"angavs, ändra till rotkatalogen (\"/\").\n"
+
+#: src/command.c:190
+msgid "connect HOST[:PORT]"
+msgstr "connect VÄRDDATOR[:PORT]"
+
+#: src/command.c:191
+msgid "Connect to a hub. If PORT is not specified, assume port 411.\n"
+msgstr "Anslut till en hubb. Om PORT inte angavs, anslut på port 411.\n"
+
+#: src/command.c:193
+msgid "disconnect"
+msgstr "disconnect"
+
+#: src/command.c:194
+msgid "Disconnect from the hub.\n"
+msgstr "Kopplar ned från hubben.\n"
+
+#: src/command.c:196
+msgid "exit"
+msgstr "exit"
+
+#: src/command.c:197
+msgid "Quit the program.\n"
+msgstr "Avsluta programmet.\n"
+
+#: src/command.c:199
+msgid "find [FILE ...]"
+msgstr "find [FIL ...]"
+
+#: src/command.c:200
+msgid ""
+"List files and directories recursively. Assume current directory if FILE is "
+"not specified. Must be browsing a user's files to use this command.\n"
+msgstr ""
+"Lista filer och kataloger rekursivt. Nuvarande katalog antas om FIL inte "
+"anges. Måste utforksa en användares filer för att kunna använda detta "
+"kommand.\n"
+
+#: src/command.c:203
+msgid "get FILE ..."
+msgstr "get FIL ..."
+
+#: src/command.c:204
+msgid ""
+"Queue file for download. Must be browsing a user's files to use this "
+"command.\n"
+msgstr ""
+"Köa fil för nedladdning. Måste utforska en användares filer för att kunna "
+"använda detta kommando.\n"
+
+#: src/command.c:207
+msgid "grantslot [USER ...]"
+msgstr "grantslot [ANVÄNDARE ...]"
+
+#: src/command.c:208
+msgid ""
+"Grant a download slot for the specified users, or remove granted slot if the "
+"user was already granted one. Without arguments, display a list of users "
+"with granted slots.\n"
+msgstr ""
+"Tilldela den specifika användaren en nedladdningsplats, eller ta bort "
+"tilldelad nedladdningsplats om användaren redan var tilldelad en. Utan "
+"argument, visa en lista över användare med tilldelade nedladdningsplatser.\n"
+
+#: src/command.c:212
+msgid "help [COMMAND ...]"
+msgstr "help [KOMMAND ...]"
+
+#: src/command.c:213
+msgid ""
+"If COMMAND is specified, display help for that command. Otherwise list all "
+"available commands.\n"
+msgstr ""
+"Visa hjälp för angivena kommandon. Om inget kommando anges, lisa alla "
+"tillgängliga kommandon.\n"
+
+#: src/command.c:216
+msgid "ls [OPTION...] [FILE...]"
+msgstr "ls [FLAGGA...] [FIL...]"
+
+#: src/command.c:217
+msgid ""
+"List files and directories. Assume current directory if FILE is not\n"
+"specified.\n"
+"\n"
+"Options:\n"
+"  -l, --long    use a long listing format\n"
+msgstr ""
+"Lista filer och kataloger. Om FIL inte anges, lista nuvarande katalog.\n"
+"\n"
+"Flaggor:\n"
+"  -l, --long    använd ett långt listningsformat\n"
+
+#: src/command.c:223
+msgid "retry USER ..."
+msgstr "retry ANVÄNDARE ..."
+
+#: src/command.c:224
+msgid "Try to connect and download files from the specified users.\n"
+msgstr "Försök att ansluta och ladda hem filer från angivna användare.\n"
+
+#: src/command.c:226
+msgid "msg USER MESSAGE..."
+msgstr "msg ANVÄNDARE MEDDELANDE..."
+
+#: src/command.c:227
+msgid ""
+"Send a private message to USER. Note that characters such as semicolon "
+"(`;'), double quote (`\"') and number sign (`#') in MESSAGE need to be "
+"escaped or quoted. Therefore it is recommended to put MESSAGE in double "
+"quotes.\n"
+"\n"
+"Example:\n"
+"  msg some_user \"hello, how are you?\"\n"
+msgstr ""
+"Skicka ett privat meddelande till ANVÄNDARE.  Notera att tecken såsom "
+"semikolon (\";\"), citationstecken (\") och nummertecken (\"#\") i "
+"MEDDELANDE måste föregås av bakåtvänt snedstreck (\"\\\") eller sättas inom "
+"citationstecken. Därför rekommenderas det alltid sätta MEDDELANDE inom "
+"citationstecken.\n"
+"\n"
+"Exempel:\n"
+"  msg någon_användare \"hej, hur står det till?\"\n"
+
+#: src/command.c:235
+msgid "pwd"
+msgstr "pwd"
+
+#: src/command.c:236
+msgid "Display user being browsed and current directory.\n"
+msgstr ""
+"Visa vilken användare som utforskas samt nuvarande katalog för utforskning.\n"
+
+#: src/command.c:238
+msgid "queue [USER ...]"
+msgstr "queue [ANVÄNDARE ...]"
+
+#: src/command.c:239
+msgid ""
+"Display files queued for download from the specified users. Without "
+"arguments, display a list of users we have queued files for.\n"
+msgstr ""
+"Visa filer köade för nedladdning från den angivna användaren.Utan argument "
+"visas en lista över användare som vi har köat filer från.\n"
+
+#: src/command.c:242
+msgid "raw DATA..."
+msgstr "raw DATA..."
+
+#: src/command.c:243
+msgid ""
+"Send some raw data to the hub. Note that characters such as semicolon (`;'), "
+"double quote (`\"') and number sign (`#') in DATA need to be escaped or "
+"quoted. Therefore it is recommended to put DATA in double quotes.\n"
+msgstr ""
+"Skicka obehandlat data till hubben.  Notera att tecken såsom semikolon (\";"
+"\"), citationstecken (\") och nummertecken (\"#\") i MEDDELANDE måste "
+"föregås av bakåtvänt snedstreck (\"\\\") eller sättas inom citationstecken. "
+"Därför rekommenderas det alltid sätta DATA inom citationstecken.\n"
+
+#: src/command.c:248
+msgid "results [INDEX ...]"
+msgstr "results [INDEX ...]"
+
+#: src/command.c:249
+msgid ""
+"If INDEX is specified, display results for the search by that index. "
+"Otherwise, display a list of searches and statistics over those searches.\n"
+msgstr ""
+"Visa resultat för en specifik sökning om INDEX angavs. Visa i annat fall en "
+"lista över sökningar med statistik.\n"
+
+#: src/command.c:252
+msgid "say MESSAGE..."
+msgstr "say MEDDELANDE..."
+
+#: src/command.c:253
+msgid ""
+"Send a public message to users on the hub. Note that characters such as "
+"semicolon (`;'), double quote (`\"') and number sign (`#') in MESSAGE need "
+"to be escaped or quoted. Therefore it is recommended to put MESSAGE in "
+"double quotes.\n"
+"\n"
+"Example:\n"
+"  say \"hi everyone!\"\n"
+msgstr ""
+"Skicka ett publikt meddelande till användare på hubben. Notera att tecken "
+"såsom semikolon (\";\"), citationstecken (\") och nummertecken (\"#\") i "
+"MEDDELANDE måste föregås av bakåtvänt snedstreck (\"\\\") eller sättas inom "
+"citationstecken. Därför rekommenderas det alltid sätta MEDDELANDE inom "
+"citationstecken.\n"
+"\n"
+"Exempel:\n"
+"  say \"hej allihopa!\"\n"
+
+#: src/command.c:261
+msgid "search WORD..."
+msgstr "search SÖKORD..."
+
+#: src/command.c:262
+msgid "Issue a search for the specified search words.\n"
+msgstr "Utför en sökning med de angivna sökorden.\n"
+
+#: src/command.c:264
+msgid "set [NAME [VALUE...]]"
+msgstr "set [NAMN [VÄRDE...]]"
+
+#: src/command.c:265
+msgid ""
+"Without arguments, display a list of variables and their current values. "
+"With only NAME argument, display the value of that variable. With NAME and "
+"VALUE arguments, change the value of a variable.\n"
+msgstr ""
+"Utan argument, vista en lista över variabler och deras nuvarande värde. Med "
+"enbart NAMN-argument, visa värdet på variabeln med det namnet. Med både NAMN-"
+"och VÄRDE-argument, ändra värdet på variabeln.\n"
+
+#: src/command.c:269
+msgid "status"
+msgstr "status"
+
+#: src/command.c:270
+msgid "Display status information and some statistics.\n"
+msgstr "Visa statusinformation och lite statistik.\n"
+
+#: src/command.c:272
+msgid "transfers"
+msgstr "transfers"
+
+#: src/command.c:273
+msgid "Display a list of user connections.\n"
+msgstr "Visa en lista över användaranslutningar.\n"
+
+#: src/command.c:275
+msgid "unqueue USER [RANGE]"
+msgstr "unqueue ANVÄNDARE [INTERVALL]"
+
+#: src/command.c:276
+msgid ""
+"Remove all or a range of queued files for USER. If RANGE is not specified, "
+"remove all files from the queue. Use dash (`-') and comma (`,') in RANGE. "
+"Open ranges are accepted (e.g. `1-' or `-2').\n"
+msgstr ""
+"Ta bort alla eller ett intervall av köade filer för ANVÄNDARE. Om INTERVALL "
+"inte angavs, ta bort alla filer från kön. Använd streck (\"-\") och komma "
+"(\",\") i INTERVALL. Öppna intervall accepteras (t.ex. \"1-\" eller \"-2"
+"\").\n"
+
+#: src/command.c:280
+msgid "unsearch INDEX ..."
+msgstr "unsearch INDEX ..."
+
+#: src/command.c:281
+msgid "Remove a previously issued search and all results for that search.\n"
+msgstr ""
+"Ta bort en tidigare utför sökning och alla resultat för den sökningen.\n"
+
+#: src/command.c:283
+msgid "who [USER ...]"
+msgstr "who [ANVÄNDARE ...]"
+
+#: src/command.c:284
+msgid ""
+"If USER is specified, display information on that user. Otherwise, display a "
+"table of users with some user details.\n"
+msgstr ""
+"Om ANVÄNDARE angavs, visa information för den användaren. Visa annars en "
+"tabell över användare med vissa användardetaljer.\n"
+
+#: src/command.c:287
+msgid "alias [NAME[=VALUE] ...]"
+msgstr "alias [NAMN[=VÄRDE] ...]"
+
+#: src/command.c:288
+msgid ""
+"Without arguments, display the list of aliases. With NAME argument, display "
+"what value (command) that alias is set to. With both NAME and VALUE "
+"argument, change alias. Note that VALUE is a single argument - you need to "
+"use quotes for more complex commands.\n"
+"\n"
+"Example:\n"
+"  alias ll \"ls -l\"\n"
+msgstr ""
+"Utan argument, visa en lista över alias. Med NAMN-argument, visa vilket "
+"värde (kommando) det aliaset är satt till. Med både NAMN- och VÄRDE-"
+"argument, ändra aliaset. Notera att VÄRDE är ett argument - du måste "
+"användare citationstecken för komplexa kommandon.\n"
+"\n"
+"Exempel:\n"
+"  alias ll \"ls -l\"\n"
+
+#: src/command.c:296
+msgid "unalias NAME ..."
+msgstr "unalias NAMN ..."
+
+#: src/command.c:297
+msgid "Remove aliases.\n"
+msgstr "Ta bort alias.\n"
+
+#: src/command.c:299
+msgid "shell [COMMAND [ARGUMENTS...]]"
+msgstr "shell [KOMMANDO [ARGUMENT...]]"
+
+#: src/command.c:300
+msgid ""
+"Execute a system command. If no arguments are specified, the current shell "
+"will be started (SHELL environment variable or `/bin/sh' if that is not "
+"set). microdc will continue in the background while the command is "
+"executing.\n"
+msgstr ""
+"Exekvera ett systemkommando. Om inga argument angavs kommer nuvarande skal "
+"att startas (miljövariabeln SHELL eller \"/bin/sh\" om den inte är satt). "
+"microdc fortsätter i bakgrunden medan kommandot utförs.\n"
+
+#: src/command.c:305
+msgid "lookup HOST ..."
+msgstr "lookup VÄRD ..."
+
+#: src/command.c:306
+msgid "Lookup the IP address of specified hosts.\n"
+msgstr "Slår upp IP-adress för angivna värdar.\n"
+
+#: src/command.c:496
+#, c-format
+msgid "%s: Unknown command.\n"
+msgstr "%s: Okänt kommando.\n"
+
+#: src/command.c:678
+#, c-format
+msgid "Cannot create child process - %s\n"
+msgstr "Kan inte skapa process - %s\n"
+
+#: src/command.c:693 src/command.c:696
+#, c-format
+msgid "%s: cannot execute - %s\n"
+msgstr "%s: kan inte exekvera - %s\n"
+
+#: src/command.c:711 src/command.c:714 src/command.c:717 src/command.c:720
+#: src/command.c:723 src/command.c:726
+#, c-format
+msgid "Hub state: %s\n"
+msgstr "Hubbens tillstånd: %s\n"
+
+#: src/command.c:711
+msgid "Not connected"
+msgstr "Inte ansluten"
+
+#: src/command.c:714
+msgid "Looking up IP address"
+msgstr "Slår upp IP-adress"
+
+#: src/command.c:717
+msgid "Waiting for complete connection"
+msgstr "Väntar på komplett anslutning"
+
+#: src/command.c:720
+msgid "Waiting for $Lock"
+msgstr "Väntar på $Lock"
+
+#: src/command.c:723
+msgid "Waiting for $Hello"
+msgstr "Väntar på $Hello"
+
+#: src/command.c:726
+msgid "Logged in"
+msgstr "Inloggad"
+
+#: src/command.c:731 src/command.c:733
+#, c-format
+msgid "Hub users: %s\n"
+msgstr "Hubbens namn: %s\n"
+
+#: src/command.c:733
+msgid "(not logged in)"
+msgstr "(inte inloggad)"
+
+#: src/command.c:736
+msgid "Pending user connections:\n"
+msgstr "Avvaktande användaranslutningar:\n"
+
+#: src/command.c:741
+msgid "  (none)\n"
+msgstr "  (ingen)\n"
+
+#: src/command.c:743
+#, c-format
+msgid "Share size: %<PRIu64> %s (%s)\n"
+msgstr "Utdelningens storlek: %<PRIu64> %s (%s)\n"
+
+#: src/command.c:745 src/command.c:749 src/command.c:753 src/command.c:1501
+#: src/command.c:1898 src/main.c:616 src/main.c:623 src/main.c:860
+#: src/user.c:421
+msgid "byte"
+msgid_plural "bytes"
+msgstr[0] "byte"
+msgstr[1] "byten"
+
+#: src/command.c:747
+#, c-format
+msgid "Bytes received: %<PRIu64> %s (%s)\n"
+msgstr "Byten mottagna: %<PRIu64> %s (%s)\n"
+
+#: src/command.c:751
+#, c-format
+msgid "Bytes sent: %<PRIu64> %s (%s)\n"
+msgstr "Byten skickade: %<PRIu64> %s (%s)\n"
+
+#: src/command.c:774
+#, c-format
+msgid "Usage: %s MESSAGE..\n"
+msgstr "Användning: %s MEDDELANDE...\n"
+
+#: src/command.c:778 src/command.c:806 src/command.c:839 src/command.c:881
+#: src/command.c:894 src/command.c:1267 src/command.c:1298 src/command.c:1414
+#: src/command.c:1489 src/command.c:1619
+msgid "Not connected.\n"
+msgstr "Inte ansluten.\n"
+
+#: src/command.c:802
+#, c-format
+msgid "Usage: %s USER MESSAGE..\n"
+msgstr "Användning: %s ANVÄNDARE MEDDELANDE...\n"
+
+#: src/command.c:811 src/command.c:913 src/command.c:1010 src/command.c:1276
+#: src/command.c:1319 src/command.c:1419 src/command.c:1499
+#, c-format
+msgid "%s: No such user on this hub\n"
+msgstr "%s: Användaren finns inte på denna hub\n"
+
+#: src/command.c:835
+#, c-format
+msgid "Usage: %s DATA...\n"
+msgstr "Användning: %s DATA...\n"
+
+#: src/command.c:855
+#, c-format
+msgid "Usage: %s HOST[:PORT]\n"
+msgstr "Användning: %s VÄRD[:PORT]\n"
+
+#: src/command.c:859
+msgid "Connection in progress, disconnect first.\n"
+msgstr "Ansluter redan, koppla ned först.\n"
+
+#: src/command.c:867
+#, c-format
+msgid "Invalid port number %s\n"
+msgstr "Felaktigt portnummer %s\n"
+
+#: src/command.c:883
+msgid "Disconnecting from hub.\n"
+msgstr "Kopplar ned hubb.\n"
+
+#: src/command.c:917
+#, c-format
+msgid "%s has been granted a slot.\n"
+msgstr "%s har tilldelats en nedladdningsplats.\n"
+
+#: src/command.c:919
+#, c-format
+msgid "%s is no longer granted a slot.\n"
+msgstr "%s har fråntagits en nedladdningsplats.\n"
+
+#: src/command.c:971
+#, c-format
+msgid "Now browsing %s.\n"
+msgstr "Utforskar nu %s.\n"
+
+#: src/command.c:989 src/command.c:1062 src/command.c:1078 src/command.c:1141
+#: src/command.c:1213 src/command.c:1854
+msgid "Not browsing any user.\n"
+msgstr "Utforskar ingen användare.\n"
+
+#: src/command.c:1017 src/filelist-in.c:240 src/fs.c:393 src/fs.c:470
+#: src/main.c:1344 src/main.c:1362 src/user.c:531 src/util.c:109
+#: src/variables.c:407 src/variables.c:427 src/variables.c:448
+#, c-format
+msgid "%s: Cannot get file status - %s\n"
+msgstr "%s: Kan inte avläsa filstatus - %s\n"
+
+#: src/command.c:1036
+msgid "No free connections. Queued file for download.\n"
+msgstr "Inga lediga anslutningar. Köade fil för nedladdning.\n"
+
+#: src/command.c:1064
+#, c-format
+msgid "(%s) Waiting for file list.\n"
+msgstr "(%s) Väntar på fillista.\n"
+
+#: src/command.c:1067
+#, c-format
+msgid "(%s) %s\n"
+msgstr "(%s) %s\n"
+
+#: src/command.c:1089
+msgid "No previous path.\n"
+msgstr "Ingen tidigare sökväg.\n"
+
+#: src/command.c:1118
+#, c-format
+msgid "%s: not a directory\n"
+msgstr "%s: inte en katalog\n"
+
+#: src/command.c:1182 src/command.c:1255
+#, c-format
+msgid "%s: No such file or directory\n"
+msgstr "%s: Filen eller katalogen finns inte\n"
+
+#: src/command.c:1282
+#, c-format
+msgid "%s: Already connected to user.\n"
+msgstr "%s: Redan ansluten till användaren.\n"
+
+#: src/command.c:1402
+#, c-format
+msgid "Usage: %s USER [RANGE]\n"
+msgstr "Användning: %s ANVÄNDARE [INTERVALL]\n"
+
+#: src/command.c:1423
+#, c-format
+msgid "%s: Invalid range, or index out of range (1-%d)\n"
+msgstr ""
+"%s: Felaktigt intervall, eller så är ett index utanför intervallet 1-%d\n"
+
+#: src/command.c:1502
+#, c-format
+msgid "Nick: %s\n"
+msgstr "Användarnamn: %s\n"
+
+#: src/command.c:1503
+#, c-format
+msgid "Description: %s\n"
+msgstr "Beskrivning: %s\n"
+
+#: src/command.c:1504
+#, c-format
+msgid "Speed: %s\n"
+msgstr "Hastighet: %s\n"
+
+#: src/command.c:1505
+#, c-format
+msgid "Level: %d\n"
+msgstr "Nivå: %d\n"
+
+#: src/command.c:1506
+#, c-format
+msgid "E-mail: %s\n"
+msgstr "E-postadress: %s\n"
+
+#: src/command.c:1507
+#, c-format
+msgid "Operator: %d\n"
+msgstr "Operatör: %d\n"
+
+#: src/command.c:1508
+#, c-format
+msgid "Share Size: %<PRIu64> %s (%<PRIu64> MB)\n"
+msgstr "Utdelningsstorlek: %<PRIu64> %s (%<PRIu64> MB)\n"
+
+#: src/command.c:1570 src/command.c:1637 src/main.c:262 src/main.c:629
+#: src/search.c:523 src/search.c:567
+#, c-format
+msgid "Cannot get current time - %s\n"
+msgstr "Kan inte avläsa nuvarande tid - %s\n"
+
+#: src/command.c:1582
+#, c-format
+msgid "Upload slots: %d/%d  Download slots: %d/unlimited\n"
+msgstr "Uppladdningsplatser: %d/%d  Nedladningsplatser: %d/obegränsat\n"
+
+#: src/command.c:1592
+#, c-format
+msgid "Usage: %s CONNECTION ...\n"
+msgstr "Användning: %s ANSLUTNING ...\n"
+
+#: src/command.c:1601
+#, c-format
+msgid "%s: No such user connection.\n"
+msgstr "%s: Ingen sådan användaranslutning.\n"
+
+#: src/command.c:1615
+#, c-format
+msgid "Usage: %s STRING...\n"
+msgstr "Användning: %s STRÄNG...\n"
+
+#: src/command.c:1648
+msgid "Closed"
+msgstr "Stängd"
+
+#: src/command.c:1648
+msgid "Open"
+msgstr "Öppen"
+
+#: src/command.c:1649
+#, c-format
+msgid "%d. %s (%s) Results: %d\n"
+msgstr "%d. %s (%s) Träffar: %d\n"
+
+#: src/command.c:1660 src/command.c:1695
+#, c-format
+msgid "%s: Invalid search index.\n"
+msgstr "%s: Felaktigt index på sökning.\n"
+
+#: src/command.c:1664
+#, c-format
+msgid "Search %d:\n"
+msgstr "Sökning %d:\n"
+
+#: src/command.c:1687
+#, c-format
+msgid "Usage: %s INDEX\n"
+msgstr "Användning: %s INDEX\n"
+
+#: src/command.c:1735 src/command.c:1775
+#, c-format
+msgid "%s: No such alias.\n"
+msgstr "%s: Inget sådant alias.\n"
+
+#: src/command.c:1741
+#, c-format
+msgid "%s: Invalid alias name\n"
+msgstr "%s: Ogiltigt aliasnamn\n"
+
+#: src/command.c:1756
+#, c-format
+msgid "%s: Cannot override built-in command.\n"
+msgstr "%s: Kan inte överskrida inbyggt kommando.\n"
+
+#: src/command.c:1768
+#, c-format
+msgid "Usage: %s NAME ...\n"
+msgstr "Användning: %s NAMN ...\n"
+
+#: src/command.c:1812
+msgid "Queue already contains this file, ignoring\n"
+msgstr "Kön innehåller redan denna fil, ignorerar\n"
+
+#: src/command.c:1850
+#, c-format
+msgid "Usage: %s FILE ...\n"
+msgstr "Användning: %s FIL ...\n"
+
+#: src/command.c:1888
+#, c-format
+msgid "Matched %s\n"
+msgstr "Matchade %s\n"
+
+#: src/command.c:1897
+#, c-format
+msgid "Downloading %<PRIu64> %s in %<PRIu32> %s\n"
+msgstr "Laddar hem %<PRIu64> %s i %<PRIu32> %s\n"
+
+#: src/command.c:1899
+msgid "file"
+msgid_plural "files"
+msgstr[0] "fil"
+msgstr[1] "filer"
+
+#: src/command.c:1902
+#, c-format
+msgid "%s: No files to download.\n"
+msgstr "%s: Inga fler filer att ladda hem.\n"
+
+#: src/command.c:1910
+msgid "No free connections. Queued files for download.\n"
+msgstr "Inga lediga anslutningar. Köade fil för nedladdning.\n"
+
+#: src/command.c:1940
+msgid "missing host argument\n"
+msgstr "saknar värdargument\n"
+
+#: src/connection.c:44
+msgid "Invalid $Lock message: Key to short\n"
+msgstr "Felaktigt $Lock-meddelande: Nyckel för kort\n"
+
+#: src/filelist-in.c:250 src/user.c:544
+#, c-format
+msgid "%s: Cannot open file for reading - %s\n"
+msgstr "%s: Kan inte öppna fil för läsning - %s\n"
+
+#: src/filelist-in.c:256 src/main.c:117 src/main.c:836
+#, c-format
+msgid "%s: Cannot read from file - %s\n"
+msgstr "%s: Kan inte läsa från fil - %s\n"
+
+#: src/filelist-in.c:258 src/main.c:119
+#, c-format
+msgid "%s: Premature end of file\n"
+msgstr "%s: För tidigt slut av fil\n"
+
+#: src/filelist-in.c:261 src/filelist-in.c:265 src/fs.c:498 src/main.c:838
+#: src/main.c:842 src/screen.c:125 src/user.c:314
+#, c-format
+msgid "%s: Cannot close file - %s\n"
+msgstr "%s: Kan inte stänga fil - %s\n"
+
+#: src/filelist-in.c:269
+#, c-format
+msgid "%s: Invalid data, cannot decode\n"
+msgstr "%s: Felaktig data, kan inte tolka\n"
+
+#: src/filelist-in.c:426 src/lookup.c:308 src/main.c:373 src/main.c:1146
+#: src/user.c:1058
+#, c-format
+msgid "Cannot create pipe pair - %s\n"
+msgstr "Kan inte skapa par av rör - %s\n"
+
+#: src/filelist-in.c:431 src/hub.c:291 src/lookup.c:313 src/main.c:389
+#: src/main.c:966 src/main.c:1007 src/user.c:1104
+#, c-format
+msgid "Cannot set non-blocking flag - %s\n"
+msgstr "Kan inte ställa in icke-blockerande flagga - %s\n"
+
+#: src/filelist-in.c:437 src/lookup.c:319 src/main.c:379
+#, c-format
+msgid "Cannot create process - %s\n"
+msgstr "Kan inte skapa process - %s\n"
+
+#: src/fs.c:379
+#, c-format
+msgid "%s: Cannot open directory - %s\n"
+msgstr "%s: Kan inte öppna katalog - %s\n"
+
+#: src/fs.c:408
+#, c-format
+msgid "%s: Not a regular file or directory, ignoring\n"
+msgstr "%s: Inte en normal fil eller katalogen, ignorerar\n"
+
+#: src/fs.c:413
+#, c-format
+msgid "%s: Cannot read directory - %s\n"
+msgstr "%s: Kan inte läsa katalog - %s\n"
+
+#: src/fs.c:415
+#, c-format
+msgid "%s: Cannot close directory - %s\n"
+msgstr "%s: Kan inte stänga katalog - %s\n"
+
+#: src/fs.c:456
+#, c-format
+msgid "Scanning directory %s\n"
+msgstr "Skannar katalogen %s\n"
+
+#: src/fs.c:473 src/main.c:1349 src/main.c:1367
+#, c-format
+msgid "%s: Cannot remove file - %s\n"
+msgstr "%s: Kan inte ta bort fil - %s\n"
+
+#: src/fs.c:481 src/user.c:436
+#, c-format
+msgid "%s: Cannot open file for writing - %s\n"
+msgstr "%s: Kan inte öppna fil för skrivning - %s\n"
+
+#: src/fs.c:491 src/main.c:114
+#, c-format
+msgid "%s: Cannot write to file - %s\n"
+msgstr "%s: Kan inte skriva till fil - %s\n"
+
+#: src/hub.c:166 src/main.c:230
+msgid "UL"
+msgstr "UL"
+
+#: src/hub.c:171 src/main.c:230
+msgid "DL"
+msgstr "NL"
+
+#: src/hub.c:223
+#, c-format
+msgid "Cannot append to hub send queue - %s\n"
+msgstr "Kan inte lägga till data i hubbens sändkö - %s\n"
+
+#: src/hub.c:228 src/user.c:205
+msgid "-->"
+msgstr "-->"
+
+#: src/hub.c:232 src/hub.c:823 src/hub.c:888
+msgid "hub"
+msgstr "hubb"
+
+#: src/hub.c:250
+#, c-format
+msgid "%s: Cannot look up address - %s\n"
+msgstr "%s: Kan inte slå upp adress - %s\n"
+
+#: src/hub.c:273
+#, c-format
+msgid "Looking up IP address for %s\n"
+msgstr "Slår upp IP-adress för %s\n"
+
+#: src/hub.c:284 src/main.c:961 src/main.c:1000 src/user.c:1093
+#, c-format
+msgid "Cannot create socket - %s\n"
+msgstr "Kan inte skapa uttag - %s\n"
+
+#: src/hub.c:296
+#, c-format
+msgid "Connecting to hub on %s.\n"
+msgstr "Ansluter till hubb på %s.\n"
+
+#: src/hub.c:299
+#, c-format
+msgid "%s: Cannot connect - %s\n"
+msgstr "%s: Kan inte ansluta - %s\n"
+
+#: src/hub.c:313
+msgid "Shutting down hub connection.\n"
+msgstr "Stänger ner anslutning till hubb.\n"
+
+#: src/hub.c:322 src/main.c:392 src/main.c:946 src/main.c:1064
+#, c-format
+msgid "Cannot close socket - %s\n"
+msgstr "Kan inte stänga uttag - %s\n"
+
+#: src/hub.c:348 src/user.c:149 src/user.c:754
+#, c-format
+msgid "Received %s message in wrong state.\n"
+msgstr "Mottog meddelande %s i fel tillstånd.\n"
+
+#: src/hub.c:389 src/user.c:654
+msgid "Invalid $Lock message: Missing Pk value\n"
+msgstr "Felaktigt $Lock-meddelande: Pk-värde saknas\n"
+
+#: src/hub.c:421
+msgid "Hub requires password.\n"
+msgstr "Hubben kräver ett lösenord.\n"
+
+#: src/hub.c:425
+msgid "Sending password to hub.\n"
+msgstr "Skickar lösenord till hubben.\n"
+
+#: src/hub.c:430
+msgid "Password not accepted.\n"
+msgstr "Lösenordet godtogs inte.\n"
+
+#: src/hub.c:434
+msgid "You have received operator status.\n"
+msgstr "Du har fått operatörsbehörighet.\n"
+
+#: src/hub.c:439
+#, c-format
+msgid "Hub name is %s.\n"
+msgstr "Hubbens namn är %s.\n"
+
+#: src/hub.c:451
+msgid "Hub did not accept nick. Nick may be in use.\n"
+msgstr "Hubben godtog inte användarnamnet. Det kan vara upptaget.\n"
+
+#: src/hub.c:459
+msgid "Nick accepted. You are now logged in.\n"
+msgstr "Användarnamnet godtogs. Du har nu loggats in.\n"
+
+#: src/hub.c:464
+#, c-format
+msgid "Nick accepted but modified to %s. You are now logged in.\n"
+msgstr "Användarnamnet godtogs men ändrades till %s. Du har nu loggats in.\n"
+
+#: src/hub.c:479
+#, c-format
+msgid "User %s logged in.\n"
+msgstr "Användaren %s loggade in.\n"
+
+#: src/hub.c:497
+msgid "Invalid $MyINFO message: Missing $ALL parameter, ignoring\n"
+msgstr "Felaktigt $MyINFO-meddelande: Saknar parametern $ALL, ignorerar\n"
+
+#: src/hub.c:503
+msgid "Invalid $MyINFO message: Missing nick parameter, ignoring\n"
+msgstr ""
+"Felaktigt $MyINFO-meddelande: Saknar parametern användarnamn, ignorerar\n"
+
+#: src/hub.c:516
+msgid "Invalid $MyINFO message: Missing description parameter, ignoring\n"
+msgstr ""
+"Felaktigt $MyINFO-meddelande: Saknar parametern beskrivning, ignorerar\n"
+
+#: src/hub.c:524
+msgid "Invalid $MyINFO message: Missing description separator, ignoring\n"
+msgstr ""
+"Felaktigt $MyINFO-meddelande: Saknars beskrivningsseparator, ignorerar\n"
+
+#: src/hub.c:530
+msgid "Invalid $MyINFO message: Missing connection speed, ignoring\n"
+msgstr ""
+"Felaktigt $MyINFO-meddelande: Saknar parametern anslutningshastighet, "
+"ignorerar\n"
+
+#: src/hub.c:545
+msgid "Invalid $MyINFO message: Missing e-mail address, ignoring\n"
+msgstr ""
+"Felaktigt $MyINFO-meddelande: Saknar parametern e-postadress, ignorerar\n"
+
+#: src/hub.c:553
+msgid "Invalid $MyINFO message: Missing share size, ignoring\n"
+msgstr ""
+"Felaktigt $MyINFO-meddelande: Saknare parametern utdelningsstorlek, "
+"ignorerar\n"
+
+#: src/hub.c:557
+msgid "Invalid $MyINFO message: Invalid share size, ignoring\n"
+msgstr "Felaktigt $MyINFO-meddelande: Felaktig utdelningsstorlek, ignorerar\n"
+
+#: src/hub.c:567
+msgid "Hub is full.\n"
+msgstr "Hubben är full.\n"
+
+#: src/hub.c:598 src/hub.c:601
+#, c-format
+msgid "Public: %s\n"
+msgstr "Publikt: %s\n"
+
+#: src/hub.c:598 src/hub.c:601 src/hub.c:634 src/hub.c:640
+#, c-format
+msgid " | %s\n"
+msgstr " | %s\n"
+
+#: src/hub.c:613
+msgid "Invalid $To message: Missing text separator, ignoring\n"
+msgstr "Felaktigt $To-meddelande: Saknar textseparator, ignorerar\n"
+
+#: src/hub.c:631 src/hub.c:638
+#, c-format
+msgid "Private: [%s] %s\n"
+msgstr "Privat: [%s] %s\n"
+
+#: src/hub.c:649
+msgid "Invalid $ConnectToMe message: Missing or invalid nick\n"
+msgstr ""
+"Felaktigt $ConnectToMe-meddelande: Användarnamnet saknas eller är felaktigt\n"
+
+#: src/hub.c:653
+msgid "Invalid $ConnectToMe message: Invalid address specification.\n"
+msgstr "Felaktigt $ConnectToMe-meddelande: Felaktig adresspecifikation.\n"
+
+#: src/hub.c:657
+#, c-format
+msgid "Connecting to user on %s\n"
+msgstr "Ansluter till användare på %s\n"
+
+#: src/hub.c:666
+msgid "Invalid $RevConnectToMe message: Missing nick parameter\n"
+msgstr "Felaktigt $RevConnectToMe-meddelande: Saknar parametern användarnamn\n"
+
+#: src/hub.c:670
+msgid "Invalid $RevConnectToMe message: Remote nick is our nick\n"
+msgstr ""
+"Felaktigt $RevConnectToMe-meddelande: Fjärranvändarens namn är samma som "
+"vårt\n"
+
+#: src/hub.c:675
+#, c-format
+msgid "Invalid $RevConnectToMe message: Unknown user %s, ignoring\n"
+msgstr "Invalid $RevConnectToMe-meddelande: Okänd användare %s, ignorerar\n"
+
+#: src/hub.c:680 src/main.c:199 src/main.c:213
+#, c-format
+msgid "No more connections to user %s allowed.\n"
+msgstr "Inga fler anslutningar till användaren %s är tillåtna.\n"
+
+#: src/hub.c:686
+#, c-format
+msgid "User %s is also passive. Cannot establish connection.\n"
+msgstr "Användaren %s är också passiv. Kan inte upprätta anslutning.\n"
+
+#: src/hub.c:761
+#, c-format
+msgid "Invalid $Quit message: Unknown user %s.\n"
+msgstr "Felaktigt $Quit-meddelande: Okänd användare %s.\n"
+
+#: src/hub.c:773
+msgid "Invalid $Search message: Missing source specification.\n"
+msgstr "Felaktigt $Search-meddelande: Saknar källspecifikation.\n"
+
+#: src/hub.c:777
+msgid "Invalid $Search message: Invalid search specification.\n"
+msgstr "Felaktigt $Search-meddelande: Felaktig sökspecifikation.\n"
+
+#: src/hub.c:783
+#, c-format
+msgid "Invalid $Search message: Unknown user %s.\n"
+msgstr "Felaktigt $Search-meddelande: Okänd användare %s.\n"
+
+#: src/hub.c:793
+msgid "Invalid $Search message: Invalid address specification.\n"
+msgstr "Felaktigt $Search-meddelande: Felaktig adresspecifikation.\n"
+
+#: src/hub.c:832 src/user.c:848
+msgid "<--"
+msgstr "<--"
+
+#: src/hub.c:856 src/user.c:873
+#, c-format
+msgid "Cannot get error status - %s\n"
+msgstr "Kan inte avläsa felstatus - %s\n"
+
+#: src/hub.c:861 src/user.c:878 src/user.c:1115
+#, c-format
+msgid "Cannot connect - %s\n"
+msgstr "Kan inte ansluta - %s\n"
+
+#: src/hub.c:869 src/main.c:1039
+#, c-format
+msgid "Cannot get socket address - %s\n"
+msgstr "Kan inte avläsa adress för uttag - %s\n"
+
+#: src/hub.c:876
+#, c-format
+msgid "Connected to hub from %s.\n"
+msgstr "Ansluten till hubb från %s.\n"
+
+#: src/hub.c:916
+#, c-format
+msgid "ConnectToMe already sent to user %s. Waiting.\n"
+msgstr "ConnectToMe har redan skickats till användaren %s. Avvaktar.\n"
+
+#: src/hub.c:927
+#, c-format
+msgid "RevConnectToMe already sent to user %s. Waiting.\n"
+msgstr "RevConnectToMe har redan skickats till användaren %s. Avvaktar.\n"
+
+#: src/hub.c:931
+#, c-format
+msgid "User %s is also passive. Cannot communicate.\n"
+msgstr "Användaren %s är också passiv. Kan inte kommunicera.\n"
+
+#: src/huffman.c:332
+msgid "Incorrect parity, ignoring\n"
+msgstr "Felaktig paritet, ignorerar\n"
+
+#: src/main.c:174
+#, c-format
+msgid "User connection %s renamed to %s.\n"
+msgstr "Användaranslutning %s bytte namn till %s.\n"
+
+#: src/main.c:265
+#, c-format
+msgid " in %s (%s/s)"
+msgstr " på %s (%s/s)"
+
+#: src/main.c:279
+#, c-format
+msgid "%s: %s of %s %s%s. %s %s%s.\n"
+msgstr "%s: %s av %s %s%s. %s %s%s.\n"
+
+#: src/main.c:281
+msgid "Upload"
+msgstr "Uppladdning"
+
+#: src/main.c:281
+msgid "Download"
+msgstr "Nedladdning"
+
+#: src/main.c:283
+msgid "succeeded"
+msgstr "lyckades"
+
+#: src/main.c:283
+msgid "failed"
+msgstr "misslyckades"
+
+#: src/main.c:286
+msgid "transferred"
+msgid_plural "transferred"
+msgstr[0] "överfört"
+msgstr[1] "överförda"
+
+#: src/main.c:342
+#, c-format
+msgid "%s: Cannot rename file to %s - %s\n"
+msgstr "%s: Kan inte ändra namn på fil till %s - %s\n"
+
+#: src/main.c:343
+msgid "cannot rename file"
+msgstr "kan inte ändra namn på fil"
+
+#: src/main.c:386 src/main.c:469 src/user.c:1055 src/user.c:1168
+#: src/user.c:1170
+#, c-format
+msgid "Cannot close pipe - %s\n"
+msgstr "Kan inte stänga rör - %s\n"
+
+#. TRANSLATORS: This represents the connection name used when
+#. * the user name is not yet known. It must not contains '|',
+#. * because that's used to distinguish between 'unknown' and
+#. * (perhaps partially) identified connections.
+#.
+#: src/main.c:419
+#, c-format
+msgid "unknown%<PRIu32>"
+msgstr "okänd%<PRIu32>"
+
+#: src/main.c:440
+#, c-format
+msgid "Shutting down user connection process for %s.\n"
+msgstr "Stänger ner process för användaranslutning %s.\n"
+
+#: src/main.c:494
+#, c-format
+msgid "Downloading %3d%% (at %5d kb/s) %s"
+msgstr "Laddar hem  %3d%% (med %5d kb/s) %s"
+
+#: src/main.c:495
+#, c-format
+msgid "Uploading   %3d%% (at %5d kb/s) %s"
+msgstr "Laddar upp  %3d%% (med %5d kb/s) %s"
+
+#: src/main.c:498
+msgid "Idle"
+msgstr "Overksam"
+
+#: src/main.c:520 src/main.c:535
+#, c-format
+msgid "user process %s"
+msgstr "användarprocess %s"
+
+#: src/main.c:549
+#, c-format
+msgid "User %s: %s"
+msgstr "Användare %s: %s"
+
+#: src/main.c:610
+#, c-format
+msgid "%s: Starting %s of %s (%<PRIu64> of %<PRIu64> %s).\n"
+msgstr "%s: Startar %s av %s (%<PRIu64> av %<PRIu64> %s).\n"
+
+#: src/main.c:612 src/main.c:620
+msgid "upload"
+msgstr "uppladdning"
+
+#: src/main.c:612 src/main.c:620
+msgid "download"
+msgstr "nedladdning"
+
+#: src/main.c:618
+#, c-format
+msgid "%s: Starting %s of %s (%<PRIu64> %s).\n"
+msgstr "%s: Startar %s av %s (%<PRIu64> %s).\n"
+
+#: src/main.c:702
+#, c-format
+msgid "Received unknown message %d from user process, shutting down process.\n"
+msgstr "Mottog meddelande %d från användarprocess.\n"
+
+#: src/main.c:746 src/main.c:747 src/user.c:968 src/user.c:969
+#, c-format
+msgid "Cannot write to signal pipe - %s\n"
+msgstr "Kan inte skriva till signalrör - %s\n"
+
+#: src/main.c:762 src/user.c:984
+#, c-format
+msgid "Cannot read from signal pipe - %s\n"
+msgstr "Kan inte läsa från signalrör - %s\n"
+
+#: src/main.c:768 src/user.c:990
+msgid "Received TERM signal, shutting down.\n"
+msgstr "Mottog TERM-signal, stänger ned.\n"
+
+#: src/main.c:784
+msgid "Shell process"
+msgstr "Programprocess"
+
+#: src/main.c:786
+msgid "Lookup process"
+msgstr "Uppslagsprocess"
+
+#: src/main.c:789
+msgid "Parse process"
+msgstr "Tolkningsprocess"
+
+#: src/main.c:793
+msgid "User process"
+msgstr "Användarprocess"
+
+#: src/main.c:796
+#, c-format
+msgid "%s exited with return code %d.\n"
+msgstr "%s avslutades med returkod %d.\n"
+
+#: src/main.c:802
+#, c-format
+msgid "%s terminated by signal %s.\n"
+msgstr "%s avslutades av signalen %s.\n"
+
+#: src/main.c:806
+#, c-format
+msgid "Cannot wait for processes - %s\n"
+msgstr "Kan inte vänta på processer - %s\n"
+
+#: src/main.c:825
+#, c-format
+msgid "%s: Cannot open file - %s\n"
+msgstr "%s: Kan inte öppna fil - %s\n"
+
+#: src/main.c:858
+#, c-format
+msgid "Sharing %<PRIu64> %s (%s) totally\n"
+msgstr "Delar %<PRIu64> %s (%s) totalt\n"
+
+#: src/main.c:875 src/main.c:906 src/main.c:928
+msgid "user (search result)"
+msgstr "användare (sökresultat)"
+
+#: src/main.c:910
+msgid "<=="
+msgstr "<=="
+
+#: src/main.c:932
+msgid "==>"
+msgstr "==>"
+
+#: src/main.c:972 src/main.c:1015
+#, c-format
+msgid "Cannot enable address reusing - %s\n"
+msgstr "Kan inte aktivera återanvändning av adress - %s\n"
+
+#: src/main.c:980 src/main.c:1024
+#, c-format
+msgid "Cannot bind to address - %s\n"
+msgstr "Kan inte binda till adress - %s\n"
+
+#: src/main.c:1032
+#, c-format
+msgid "Cannot listen - %s\n"
+msgstr "Kan inte lyssna - %s\n"
+
+#: src/main.c:1044
+#, c-format
+msgid "Listening on %s.\n"
+msgstr "Lyssnar på %s.\n"
+
+#: src/main.c:1083
+#, c-format
+msgid "Cannot accept user connection - %s\n"
+msgstr "Kan inte ta emot användaranslutning - %s\n"
+
+#: src/main.c:1087
+#, c-format
+msgid "User from %s connected.\n"
+msgstr "Användare från %s anslöt.\n"
+
+#: src/main.c:1103
+#, c-format
+msgid "%s: Cannot set locale: %s\n"
+msgstr "%s: Kan inte ställa in lokal - %s\n"
+
+#: src/main.c:1106
+#, c-format
+msgid "%s: Cannot bind message domain: %s\n"
+msgstr "%s: Kan inte binda meddelandedomän - %s\n"
+
+#: src/main.c:1108
+#, c-format
+msgid "%s: Cannot set message domain: %s\n"
+msgstr "%s: Kan inte ställa in meddelandedomän - %s\n"
+
+#: src/main.c:1130
+#, c-format
+msgid "Usage: %s [OPTION]...\n"
+msgstr "Användning: %s [FLAGGA]...\n"
+
+#: src/main.c:1131
+msgid "Start microdc, a command-line based Direct Connect client.\n"
+msgstr "Starar microdc, en kommandoradbaserad Direct Connect-klient.\n"
+
+#: src/main.c:1132
+#, c-format
+msgid "  -n, --no-config  do not read config file on startup\n"
+msgstr "  -n, --no-config  läs inte konfigurationsfil vid uppstart\n"
+
+#: src/main.c:1133
+#, c-format
+msgid "      --help       display this help and exit\n"
+msgstr "      --help       visa denna hjälptext och avsluta\n"
+
+#: src/main.c:1134
+#, c-format
+msgid "      --version    output version information and exit\n"
+msgstr "      --version    visa versionsinformation och avsluta\n"
+
+#: src/main.c:1135
+#, c-format
+msgid ""
+"\n"
+"Report bugs to <%s>.\n"
+msgstr ""
+"\n"
+"Rapportera fel till <%1$s>.\n"
+"Rapportera kommentarer om översättningen till <%1$s>.\n"
+
+#: src/main.c:1153 src/user.c:1063
+#, c-format
+msgid "Cannot empty signal set - %s\n"
+msgstr "Kan inte tömma signaluppsättning - %s\n"
+
+#: src/main.c:1164 src/main.c:1168 src/main.c:1172 src/main.c:1176
+#: src/main.c:1181 src/user.c:1076 src/user.c:1083
+#, c-format
+msgid "Cannot register signal handler - %s\n"
+msgstr "Kan inte registrera signalhanterare - %s\n"
+
+#: src/main.c:1210
+#, c-format
+msgid "Cannot find directory for temporary files - %s\n"
+msgstr "Kan inte hitta katalog för tillfälliga filer - %s\n"
+
+#: src/main.c:1251 src/user.c:1133
+#, c-format
+msgid "Cannot select - %s\n"
+msgstr "select-anropet misslyckades - %s\n"
+
+#: src/main.c:1333 src/main.c:1335 src/variables.c:311 src/variables.c:313
+#, c-format
+msgid "cannot close character convertor - %s\n"
+msgstr "kan inte stänga teckenuppsättningskonverterare - %s\n"
+
+#: src/main.c:1374
+#, c-format
+msgid "Cannot close search results socket - %s\n"
+msgstr "Kan inte stänga uttag för sökresultat - %s\n"
+
+#: src/main.c:1376
+#, c-format
+msgid "Cannot close user connections socket - %s\n"
+msgstr "Kan inte stänga uttag för användaranslutningar - %s\n"
+
+#: src/main.c:1378 src/main.c:1380 src/user.c:1164 src/user.c:1166
+#, c-format
+msgid "Cannot close signal pipe - %s\n"
+msgstr "Kan inte stänga signalrör - %s\n"
+
+#: src/screen.c:132
+msgid "No longer logging to file.\n"
+msgstr "Loggar inte längre till fil.\n"
+
+#: src/screen.c:137
+#, c-format
+msgid "%s: Cannot open file for appending - %s\n"
+msgstr "%s: Kan inte öppna fil för att lägga till - %s\n"
+
+#: src/screen.c:142
+#, c-format
+msgid "Logging to `%s'.\n"
+msgstr "Loggar till \"%s\".\n"
+
+#: src/screen.c:369
+#, c-format
+msgid "%s: Cannot write history - %s\n"
+msgstr "%s: Kan inte skriva historik - %s\n"
+
+#: src/screen.c:568
+#, c-format
+msgid "%s: Cannot read history - %s\n"
+msgstr "%s: Kan inte läsa historik - %s\n"
+
+#: src/search.c:322 src/search.c:324
+#, c-format
+msgid "Sent %d/%d search results to %s.\n"
+msgstr "Skickade %d/%d sökresultat till %s.\n"
+
+#: src/search.c:327
+msgid "No search results.\n"
+msgstr "Inga sökresultat.\n"
+
+#: src/search.c:512
+msgid "No pattern to match.\n"
+msgstr "Inget mönster att matcha.\n"
+
+#: src/search.c:529
+#, c-format
+msgid "Reissuing search %d.\n"
+msgstr "Utför sökning %d på nytt.\n"
+
+#: src/search.c:533
+#, c-format
+msgid "Issuing new search with index %d.\n"
+msgstr "Utför ny sökning med index %d.\n"
+
+#: src/search.c:573
+#, c-format
+msgid "Unterminated or invalid $SR, discarding: %s\n"
+msgstr "Oterminerad eller felaktig $SR, kastar: %s\n"
+
+#: src/search.c:590
+#, c-format
+msgid "Result has been added earlier to search %d.\n"
+msgstr "Resultat hade tidigare lagts till i sökning %d.\n"
+
+#: src/search.c:596
+#, c-format
+msgid "Added result to search %d (now %d result).\n"
+msgid_plural "Added result to search %d (now %d results).\n"
+msgstr[0] "Nya resultat lades till sökning %d (nu %d resultat).\n"
+msgstr[1] "Nya resultat lades till sökning %d (nu %d resultat).\n"
+
+#: src/user.c:124
+msgid "main process"
+msgstr "huvudprocess"
+
+#: src/user.c:209 src/user.c:828 src/user.c:922 src/user.c:942
+msgid "user"
+msgstr "användare"
+
+#: src/user.c:255
+msgid "Too many connections to user, or no free slots.\n"
+msgstr "För många anslutningar till användare, eller inga lediga platser.\n"
+
+#: src/user.c:297
+#, c-format
+msgid "User %s not on hub, or too many connections to user.\n"
+msgstr ""
+"Användaren %s finns inte på hubben, eller för många anslutningar till "
+"användaren.\n"
+
+#: src/user.c:365
+msgid "No more files to download.\n"
+msgstr "Inga fler filer att ladda hem.\n"
+
+#: src/user.c:377
+#, c-format
+msgid "%s: Cannot get file status: %s\n"
+msgstr "%s: Kan inte avläsa filstatus: %s\n"
+
+#: src/user.c:378 src/user.c:387 src/user.c:437 src/user.c:443 src/user.c:533
+#: src/user.c:546 src/user.c:552 src/user.c:611 src/user.c:912
+msgid "local error"
+msgstr "lokalt fel"
+
+#: src/user.c:386
+#, c-format
+msgid "%s: File exists and is not a regular file\n"
+msgstr "%s: Filen finns och är inte en vanlig fil\n"
+
+#: src/user.c:397 src/user.c:449 src/user.c:557 src/user.c:923
+msgid "communication error"
+msgstr "kommunikationsfel"
+
+#: src/user.c:420
+#, c-format
+msgid ""
+"remote file is smaller than local (expected %<PRIu64>, got %<PRIu64> %s)"
+msgstr ""
+"fjärrfilen är mindre än den lokala (förväntade %<PRIu64>, fick %<PRIu64> %s)"
+
+#: src/user.c:442
+#, c-format
+msgid "%s: Cannot seek to resume position - %s\n"
+msgstr "%s: Kan inte söka till omstartspositionen - %s\n"
+
+#: src/user.c:462 src/user.c:584
+msgid "no data to transfer"
+msgstr "ingen data att överföra"
+
+#: src/user.c:525
+#, c-format
+msgid "%s: No such shared file\n"
+msgstr "%s: Ingen sådant delad fil\n"
+
+#: src/user.c:527
+msgid "no such shared file"
+msgstr "ingen sådant delad fil"
+
+#: src/user.c:537
+#, c-format
+msgid "%s: Resume offset %<PRIu64> outside file\n"
+msgstr "%s: Omstartsposition %<PRIu64> utanför filen\n"
+
+#: src/user.c:539
+msgid "resume offset out of range"
+msgstr "återstartsposition utanför området"
+
+#: src/user.c:550
+#, c-format
+msgid "%s: Cannot seek in file - %s\n"
+msgstr "%s: Kan inte söka i fil - %s\n"
+
+#: src/user.c:620 src/user.c:932
+msgid "transfer complete"
+msgstr "överföringar färdiga"
+
+#: src/user.c:682
+msgid "Invalid $Direction message: Missing direction parameter\n"
+msgstr "Felaktigt $Direction-meddelande: Saknar parameter för riktning\n"
+
+#: src/user.c:691
+msgid "Invalid $Direction message: Invalid direction parameter\n"
+msgstr "Felaktigt $Direction-meddelande: Felaktig parameter för riktning\n"
+
+#: src/user.c:698
+msgid "Invalid $Direction message: Missing challenge parameter\n"
+msgstr "Felaktigt $Direction-meddelande: Saknar parameter för utmaning.\n"
+
+#: src/user.c:703
+msgid "Invalid $Direction message: Invalid challenge parameter\n"
+msgstr "Felaktigt $Direction-meddelande: Felaktig parameter för utmaning.\n"
+
+#: src/user.c:724
+msgid "User does not want to download, nor do we.\n"
+msgstr "Användaren vill inte ladda ner, och inte vi heller.\n"
+
+#: src/user.c:741
+msgid "Invalid $Key message: Incorrect key, ignoring\n"
+msgstr "Felaktigt $Key-meddelande: Felaktig nyckel, ignorerar\n"
+
+#: src/user.c:760
+msgid "Invalid $Get message: Missing offset, assuming start\n"
+msgstr "Felaktigt $Get-meddelande: Saknar position, antar start\n"
+
+#: src/user.c:765
+msgid "Invalid $Get message: Offset not integer\n"
+msgstr "Felaktigt $Get-meddelande: Position är inte ett heltal\n"
+
+#: src/user.c:775
+msgid "remote did not want file"
+msgstr "fjärranvändaren ville inte ha filen"
+
+#: src/user.c:782
+msgid "remote is maxed out"
+msgstr "fjärranvändaren har inga lediga platser"
+
+#: src/user.c:791
+msgid "protocol error: invalid $FileLength message"
+msgstr "protokollfel: felaktigt $FileLength-meddelande"
+
+#: src/user.c:800
+msgid "file not available on remote"
+msgstr "filen är inte tillgänglig hos fjärranvändaren"
+
+#: src/user.c:802
+#, c-format
+msgid "remote error: %s"
+msgstr "fjärrfel: %s"
+
+#: src/user.c:807
+#, c-format
+msgid "Received error from user: %s\n"
+msgstr "Mottog fel från användare: %s\n"
+
+#: src/user.c:892
+msgid "Connected to user.\n"
+msgstr "Ansluten till användare.\n"
+
+#: src/user.c:993
+#, c-format
+msgid "Idle timeout (%d seconds)\n"
+msgstr "Inaktivitetstimeout (%d sekunder)\n"
+
+#: src/user.c:1024
+msgid "Received unknown message from main process, shutting down process.\n"
+msgstr "Mottog okänt meddelande från huvudprocess, stänger ner process.\n"
+
+#: src/user.c:1162
+#, c-format
+msgid "Cannot close transfer file - %s\n"
+msgstr "Kan inte stänga överföringsfil - %s\n"
+
+#: src/user.c:1172
+#, c-format
+msgid "Cannot close user connection - %s\n"
+msgstr "Kan inte stänga användaranslutning - %s\n"
+
+#: src/util.c:113
+#, c-format
+msgid "%s: Cannot create directory - %s\n"
+msgstr "%s: Kan inte skapa katalog - %s\n"
+
+#. TRANSLATORS: This comma-separated list specifies
+#. * all strings which are considered negative boolean
+#. * values for variables such as `active'.
+#. * Retain the default English strings and add the
+#. * localized ones.
+#.
+#: src/variables.c:52
+msgid "0,off,no,false"
+msgstr "0,off,no,false,av,nej"
+
+#. TRANSLATORS: This comma-separated list specifies
+#. * all strings which are considered positive boolean
+#. * values for variables such as `active'.
+#. * Retain the default English strings and add the
+#. * localized ones.
+#.
+#: src/variables.c:59
+msgid "1,on,yes,true"
+msgstr "1,on,yes,true,på,ja"
+
+#: src/variables.c:288 src/variables.c:324 src/variables.c:359
+#: src/variables.c:388 src/variables.c:403 src/variables.c:423
+#: src/variables.c:444 src/variables.c:464 src/variables.c:546
+#: src/variables.c:571 src/variables.c:690 src/variables.c:709
+#: src/variables.c:733
+msgid "too many arguments\n"
+msgstr "för många argument\n"
+
+#: src/variables.c:296
+msgid "cannot get current character set"
+msgstr "kan inte avläsa nuvarande teckenuppsättning"
+
+#: src/variables.c:301 src/variables.c:306
+#, c-format
+msgid "cannot create character set convertor - %s\n"
+msgstr "kan inte skapa teckenuppsättningskonverterare - %s\n"
+
+#: src/variables.c:326
+msgid "Nick cannot be empty.\n"
+msgstr "Användarnamn kan inte vara tomt.\n"
+
+#: src/variables.c:328
+msgid "Nick is too long - max length is 35 characters.\n"
+msgstr "Användarnamn är för långt - max längd är 35 tecken.\n"
+
+#: src/variables.c:330
+msgid "Nick may not contain `$', `|' or space characters.\n"
+msgstr ""
+"Användarnamn får inte innehålla tecknen \"$\", \"|\" eller mellanslag.\n"
+
+#: src/variables.c:343
+msgid "Description may not contain `$' or `|' characters.\n"
+msgstr "Beskrivning får inte innehålla tecknen \"$\" eller \"|\".\n"
+
+#: src/variables.c:346
+msgid "Description is too long - max length is 35 characters.\n"
+msgstr "Beskrivning är för lång - max längd är 35 tecken.\n"
+
+#: src/variables.c:361
+msgid "E-mail may not contain `$' or `|' characters.\n"
+msgstr "E-postadress får inte innehålla tecknen \"$\" eller \"|\".\n"
+
+#: src/variables.c:363
+msgid "E-mail is too long - max length is 35 characters.\n"
+msgstr "E-postadress är för lång - max längd är 35 tecken.\n"
+
+#: src/variables.c:376
+msgid "Tag may not contain `$' or `|' characters.\n"
+msgstr "Tagg får inte innehålla tecknen \"$\" eller \"|\".\n"
+
+#: src/variables.c:390
+msgid "Speed may not contain `$' or `|' characters.\n"
+msgstr "Hastighet får inte innehålla tecknen \"$\" eller \"|\".\n"
+
+#: src/variables.c:411 src/variables.c:431 src/variables.c:452
+#, c-format
+msgid "%s: Not a directory\n"
+msgstr "%s: Inte en katalog\n"
+
+#: src/variables.c:468
+#, c-format
+msgid "Invalid slot number `%s'\n"
+msgstr "Felaktigt platsnummer \"%s\"\n"
+
+#: src/variables.c:550
+msgid "Specify active as `0', `no', `off', `1', `yes', or `on'.\n"
+msgstr "Ange aktiv som \"0\", \"nej\", \"av\", \"1\", \"ja\", eller \"på\".\n"
+
+#: src/variables.c:554 src/variables.c:702
+msgid "Active setting not changed.\n"
+msgstr "Inställning för aktiv ändrades inte.\n"
+
+#: src/variables.c:576
+msgid "Removing listening address.\n"
+msgstr "Tar bort manuell adress för anslutningar.\n"
+
+#: src/variables.c:581
+#, c-format
+msgid "%s: Specify listen address as an IP address\n"
+msgstr "%s: Ange anslutningsadress som en IP-adress\n"
+
+#: src/variables.c:596
+#, c-format
+msgid "Listening address set to %s.\n"
+msgstr "Manuell adress för anslutningar ändrad till %s.\n"
+
+#: src/variables.c:661
+#, c-format
+msgid "No flag by the name %s, display flags not changed.\n"
+msgstr "Ingen flagga med namnet %s finns, visningsflaggor har inte ändrats.\n"
+
+#: src/variables.c:668
+msgid "Cannot set and add or delete flags at the same time.\n"
+msgstr "Kan inte ställa in och lägga till eller ta bort flaggor samtidigt.\n"
+
+#: src/variables.c:697
+#, c-format
+msgid "Invalid value `%s' for port number.\n"
+msgstr "Felaktigt portnummer \"%s\"\n"
+
+#: src/variables.c:726
+msgid "on"
+msgstr "på"
+
+#: src/variables.c:726
+msgid "off"
+msgstr "av"
+
+#: src/variables.c:737
+msgid "Removing current password.\n"
+msgstr "Tar bort nuvarande lösenord.\n"
+
+#: src/variables.c:741
+msgid "Password may not contain `|' characters.\n"
+msgstr "Lösenord får inte innehålla tecknet \"|\".\n"
+
+#: src/variables.c:843
+#, c-format
+msgid "No value is set for `%s'.\n"
+msgstr "Inget värde har sats för \"%s\".\n"
+
+#: src/variables.c:845
+#, c-format
+msgid ""
+"Current value for `%s':\n"
+"%s\n"
+msgstr ""
+"Nuvarande värde för \"%s\":\n"
+"%s\n"
+
+#: src/common/optparser.c:93
+#, c-format
+msgid "option `--%s' is ambiguous"
+msgstr "flaggan \"%s\" är tvetydig"
+
+#: src/common/optparser.c:101
+#, c-format
+msgid "unrecognized option `--%s'"
+msgstr "okänd flagga \"--%s\""
+
+#: src/common/optparser.c:181 src/common/optparser.c:186
+#, c-format
+msgid "invalid option -- %c"
+msgstr "ogiltig flagga -- %c"
+
+#: src/common/optparser.c:206
+#, c-format
+msgid "option requires an argument -- %c"
+msgstr "flaggan kräver ett argument -- %c"
+
+#: src/common/optparser.c:258
+#, c-format
+msgid "option `--%s' doesn't allow an argument"
+msgstr "flaggan \"--%s\" tar inget argument"
+
+#: src/common/optparser.c:266
+#, c-format
+msgid "option `--%s' requires an argument"
+msgstr "flaggan \"%s\" kräver ett argument"
+
+#~ msgid "%s|UL"
+#~ msgstr "%s|UL"
+
+#~ msgid "%s|DL"
+#~ msgstr "%s|DL"
+
+#~ msgid "Hub state %s\n"
+#~ msgstr "Hubbens tillstånd %s\n"
+
+#~ msgid "User %s validated as %s\n"
+#~ msgstr "Användaren %s validerades som %s\n"
+
+#~ msgid "Logical communication error with user process (during message %d).\n"
+#~ msgstr ""
+#~ "Logiskt kommunikationsfel med användarprocess (vid meddelande %d).\n"
+
+#~ msgid "%s: Download of %s %s (%s). %<PRIu64> %s.\n"
+#~ msgstr "%s: Nedladdning av %s %s (%s). %<PRIu64> %s.\n"
+
+#~ msgid "%s: Download of %s %s but unqueued (%s). %<PRIu64> %s.\n"
+#~ msgstr "%s: Nedladdning av %s %s men ej längre i kö (%s). %<PRIu64> %s.\n"
+
+#~ msgid "Cannot create socket pair - %s\n"
+#~ msgstr "Kan inte skapa par av uttag - %s\n"
+
+#~ msgid "User %s: Shutting down user connection.\n"
+#~ msgstr "Användare %s: Stänger ner användaranslutning.\n"
+
+#~ msgid "Disconnecting user.\n"
+#~ msgstr "Kopplar ned användare.\n"
+
+#~ msgid "Logical communication error with main process (during message %d).\n"
+#~ msgstr "Logiskt kommunikationsfel med huvudprocess (vid meddelande %d).\n"
+
+#~ msgid "Cannot append to user send queue - %s\n"
+#~ msgstr "Kan inte lägga till data i användarens sändkö - %s\n"
+
+#~ msgid "Cannot close main process socket - %s\n"
+#~ msgstr "Kan inte stänga uttag till huvudprocess - %s\n"

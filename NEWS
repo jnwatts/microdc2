@@ -1,0 +1,361 @@
+2005-10-18: microdc 0.11.0 released.
+  Uploaded/download completed messages now contain time elapsed and final
+  transfer rate.
+  Support extended protocol for hubs - NoGetINFO and NoHello extensions are
+  supported.
+  Support character set conversion through the new variable charset.
+  Messages received and sent to hub and users are now converted according
+  to charset (unless unset). (Feature suggested by Vlad Safronov.)
+  Display many data sizes in human readable form.
+  Display reason why uploads failed.
+  Link with LIBINTL for proper portability.
+  Revamped communication between main and user processes, to reduce
+  possible latency in the main process.
+  Revamped user process termination handling, cleaning up messages related
+  to that.
+  Fixed display of private messages - now displays source user properly.
+  User connections will now be closed after 180 seconds of inactivity.
+  Added --config (-c) option to specify a different configuration script to
+  load on startup.
+  Updated manual page and added new section "Files".
+  Add gnulib module getaddrinfo for improved portability.
+  Add gnulib modules human, iconv, iconvme.
+  Added lookup command to look up host IP addresses.
+  All host name lookups are done in the background (currently only for
+  lookup and connect commands).
+  Parsing of downloaded file lists is now done in the background (by a
+  separate process).
+  Fixed bug: User connection communication is now printed in debug display
+  (set display +debug).
+  Added References section to web page and README.
+  Somewhat cleaned up hub connection and disconnection messages.
+  Improved the way user connections are named before they're identified
+  fully.
+  Allow localization of some strings that previously weren't localized.
+  Fix potential bugs when reconnecting to a hub - some local values weren't
+  cleared.
+  Fix potential bug when GetINFO would be sent twice for a user.
+  Oops. Send proper tag in MyINFO.
+  Unescape certain escaped sequences (such as &amp;) in chat text.
+  Fix bug when an invalid $GetINFO command would be sent to the hub.
+  Changed state in README from beta to late beta.
+
+2005-09-17: microdc 0.10.0 released.
+  Improve sorting for completion results.
+  Fixed possible portability bugs in IPC code.
+  Partial downloads are now resumed automaticly.
+  The get command now matches complete directories even if the file name
+  was specified with trailing slash(es).
+  Cleaned up download and upload code, hopefully fixing a few bugs and
+  adding some improvements. Don't open a file to upload before checking if
+  there's a free upload slot.
+  Cleaned up download and upload messages a bit.
+  Fix segmentation fault when completion for cd, ls and find when file list
+  was not received yet.
+  The queue command now accepts zero arguments to list users we have queued
+  files for.
+  Fix segmentation fault when browsing oneself twice.
+  The grantslot can now be used to displays a list of users with granted
+  slots, and to remove granted slot for a user.
+  The ls, find, and cd commands now accepts wildcards like get.
+  Fixed some minor completion issues when completing file names with
+  wildcards.
+  The find command now accepts multiple file arguments.
+  Improved queueing system, to pave way for automatic download support in
+  upcoming versions. Completed downloads as well as failed ones are now
+  kept in the queue, marked appropriately.
+  Fix completion for unqueue command (now same as queue command).
+  The commands get . and get .. now work properly.
+  Fix upload slots bug: Don't grant slots to arbitrary users! (oops).
+  Don't overwrite files when renaming after complete download.
+  Added retry command to try to connect and download files from user.
+  The status command now includes total bytes received and sent.
+
+2005-09-06: Added missing package files.
+  Added missing Slackware and Slamd64 package files.
+
+2005-09-02: microdc 0.9.0 released.
+  Search strings are now all required, not just one of them! (reported by
+  Megizo Pet).
+  The shell command can now be run without arguments to run the current
+  shell in the foreground.
+  Implemented completion natively. The completion support in GNU readline
+  is no longer used, but the microdc implementation tries to mimic GNU
+  readline. The following improvements have been made:
+    Complete partially quoted words (e.g. /ho"me").
+    Add closing quote only when expected (cannot control this properly with
+    GNU readline).
+    Improved completion with wildcards - will no longer escape wildcards if
+    there are many matches.
+    Probably some other fixes as well.
+  No longer accept c-style escapes (\n, \t etc), but still accepts octal
+  escape sequences (\012, \011 etc).
+  Sort file name completion results.
+  Display files starting with dot in completion results only if completion
+  file name starts with a dot.
+  Implemented wildcard support for completion of local and remote files and
+  directories. A wildcard can be disabled if escaped with backslash or if
+  put inside double quotes (e.g. "*").
+  The get command now accepts wildcards.
+  Fixed a bug: Could get stuck reading the startup script on some systems.
+  Fix raw command - don't escape the data for HTML display like it is done
+  with msg and say.
+  Fix msg command - could potentially send nothing or garbage due to
+  freeing memory before using it. Escape the message properly as well.
+  Fixed parsing of boolean values (for active variable currently only) -
+  true was considered negative and false positive. Also allow for flexible
+  translation (suggested by Jakub Jankowski).
+  Added completion for boolean values (for set active).
+  Fix compilation problems on FreeBSD:
+    Include "strnlen.h" where strnlen was being used.
+    Add Gnulib modules memmem, getline, progname.
+    Add tempfailure.h.
+  Add Gnulib module fnmatch-gnu for wildcard support.
+
+2005-08-13: microdc 0.8.0 released.
+  Add a help command. Document all commands.
+  Improve commands by accepting multiple arguments: alias, cancel, unalias,
+  get, queue, results, unsearch, who.
+  Fix Ctrl+C again (register signal handler for SIGINT and other signals in
+  user processes).
+  Add -n, --no-config command line option for preventing config files to be
+  read and executed on startup.
+  Improve error handling for shell command.
+  Improve error messages for terminated user processes.
+  Improve portability by only assigning struct sigaction.sa_restorer when
+  available (patch submitted by Jochen Friedrich for another project).
+  Updated FSF address in copyright and license messages.
+  Update documentation in README, fix some typos.
+  Fix a bunch of compilation warnings when using gcc 4.0.
+  Build Slackware and Slamd64 packages of microdc (thanks Jakub Jankowski
+  and Kanedaaa). Also add slackware target to Makefile.am.
+  Add Gnulib modules sig2str.
+  Put scripts from autoconf and automake needed for building build-aux,
+  move the rpm spec file into rpm, the slackbuild file into slackware, and
+  some documentation into doc.
+  Fixed description for Slackware package (from Jakub Jankowski).
+  Always build slackware packages with -O2 (from Jakub Jankowski).
+  RPM packages now contain locale files as well.
+
+2005-07-02: microdc 0.7.0 released.
+  Created a mailing list microdc-devel@nongnu.org which is open to
+  everyone.
+  Add shell command for executing system commands.
+  Fix bug in code setting non-blocking mode on file descriptors. The fd
+  wasn't set in non-blocking mode! I can't believe everything worked well
+  before this fix. Now microdc should be more fluid.
+  The ls command now lists files with small size properly in long mode
+  (-l).
+  Fix segfault when pressing tab and no completor is expected (reported by
+  Mark Lee).
+  Add alias and unalias commands.
+  Don't quote say messages sent to hub.
+  Get rid of Invalid $MyINFO message: Unknown user .., ignoring message
+  (reported by Gheorghe Pula).
+  Fix small memory leak when using cd without arguments.
+  The grantslot command now allows multiple user arguments.
+  Change way arguments for commands are parsed - microdc now handles
+  arguments much like the shell. This means that if you want to put double
+  quote ("), backslash (\), semicolon (;) or number sign (#) in public or
+  private messages (say or msg), you have to escape those characters like
+  this:
+    say Debian GNU/Linux 3.1 \"sarge\" is out now\; that's good.
+  Allow commands to be separated with semicolon, like this:
+    set downloaddir . ; set listingdir .
+  Support comments starting with the number sign (#). Number signs inside
+  words are not treated as comment introducers though, just like with bash.
+  Rewrote screen handling code - fixing some display bugs such as Ctrl+C
+  messing up the screen.
+  Don't start when unrecognized options are encountered on command line.
+  Correctly log warnings and other messages printed on screen if logging is
+  enabled.
+  The executables in the RPM packages now links with ncurses to prevent
+  problems on Red Hat and Fedora systems.
+  Fix many error messages: Print trailing newline.
+  Add support for building Slackware packages (from Jakub Jankowski and
+  Kanedaaa, thanks).
+  The listingdir and listenaddr variables can now be set correctly.
+  Add Gnulib modules quote, quotearg, argp, and stpcpy.
+  Complete correctly for set log.
+  Improved ls command: Allow multiple arguments and options (-l) anywhere.
+  Complete directory names with trailing backslash even if completing
+  inside a word.
+  Send correct nick to remove users in user connections.
+  Internal code changes: Add optparser, tempdir and tmap modules. Remove
+  inline.h.
+  Internal code changes: Prepare for future POSIX thread support by adding
+  ACX_PTHREAD and removing static variables in user.c.
+  Compile on systems where fopencookie is not available.
+  Allow translation of more strings.
+  Get rid of year ranges in copyright (as recommended by the FSF).
+
+2005-06-01: microdc 0.6.0 released.
+  Add set command, remove many commands for setting and displaying
+  variables.
+  Add status command for displaying various status information.
+  The cd command now accepts - for previous directory (just like bash).
+  Do not add already added result to searches.
+  Wrap public and private chat messages better (when they contain
+  newlines).
+  The results command now displays the search pattern.
+  Accept comma separated list of ranges for unqueue command.
+  Display outgoing UDP search results in if debug display flag is set.
+  Handle incomplete search results from NeoModus DirectConnect 2.20
+  clients.
+  Quote strings printed (to prevent non-printable characters from being
+  displayed).
+  Quote strings generated as completion results.
+  Use locale settings even if compiled without localization support.
+  Completion for queue command now generates users with queued files only.
+  Improved completion for set display command - check if flag starts with
+  `-' or `+'.
+  The unqueue and queue commands only work when connected (queues are
+  unfortunately cleared on disconnect).
+  Implement logging to file through set logfile and set log commands.
+  Add connections display flag, for displaying normal user connection
+  events.
+  Fix bug in search handling, causing all incoming search results to be
+  discarded (bug reported by Tomas Hallenberg).
+  Parse $OpList hub message correcly, now issues $GetINFO for all ops.
+  Reply to $GetNetInfo message from hubs (is this bad?).
+  Update MANIFEST.sources (forgot to do this for 0.5.0 release).
+  Added new Gnulib module quotearg, update some other modules Gnulib.
+  Some internal code changes - merge ipc_private.h into ipc.c,
+  hmap_internal.h into hmap.c, remove collections.h, common.h, substrcmp,
+  replace intparse with intutil, add range, comparison.h, quoting, swap.h,
+  minmaxonce.h, bksearch, tempdir, substrcmp, clean up common code.
+  Fix handling of files starting with dots - cd .foo would not change to
+  .foo.
+  Corrected use of quotes in some messages ('foo' => `foo').
+  Add replacement for GNU Libc's comparison_fn_t.
+  Rewrite quoting functions.
+  Speed up file listing operations by accessing directory children map
+  properly.
+
+2005-05-16: microdc 0.5.0 released.
+  Fixed copyright year for microdc manual page.
+  rpm make target is now a .PHONY makefile target.
+  Mention more projects in copyright section in the README.
+  Set locale and bind to the right message domain in microdc. Otherwise
+  localization won't work. Doh!
+  Display emotes (patch submitted by Mark Lee).
+  Fixed typo in manual page (patch submitted by Jakub Jankowski).
+  Added Polish translation and Polish manual page, also from Jakub
+  Jankowski.
+  Fix some translation messages (especially regarding plurals).
+  Improve detection of readline library - the configure script will fail if
+  it is not available.
+  GNU Readline is required - libedit or libeditline will not do.
+  Fix memory leak in file completion code.
+  Add display command for controlling what's displayed on screen.
+  Remove debug command in favor of display command.
+  Fix parsing of ranges in unqueue command, would cause crash (sooner or
+  later).
+  Print Invalid $Quit message only when debug enabled, some hubs send this
+  message for users never joined.
+  Use a more secure way to resolve and check local path of file to upload.
+  The results command now displays whether new results are accepted for a
+  search or not.
+  Refuse to handle empty search patterns, both those sent by remote and
+  those made locally.
+  The search command will now properly issue searches that haven't been
+  made before instead of reissuing some other search.
+  The search command will only work when connected to a hub.
+  Handle downloading of zero size files properly (bug reported by Jakub
+  Jankowski).
+  Fixed release date for 0.4.0 release. Oops!
+
+2005-05-03: microdc 0.4.0 released.
+  Fixed various typos in the README document.
+  Fix debian building: target in Makefile.am is now PHONY.
+  Add command-line options --help and --version.
+  Add very basic manual page.
+  Support localization.
+  Add swedish translation.
+  Improve some error messages and error handling in signal routines.
+  Add newline to some error messages missing it.
+  Improve way to determine temporary directory.
+  Clean up common code - remove memory.h.
+  Fix crash in share directory scanning code (crashed when file status
+  could not be retried).
+  Make it possible to browse ourselves.
+  Added MANIFEST.sources file.
+  Don't add search results to old searches (more than 60 seconds old at the
+  moment).
+  Create RPM packages for microdc.
+  Rename Known bugs section and add info about lack of support for multiple
+  share directories.
+  Make it possible to "fake" address listening on using listenaddr command.
+  This is useful if you are behind a router. Patch submitted by Tiago
+  Cogumbreiro.
+  Don't add empty lines to readline history.
+
+2005-04-30: microdc 0.3.0 released.
+  microdc is now hosted on Savannah.
+  The home page has been redesigned.
+  Better prompt - displays browsing user and current directory.
+  Automaticly browses users when file list downloaded.
+  Add command find to list recursively.
+  Improve file name completion - now completes file names with spaces
+  correctly.
+  Improve completion for say command - now adds colon (":") when a single
+  match is found.
+  Fix certain error messages missing newline at end.
+  Fix completion for transfer command.
+  Display more information with who command.
+  Fix bug in cd command - change to root directory now works.
+  No longer creates full absolute path for downloaded files in the download
+  directory.
+  The ls command now prints file sizes in megabytes.
+  The ls command now sorts files.
+  The who command now sorts users by name.
+  The who command doesn't wrap lines.
+  Better readline check - only link with termcap and/or ncurses if
+  necessary.
+  Fix _rl_mark_modified_lines compilation bug (reported by Spoiala
+  Cristian).
+  Check max number of connections to user before sending them
+  $RevConnectToMe.
+  Add more error messages: "No more connections allowed...".
+  Fix a potential bug with connections being identified for a certain user
+  despite the fact that no more connections to that user are allowed. This
+  should fix this error:
+    microdc: user.c:1000: user_disconnect: Assertion `c !=
+    uc->info->conn_count' failed.
+  Display who sent private messages (oops).
+  Download files as ".part" and rename when completed.
+
+2005-04-22: microdc 0.2.2 released.
+  Use autoconf, automake and gnulib.
+  Fix compilation warnings/errors on 64-bit platforms.
+  Added patch to fix listenport problem (from Jakub Jankowski, thanks).
+  The msg command no longer sends text into public... Oops!
+  Updated README (various additions and modifications).
+
+2004-08-21: microdc 0.2.1 released.
+  Fixed crash on some (many) search requests.
+  Fixed crash when disabling active mode.
+  Fixed compile and link problems with readline on some systems (reported
+  by Ludvig Holmström).
+  Added a new document INTERNALS.
+  Use user name completion for queue, unqueue and say commands for now.
+  If file is already queued on get, retry immediately instead of doing
+  nothing.
+  Detection and handling of user active/passive state has been improved.
+  TTH searches are now recognized and ignored.
+  Print only outgoing search information when debug is enabled.
+  Fixed minor memory leak when reusing searches (issuing same search).
+  Internal changes:
+    Implemented a better IPC mechanism.
+    Better status reporting, improving latency of transfers command.
+    Improved code looking up user connections.
+
+2004-08-13: microdc 0.2.0 released.
+  Alpha 2 release.
+  Added support for searching.
+  New commands: search, results, unsearch.
+  Improved completion of local symbolic links (to match bash behavior).
+  Some minor bugs that I have forgotten about were probably fixed.
+
+2004-08-11: microdc 0.1.0 released.
+  First release (alpha 1).

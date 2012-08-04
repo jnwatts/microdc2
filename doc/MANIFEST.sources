@@ -1,0 +1,290 @@
+# This file specifies the origin of each file in the source code file
+# archive of this project. It is best viewed with a tab width of 28 or
+# greater. Note that files marked as "generated" have been generated from
+# other files in to this project, files which themselves may have come
+# from another project (if marked so in this document). Files marked with
+# "this" come from this project.
+#
+ABOUT-NLS	GNU gettext
+AUTHORS	this
+COPYING	GNU Automake
+ChangeLog	this
+INSTALL	GNU Automake
+Makefile.am	this
+Makefile.in	generated GNU Automake
+NEWS	this
+README	this
+aclocal.m4	generated GNU Automake
+config.h.in	generated GNU Autoconf
+configure	generated GNU Autoconf
+configure.ac	this
+build-aux/config.guess	GNU Automake
+build-aux/config.rpath	Gnulib
+build-aux/config.sub	GNU Automake
+build-aux/depcomp	GNU Automake
+build-aux/install-sh	GNU Automake
+build-aux/missing	GNU Automake
+build-aux/mkinstalldirs	GNU gettext
+debian/changelog	this
+debian/control	this
+debian/copyright	this
+debian/rules	this
+doc/INTERNALS	this
+doc/MANIFEST.sources	this
+doc/TODO	this
+lib/Makefile.am	generated Gnulib
+lib/Makefile.in	generated GNU Automake
+lib/alloca.c	Gnulib
+lib/alloca_.h	Gnulib
+lib/argmatch.c	Gnulib
+lib/argmatch.h	Gnulib
+lib/asnprintf.c	Gnulib
+lib/asprintf.c	Gnulib
+lib/basename.c	Gnulib
+lib/dirname.c	Gnulib
+lib/dirname.h	Gnulib
+lib/error.c	Gnulib
+lib/error.h	Gnulib
+lib/exit.h	Gnulib
+lib/exitfail.c	Gnulib
+lib/exitfail.h	Gnulib
+lib/fnmatch.c	Gnulib
+lib/fnmatch_.h	Gnulib
+lib/fnmatch_loop.c	Gnulib
+lib/free.c	Gnulib
+lib/full-read.c	Gnulib
+lib/full-read.h	Gnulib
+lib/full-write.c	Gnulib
+lib/full-write.h	Gnulib
+lib/gai_strerror.c	Gnulib
+lib/getaddrinfo.c	Gnulib
+lib/getaddrinfo.h	Gnulib
+lib/getdelim.c	Gnulib
+lib/getdelim.h	Gnulib
+lib/gethostname.c	Gnulib
+lib/getline.c	Gnulib
+lib/getline.h	Gnulib
+lib/getopt.c	Gnulib
+lib/getopt1.c	Gnulib
+lib/getopt_.h	Gnulib
+lib/getopt_int.h	Gnulib
+lib/gettext.h	Gnulib
+lib/human.c	Gnulib
+lib/human.h	Gnulib
+lib/iconvme.c	Gnulib
+lib/iconvme.h	Gnulib
+lib/intprops.h	Gnulib
+lib/memmem.c	Gnulib
+lib/memmem.h	Gnulib
+lib/minmax.h	Gnulib
+lib/printf-args.c	Gnulib
+lib/printf-args.h	Gnulib
+lib/printf-parse.c	Gnulib
+lib/printf-parse.h	Gnulib
+lib/progname.c	Gnulib
+lib/progname.h	Gnulib
+lib/quote.c	Gnulib
+lib/quote.h	Gnulib
+lib/quotearg.c	Gnulib
+lib/quotearg.h	Gnulib
+lib/safe-read.c	Gnulib
+lib/safe-read.h	Gnulib
+lib/safe-write.c	Gnulib
+lib/safe-write.h	Gnulib
+lib/sig2str.c	Gnulib
+lib/sig2str.h	Gnulib
+lib/size_max.h	Gnulib
+lib/stdbool_.h	Gnulib
+lib/stdint_.h	Gnulib
+lib/stpcpy.c	Gnulib
+lib/stpcpy.h	Gnulib
+lib/strdup.c	Gnulib
+lib/strdup.h	Gnulib
+lib/strftime.c	Gnulib
+lib/strftime.h	Gnulib
+lib/stripslash.c	Gnulib
+lib/strndup.c	Gnulib
+lib/strndup.h	Gnulib
+lib/strnlen.c	Gnulib
+lib/strnlen.h	Gnulib
+lib/strtoimax.c	Gnulib
+lib/strtol.c	Gnulib
+lib/strtoll.c	Gnulib
+lib/strtoul.c	Gnulib
+lib/strtoull.c	Gnulib
+lib/strtoumax.c	Gnulib
+lib/time_r.c	Gnulib
+lib/time_r.h	Gnulib
+lib/vasnprintf.c	Gnulib
+lib/vasnprintf.h	Gnulib
+lib/vasprintf.c	Gnulib
+lib/vasprintf.h	Gnulib
+lib/verify.h	Gnulib
+lib/version-etc.c	Gnulib
+lib/version-etc.h	Gnulib
+lib/xalloc-die.c	Gnulib 
+lib/xalloc.h	Gnulib
+lib/xasprintf.c	Gnulib
+lib/xgethostname.c	Gnulib
+lib/xgethostname.h	Gnulib
+lib/xmalloc.c	Gnulib
+lib/xsize.h	Gnulib
+lib/xstrndup.c	Gnulib
+lib/xstrndup.h	Gnulib
+lib/xstrtol.c	Gnulib
+lib/xstrtol.h	Gnulib
+lib/xstrtoul.c	Gnulib
+lib/xstrtoumax.c	Gnulib
+lib/xvasprintf.c	Gnulib
+lib/xvasprintf.h	Gnulib
+m4/ac_define_dir.m4	Autoconf Macro Archive
+m4/ac_lib_readline.m4	this
+m4/acx_pthread.m4	this
+m4/alloca.m4	Gnulib
+m4/dirname.m4	Gnulib
+m4/dos.m4	Gnulib
+m4/eoverflow.m4	Gnulib
+m4/error.m4	Gnulib
+m4/exitfail.m4	Gnulib
+m4/extensions.m4	Gnulib
+m4/fnmatch.m4	Gnulib
+m4/free.m4	Gnulib
+m4/getaddrinfo.m4	Gnulib
+m4/getdelim.m4	Gnulib
+m4/gethostname.m4	Gnulib
+m4/getline.m4	Gnulib
+m4/getopt.m4	Gnulib
+m4/gettext.m4	Gnulib
+m4/gnulib-cache.m4	generated Gnulib
+m4/gnulib-comp.m4	generated Gnulib
+m4/human.m4	Gnulib
+m4/iconv.m4	Gnulib
+m4/iconvme.m4	Gnulib
+m4/intmax_t.m4	Gnulib
+m4/inttypes.m4	Gnulib
+m4/inttypes_h.m4	Gnulib
+m4/lib-ld.m4	Gnulib
+m4/lib-link.m4	Gnulib
+m4/lib-prefix.m4	Gnulib
+m4/longdouble.m4	Gnulib
+m4/longlong.m4	Gnulib
+m4/mbrtowc.m4	Gnulib
+m4/mbstate_t.m4	Gnulib
+m4/memmem.m4	Gnulib
+m4/minmax.m4	Gnulib
+m4/nls.m4	Gnulib
+m4/onceonly_2_57.m4	Gnulib
+m4/po.m4	Gnulib
+m4/progtest.m4	Gnulib
+m4/quote.m4	Gnulib
+m4/quotearg.m4	Gnulib
+m4/restrict.m4	Gnulib
+m4/safe-read.m4	Gnulib
+m4/safe-write.m4	Gnulib
+m4/sig2str.m4	Gnulib
+m4/signed.m4	Gnulib
+m4/size_max.m4	Gnulib
+m4/socklen.m4	Gnulib
+m4/sockpfaf.m4	Gnulib
+m4/ssize_t.m4	Gnulib
+m4/stdbool.m4	Gnulib
+m4/stdint.m4	Gnulib
+m4/stdint_h.m4	Gnulib
+m4/stpcpy.m4	Gnulib
+m4/strdup.m4	Gnulib
+m4/strftime.m4	Gnulib
+m4/strndup.m4	Gnulib
+m4/strnlen.m4	Gnulib
+m4/strtoimax.m4	Gnulib
+m4/strtol.m4	Gnulib
+m4/strtoll.m4	Gnulib
+m4/strtoul.m4	Gnulib
+m4/strtoull.m4	Gnulib
+m4/strtoumax.m4	Gnulib
+m4/time_r.m4	Gnulib
+m4/tm_gmtoff.m4	Gnulib
+m4/uintmax_t.m4	Gnulib
+m4/ulonglong.m4	Gnulib
+m4/vasnprintf.m4	Gnulib
+m4/vasprintf.m4	Gnulib
+m4/wchar_t.m4	Gnulib
+m4/wint_t.m4	Gnulib
+m4/xalloc.m4	Gnulib
+m4/xsize.m4	Gnulib
+m4/xstrndup.m4	Gnulib
+m4/xstrtol.m4	Gnulib
+m4/xstrtoumax.m4	Gnulib
+po/ChangeLog	generated GNU gettext
+po/LINGUAS	this
+po/Makefile.in.in	GNU gettext
+po/Makevars	this
+po/POTFILES.in	this
+po/Rules-quot	GNU gettext
+po/boldquot.sed	GNU gettext
+po/en@boldquot.header	GNU gettext
+po/en@quot.header	GNU gettext
+po/insert-header.sin	GNU gettext
+po/microdc.pot	generated GNU gettext
+po/pl.gmo	generated GNU gettext
+po/pl.po	this
+po/quot.sed	GNU gettext
+po/remove-potcdate.sin	GNU gettext
+po/stamp-po	GNU gettext
+po/sv.gmo	generated GNU gettext
+po/sv.po	this
+rpm/microdc.spec.in	this
+slackware/microdc.SlackBuild.in	this
+src/Makefile.am	this
+src/Makefile.in	generated GNU Automake
+src/command.c	this
+src/connection.c	this
+src/filelist-in.c	this
+src/fs.c	this
+src/hub.c	this
+src/huffman.c	this
+src/lookup.c	this
+src/main.c	this
+src/microdc.1	this
+src/microdc.h	this
+src/microdc.pl.1	this
+src/screen.c	this
+src/search.c	this
+src/user.c	this
+src/util.c	this
+src/variables.c	this
+src/common/Makefile.am	this
+src/common/Makefile.in	generated GNU Automake
+src/common/bksearch.c	this
+src/common/bksearch.h	this
+src/common/byteq.c	this
+src/common/byteq.h	this
+src/common/comparison.h	this
+src/common/error.c	this
+src/common/error.h	this
+src/common/hmap.c	this
+src/common/hmap.h	this
+src/common/intutil.c	this
+src/common/intutil.h	this
+src/common/minmaxonce.h	this
+src/common/msgq.c	this
+src/common/msgq.h	this
+src/common/optparser.c	this
+src/common/optparser.h	this
+src/common/ptrv.c	this
+src/common/ptrv.h	this
+src/common/quoting.c	this
+src/common/quoting.h	this
+src/common/range.c	this
+src/common/range.h	this
+src/common/strbuf.c	this
+src/common/strbuf.h	this
+src/common/strleftcmp.c	this
+src/common/strleftcmp.h	this
+src/common/substrcmp.c	this
+src/common/substrcmp.h	this
+src/common/swap.h	this
+src/common/tempdir.c	this
+src/common/tempdir.h	this
+src/common/tempfailure.h	this
+src/common/tmap.c	this
+src/common/tmap.h	this

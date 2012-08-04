@@ -1,0 +1,186 @@
+This document contains various technical information geared towards
+developers of microdc.
+
+===
+
+User connection identification improvements:
+  There are four possible cases to consider:
+
+  We initiating       | They initiating
+  =================================================
+  !+RCTM (we passive) | %+RCTM => we initiating CTM
+  %+CTM  (we active)  |  -CTM
+
+  (R)CTM = (Rev)ConnectToMe
+  -  = We cannot antipicate
+  !+ = We can anticipate by pending_userinfo and we_connected=true
+  %+ = We can anticipate by pending_userinfo and we_connected=false
+
+  Current implementation has pending_userinfo. To be more accurate,
+  we should split this map into pending_userinfo_{in,out}.
+  validate_nick need to be modified to check based on uc->we_connected.
+
+RevConnectToMe vs ConnectToMe considerations:
+  1) Security consideration: We don't want to connect to other users.
+     It's the one that connects that starts sending data. The remote user
+     could make us connect and send data ($MyNick+$Lock) to anyone on the
+     net, which is bad.
+  2) Some users may think they are active, but they are not.
+
+  The following is only relevant for active microdc users:
+  These two considerations gives that it is better to be connected to than
+  connect to, i.e. it is better to send ConnectToMe's and receive
+  RevConnectToMe's rather than to send RevConnectToMe's and receive
+  ConnectToMe's.
+
+  So here's one an improved scheme for response to remote connection
+  initiations.
+
+    1. Receive ConnectToMe from remote.
+    2. Ignore ConnectToMe from remote, and send ConnectToMe to remote.
+    3.1. If remote is not running microdc, remote will now connect to us.
+    3.2. If remote is running microdc, remote will send ConnectToMe to us again.
+    4.2. We connect to the remote.
+
+  Problems:
+    * Hubs may block repeated ConnectToMe's.
+    * Clients' behavior on receiving ConnectToMe right after sending
+      ConnectToMe could be unexpected.
+    * This scheme is unfair to other clients not implementing this scheme.
+
+User active/passive state transition
+  At the moment, there are four values for DCActiveState (DCUserInfo.active_state).
+  Initial state is UNKNOWN.
+
+  Note. KNOWN_ACTIVE only means that the user states that he is active.
+        It means that the user's client has active enabled.
+        But the client may be misconfigured, or the user's firewall may be.
+  Note. RECEIVED_PASSIVE doesn't mean that the user states that he is passive.
+        It only means that the user sent us $RevConnectToMe. It is unclear
+	whether the client is forbidden to send $RevConnectToMe in
+	active mode.
+
+  UNKNOWN
+    set on SENT_ACTIVE       in main.c:DC_MSG_VALIDATE_NICK:ok                       # make way for future ConnectToMe
+  KNOWN_ACTIVE
+    set on SENT_PASSIVE      in main.c:DC_MSG_VALIDATE_NICK:ok                       # logically!
+  RECEIVED_PASSIVE
+    set on *                 in hub.c:hub_handle_command:$RevConnectToMe             # naturally!
+    tested for               in hub.c:hub_handle_command:$RevConnectToMe:!is_active  # do we need to send back $RevConnectToMe?
+    tested for               in hub.c:hub_connect_user:!is_active                    # user also passive
+  SENT_PASSIVE
+    tested for               in hub.c:hub_handle_command:$RevConnectToMe:!is_active  # cannot communicate?
+    tested for               in hub.c:hub_connect_user:!is_active                    # waiting - RevConnectToMe already sent
+    set on !RECEIVED_PASSIVE in hub.c:hub_connect_user:!is_active
+  SENT_ACTIVE
+    tested for               in hub.c:hub_connect_user:is_active                     # waiting - ConnectToMe already sent
+    set on *                 in hub.c:hub_connect_user:is_active
+
+  When passive:
+    UNKNOWN => SENT_PASSIVE => RECEIVED_PASSIVE [DC++ clients]
+    UNKNOWN => SENT_PASSIVE [non-DC++ clients]
+    UNKNOWN => SENT_PASSIVE => KNOWN_ACTIVE => SENT_PASSIVE => ..
+    UNKNOWN => RECEIVED_PASSIVE
+  When active:
+    UNKNOWN => RECEIVED_PASSIVE => SENT_ACTIVE => UNKNOWN => ..
+    UNKNOWN => SENT_ACTIVE => UNKNOWN => ..
+
+  When user sends new $MyINFO
+    RECEIVED_PASSIVE => UNKNOWN
+    KNOWN_ACTIVE => UNKNOWN
+    SENT_PASSIVE unchanged - technically we could try resending this. XXX?
+    SENT_ACTIVE unchanged - will always work
+
+  Problem: Loss of KNOWN_ACTIVE state
+    We lose KNOWN_ACTIVE knowledge if
+    1) we are passive (!is_active)
+    2) we have connected to remote user, and state has become KNOWN_ACTIVE
+    3) we try to connect to remote user again by sending $RevConnectToMe
+    State becomes SENT_PASSIVE.
+
+  Problem: Loss of RECEIVED_PASSIVE state
+    Assume we are passive. State for some user is RECEIVED_PASSIVE.
+    We then become active (setting changed). RECEIVED_PASSIVE information is
+    when we try to connect to user next time.
+  Since passive DC++ clients only sends RevConnectToMe back once in reply
+  to $RevConnectToMe, it means we might get stuck in SENT_PASSIVE state.
+  This is not a problem though.
+
+  Relevant states in microdc active mode:  all but SENT_ACTIVE
+  Relevant states in microdc passive mode: all but SEND_PASSIVE
+  When changing from active to passive, we must only consider SENT_ACTIVE state.
+    OK : SENT_ACTIVE tested for in hub.c:hub_connect_user:is_active -- is_active is false!
+  When changing from passive to active, we must only consider SENT_PASSIVE state.
+    OK : SENT_PASSIVE tested for in hub.c:hub_connect_user:!is_active -- is_active is true! 
+    OK : SENT_PASSIVE tested for in hub.c:hub_handle_command:$RevConnectToMe:!is_active -- cannot communicate?
+    OK : KNOWN_ACTIVE set on SENT_PASSIVE in main.c:DC_MSG_VALIDATE_NICK:ok -- this is still true.
+
+===
+
+Coding notes:
+  Error management:
+    Assume ((x)v)asprintf only fails due to memory exhaustion
+      (assuming format appears to be OK) or if it fails, just abort()
+    Handle memory exhaustion errors by dying immediately
+    Handle every other error that can occur!
+
+===
+
+User commands:
+
+  $MyNick		s     		MYNICK
+  $Direction		s i 		DIRECTION
+  $Error		s...  		*
+  $FileLength		i     		FILE_LENGTH
+  $GetListLen		-	    	*
+  $ListLen		i     		*   	    	sent as a reply to $GetListLen
+  $Get			s$i 		GET
+  $GetTestZBlock	?	    	*
+  $GetZBlock		?	    	*
+  $UGetZBlock		?	    	*
+  $UGetBlock		?	    	*
+  $Key			s...  		KEY
+  $Lock			s...  		LOCK
+  $Send			-	    	SEND
+  $Sending		[i]   		FILE_LENGTH
+  $MaxedOut		-	    	FILE_LENGTH
+  $Supports		s...  		*
+
+Hub commands:
+
+  $ValidateNick		s
+  $Key			s...
+  $Version		s...
+  $GetNickList		-
+  $MyPass		s...
+  $GetINFO		s
+  <			s> s...
+  $ConnectToMe		s s:i
+  $To:			s From: s $s
+  $Supports		s...
+  $RevConnectToMe	s s
+  $OpForceMove		$Who:s$Where:s$Msg:s
+  $Search		?
+  $MyINFO		?
+  $Quit			?
+  $SR			?
+  $HubName		s...
+  $Supports		?
+  $UserCommand		?
+  $Lock			s Pk=s
+  $Hello		s
+  $ForceMove		?
+  $HubIsFull		?
+  $ValidateDenide	-
+  $UserIP		?
+  $NickList		s{$$s}
+  $OpList		[s{$$s}]
+  $GetPass		-
+  $BadPass		-
+  $LogedIn		-
+  $Kick			?
+  $Capabilities		[s{$s}]			dchub:YES dc++:NO
+
+===
+
+curses client
