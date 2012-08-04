@@ -289,5 +289,8 @@ the following address:
 
 [vladch@k804.mainet.msk.su](mailto:vladch@k804.mainet.msk.su)
 
-  
+The maintainer of **this repository**, Josh Watts, can be contacted by e-mail
+on the following address:
+
+[josh+github@sroz.net](mailto:josh+github@sroz.net)
 
