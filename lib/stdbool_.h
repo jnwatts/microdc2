@@ -73,7 +73,7 @@
 #if !(defined __cplusplus || defined __BEOS__)
 # if !@HAVE__BOOL@
 #  if defined __SUNPRO_C && (__SUNPRO_C < 0x550 || __STDC__ == 1)
-    /* Avoid stupid "warning: _Bool is a keyword in ISO C99".  */
+/* Avoid stupid "warning: _Bool is a keyword in ISO C99".  */
 #   define _Bool signed char
 enum { false = 0, true = 1 };
 #  else

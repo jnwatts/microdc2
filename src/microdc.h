@@ -279,15 +279,15 @@ struct _DCFileList {
     DCFileType type;
     uint64_t size;	/* total size of all contained files for DC_TYPE_DIR */
     union {
-    	struct {
+        struct {
             char    has_tth;
-	        char    tth[39];
+            char    tth[39];
             time_t  mtime;
-	    } reg;
-	    struct {
-	        char *real_path;
-	        HMap *children;
-	    } dir;
+        } reg;
+        struct {
+            char *real_path;
+            HMap *children;
+        } dir;
     };
 };
 
@@ -446,7 +446,7 @@ void screen_get_size(int *rows, int *cols);
 void set_screen_prompt(const char *prompt, ...) __attribute__ ((format (printf, 1, 2)));
 bool set_log_file(const char *new_filename, bool verbose);
 void sorted_list_completion_generator(const char *base, PtrV *results,
-    void *items, size_t item_count, size_t item_size, size_t key_offset); /* completion */
+                                      void *items, size_t item_count, size_t item_size, size_t key_offset); /* completion */
 DCCompletionEntry *new_completion_entry(const char *input, const char *display); /* completion */
 DCCompletionEntry *new_completion_entry_full(char *input, char *display, const char *input_fmt, const char *display_fmt, bool finalize, bool quoted);
 void free_completion_entry(DCCompletionEntry *entry); /* completion */
@@ -511,7 +511,7 @@ void remote_wildcard_expand(char *matchpath, bool *quotedptr, const char *basedi
 bool has_leading_slash(const char *str);
 void dir_to_filelist(DCFileList *parent, const char *path);
 bool write_filelist_file(DCFileList* root, const char* prefix);
-    
+
 /* xml_flist.c */
 int write_xml_filelist(int fd, DCFileList* root);
 int write_bzxml_filelist(int fd, DCFileList* root);
@@ -546,7 +546,7 @@ bool parse_ip_and_port(char *source, struct sockaddr_in *addr, uint16_t defport)
 char *join_strings(char **strs, int count, char mid);
 PtrV *wordwrap(const char *str, size_t len, size_t first_width, size_t other_width);
 struct dirent *xreaddir(DIR *dh);
-    
+
 #define LONGEST_ELAPSED_TIME 22 /* 123456789012dNNhNNmNNs */
 char *elapsed_time_to_string(time_t elapsed, char *buf);
 

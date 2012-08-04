@@ -80,7 +80,7 @@ char* tth(const char* filename, char **tthl, size_t *tthl_len)
     /* get memry for leaves */
     leaf_cnt = sb.st_size / leaf_blocksize;
     if (sb.st_size % leaf_blocksize)
-	    leaf_cnt++;
+        leaf_cnt++;
 
     //TRACE(("leaf_cnt == %d\n", leaf_cnt));
 

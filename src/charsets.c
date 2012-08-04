@@ -47,7 +47,7 @@ void set_fs_charset(const char* charset);
 void set_main_charset(const char* charset)
 {
     if ((charset == NULL && main_charset == NULL) ||
-        (charset != NULL && main_charset != NULL && strcasecmp(charset, main_charset) == 0)) {
+            (charset != NULL && main_charset != NULL && strcasecmp(charset, main_charset) == 0)) {
         return;
     } else {
         /* clearing the conversion to/from this charset */
@@ -91,7 +91,7 @@ void set_main_charset(const char* charset)
 void set_hub_charset(const char* charset)
 {
     if ((charset == NULL && hub_charset == NULL) ||
-        (charset != NULL && hub_charset != NULL && strcasecmp(charset, hub_charset) == 0)) {
+            (charset != NULL && hub_charset != NULL && strcasecmp(charset, hub_charset) == 0)) {
         return;
     } else {
         /* clearing the conversion to/from this charset */
@@ -131,7 +131,7 @@ void set_hub_charset(const char* charset)
 void set_fs_charset(const char* charset)
 {
     if ((charset == NULL && fs_charset == NULL) ||
-        (charset != NULL && fs_charset != NULL && strcasecmp(charset, fs_charset) == 0)) {
+            (charset != NULL && fs_charset != NULL && strcasecmp(charset, fs_charset) == 0)) {
         return;
     } else {
         /* clearing the conversion to/from this charset */
@@ -171,7 +171,7 @@ void set_fs_charset(const char* charset)
 void set_log_charset(const char* charset)
 {
     if ((charset == NULL && log_charset == NULL) ||
-        (charset != NULL && log_charset != NULL && strcasecmp(charset, log_charset) == 0)) {
+            (charset != NULL && log_charset != NULL && strcasecmp(charset, log_charset) == 0)) {
         return;
     } else {
         /* clearing the conversion to/from this charset */

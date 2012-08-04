@@ -1,6 +1,6 @@
 /* (PD) 2001 The Bitzi Corporation
  * Copyright (C) 2006 Alexey Illarionov <littlesavage@rambler.ru>
- * Please see file COPYING or http://bitzi.com/publicdomain 
+ * Please see file COPYING or http://bitzi.com/publicdomain
  * for more info.
  *
  */
@@ -21,28 +21,28 @@
 #define STACKSIZE TIGERSIZE*56
 
 typedef struct tt_context {
-  word64 count;                   /* total blocks processed */
+    word64 count;                   /* total blocks processed */
 #if 0
-  unsigned char leaf[1+BLOCKSIZE]; /* leaf in progress */
-  unsigned char *block;            /* leaf data */
+    unsigned char leaf[1+BLOCKSIZE]; /* leaf in progress */
+    unsigned char *block;            /* leaf data */
 #endif
-  unsigned char	*leaf;		  /* leaf in progress */
-  unsigned char node[1+NODESIZE]; /* node scratch space */
-  int index;                      /* index into block */
-  unsigned char *top;             /* top (next empty) stack slot */
-  unsigned char *tthl;		  /* index into buf for tth leaves */
-  unsigned  depth;		  /* num of generations in tree to discard */
-  unsigned char nodes[STACKSIZE]; /* stack of interim node values */
+    unsigned char	*leaf;		  /* leaf in progress */
+    unsigned char node[1+NODESIZE]; /* node scratch space */
+    int index;                      /* index into block */
+    unsigned char *top;             /* top (next empty) stack slot */
+    unsigned char *tthl;		  /* index into buf for tth leaves */
+    unsigned  depth;		  /* num of generations in tree to discard */
+    unsigned char nodes[STACKSIZE]; /* stack of interim node values */
 } TT_CONTEXT;
 
 #if defined(__cplusplus)
 extern "C" {
 #endif
-void tt_init(TT_CONTEXT *ctx, unsigned char *tthl, unsigned depth);
+    void tt_init(TT_CONTEXT *ctx, unsigned char *tthl, unsigned depth);
 //void tt_update(TT_CONTEXT *ctx, unsigned char *buffer, word32 len);
-void tt_block(TT_CONTEXT *ctx);
-void tt_digest(TT_CONTEXT *ctx, unsigned char *hash);
-void tt_copy(TT_CONTEXT *dest, TT_CONTEXT *src);
+    void tt_block(TT_CONTEXT *ctx);
+    void tt_digest(TT_CONTEXT *ctx, unsigned char *hash);
+    void tt_copy(TT_CONTEXT *dest, TT_CONTEXT *src);
 #if defined(__cplusplus)
 }
 #endif

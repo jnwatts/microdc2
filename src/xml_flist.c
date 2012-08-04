@@ -75,7 +75,7 @@ char* xml_quote_string(const unsigned char* str)
             strbuf_append(r, "&apos;");
             break;
         default:
-	        strbuf_append_char(r, str[i]);
+            strbuf_append_char(r, str[i]);
             break;
         }
     }
@@ -159,14 +159,14 @@ int write_node(xmlTextWriterPtr writer, DCFileList* node)
     size_t written = 0;
     if (node != NULL) {
         switch (node->type) {
-            case DC_TYPE_REG:
-                written += xmlTextWriterStartElement(writer, "File");
-                break;
-            case DC_TYPE_DIR:
-                written += xmlTextWriterStartElement(writer, "Directory");
-                break;
-            default:
-                return 0;
+        case DC_TYPE_REG:
+            written += xmlTextWriterStartElement(writer, "File");
+            break;
+        case DC_TYPE_DIR:
+            written += xmlTextWriterStartElement(writer, "Directory");
+            break;
+        default:
+            return 0;
         }
 
         char* q_name = xml_quote_string(node->name);
@@ -177,30 +177,30 @@ int write_node(xmlTextWriterPtr writer, DCFileList* node)
         free(utf8_name);
 
         switch (node->type) {
-            case DC_TYPE_REG:
-                {
-                    char value[64];
-                    sprintf(value, "%" PRIu64, node->size);
-                    written += xmlTextWriterWriteAttribute(writer, "Size", value);
-                    if (node->reg.has_tth) {
-                        memset(value, 0, 64);
-                        memcpy(value, node->reg.tth, sizeof(node->reg.tth));
-                        written += xmlTextWriterWriteAttribute(writer, "TTH", value);
-                    }
-                }
-                break;
-            case DC_TYPE_DIR:
-                {
-                    HMapIterator it;
-	                hmap_iterator(node->dir.children, &it);
-	                while (it.has_next(&it)) {
-	                    DCFileList *subnode = it.next(&it);
-                        write_node(writer, subnode);
-	                }
-                }
-                break;
-            default:
-                return 0;
+        case DC_TYPE_REG:
+        {
+            char value[64];
+            sprintf(value, "%" PRIu64, node->size);
+            written += xmlTextWriterWriteAttribute(writer, "Size", value);
+            if (node->reg.has_tth) {
+                memset(value, 0, 64);
+                memcpy(value, node->reg.tth, sizeof(node->reg.tth));
+                written += xmlTextWriterWriteAttribute(writer, "TTH", value);
+            }
+        }
+        break;
+        case DC_TYPE_DIR:
+        {
+            HMapIterator it;
+            hmap_iterator(node->dir.children, &it);
+            while (it.has_next(&it)) {
+                DCFileList *subnode = it.next(&it);
+                write_node(writer, subnode);
+            }
+        }
+        break;
+        default:
+            return 0;
         }
         written += xmlTextWriterFullEndElement(writer);
     }
@@ -224,11 +224,11 @@ int write_xml_filelist_document(xmlOutputBufferPtr output, DCFileList* root)
     if (root != NULL) {
         HMapIterator it;
 
-	    hmap_iterator(root->dir.children, &it);
-	    while (it.has_next(&it)) {
-	        DCFileList *node = it.next(&it);
+        hmap_iterator(root->dir.children, &it);
+        while (it.has_next(&it)) {
+            DCFileList *node = it.next(&it);
             written += write_node(writer, node);
-	    }
+        }
     }
     written += xmlTextWriterEndElement(writer);
     written += xmlTextWriterEndDocument(writer);
@@ -287,11 +287,11 @@ xmlDocPtr  generate_xml_filelist(DCFileList* root)
 
     HMapIterator it;
 
-	hmap_iterator(root->dir.children, &it);
-	while (it.has_next(&it)) {
-	    DCFileList *subnode = it.next(&it);
+    hmap_iterator(root->dir.children, &it);
+    while (it.has_next(&it)) {
+        DCFileList *subnode = it.next(&it);
         insert_node(xml_root, subnode);
-	}
+    }
 
 cleanup:
 
@@ -310,11 +310,11 @@ xmlNodePtr insert_node(xmlNodePtr xml_parent, DCFileList* node)
         break;
     case DC_TYPE_DIR:
         XML_CALL(xml_node, xmlNewChild(xml_parent, NULL, BAD_CAST("Directory"), BAD_CAST("")));
-	    hmap_iterator(node->dir.children, &it);
-	    while (it.has_next(&it)) {
-	        DCFileList *subnode = it.next(&it);
+        hmap_iterator(node->dir.children, &it);
+        while (it.has_next(&it)) {
+            DCFileList *subnode = it.next(&it);
             insert_node(xml_node, subnode);
-	    }
+        }
         break;
     default:
         break;
@@ -322,7 +322,7 @@ xmlNodePtr insert_node(xmlNodePtr xml_parent, DCFileList* node)
 
     if (node != NULL) {
         char* utf8_name = fs_to_utf8_string(node->name);
-        
+
         XML_CALL(attr, xmlNewProp(xml_node, BAD_CAST("Name"), utf8_name));
         free(utf8_name);
 

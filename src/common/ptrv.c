@@ -53,8 +53,8 @@ void
 ptrv_free(PtrV *pv)
 {
     if (pv != NULL) {
-	free(pv->buf);
-	free(pv);
+        free(pv->buf);
+        free(pv);
     }
 }
 
@@ -85,7 +85,7 @@ ptrv_prepend_n(PtrV *pv, uint32_t count, void *value)
     memmove(pv->buf+count, pv->buf, pv->cur*sizeof(void *));
 
     for (c = 0; c < count; c++)
-	pv->buf[c] = value;
+        pv->buf[c] = value;
     pv->cur += count;
 }
 
@@ -141,8 +141,8 @@ ptrv_find(PtrV *pv, void *element, comparison_fn_t comparator)
     uint32_t c;
 
     for (c = 0; c < pv->cur; c++) {
-	if (comparator(element, pv->buf[c]) == 0)
-	    return c;
+        if (comparator(element, pv->buf[c]) == 0)
+            return c;
     }
 
     return -1;
@@ -161,19 +161,19 @@ ptrv_insort(PtrV *pv, void *element, comparison_fn_t comparator)
 
     /* XXX: this is slow but stable... */
     for (c = 0; c < pv->cur; c++) {
-    	int cmp;
+        int cmp;
 
-	cmp = comparator(element, pv->buf[c]);
-	if (cmp <= 0) {
-	    if (pv->cur >= pv->max) {
-	        pv->max = MAX(1, pv->max * 2);
-        	pv->buf = xrealloc(pv->buf, pv->max * sizeof(void *));
-	    }
-	    memmove(pv->buf+c+1, pv->buf+c, sizeof(void *)*(pv->cur-c));
-    	    pv->buf[c] = element;
-	    pv->cur++;
-	    return;
-	}
+        cmp = comparator(element, pv->buf[c]);
+        if (cmp <= 0) {
+            if (pv->cur >= pv->max) {
+                pv->max = MAX(1, pv->max * 2);
+                pv->buf = xrealloc(pv->buf, pv->max * sizeof(void *));
+            }
+            memmove(pv->buf+c+1, pv->buf+c, sizeof(void *)*(pv->cur-c));
+            pv->buf[c] = element;
+            pv->cur++;
+            return;
+        }
     }
 
     ptrv_append(pv, element);

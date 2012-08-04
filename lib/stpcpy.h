@@ -29,8 +29,8 @@
 extern "C" {
 #endif
 
-/* Copy SRC to DST, returning the address of the terminating '\0' in DST.  */
-extern char *stpcpy (char *dst, const char *src);
+    /* Copy SRC to DST, returning the address of the terminating '\0' in DST.  */
+    extern char *stpcpy (char *dst, const char *src);
 
 #ifdef __cplusplus
 }

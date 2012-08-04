@@ -67,8 +67,8 @@ void
 byteq_free(ByteQ *bq)
 {
     if (bq != NULL) {
-	free(bq->buf);
-	free(bq);
+        free(bq->buf);
+        free(bq);
     }
 }
 
@@ -78,8 +78,8 @@ void
 byteq_assure(ByteQ *bq, size_t max)
 {
     if (max > bq->max) {
-    	bq->max = max;
-    	bq->buf = xrealloc(bq->buf, bq->max);
+        bq->max = max;
+        bq->buf = xrealloc(bq->buf, bq->max);
     }
 }
 
@@ -89,9 +89,9 @@ void
 byteq_append(ByteQ *bq, void *data, size_t len)
 {
     if (len > 0) {
-	byteq_assure(bq, bq->cur+len);
-	memcpy(bq->buf + bq->cur, data, len);
-	bq->cur += len;
+        byteq_assure(bq, bq->cur+len);
+        memcpy(bq->buf + bq->cur, data, len);
+        bq->cur += len;
     }
 }
 
@@ -135,7 +135,7 @@ byteq_remove(ByteQ *bq, size_t len)
 
     bq->cur -= len;
     if (bq->cur > 0)
-	memmove(bq->buf, bq->buf + len, bq->cur);
+        memmove(bq->buf, bq->buf + len, bq->cur);
 }
 
 /* Read once from fd into queue, so that queue ends up being
@@ -151,12 +151,12 @@ byteq_read_upto(ByteQ *bq, int fd, size_t len)
     ssize_t res;
 
     if (len <= bq->cur)
-    	return 0;
+        return 0;
 
     byteq_assure(bq, bq->cur + len);
     res = read(fd, bq->buf + bq->cur, len - bq->cur);
     if (res > 0)
-    	bq->cur += res;
+        bq->cur += res;
 
     return res;
 }
@@ -167,12 +167,12 @@ byteq_full_read_upto(ByteQ *bq, int fd, size_t len)
     ssize_t res;
 
     if (len <= bq->cur)
-    	return 0;
+        return 0;
 
     byteq_assure(bq, bq->cur + len);
     res = full_read(fd, bq->buf + bq->cur, len - bq->cur);
     if (res > 0)
-    	bq->cur += res;
+        bq->cur += res;
 
     return res;
 }
@@ -186,11 +186,11 @@ byteq_read(ByteQ *bq, int fd)
     ssize_t res;
 
     if (bq->cur == bq->max)
-    	byteq_enlarge(bq);
+        byteq_enlarge(bq);
 
     res = read(fd, bq->buf + bq->cur, bq->max - bq->cur);
     if (res > 0)
-    	bq->cur += res;
+        bq->cur += res;
 
     return res;
 }
@@ -203,7 +203,7 @@ byteq_full_read(ByteQ *bq, int fd)
 
     res = full_read(fd, bq->buf+bq->cur, bq->max-bq->cur);
     if (res > 0)
-    	bq->cur += res;
+        bq->cur += res;
 
     return res;
 }
@@ -235,8 +235,8 @@ byteq_full_write(ByteQ *bq, int fd)
 
     res = full_write(fd, bq->buf, bq->cur);
     if (res > 0) {
-	bq->cur -= res;
-	if (bq->cur > 0)
+        bq->cur -= res;
+        if (bq->cur > 0)
             memmove(bq->buf, bq->buf + res, bq->cur);
     }
 
@@ -256,8 +256,8 @@ byteq_sendto(ByteQ *bq, int fd, int flags, const struct sockaddr *to, socklen_t 
 
     res = sendto(fd, bq->buf, bq->cur, flags, to, tolen);
     if (res > 0) {
-	bq->cur -= res;
-	if (bq->cur > 0)
+        bq->cur -= res;
+        if (bq->cur > 0)
             memmove(bq->buf, bq->buf + res, bq->cur);
     }
 
@@ -270,11 +270,11 @@ byteq_recvfrom(ByteQ *bq, int fd, int flags, struct sockaddr *from, socklen_t *f
     ssize_t res;
 
     if (bq->cur == bq->max)
-    	byteq_enlarge(bq);
+        byteq_enlarge(bq);
 
     res = recvfrom(fd, bq->buf+bq->cur, bq->max-bq->cur, flags, from, fromlen);
     if (res > 0)
-    	bq->cur += res;
+        bq->cur += res;
 
     return res;
 }

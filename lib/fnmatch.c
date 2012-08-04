@@ -239,59 +239,131 @@ static int posixly_correct;
 static wctype_t
 is_char_class (const wchar_t *wcs)
 {
-  char s[CHAR_CLASS_MAX_LENGTH + 1];
-  char *cp = s;
+    char s[CHAR_CLASS_MAX_LENGTH + 1];
+    char *cp = s;
 
-  do
+    do
     {
-      /* Test for a printable character from the portable character set.  */
+        /* Test for a printable character from the portable character set.  */
 #  ifdef _LIBC
-      if (*wcs < 0x20 || *wcs > 0x7e
-	  || *wcs == 0x24 || *wcs == 0x40 || *wcs == 0x60)
-	return (wctype_t) 0;
+        if (*wcs < 0x20 || *wcs > 0x7e
+                || *wcs == 0x24 || *wcs == 0x40 || *wcs == 0x60)
+            return (wctype_t) 0;
 #  else
-      switch (*wcs)
-	{
-	case L' ': case L'!': case L'"': case L'#': case L'%':
-	case L'&': case L'\'': case L'(': case L')': case L'*':
-	case L'+': case L',': case L'-': case L'.': case L'/':
-	case L'0': case L'1': case L'2': case L'3': case L'4':
-	case L'5': case L'6': case L'7': case L'8': case L'9':
-	case L':': case L';': case L'<': case L'=': case L'>':
-	case L'?':
-	case L'A': case L'B': case L'C': case L'D': case L'E':
-	case L'F': case L'G': case L'H': case L'I': case L'J':
-	case L'K': case L'L': case L'M': case L'N': case L'O':
-	case L'P': case L'Q': case L'R': case L'S': case L'T':
-	case L'U': case L'V': case L'W': case L'X': case L'Y':
-	case L'Z':
-	case L'[': case L'\\': case L']': case L'^': case L'_':
-	case L'a': case L'b': case L'c': case L'd': case L'e':
-	case L'f': case L'g': case L'h': case L'i': case L'j':
-	case L'k': case L'l': case L'm': case L'n': case L'o':
-	case L'p': case L'q': case L'r': case L's': case L't':
-	case L'u': case L'v': case L'w': case L'x': case L'y':
-	case L'z': case L'{': case L'|': case L'}': case L'~':
-	  break;
-	default:
-	  return (wctype_t) 0;
-	}
+        switch (*wcs)
+        {
+        case L' ':
+        case L'!':
+        case L'"':
+        case L'#':
+        case L'%':
+        case L'&':
+        case L'\'':
+        case L'(':
+        case L')':
+        case L'*':
+        case L'+':
+        case L',':
+        case L'-':
+        case L'.':
+        case L'/':
+        case L'0':
+        case L'1':
+        case L'2':
+        case L'3':
+        case L'4':
+        case L'5':
+        case L'6':
+        case L'7':
+        case L'8':
+        case L'9':
+        case L':':
+        case L';':
+        case L'<':
+        case L'=':
+        case L'>':
+        case L'?':
+        case L'A':
+        case L'B':
+        case L'C':
+        case L'D':
+        case L'E':
+        case L'F':
+        case L'G':
+        case L'H':
+        case L'I':
+        case L'J':
+        case L'K':
+        case L'L':
+        case L'M':
+        case L'N':
+        case L'O':
+        case L'P':
+        case L'Q':
+        case L'R':
+        case L'S':
+        case L'T':
+        case L'U':
+        case L'V':
+        case L'W':
+        case L'X':
+        case L'Y':
+        case L'Z':
+        case L'[':
+        case L'\\':
+        case L']':
+        case L'^':
+        case L'_':
+        case L'a':
+        case L'b':
+        case L'c':
+        case L'd':
+        case L'e':
+        case L'f':
+        case L'g':
+        case L'h':
+        case L'i':
+        case L'j':
+        case L'k':
+        case L'l':
+        case L'm':
+        case L'n':
+        case L'o':
+        case L'p':
+        case L'q':
+        case L'r':
+        case L's':
+        case L't':
+        case L'u':
+        case L'v':
+        case L'w':
+        case L'x':
+        case L'y':
+        case L'z':
+        case L'{':
+        case L'|':
+        case L'}':
+        case L'~':
+            break;
+        default:
+            return (wctype_t) 0;
+        }
 #  endif
 
-      /* Avoid overrunning the buffer.  */
-      if (cp == s + CHAR_CLASS_MAX_LENGTH)
-	return (wctype_t) 0;
+        /* Avoid overrunning the buffer.  */
+        if (cp == s + CHAR_CLASS_MAX_LENGTH)
+            return (wctype_t) 0;
 
-      *cp++ = (char) *wcs++;
+        *cp++ = (char) *wcs++;
     }
-  while (*wcs != L'\0');
+    while (*wcs != L'\0');
 
-  *cp = '\0';
+    *cp = '\0';
 
 #  ifdef _LIBC
-  return __wctype (s);
+    return __wctype (s);
 #  else
-  return wctype (s);
+    return wctype (s);
 #  endif
 }
 #  define IS_CHAR_CLASS(string) is_char_class (string)
@@ -305,69 +377,69 @@ fnmatch (const char *pattern, const char *string, int flags)
 {
 # if HANDLE_MULTIBYTE
 #  define ALLOCA_LIMIT 2000
-  if (__builtin_expect (MB_CUR_MAX, 1) != 1)
+    if (__builtin_expect (MB_CUR_MAX, 1) != 1)
     {
-      mbstate_t ps;
-      size_t patsize;
-      size_t strsize;
-      size_t totsize;
-      wchar_t *wpattern;
-      wchar_t *wstring;
-      int res;
+        mbstate_t ps;
+        size_t patsize;
+        size_t strsize;
+        size_t totsize;
+        wchar_t *wpattern;
+        wchar_t *wstring;
+        int res;
 
-      /* Calculate the size needed to convert the strings to
-	 wide characters.  */
-      memset (&ps, '\0', sizeof (ps));
-      patsize = mbsrtowcs (NULL, &pattern, 0, &ps) + 1;
-      if (__builtin_expect (patsize != 0, 1))
-	{
-	  assert (mbsinit (&ps));
-	  strsize = mbsrtowcs (NULL, &string, 0, &ps) + 1;
-	  if (__builtin_expect (strsize != 0, 1))
-	    {
-	      assert (mbsinit (&ps));
-	      totsize = patsize + strsize;
-	      if (__builtin_expect (! (patsize <= totsize
-				       && totsize <= SIZE_MAX / sizeof (wchar_t)),
-				    0))
-		{
-		  errno = ENOMEM;
-		  return -1;
-		}
+        /* Calculate the size needed to convert the strings to
+        wide characters.  */
+        memset (&ps, '\0', sizeof (ps));
+        patsize = mbsrtowcs (NULL, &pattern, 0, &ps) + 1;
+        if (__builtin_expect (patsize != 0, 1))
+        {
+            assert (mbsinit (&ps));
+            strsize = mbsrtowcs (NULL, &string, 0, &ps) + 1;
+            if (__builtin_expect (strsize != 0, 1))
+            {
+                assert (mbsinit (&ps));
+                totsize = patsize + strsize;
+                if (__builtin_expect (! (patsize <= totsize
+                                         && totsize <= SIZE_MAX / sizeof (wchar_t)),
+                                      0))
+                {
+                    errno = ENOMEM;
+                    return -1;
+                }
 
-	      /* Allocate room for the wide characters.  */
-	      if (__builtin_expect (totsize < ALLOCA_LIMIT, 1))
-		wpattern = (wchar_t *) alloca (totsize * sizeof (wchar_t));
-	      else
-		{
-		  wpattern = malloc (totsize * sizeof (wchar_t));
-		  if (__builtin_expect (! wpattern, 0))
-		    {
-		      errno = ENOMEM;
-		      return -1;
-		    }
-		}
-	      wstring = wpattern + patsize;
+                /* Allocate room for the wide characters.  */
+                if (__builtin_expect (totsize < ALLOCA_LIMIT, 1))
+                    wpattern = (wchar_t *) alloca (totsize * sizeof (wchar_t));
+                else
+                {
+                    wpattern = malloc (totsize * sizeof (wchar_t));
+                    if (__builtin_expect (! wpattern, 0))
+                    {
+                        errno = ENOMEM;
+                        return -1;
+                    }
+                }
+                wstring = wpattern + patsize;
 
-	      /* Convert the strings into wide characters.  */
-	      mbsrtowcs (wpattern, &pattern, patsize, &ps);
-	      assert (mbsinit (&ps));
-	      mbsrtowcs (wstring, &string, strsize, &ps);
+                /* Convert the strings into wide characters.  */
+                mbsrtowcs (wpattern, &pattern, patsize, &ps);
+                assert (mbsinit (&ps));
+                mbsrtowcs (wstring, &string, strsize, &ps);
 
-	      res = internal_fnwmatch (wpattern, wstring, wstring + strsize - 1,
-				       flags & FNM_PERIOD, flags);
+                res = internal_fnwmatch (wpattern, wstring, wstring + strsize - 1,
+                                         flags & FNM_PERIOD, flags);
 
-	      if (__builtin_expect (! (totsize < ALLOCA_LIMIT), 0))
-		free (wpattern);
-	      return res;
-	    }
-	}
+                if (__builtin_expect (! (totsize < ALLOCA_LIMIT), 0))
+                    free (wpattern);
+                return res;
+            }
+        }
     }
 
 # endif /* HANDLE_MULTIBYTE */
 
-  return internal_fnmatch (pattern, string, string + strlen (string),
-			   flags & FNM_PERIOD, flags);
+    return internal_fnmatch (pattern, string, string + strlen (string),
+                             flags & FNM_PERIOD, flags);
 }
 
 # ifdef _LIBC

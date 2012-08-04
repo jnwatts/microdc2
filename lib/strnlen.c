@@ -40,8 +40,8 @@
 size_t
 __strnlen (const char *string, size_t maxlen)
 {
-  const char *end = memchr (string, '\0', maxlen);
-  return end ? (size_t) (end - string) : maxlen;
+    const char *end = memchr (string, '\0', maxlen);
+    return end ? (size_t) (end - string) : maxlen;
 }
 #ifdef weak_alias
 weak_alias (__strnlen, strnlen)

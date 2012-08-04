@@ -24,10 +24,10 @@ extern "C" {
 #endif
 
 
-/* Write COUNT bytes at BUF to descriptor FD, retrying if interrupted
-   or if partial writes occur.  Return the number of bytes successfully
-   written, setting errno if that is less than COUNT.  */
-extern size_t full_write (int fd, const void *buf, size_t count);
+    /* Write COUNT bytes at BUF to descriptor FD, retrying if interrupted
+       or if partial writes occur.  Return the number of bytes successfully
+       written, setting errno if that is less than COUNT.  */
+    extern size_t full_write (int fd, const void *buf, size_t count);
 
 
 #ifdef __cplusplus

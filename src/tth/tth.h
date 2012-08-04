@@ -9,7 +9,7 @@ extern "C" {
 
 // user must call free() funtion on pointer returned from these functions
 
-char* tth(const char* filename, char **tthl, size_t *tthl_len);
+    char* tth(const char* filename, char **tthl, size_t *tthl_len);
 
 #if defined(__cplusplus)
 }

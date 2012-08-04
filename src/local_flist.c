@@ -143,7 +143,7 @@ DCFileList* read_local_file_list(const char* path)
         } else {
             data += sizeof(uint32_t);
             if (*((uint32_t*)data) < filelist_min_supported_version ||
-                *((uint32_t*)data) > filelist_max_supported_version) {
+                    *((uint32_t*)data) > filelist_max_supported_version) {
                 errno = EWRONGVERSION;
             } else {
                 data += sizeof(uint32_t);
@@ -172,7 +172,7 @@ bool write_local_file_list(const char* path, DCFileList* root)
         size_t size = sizeof(filelist_signature);
 
         if (write(fd, &filelist_signature, sizeof(filelist_signature)) != sizeof(filelist_signature) ||
-            write(fd, &filelist_max_supported_version, sizeof(filelist_max_supported_version)) != sizeof(filelist_max_supported_version))
+                write(fd, &filelist_max_supported_version, sizeof(filelist_max_supported_version)) != sizeof(filelist_max_supported_version))
             goto cleanup;
 
         filelist_to_data(root, (void**)&data, &data_size);
@@ -236,7 +236,7 @@ lookup_filelist_changes(DCFileList* node, PtrV* hash_files)
                 char* fullname = catfiles(node->dir.real_path, child->name);
                 if (stat(fullname, &st) < 0) {
                     if (errno == ENOENT) {
-                        /* 
+                        /*
                             file was removed
                             we have to delete from the file list
                         */
@@ -274,14 +274,14 @@ lookup_filelist_changes(DCFileList* node, PtrV* hash_files)
                     DCFileList* child;
 
                     if (IS_SPECIAL_DIR(ep->d_name))
-	                    continue;
+                        continue;
 
-    	            fullname = catfiles(node->dir.real_path, ep->d_name);
-    	            if (stat(fullname, &st) < 0) {
+                    fullname = catfiles(node->dir.real_path, ep->d_name);
+                    if (stat(fullname, &st) < 0) {
                         /*
-	                    fprintf(stderr, "%s: Cannot get file status - %s\n", fullname, errstr);
+                        fprintf(stderr, "%s: Cannot get file status - %s\n", fullname, errstr);
                         */
-	                    free(fullname);
+                        free(fullname);
                         continue;
                     }
 
@@ -305,14 +305,14 @@ lookup_filelist_changes(DCFileList* node, PtrV* hash_files)
                         }
                     } else {
                         result = true;
-	                    if (S_ISDIR(st.st_mode)) {
-	                        child = new_file_node(ep->d_name, DC_TYPE_DIR, node);
+                        if (S_ISDIR(st.st_mode)) {
+                            child = new_file_node(ep->d_name, DC_TYPE_DIR, node);
                             child->dir.real_path = fullname;
                             fullname = NULL;
                         } else if (S_ISREG(st.st_mode)) {
-	                        child = new_file_node(ep->d_name, DC_TYPE_REG, node);
+                            child = new_file_node(ep->d_name, DC_TYPE_REG, node);
 
-	                        child->size = st.st_size;
+                            child->size = st.st_size;
                             child->reg.has_tth = 0;
                             memset(child->reg.tth, 0, sizeof(child->reg.tth));
                             child->reg.mtime = st.st_mtime;
@@ -495,7 +495,7 @@ local_filelist_update_main(int request_fd[2], int result_fd[2])
     sigaction(SIGUSR1, &sigact, NULL);
     sigaction(SIGCHLD, &sigact, NULL);
     sigaction(SIGPIPE, &sigact, NULL);
-    
+
     FD_ZERO(&readable);
     FD_ZERO(&writable);
 
@@ -615,7 +615,7 @@ local_filelist_update_main(int request_fd[2], int result_fd[2])
                         } else {
                             char *name;
                             int len = 0;
-                        
+
                             msgq_get(request_mq, MSGQ_STR, &name, MSGQ_END);
 
                             len = strlen(name);
@@ -643,30 +643,30 @@ local_filelist_update_main(int request_fd[2], int result_fd[2])
                                 break;
                             case FILELIST_UPDATE_DEL_DIR_NAME:
                                 //selected = 0;
-                                {
-                                    char* bname = xstrdup(base_name(name));
+                            {
+                                char* bname = xstrdup(base_name(name));
 
-                                    DCFileList* node = hmap_get(root->dir.children, bname);
-                                    if (node != NULL && node->type == DC_TYPE_DIR) {
-                                        if (strcmp(node->dir.real_path, name) == 0) {
-                                            node = hmap_remove(root->dir.children, bname);
-                                            filelist_free(node);
-                                            if (write_local_file_list(new_flist_filename, root)) {
-                                                rename(new_flist_filename, flist_filename);
-                                            } else {
-                                                unlink(new_filelist_name);
-                                            }
-
-                                            if (!send_filelist(result_mq, root)) {
-                                                goto cleanup;
-                                            }
+                                DCFileList* node = hmap_get(root->dir.children, bname);
+                                if (node != NULL && node->type == DC_TYPE_DIR) {
+                                    if (strcmp(node->dir.real_path, name) == 0) {
+                                        node = hmap_remove(root->dir.children, bname);
+                                        filelist_free(node);
+                                        if (write_local_file_list(new_flist_filename, root)) {
+                                            rename(new_flist_filename, flist_filename);
                                         } else {
-                                            report_error(result_mq, "%s directory is not shared\n");
+                                            unlink(new_filelist_name);
                                         }
+
+                                        if (!send_filelist(result_mq, root)) {
+                                            goto cleanup;
+                                        }
+                                    } else {
+                                        report_error(result_mq, "%s directory is not shared\n");
                                     }
-                                    free(bname);
                                 }
-                                break;
+                                free(bname);
+                            }
+                            break;
                             case FILELIST_UPDATE_LISTING_DIR:
                                 if (listing_dir != NULL) {
                                     free(listing_dir);
@@ -765,7 +765,7 @@ bool local_file_list_update_init(void)
 {
     int request_fd[2];
     int result_fd[2];
-    
+
     if (pipe(request_fd) != 0 || pipe(result_fd) != 0) {
         warn(_("Cannot create pipe pair - %s\n"), errstr);
         return false;
@@ -786,7 +786,7 @@ bool local_file_list_update_init(void)
         local_filelist_update_main(request_fd, result_fd);
         // we never reach this place
     }
-    
+
     close(request_fd[0]);
     close(result_fd[1]);
     update_request_mq = msgq_new(request_fd[1]);
@@ -816,8 +816,8 @@ bool process_new_file_list(MsgQ* result_mq)
     my_share_size = our_filelist->size;
 
     char sizebuf[LONGEST_HUMAN_READABLE+1];
-	screen_putf(_("Sharing %" PRIu64 " %s (%s) totally\n"), my_share_size, ngettext("byte", "bytes", my_share_size),
-	    human_readable(my_share_size, sizebuf, human_suppress_point_zero|human_autoscale|human_base_1024|human_SI|human_B, 1, 1));
+    screen_putf(_("Sharing %" PRIu64 " %s (%s) totally\n"), my_share_size, ngettext("byte", "bytes", my_share_size),
+                human_readable(my_share_size, sizebuf, human_suppress_point_zero|human_autoscale|human_base_1024|human_SI|human_B, 1, 1));
 
 #if 0
     struct timeval start, end;
@@ -827,32 +827,35 @@ bool process_new_file_list(MsgQ* result_mq)
     /*bool result = write_filelist_file(our_filelist);*/
     char *dc_flist_from    = xasprintf("%s%s%sMyList.DcLst", listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/", filelist_prefix),
 #if defined(HAVE_LIBXML2)
-         *xml_flist_from   = xasprintf("%s%s%sfiles.xml",    listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/", filelist_prefix),
-         *bzxml_flist_from = xasprintf("%s%s%sfiles.xml.bz2",listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/", filelist_prefix),
-         *xml_flist_to     = xasprintf("%s%sfiles.xml",      listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/"),
-         *bzxml_flist_to   = xasprintf("%s%sfiles.xml.bz2",  listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/"),
+          *xml_flist_from   = xasprintf("%s%s%sfiles.xml",    listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/", filelist_prefix),
+           *bzxml_flist_from = xasprintf("%s%s%sfiles.xml.bz2",listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/", filelist_prefix),
+            *xml_flist_to     = xasprintf("%s%sfiles.xml",      listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/"),
+             *bzxml_flist_to   = xasprintf("%s%sfiles.xml.bz2",  listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/"),
 #endif
-         *dc_flist_to      = xasprintf("%s%sMyList.DcLst",   listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/");
+              *dc_flist_to      = xasprintf("%s%sMyList.DcLst",   listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/");
 
     rename(   dc_flist_from,    dc_flist_to);
     if (ptrv_find(delete_files, dc_flist_to, (comparison_fn_t) strcmp) < 0)
-    	ptrv_append(delete_files, xstrdup(dc_flist_to));
+        ptrv_append(delete_files, xstrdup(dc_flist_to));
     if (ptrv_find(delete_files, dc_flist_from, (comparison_fn_t) strcmp) < 0)
-    	ptrv_append(delete_files, xstrdup(dc_flist_from));
-    free(dc_flist_from);    free(dc_flist_to);
+        ptrv_append(delete_files, xstrdup(dc_flist_from));
+    free(dc_flist_from);
+    free(dc_flist_to);
 #if defined(HAVE_LIBXML2)
     rename(  xml_flist_from,   xml_flist_to);
     rename(bzxml_flist_from, bzxml_flist_to);
     if (ptrv_find(delete_files, xml_flist_to, (comparison_fn_t) strcmp) < 0)
-    	ptrv_append(delete_files, xstrdup(xml_flist_to));
+        ptrv_append(delete_files, xstrdup(xml_flist_to));
     if (ptrv_find(delete_files, xml_flist_from, (comparison_fn_t) strcmp) < 0)
-    	ptrv_append(delete_files, xstrdup(xml_flist_from));
+        ptrv_append(delete_files, xstrdup(xml_flist_from));
     if (ptrv_find(delete_files, bzxml_flist_to, (comparison_fn_t) strcmp) < 0)
-    	ptrv_append(delete_files, xstrdup(bzxml_flist_to));
+        ptrv_append(delete_files, xstrdup(bzxml_flist_to));
     if (ptrv_find(delete_files, bzxml_flist_from, (comparison_fn_t) strcmp) < 0)
-    	ptrv_append(delete_files, xstrdup(bzxml_flist_from));
-    free(xml_flist_from);   free(xml_flist_to);
-    free(bzxml_flist_from); free(bzxml_flist_to);
+        ptrv_append(delete_files, xstrdup(bzxml_flist_from));
+    free(xml_flist_from);
+    free(xml_flist_to);
+    free(bzxml_flist_from);
+    free(bzxml_flist_to);
 #endif
 
 #if 0
@@ -864,7 +867,7 @@ bool process_new_file_list(MsgQ* result_mq)
     fprintf(stderr, "write_filelist_file() completes in %ld.%06ld\n", sec, usec);
 #endif
     if (hub_state >= DC_HUB_LOGGED_IN && !send_my_info())
-    	return false;
+        return false;
 
     return true;
 }
@@ -989,7 +992,7 @@ void
 update_request_fd_writable(void)
 {
     int res;
-    
+
     res = msgq_write(update_request_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
         warn_socket_error(res, true, "update request pipe");
@@ -1027,13 +1030,13 @@ update_result_fd_readable(void)
                 msgq_get(update_result_mq, MSGQ_STR, &update_status, MSGQ_END);
                 break;
             case FILELIST_UPDATE_ERROR:
-                {
-                    char* err;
-                    msgq_get(update_result_mq, MSGQ_STR, &err, MSGQ_END);
-                    warn(_("filelist_update: %s\n"), err);
-                    free(err);
-                }
-                break;
+            {
+                char* err;
+                msgq_get(update_result_mq, MSGQ_STR, &err, MSGQ_END);
+                warn(_("filelist_update: %s\n"), err);
+                free(err);
+            }
+            break;
             default:
                 assert(false);
                 break;

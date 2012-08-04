@@ -36,12 +36,12 @@
 #endif
 
 static struct
-  {
+{
     int code;
     const char *msg;
-  }
+}
 values[] =
-  {
+{
     { EAI_ADDRFAMILY, N_("Address family for hostname not supported") },
     { EAI_AGAIN, N_("Temporary failure in name resolution") },
     { EAI_BADFLAGS, N_("Bad value for ai_flags") },
@@ -61,17 +61,17 @@ values[] =
     { EAI_INTR, N_("Interrupted by a signal") },
     { EAI_IDN_ENCODE, N_("Parameter string not correctly encoded") }
 #endif
-  };
+};
 
 const char *
 gai_strerror (int code)
 {
-  size_t i;
-  for (i = 0; i < sizeof (values) / sizeof (values[0]); ++i)
-    if (values[i].code == code)
-      return _(values[i].msg);
+    size_t i;
+    for (i = 0; i < sizeof (values) / sizeof (values[0]); ++i)
+        if (values[i].code == code)
+            return _(values[i].msg);
 
-  return _("Unknown error");
+    return _("Unknown error");
 }
 #ifdef _LIBC
 libc_hidden_def (gai_strerror)

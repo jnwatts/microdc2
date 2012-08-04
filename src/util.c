@@ -101,29 +101,29 @@ mkdirs_for_file(char *filename)
 
     for (t = filename; *t == '/'; t++);
     while ((t = strchr(t, '/')) != NULL) {
-	    struct stat st;
+        struct stat st;
 
-            *t = '\0';
-	    if (stat(filename, &st) < 0) {
-	        if (errno != ENOENT) {
-	    	    screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
+        *t = '\0';
+        if (stat(filename, &st) < 0) {
+            if (errno != ENOENT) {
+                screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
                 return -1;
             } else {
                 if (mkdir(filename, 0777) < 0) {
-                    screen_putf(_("%s: Cannot create directory - %s\n"), quotearg(filename), errstr); 
+                    screen_putf(_("%s: Cannot create directory - %s\n"), quotearg(filename), errstr);
                     return -1;
                 }
                 /*
                 else if (deletedirs) {
-	    	        if (ptrv_find(delete_dirs, filename, (comparison_fn_t) strcmp) < 0)
-	    		    ptrv_append(delete_dirs, xstrdup(filename));
+                    if (ptrv_find(delete_dirs, filename, (comparison_fn_t) strcmp) < 0)
+                    ptrv_append(delete_dirs, xstrdup(filename));
                 }
                 */
             }
         }
 
         *t = '/';
-	    for (; *t == '/'; t++);
+        for (; *t == '/'; t++);
     }
 
     return 0;
@@ -152,16 +152,16 @@ char *
 catfiles_with_trailing_slash(const char *p1, const char *p2)
 {
     return xasprintf("%s%s%s%s",
-	    p1, p1[0] == '\0' || p1[strlen(p1)-1] == '/' ? "" : "/",
-	    p2, p2[0] == '\0' || p2[strlen(p2)-1] == '/' ? "" : "/");
+                     p1, p1[0] == '\0' || p1[strlen(p1)-1] == '/' ? "" : "/",
+                     p2, p2[0] == '\0' || p2[strlen(p2)-1] == '/' ? "" : "/");
 }
 
 char *
 catfiles(const char *p1, const char *p2)
 {
     return xasprintf("%s%s%s",
-	    p1, p1[0] == '\0' || p1[strlen(p1)-1] == '/' ? "" : "/",
-	    p2);
+                     p1, p1[0] == '\0' || p1[strlen(p1)-1] == '/' ? "" : "/",
+                     p2);
 }
 
 /* Get environment variable with default value if it is not set.
@@ -189,13 +189,13 @@ fd_set_status_flags(int fd, bool set, int modflags)
 
     curflags = fcntl(fd, F_GETFL, 0);
     if (curflags < 0)
-    	return false;
+        return false;
     if (set)
-    	newflags = curflags | modflags;
+        newflags = curflags | modflags;
     else
-    	newflags = curflags & ~modflags;
+        newflags = curflags & ~modflags;
     if (newflags == curflags)
-	return true;
+        return true;
 
     return fcntl(fd, F_SETFL, newflags) != -1;
 }
@@ -207,7 +207,7 @@ in_addr_str(struct in_addr addr)
     unsigned char *bytes;
     bytes = (unsigned char *) &addr;
     snprintf(buffer, sizeof(buffer), "%d.%d.%d.%d",
-    	    bytes[0], bytes[1], bytes[2], bytes[3]);
+             bytes[0], bytes[1], bytes[2], bytes[3]);
     return buffer;
 }
 
@@ -219,8 +219,8 @@ sockaddr_in_str(struct sockaddr_in *addr)
 
     bytes = (unsigned char *) &addr->sin_addr;
     snprintf(buffer, sizeof(buffer), "%d.%d.%d.%d:%u",
-    	    bytes[0], bytes[1], bytes[2], bytes[3],
-	    ntohs(addr->sin_port));
+             bytes[0], bytes[1], bytes[2], bytes[3],
+             ntohs(addr->sin_port));
 
     return buffer;
 }
@@ -274,7 +274,7 @@ join_strings(char **strs, int count, char mid)
     for (c = 0; c < count; c++)
         len += strlen(strs[c]);
     p = out = xmalloc(len);
-    for (c = 0; c < count ;c++) {
+    for (c = 0; c < count ; c++) {
         p = stpcpy(p, strs[c]);
         *p = mid;
         p++;
@@ -309,6 +309,6 @@ elapsed_time_to_string(time_t elapsed, char *buf)
         elapsed %= SECONDS_PER_MINUTE;
     }
     if (elapsed > 0 || s == buf)
-	s += sprintf(s, "%lus", (long) elapsed);
+        s += sprintf(s, "%lus", (long) elapsed);
     return buf;
 }

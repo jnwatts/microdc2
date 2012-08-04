@@ -41,116 +41,116 @@ enum { COPYRIGHT_YEAR = 2005 };
    provided via a variable of type va_list.  */
 void
 version_etc_va (FILE *stream,
-		const char *command_name, const char *package,
-		const char *version, va_list authors)
+                const char *command_name, const char *package,
+                const char *version, va_list authors)
 {
-  size_t n_authors;
+    size_t n_authors;
 
-  /* Count the number of authors.  */
-  {
-    va_list tmp_authors;
+    /* Count the number of authors.  */
+    {
+        va_list tmp_authors;
 
 #ifdef __va_copy
-    __va_copy (tmp_authors, authors);
+        __va_copy (tmp_authors, authors);
 #else
-    tmp_authors = authors;
+        tmp_authors = authors;
 #endif
 
-    n_authors = 0;
-    while (va_arg (tmp_authors, const char *) != NULL)
-      ++n_authors;
-  }
+        n_authors = 0;
+        while (va_arg (tmp_authors, const char *) != NULL)
+            ++n_authors;
+    }
 
-  if (command_name)
-    fprintf (stream, "%s (%s) %s\n", command_name, package, version);
-  else
-    fprintf (stream, "%s %s\n", package, version);
+    if (command_name)
+        fprintf (stream, "%s (%s) %s\n", command_name, package, version);
+    else
+        fprintf (stream, "%s %s\n", package, version);
 
-  /* TRANSLATORS: Translate "(C)" to the copyright symbol
-     (C-in-a-circle), if this symbol is available in the user's
-     locale.  Otherwise, do not translate "(C)"; leave it as-is.  */
-  fprintf (stream, version_etc_copyright, _("(C)"), COPYRIGHT_YEAR);
+    /* TRANSLATORS: Translate "(C)" to the copyright symbol
+       (C-in-a-circle), if this symbol is available in the user's
+       locale.  Otherwise, do not translate "(C)"; leave it as-is.  */
+    fprintf (stream, version_etc_copyright, _("(C)"), COPYRIGHT_YEAR);
 
-  fputs (_("\
+    fputs (_("\
 \n\
 This is free software.  You may redistribute copies of it under the terms of\n\
 the GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\n\
 There is NO WARRANTY, to the extent permitted by law.\n\
 \n\
 "),
-	 stream);
+           stream);
 
-  switch (n_authors)
+    switch (n_authors)
     {
     case 0:
-      /* The caller must provide at least one author name.  */
-      abort ();
+        /* The caller must provide at least one author name.  */
+        abort ();
     case 1:
-      /* TRANSLATORS: %s denotes an author name.  */
-      vfprintf (stream, _("Written by %s.\n"), authors);
-      break;
+        /* TRANSLATORS: %s denotes an author name.  */
+        vfprintf (stream, _("Written by %s.\n"), authors);
+        break;
     case 2:
-      /* TRANSLATORS: Each %s denotes an author name.  */
-      vfprintf (stream, _("Written by %s and %s.\n"), authors);
-      break;
+        /* TRANSLATORS: Each %s denotes an author name.  */
+        vfprintf (stream, _("Written by %s and %s.\n"), authors);
+        break;
     case 3:
-      /* TRANSLATORS: Each %s denotes an author name.  */
-      vfprintf (stream, _("Written by %s, %s, and %s.\n"), authors);
-      break;
+        /* TRANSLATORS: Each %s denotes an author name.  */
+        vfprintf (stream, _("Written by %s, %s, and %s.\n"), authors);
+        break;
     case 4:
-      /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
-      vfprintf (stream, _("Written by %s, %s, %s,\nand %s.\n"), authors);
-      break;
+        /* TRANSLATORS: Each %s denotes an author name.
+        You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+        vfprintf (stream, _("Written by %s, %s, %s,\nand %s.\n"), authors);
+        break;
     case 5:
-      /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
-      vfprintf (stream, _("Written by %s, %s, %s,\n%s, and %s.\n"), authors);
-      break;
+        /* TRANSLATORS: Each %s denotes an author name.
+        You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+        vfprintf (stream, _("Written by %s, %s, %s,\n%s, and %s.\n"), authors);
+        break;
     case 6:
-      /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
-      vfprintf (stream, _("Written by %s, %s, %s,\n%s, %s, and %s.\n"),
-		authors);
-      break;
+        /* TRANSLATORS: Each %s denotes an author name.
+        You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+        vfprintf (stream, _("Written by %s, %s, %s,\n%s, %s, and %s.\n"),
+                  authors);
+        break;
     case 7:
-      /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
-      vfprintf (stream, _("Written by %s, %s, %s,\n%s, %s, %s, and %s.\n"),
-		authors);
-      break;
+        /* TRANSLATORS: Each %s denotes an author name.
+        You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+        vfprintf (stream, _("Written by %s, %s, %s,\n%s, %s, %s, and %s.\n"),
+                  authors);
+        break;
     case 8:
-      /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
-      vfprintf (stream, _("\
+        /* TRANSLATORS: Each %s denotes an author name.
+        You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+        vfprintf (stream, _("\
 Written by %s, %s, %s,\n%s, %s, %s, %s,\nand %s.\n"),
-		authors);
-      break;
+                  authors);
+        break;
     case 9:
-      /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
-      vfprintf (stream, _("\
+        /* TRANSLATORS: Each %s denotes an author name.
+        You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+        vfprintf (stream, _("\
 Written by %s, %s, %s,\n%s, %s, %s, %s,\n%s, and %s.\n"),
-		authors);
-      break;
+                  authors);
+        break;
     default:
-      /* 10 or more authors.  Use an abbreviation, since the human reader
-	 will probably not want to read the entire list anyway.  */
-      /* TRANSLATORS: Each %s denotes an author name.
-	 You can use line breaks, estimating that each author name occupies
-	 ca. 16 screen columns and that a screen line has ca. 80 columns.  */
-      vfprintf (stream, _("\
+        /* 10 or more authors.  Use an abbreviation, since the human reader
+        will probably not want to read the entire list anyway.  */
+        /* TRANSLATORS: Each %s denotes an author name.
+        You can use line breaks, estimating that each author name occupies
+         ca. 16 screen columns and that a screen line has ca. 80 columns.  */
+        vfprintf (stream, _("\
 Written by %s, %s, %s,\n%s, %s, %s, %s,\n%s, %s, and others.\n"),
-		authors);
-      break;
+                  authors);
+        break;
     }
-  va_end (authors);
+    va_end (authors);
 }
 
 
@@ -169,11 +169,11 @@ Written by %s, %s, %s,\n%s, %s, %s, %s,\n%s, %s, and others.\n"),
    NULL argument at the end.  */
 void
 version_etc (FILE *stream,
-	     const char *command_name, const char *package,
-	     const char *version, /* const char *author1, ...*/ ...)
+             const char *command_name, const char *package,
+             const char *version, /* const char *author1, ...*/ ...)
 {
-  va_list authors;
+    va_list authors;
 
-  va_start (authors, version);
-  version_etc_va (stream, command_name, package, version, authors);
+    va_start (authors, version);
+    version_etc_va (stream, command_name, package, version, authors);
 }

@@ -33,7 +33,7 @@ typedef int iconv_t;
 
 #define EXPORT_CONVERSION(from, to)                                     \
     char* from##_to_##to##_string(const char* str);                     \
-    char* try_##from##_to_##to##_string(const char* str);               
+    char* try_##from##_to_##to##_string(const char* str);
 
 #if HAVE_ICONV
 #define DECLARE_CONVERSION(from, to)                                    \

@@ -79,25 +79,25 @@ mkdirs_for_temp_file(char *filename)
 
     for (t = filename; *t == '/'; t++);
     while ((t = strchr(t, '/')) != NULL) {
-	struct stat st;
+        struct stat st;
 
         *t = '\0';
-	if (stat(filename, &st) < 0) {
-	    if (errno != ENOENT) {
-	    	warn(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
-		return -1;
-	    } else {
-        	if (mkdir(filename, 0777) < 0) {
-    	    	    warn(_("%s: Cannot create directory - %s\n"), quotearg(filename), errstr); 
-		    return -1;
-		} else {
-	    	    if (ptrv_find(delete_dirs, filename, (comparison_fn_t) strcmp) < 0)
-	    		ptrv_append(delete_dirs, xstrdup(filename));
-		}
-	    }
-	}
+        if (stat(filename, &st) < 0) {
+            if (errno != ENOENT) {
+                warn(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
+                return -1;
+            } else {
+                if (mkdir(filename, 0777) < 0) {
+                    warn(_("%s: Cannot create directory - %s\n"), quotearg(filename), errstr);
+                    return -1;
+                } else {
+                    if (ptrv_find(delete_dirs, filename, (comparison_fn_t) strcmp) < 0)
+                        ptrv_append(delete_dirs, xstrdup(filename));
+                }
+            }
+        }
         *t = '/';
-	for (; *t == '/'; t++);
+        for (; *t == '/'; t++);
     }
 
     return 0;
@@ -105,7 +105,7 @@ mkdirs_for_temp_file(char *filename)
 
 static int
 fs_completion_entry_compare(const void *e1, const void *e2)
-{  
+{
     const DCCompletionEntry *ce1 = *(const DCCompletionEntry **) e1;
     const DCCompletionEntry *ce2 = *(const DCCompletionEntry **) e2;
     if (ce1->sorting.file_type == ce2->sorting.file_type) {
@@ -117,7 +117,7 @@ fs_completion_entry_compare(const void *e1, const void *e2)
         return cmp;
     }
     return ce1->sorting.file_type - ce2->sorting.file_type;
-}   
+}
 
 DCFileList *
 new_file_node(const char *name, DCFileType type, DCFileList *parent)
@@ -134,8 +134,8 @@ new_file_node(const char *name, DCFileType type, DCFileList *parent)
     switch (node->type) {
     case DC_TYPE_DIR:
         node->dir.real_path = NULL;
-    	node->dir.children = hmap_new();
-	break;
+        node->dir.children = hmap_new();
+        break;
     case DC_TYPE_REG:
         node->reg.has_tth = false;
         memset(node->reg.tth, 0, sizeof(node->reg.tth));
@@ -192,13 +192,13 @@ filelist_free(DCFileList *node)
     if (node != NULL) {
         switch (node->type) {
         case DC_TYPE_REG:
-    	    break;
+            break;
         case DC_TYPE_DIR:
             if (node->dir.real_path != NULL)
                 free(node->dir.real_path);
             hmap_foreach_value(node->dir.children, filelist_free);
             hmap_free(node->dir.children);
-    	    break;
+            break;
         }
         free(node->name);
         free(node);
@@ -209,27 +209,27 @@ static DCFileList *
 filelist_lookup_tth(DCFileList *node, const char *tth)
 {
     if (node->type == DC_TYPE_REG) {
-	unsigned n;
+        unsigned n;
 
-	if (!node->reg.has_tth)
-	    return NULL;
+        if (!node->reg.has_tth)
+            return NULL;
 
-	for (n = 0; n < sizeof(node->reg.tth); n++) {
-	    if ( tolower(node->reg.tth[n]) != tolower(tth[n]))
-		return NULL;
-	}
-	return node;
-    }else {
-	HMapIterator it;
-	DCFileList *res;
+        for (n = 0; n < sizeof(node->reg.tth); n++) {
+            if ( tolower(node->reg.tth[n]) != tolower(tth[n]))
+                return NULL;
+        }
+        return node;
+    } else {
+        HMapIterator it;
+        DCFileList *res;
 
-	hmap_iterator(node->dir.children, &it);
-	while (it.has_next(&it)) {
-	    DCFileList *subnode = it.next(&it);
-	    res =  filelist_lookup_tth( subnode, tth);
-	    if (res)
-		return res;
-	}
+        hmap_iterator(node->dir.children, &it);
+        while (it.has_next(&it)) {
+            DCFileList *subnode = it.next(&it);
+            res =  filelist_lookup_tth( subnode, tth);
+            if (res)
+                return res;
+        }
     }
     return NULL;
 }
@@ -271,9 +271,9 @@ filelist_get_path_with_trailing_slash(DCFileList *node)
 
     sb = strbuf_new();
     while (node->parent != NULL) {
-	strbuf_prepend(sb, node->name);
-	strbuf_prepend_char(sb, '/');
-    	node = node->parent;
+        strbuf_prepend(sb, node->name);
+        strbuf_prepend_char(sb, '/');
+        node = node->parent;
     }
     if (node->type == DC_TYPE_DIR)
         strbuf_append_char(sb, '/');
@@ -289,13 +289,13 @@ filelist_get_path(DCFileList *node)
     StrBuf *sb;
 
     if (node->parent == NULL)
-	return xstrdup("/"); /* root */
+        return xstrdup("/"); /* root */
 
     sb = strbuf_new();
     while (node->parent != NULL) {
-	strbuf_prepend(sb, node->name);
-	strbuf_prepend_char(sb, '/');
-    	node = node->parent;
+        strbuf_prepend(sb, node->name);
+        strbuf_prepend_char(sb, '/');
+        node = node->parent;
     }
 
     return strbuf_free_to_string(sb);
@@ -344,7 +344,7 @@ file_node_compare(const void *i1, const void *i2)
     int res;
 
     if (f1->type != f2->type)
-	return f1->type - f2->type;
+        return f1->type - f2->type;
 
     str1 = (unsigned char *)f1->name;
     str2 = (unsigned char *)f2->name;
@@ -352,19 +352,19 @@ file_node_compare(const void *i1, const void *i2)
     s1[1] = s2[1] =  '\0';
 
     for (; *str1 && *str2; str1++, str2++) {
-	if ((*str1 != *str2)
-		&& (tolower(*str1) != tolower(*str2))) {
-	    s1[0] = tolower(*str1);
-	    s2[0] = tolower(*str2);
-	    res = strcoll(s1, s2);
-	    if (res != 0)
-		return res;
-	}
+        if ((*str1 != *str2)
+                && (tolower(*str1) != tolower(*str2))) {
+            s1[0] = tolower(*str1);
+            s2[0] = tolower(*str2);
+            res = strcoll(s1, s2);
+            if (res != 0)
+                return res;
+        }
     }
     if ( *str1 )
-	return 1;
+        return 1;
     if ( *str2)
-	return -1;
+        return -1;
     return 0;
 }
 
@@ -459,14 +459,14 @@ filelist_list(DCFileList *node, int mode)
                     screen_putf(format, (uint64_t) (items[c]->size/(1024*1024)), quotearg(items[c]->name), "/");
                     break;
                 }
-	        }
+            }
             free(items);
         } else {
-	        screen_putf(format, (uint64_t) (node->size/(1024*1024)), quotearg(node->name), "");
+            screen_putf(format, (uint64_t) (node->size/(1024*1024)), quotearg(node->name), "");
         }
         free(format);
     } else {
-    	if (node->type == DC_TYPE_DIR) {
+        if (node->type == DC_TYPE_DIR) {
             DCFileList **items;
             int cols;
             int rows;
@@ -497,8 +497,8 @@ filelist_list(DCFileList *node, int mode)
                         break;
                     }
                     if (c+rows < count) {
-                    for (d = maxlen-strlen(items[c]->name)-extlen+2; d > 0; d--)
-	                    screen_putf(" ");
+                        for (d = maxlen-strlen(items[c]->name)-extlen+2; d > 0; d--)
+                            screen_putf(" ");
                     }
                 }
                 screen_putf("\n");
@@ -521,10 +521,10 @@ dir_to_filelist(DCFileList *parent, const char *path)
 
     dp = opendir(path);
     if (dp == NULL) {
-    	screen_putf(_("%s: Cannot open directory - %s\n"), quotearg(path), errstr);
-	    return;
+        screen_putf(_("%s: Cannot open directory - %s\n"), quotearg(path), errstr);
+        return;
     }
-    
+
     parent->dir.real_path = xstrdup(path);
 
     /*
@@ -532,36 +532,36 @@ dir_to_filelist(DCFileList *parent, const char *path)
     */
 
     while ((ep = xreaddir(dp)) != NULL) {
-    	struct stat st;
-	    char *fullname;
+        struct stat st;
+        char *fullname;
 
-    	if (IS_SPECIAL_DIR(ep->d_name))
-	        continue;
+        if (IS_SPECIAL_DIR(ep->d_name))
+            continue;
 
-	    /* If we ran into looped symlinked dirs, stat will stop (errno=ELOOP). */
+        /* If we ran into looped symlinked dirs, stat will stop (errno=ELOOP). */
 
-    	fullname = catfiles(path, ep->d_name);
-    	if (stat(fullname, &st) < 0) {
-	        screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(fullname), errstr);
-	        free(fullname);
-	        continue;
-	    }
-	    if (S_ISDIR(st.st_mode)) {
-	        DCFileList *node = new_file_node(ep->d_name, DC_TYPE_DIR, parent);
-	        dir_to_filelist(node, fullname);
-	        parent->size += node->size;
-	    }
-	    else if (S_ISREG(st.st_mode)) {
+        fullname = catfiles(path, ep->d_name);
+        if (stat(fullname, &st) < 0) {
+            screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(fullname), errstr);
+            free(fullname);
+            continue;
+        }
+        if (S_ISDIR(st.st_mode)) {
+            DCFileList *node = new_file_node(ep->d_name, DC_TYPE_DIR, parent);
+            dir_to_filelist(node, fullname);
+            parent->size += node->size;
+        }
+        else if (S_ISREG(st.st_mode)) {
             /*
             char *tth_fname = NULL;
             int tth_fd = -1;
             */
-	        DCFileList *node = new_file_node(ep->d_name, DC_TYPE_REG, parent);
-	        node->size = st.st_size;
+            DCFileList *node = new_file_node(ep->d_name, DC_TYPE_REG, parent);
+            node->size = st.st_size;
             node->reg.has_tth = 0;
             memset(node->reg.tth, 0, sizeof(node->reg.tth));
             node->reg.mtime = st.st_mtime;
-	        parent->size += node->size;
+            parent->size += node->size;
 
             /*
             tth_fname = xasprintf("%s%s%s%s", tth_path, tth_path[0] == '\0' || tth_path[strlen(tth_path)-1] == '/' ? "" : "/", ep->d_name, ".tth");
@@ -571,8 +571,8 @@ dir_to_filelist(DCFileList *parent, const char *path)
                 uint64_t fsize;
                 time_t mtime, ctime;
                 char tth[39];
-                if (read(tth_fd, &fsize, sizeof(fsize)) == sizeof(fsize) && st.st_size == fsize && 
-                    read(tth_fd, &mtime, sizeof(mtime)) == sizeof(mtime) && st.st_mtime == mtime && 
+                if (read(tth_fd, &fsize, sizeof(fsize)) == sizeof(fsize) && st.st_size == fsize &&
+                    read(tth_fd, &mtime, sizeof(mtime)) == sizeof(mtime) && st.st_mtime == mtime &&
                     read(tth_fd, &ctime, sizeof(ctime)) == sizeof(ctime) && st.st_ctime == ctime &&
                     read(tth_fd, tth, sizeof(tth)) == sizeof(tth)) {
                     node->reg.has_tth = 1;
@@ -583,20 +583,20 @@ dir_to_filelist(DCFileList *parent, const char *path)
             }
             free(tth_fname);
             */
-	    }
-	    else {
-	        screen_putf(_("%s: Not a regular file or directory, ignoring\n"), quotearg(fullname));
-	    }
-	    free(fullname);
+        }
+        else {
+            screen_putf(_("%s: Not a regular file or directory, ignoring\n"), quotearg(fullname));
+        }
+        free(fullname);
     }
 
     /*
     free(tth_path);
     */
     if (errno != 0)
-    	screen_putf(_("%s: Cannot read directory - %s\n"), quotearg(path), errstr);
+        screen_putf(_("%s: Cannot read directory - %s\n"), quotearg(path), errstr);
     if (closedir(dp) < 0)
-    	screen_putf(_("%s: Cannot close directory - %s\n"), quotearg(path), errstr);
+        screen_putf(_("%s: Cannot close directory - %s\n"), quotearg(path), errstr);
 }
 
 static void
@@ -605,7 +605,7 @@ filelist_to_string(DCFileList *node, StrBuf *sb, int level)
     char *fname;
 
     if (level != 0)
-    	strbuf_append_char_n(sb, level-1, '\t');
+        strbuf_append_char_n(sb, level-1, '\t');
 
     /* convert filenames from filesystem charset to hub charset */
     fname = fs_to_hub_string(node->name);
@@ -646,7 +646,7 @@ bool write_filelist_file(DCFileList* root, const char* prefix)
 
     if (root != NULL) {
         sb = strbuf_new();
-	    filelist_to_string(root, sb, 0);
+        filelist_to_string(root, sb, 0);
         len = strbuf_length(sb);
         indata = strbuf_free_to_string(sb);
         outdata = huffman_encode((uint8_t *) indata, len, &len);
@@ -656,88 +656,88 @@ bool write_filelist_file(DCFileList* root, const char* prefix)
         mkdirs_for_temp_file(filename); /* Ignore errors */
 
         if (stat(filename, &st) < 0) {
-    	    if (errno != ENOENT)
-	        warn(_("%s: Cannot get file status - %s\n"), filename, errstr);
+            if (errno != ENOENT)
+                warn(_("%s: Cannot get file status - %s\n"), filename, errstr);
         } else {
-	        if (unlink(filename) < 0)
-	            warn(_("%s: Cannot remove file - %s\n"), filename, errstr);
+            if (unlink(filename) < 0)
+                warn(_("%s: Cannot remove file - %s\n"), filename, errstr);
         }
         i = ptrv_find(delete_files, filename, (comparison_fn_t) strcmp);
         if (i >= 0)
-    	    ptrv_remove_range(delete_files, i, i+1);
+            ptrv_remove_range(delete_files, i, i+1);
 
 #if defined(HAVE_LIBXML2)
         xml_filename = xasprintf("%s%s%sfiles.xml", listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/", prefix == NULL ? "" : prefix);
         mkdirs_for_temp_file(xml_filename); /* Ignore errors */
         if (stat(xml_filename, &st) < 0) {
-    	    if (errno != ENOENT)
-	        warn(_("%s: Cannot get file status - %s\n"), xml_filename, errstr);
+            if (errno != ENOENT)
+                warn(_("%s: Cannot get file status - %s\n"), xml_filename, errstr);
         } else {
-	        if (unlink(xml_filename) < 0)
-	            warn(_("%s: Cannot remove file - %s\n"), xml_filename, errstr);
+            if (unlink(xml_filename) < 0)
+                warn(_("%s: Cannot remove file - %s\n"), xml_filename, errstr);
         }
         i = ptrv_find(delete_files, xml_filename, (comparison_fn_t) strcmp);
         if (i >= 0)
-    	    ptrv_remove_range(delete_files, i, i+1);
+            ptrv_remove_range(delete_files, i, i+1);
 
 
         bzxml_filename = xasprintf("%s%s%sfiles.xml.bz2", listing_dir, listing_dir[0] == '\0' || listing_dir[strlen(listing_dir)-1] == '/' ? "" : "/", prefix == NULL ? "" : prefix);
         mkdirs_for_temp_file(bzxml_filename); /* Ignore errors */
         if (stat(bzxml_filename, &st) < 0) {
-    	    if (errno != ENOENT)
-	        warn(_("%s: Cannot get file status - %s\n"), bzxml_filename, errstr);
+            if (errno != ENOENT)
+                warn(_("%s: Cannot get file status - %s\n"), bzxml_filename, errstr);
         } else {
-	        if (unlink(bzxml_filename) < 0)
-	            warn(_("%s: Cannot remove file - %s\n"), bzxml_filename, errstr);
+            if (unlink(bzxml_filename) < 0)
+                warn(_("%s: Cannot remove file - %s\n"), bzxml_filename, errstr);
         }
         i = ptrv_find(delete_files, bzxml_filename, (comparison_fn_t) strcmp);
         if (i >= 0)
-    	    ptrv_remove_range(delete_files, i, i+1);
+            ptrv_remove_range(delete_files, i, i+1);
 #endif
 
         failed_count = 0;
         fd = open(filename, O_CREAT|O_EXCL|O_WRONLY, 0666);
         if (fd < 0) {
-    	    screen_putf(_("%s: Cannot open file for writing - %s\n"), quotearg(filename), errstr);
+            screen_putf(_("%s: Cannot open file for writing - %s\n"), quotearg(filename), errstr);
             failed_count++;
         }
 #if defined(HAVE_LIBXML2)
         xml_fd = open(xml_filename, O_CREAT|O_EXCL|O_WRONLY, 0666);
         if (xml_fd < 0) {
-    	    screen_putf(_("%s: Cannot open file for writing - %s\n"), quotearg(xml_filename), errstr);
+            screen_putf(_("%s: Cannot open file for writing - %s\n"), quotearg(xml_filename), errstr);
             failed_count++;
         }
         bzxml_fd = open(bzxml_filename, O_CREAT|O_EXCL|O_WRONLY, 0666);
         if (bzxml_fd < 0) {
-    	    screen_putf(_("%s: Cannot open file for writing - %s\n"), quotearg(bzxml_filename), errstr);
+            screen_putf(_("%s: Cannot open file for writing - %s\n"), quotearg(bzxml_filename), errstr);
             failed_count++;
         }
 #endif
         if (failed_count == max_failed_count) {
-	        filelist_free(root);
-	        free(outdata);
-	        free(filename);
+            filelist_free(root);
+            free(outdata);
+            free(filename);
 #if defined(HAVE_LIBXML2)
-	        free(xml_filename);
-	        free(bzxml_filename);
+            free(xml_filename);
+            free(bzxml_filename);
 #endif
-	        return false;
+            return false;
         }
         /*
         if (ptrv_find(delete_files, filename, (comparison_fn_t) strcmp) < 0)
-    	    ptrv_append(delete_files, xstrdup(filename));
-#if defined(HAVE_LIBXML2)
+            ptrv_append(delete_files, xstrdup(filename));
+        #if defined(HAVE_LIBXML2)
         if (ptrv_find(delete_files, xml_filename, (comparison_fn_t) strcmp) < 0)
-    	    ptrv_append(delete_files, xstrdup(xml_filename));
+            ptrv_append(delete_files, xstrdup(xml_filename));
         if (ptrv_find(delete_files, bzxml_filename, (comparison_fn_t) strcmp) < 0)
-    	    ptrv_append(delete_files, xstrdup(bzxml_filename));
-#endif
+            ptrv_append(delete_files, xstrdup(bzxml_filename));
+        #endif
         */
 
         failed_count = 0;
         if (fd < 0 || full_write(fd, outdata, len) < len) {
             if (fd >= 0)
-    	        screen_putf(_("%s: Cannot write to file - %s\n"), quotearg(filename), errstr);
+                screen_putf(_("%s: Cannot write to file - %s\n"), quotearg(filename), errstr);
             failed_count++;
         }
         free(outdata);
@@ -745,34 +745,34 @@ bool write_filelist_file(DCFileList* root, const char* prefix)
 #if defined(HAVE_LIBXML2)
         if (xml_fd < 0 || write_xml_filelist(xml_fd, root) < 0) {
             if (xml_fd >= 0) {
-    	        screen_putf(_("%s: Cannot write to file - %s\n"), quotearg(xml_filename), errstr);
+                screen_putf(_("%s: Cannot write to file - %s\n"), quotearg(xml_filename), errstr);
             }
             failed_count++;
         }
         if (bzxml_fd < 0 || write_bzxml_filelist(bzxml_fd, root) < 0) {
             if (bzxml_fd >= 0) {
-    	        screen_putf(_("%s: Cannot write to file - %s\n"), quotearg(bzxml_filename), errstr);
+                screen_putf(_("%s: Cannot write to file - %s\n"), quotearg(bzxml_filename), errstr);
             }
             failed_count++;
         }
 #endif
         if (failed_count == max_failed_count) {
-	        filelist_free(root); 
-	        free(filename);
+            filelist_free(root);
+            free(filename);
 #if defined(HAVE_LIBXML2)
-	        free(xml_filename);
-	        free(bzxml_filename);
+            free(xml_filename);
+            free(bzxml_filename);
 #endif
-	        return false;
+            return false;
         }
 
         if (close(fd) < 0)
-    	    screen_putf(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
+            screen_putf(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
         free(filename);
 
 #if defined(HAVE_LIBXML2)
         if (close(xml_fd) < 0)
-    	    screen_putf(_("%s: Cannot close file - %s\n"), quotearg(xml_filename), errstr);
+            screen_putf(_("%s: Cannot close file - %s\n"), quotearg(xml_filename), errstr);
         free(xml_filename);
 
         // we don't need to close this file - it was closed by write_bzxml_filelist() function.
@@ -791,18 +791,18 @@ filelist_create(const char *basedir)
     DCFileList *root = new_file_node("", DC_TYPE_DIR, NULL);
 
     if (basedir != NULL) {
-    	screen_putf(_("Scanning directory %s\n"), quotearg(basedir));
+        screen_putf(_("Scanning directory %s\n"), quotearg(basedir));
         //screen_sync();
-    	dir_to_filelist(root, basedir);
+        dir_to_filelist(root, basedir);
     }
-	/*  basedir for dir_to_filelist must be in filesystem encoding */
-	conv_basedir = main_to_fs_string(basedir);
-	dir_to_filelist(root, conv_basedir);
+    /*  basedir for dir_to_filelist must be in filesystem encoding */
+    conv_basedir = main_to_fs_string(basedir);
+    dir_to_filelist(root, conv_basedir);
     free(conv_basedir);
 
 
     if (our_filelist != NULL)
-    	filelist_free(our_filelist);
+        filelist_free(our_filelist);
     our_filelist = root;
     my_share_size = our_filelist->size;
 
@@ -830,9 +830,9 @@ resolve_upload_file(DCUserInfo *ui, DCAdcgetType ul_type, const char *name, DCTr
 
         if (strcmp(name, "/MyList.DcLst") == 0
 #if defined(HAVE_LIBXML2)
-            || strcmp(name, "/files.xml") == 0 || strcmp(name, "/files.xml.bz2") == 0
+                || strcmp(name, "/files.xml") == 0 || strcmp(name, "/files.xml.bz2") == 0
 #endif
-            ) {
+           ) {
             char* filename = catfiles(listing_dir, name);
             if (flag != NULL) {
                 *flag = DC_TF_LIST;
@@ -852,7 +852,7 @@ resolve_upload_file(DCUserInfo *ui, DCAdcgetType ul_type, const char *name, DCTr
     if (our_filelist == NULL)
         return NULL;
 
-    if (ul_type == DC_ADCGET_FILE) 
+    if (ul_type == DC_ADCGET_FILE)
         node = filelist_lookup(our_filelist, name);
     else
         node = filelist_lookup_tth(our_filelist, name);
@@ -861,29 +861,29 @@ resolve_upload_file(DCUserInfo *ui, DCAdcgetType ul_type, const char *name, DCTr
         return NULL;
     if (ul_type == DC_ADCGET_TTHL) {
         return NULL;
-/*
-	StrBuf *sb;
+        /*
+        	StrBuf *sb;
 
-	sb = strbuf_new();
+        	sb = strbuf_new();
 
-	strbuf_append_char(sb, '/');
-	strbuf_append(sb, tth_directory_name);
-	if ( tth_directory_name[strlen(tth_directory_name) - 1] != '/' )
-	    strbuf_append_char(sb, '/');
-	strbuf_append(sb, node->name);
-	strbuf_append(sb, ".tth");
+        	strbuf_append_char(sb, '/');
+        	strbuf_append(sb, tth_directory_name);
+        	if ( tth_directory_name[strlen(tth_directory_name) - 1] != '/' )
+        	    strbuf_append_char(sb, '/');
+        	strbuf_append(sb, node->name);
+        	strbuf_append(sb, ".tth");
 
-	node = node->parent;
-	while (node != NULL) {
-	    strbuf_prepend(sb, node->name);
-	    strbuf_prepend_char(sb, '/');
-	    node = node->parent;
-	}
+        	node = node->parent;
+        	while (node != NULL) {
+        	    strbuf_prepend(sb, node->name);
+        	    strbuf_prepend_char(sb, '/');
+        	    node = node->parent;
+        	}
 
-	strbuf_prepend(sb, share_dir);
-	
-	return strbuf_free_to_string(sb);
-*/
+        	strbuf_prepend(sb, share_dir);
+
+        	return strbuf_free_to_string(sb);
+        */
 
     } else {
         if (flag != NULL) {
@@ -919,7 +919,7 @@ resolve_download_file(DCUserInfo *ui, DCQueuedFile *queued)
         free(tmp);
 
         filename = main_to_fs_string(tmp2);
-	    free(tmp2);
+        free(tmp2);
 
         if (filename)
             mkdirs_for_file(filename); /* Ignore errors */
@@ -936,10 +936,10 @@ translate_remote_to_local(const char *remotename)
     sb = strbuf_new();
     strbuf_append_char(sb, '/');
     for (; *remotename != '\0'; remotename++) {
-    	if (*remotename == '\\')
-	    strbuf_append_char(sb, '/');
-	else
-	    strbuf_append_char(sb, *remotename);
+        if (*remotename == '\\')
+            strbuf_append_char(sb, '/');
+        else
+            strbuf_append_char(sb, *remotename);
     }
 
     return strbuf_free_to_string(sb);
@@ -953,10 +953,10 @@ translate_local_to_remote(const char *localname)
     sb = strbuf_new();
     localname++;
     for (; *localname != '\0'; localname++) {
-    	if (*localname == '/')
+        if (*localname == '/')
             strbuf_append_char(sb, '\\');
-	else
-	    strbuf_append_char(sb, *localname);
+        else
+            strbuf_append_char(sb, *localname);
     }
 
     return strbuf_free_to_string(sb);
@@ -966,9 +966,9 @@ char *
 apply_cwd(const char *path)
 {
     if (*path == '/') {
-    	return xstrdup(path);
+        return xstrdup(path);
     } else {
-    	return catfiles(browse_path, path);
+        return catfiles(browse_path, path);
     }
 }
 
@@ -982,7 +982,7 @@ apply_cwd(const char *path)
  * P1 and P2.
  * The returned value should be freed when no longer needed.
  * P1 or P2 may not be NULL.
- */   
+ */
 char *
 concat_filenames(const char *p1, const char *p2)
 {
@@ -1050,19 +1050,19 @@ skip_slashes(char **bufptr, bool *quotedptr)
         } else {
             break;
         }
-    }    
+    }
 
     *bufptr = buf;
     *quotedptr = quoted;
     return slash;
-}  
+}
 
 
 /* Extract the first file name component of *BUFPTR and place the
- * newly allocated string into *OUTPTR. Update *BUFPTR to point  
+ * newly allocated string into *OUTPTR. Update *BUFPTR to point
  * to the first character not in this component (excluding quotes).
  * Also update *QUOTEDPTR. A file component is not supposed to contain
- * slashes, so all leading slashes of *BUFPTR are ignored. Note that  
+ * slashes, so all leading slashes of *BUFPTR are ignored. Note that
  * if *BUFPTR is the empty string (possibly after leading slashes have
  * been ignored), then *OUTPTR will be an empty string. You should
  * free *OUTPTR when it is no longer needed.
@@ -1077,12 +1077,12 @@ static bool
 dircomp_to_fnmatch_str(char **bufptr, bool *quotedptr, char **outptr)
 {
     StrBuf *out;
-    char *buf;  
+    char *buf;
     bool quoted;
     bool wildcards = false;
 
     skip_slashes(bufptr, quotedptr);
-    out = strbuf_new(); 
+    out = strbuf_new();
 
     quoted = *quotedptr;
     for (buf = *bufptr; *buf != '\0' && *buf != '/'; buf++) {
@@ -1117,19 +1117,20 @@ dircomp_to_fnmatch_str(char **bufptr, bool *quotedptr, char **outptr)
                 strbuf_append_char(out, '\t');
             } else if (*buf == 'v') {
                 strbuf_append_char(out, '\v');
-            } else*/ if (IS_OCT_DIGIT(*buf)) {
+            } else*/
+            if (IS_OCT_DIGIT(*buf)) {
                 int chr = *buf - '0';
                 buf++;
                 if (*buf != '\0' && IS_OCT_DIGIT(*buf)) {
-                    chr = (chr * 8) + (*buf - '0');    
+                    chr = (chr * 8) + (*buf - '0');
                     buf++;
                     if (*buf != '\0' && IS_OCT_DIGIT(*buf)) {
-                        chr = (chr * 8) + (*buf - '0');    
+                        chr = (chr * 8) + (*buf - '0');
                         buf++;
                     }
                 }
                 buf--;
-		strbuf_append_char(out, chr);
+                strbuf_append_char(out, chr);
             } else if (*buf == '*' || *buf == '?') {
                 if (quoted || !wildcards)
                     strbuf_append_char(out, '\\'); /* escape wildcard for fnmatch */
@@ -1147,7 +1148,7 @@ dircomp_to_fnmatch_str(char **bufptr, bool *quotedptr, char **outptr)
     *bufptr = buf;
     *quotedptr = quoted;
     *outptr = strbuf_free_to_string(out);
-    
+
     return wildcards;
 }
 
@@ -1249,7 +1250,7 @@ filelist_get_next(DCFileListIterator *it, DCFileList **node, char **name)
 {
     it->c++;
     if (it->c == 1) {
-        *node = it->node; 
+        *node = it->node;
         *name = ".";
         return true;
     }
@@ -1346,11 +1347,11 @@ remote_wildcard_complete(char *matchpath, bool *quotedptr, char *basedir, DCFile
              * first rather than generating multiple possible completion results.
              * This behavior is similar to that of GNU readline.
              */
-	    if (found_wc) {
-	        if (*matchcomp == '\0') { /* completion word ends in slash */
+            if (found_wc) {
+                if (*matchcomp == '\0') { /* completion word ends in slash */
                     add_remote_wildcard_result(concat_filenames(basedir, matchcomp), basenode, flags, ci);
-	        } else {
-	            node = get_child_node(basenode, matchcomp);
+                } else {
+                    node = get_child_node(basenode, matchcomp);
                     if (node != NULL)
                         add_remote_wildcard_result(concat_filenames(basedir, matchcomp), node, flags, ci);
                 }
@@ -1418,8 +1419,8 @@ local_wildcard_complete(char *matchpath, bool *quotedptr, char *basedir, DCFSCom
              * This behavior is similar to that of GNU readline.
              */
             if (found_wc) {
-	            if (*matchcomp == '\0') { /* completion word ends in slash */
-	                add_local_wildcard_result(concat_filenames(basedir, matchcomp), flags, ci);
+                if (*matchcomp == '\0') { /* completion word ends in slash */
+                    add_local_wildcard_result(concat_filenames(basedir, matchcomp), flags, ci);
                 } else if (/*strcmp(basedir, "/") != 0 &&*/ lstat(fullpath_fs ? fullpath_fs : fullpath, &sb) == 0) {
                     add_local_wildcard_result(concat_filenames(basedir, matchcomp), flags, ci);
                 }
@@ -1493,7 +1494,7 @@ fixup_wildcard_completion_results(DCCompletionInfo *ci)
             }
         }
         free(s1);
- 
+
         ptrv_sort(ci->results, fs_completion_entry_compare);
     }
 }

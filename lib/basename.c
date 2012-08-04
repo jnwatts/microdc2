@@ -35,32 +35,32 @@
 char *
 base_name (char const *name)
 {
-  char const *base = name + FILE_SYSTEM_PREFIX_LEN (name);
-  char const *p;
+    char const *base = name + FILE_SYSTEM_PREFIX_LEN (name);
+    char const *p;
 
-  for (p = base; *p; p++)
+    for (p = base; *p; p++)
     {
-      if (ISSLASH (*p))
-	{
-	  /* Treat multiple adjacent slashes like a single slash.  */
-	  do p++;
-	  while (ISSLASH (*p));
+        if (ISSLASH (*p))
+        {
+            /* Treat multiple adjacent slashes like a single slash.  */
+            do p++;
+            while (ISSLASH (*p));
 
-	  /* If the file name ends in slash, use the trailing slash as
-	     the basename if no non-slashes have been found.  */
-	  if (! *p)
-	    {
-	      if (ISSLASH (*base))
-		base = p - 1;
-	      break;
-	    }
+            /* If the file name ends in slash, use the trailing slash as
+               the basename if no non-slashes have been found.  */
+            if (! *p)
+            {
+                if (ISSLASH (*base))
+                    base = p - 1;
+                break;
+            }
 
-	  /* *P is a non-slash preceded by a slash.  */
-	  base = p;
-	}
+            /* *P is a non-slash preceded by a slash.  */
+            base = p;
+        }
     }
 
-  return (char *) base;
+    return (char *) base;
 }
 
 /* Return the length of of the basename NAME.  Typically NAME is the
@@ -70,10 +70,10 @@ base_name (char const *name)
 size_t
 base_len (char const *name)
 {
-  size_t len;
+    size_t len;
 
-  for (len = strlen (name);  1 < len && ISSLASH (name[len - 1]);  len--)
-    continue;
+    for (len = strlen (name);  1 < len && ISSLASH (name[len - 1]);  len--)
+        continue;
 
-  return len;
+    return len;
 }

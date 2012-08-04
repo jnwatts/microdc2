@@ -35,19 +35,19 @@ int
 gethostname (char *name, size_t len)
 {
 #ifdef HAVE_UNAME
-  struct utsname uts;
+    struct utsname uts;
 
-  if (uname (&uts) == -1)
-    return -1;
-  if (len > sizeof (uts.nodename))
+    if (uname (&uts) == -1)
+        return -1;
+    if (len > sizeof (uts.nodename))
     {
-      /* More space than we need is available.  */
-      name[sizeof (uts.nodename)] = '\0';
-      len = sizeof (uts.nodename);
+        /* More space than we need is available.  */
+        name[sizeof (uts.nodename)] = '\0';
+        len = sizeof (uts.nodename);
     }
-  strncpy (name, uts.nodename, len);
+    strncpy (name, uts.nodename, len);
 #else
-  strcpy (name, "");		/* Hardcode your system name if you want.  */
+    strcpy (name, "");		/* Hardcode your system name if you want.  */
 #endif
-  return 0;
+    return 0;
 }

@@ -43,8 +43,8 @@
  */
 char *
 quote_word_full(const char *string, bool quoted, bool add_end_quote,
-		const char *qc, const char *leading_qc, bool quote_non_print_hex,
-		bool quote_non_print_oct, bool quote_non_print_c, bool quote_wc)
+                const char *qc, const char *leading_qc, bool quote_non_print_hex,
+                bool quote_non_print_oct, bool quote_non_print_c, bool quote_wc)
 {
     StrBuf *r = strbuf_new();
     const char *s;
@@ -53,27 +53,41 @@ quote_word_full(const char *string, bool quoted, bool add_end_quote,
     if (quoted) {
         strbuf_append_char(r, '"');
         for (s = string; *s != '\0'; s++) {
-	    if (quote_non_print_c) {
-		int chr = 0;
-		switch (*s) {
-		case '\a': chr = 'a'; break;
-		case '\b': chr = 'b'; break;
-		case '\f': chr = 'f'; break;
-		case '\n': chr = 'n'; break;
-		case '\r': chr = 'r'; break;
-		case '\t': chr = 't'; break;
-		case '\v': chr = 'v'; break;
-		}
-		if (chr != 0) {
-		    strbuf_appendf(r, "\\%c", chr);
-		    continue;
-		}
-	    }
-	    u_s = (const unsigned char *)s;
+            if (quote_non_print_c) {
+                int chr = 0;
+                switch (*s) {
+                case '\a':
+                    chr = 'a';
+                    break;
+                case '\b':
+                    chr = 'b';
+                    break;
+                case '\f':
+                    chr = 'f';
+                    break;
+                case '\n':
+                    chr = 'n';
+                    break;
+                case '\r':
+                    chr = 'r';
+                    break;
+                case '\t':
+                    chr = 't';
+                    break;
+                case '\v':
+                    chr = 'v';
+                    break;
+                }
+                if (chr != 0) {
+                    strbuf_appendf(r, "\\%c", chr);
+                    continue;
+                }
+            }
+            u_s = (const unsigned char *)s;
             if (quote_non_print_hex && !isprint(*u_s)) {
                 strbuf_appendf(r, "\\x%02x", (unsigned)*s);
-	    } else if (quote_non_print_oct && !isprint(*u_s)) {
-		strbuf_appendf(r, "\\%03o", (unsigned)*s);
+            } else if (quote_non_print_oct && !isprint(*u_s)) {
+                strbuf_appendf(r, "\\%03o", (unsigned)*s);
             } else {
                 if (*s == '"' || *s == '\\')
                     strbuf_append_char(r, '\\');
@@ -84,34 +98,48 @@ quote_word_full(const char *string, bool quoted, bool add_end_quote,
             strbuf_append_char(r, '"');
     } else {
         for (s = string; *s != '\0'; s++) {
-	    if (quote_non_print_c) {
-		int chr = 0;
-		switch (*s) {
-		case '\a': chr = 'a'; break;
-		case '\b': chr = 'b'; break;
-		case '\f': chr = 'f'; break;
-		case '\n': chr = 'n'; break;
-		case '\r': chr = 'r'; break;
-		case '\t': chr = 't'; break;
-		case '\v': chr = 'v'; break;
-		}
-		if (chr != 0) {
-		    strbuf_appendf(r, "\\%c", chr);
-		    continue;
-		}
-	    }
-	    u_s = (const unsigned char *)s;
+            if (quote_non_print_c) {
+                int chr = 0;
+                switch (*s) {
+                case '\a':
+                    chr = 'a';
+                    break;
+                case '\b':
+                    chr = 'b';
+                    break;
+                case '\f':
+                    chr = 'f';
+                    break;
+                case '\n':
+                    chr = 'n';
+                    break;
+                case '\r':
+                    chr = 'r';
+                    break;
+                case '\t':
+                    chr = 't';
+                    break;
+                case '\v':
+                    chr = 'v';
+                    break;
+                }
+                if (chr != 0) {
+                    strbuf_appendf(r, "\\%c", chr);
+                    continue;
+                }
+            }
+            u_s = (const unsigned char *)s;
             if (quote_non_print_hex && !isprint(*u_s)) {
                 strbuf_appendf(r, "\\x%02x", (unsigned)*s);
-	    } else if (quote_non_print_oct && !isprint(*u_s)) {
-		strbuf_appendf(r, "\\%03o", (unsigned)*u_s);
-	    } else {
-	        if (*s == '"'
-      	                || *s == '\\'
-	                || (quote_wc && *s == ' ')
-  		        || strchr(qc, *s) != NULL
-		        || (s == string && strchr(leading_qc, *u_s) != NULL))
-		    strbuf_append_char(r, '\\');
+            } else if (quote_non_print_oct && !isprint(*u_s)) {
+                strbuf_appendf(r, "\\%03o", (unsigned)*u_s);
+            } else {
+                if (*s == '"'
+                        || *s == '\\'
+                        || (quote_wc && *s == ' ')
+                        || strchr(qc, *s) != NULL
+                        || (s == string && strchr(leading_qc, *u_s) != NULL))
+                    strbuf_append_char(r, '\\');
                 strbuf_append_char(r, *s);
             }
         }
@@ -132,68 +160,82 @@ dequote_words_full(const char *str, bool quoted, bool c_hex_unescape, bool c_oct
     char *r;
 
     if (maxend == NULL)
-	maxend = (void *) UINTPTR_MAX;
+        maxend = (void *) UINTPTR_MAX;
 
     result = r = xmalloc(strlen(str) + 1);
     for (p = str; p < maxend && *p != '\0'; p++) {
-	if (*p == '\\') {
-	    p++;
-	    if (p >= maxend || *p == '\0')
-		break; /* also discards bogus trailing backslash */
-	    if (c_simple_unescape) {
-		int chr = 0;
-		switch (*p) {
-		case 'a': chr = '\a'; break;
-		case 'b': chr = '\b'; break;
-		case 'f': chr = '\f'; break;
-		case 'n': chr = '\n'; break;
-		case 'r': chr = '\r'; break;
-		case 't': chr = '\t'; break;
-		case 'v': chr = '\v'; break;
-		}
-		if (chr != 0) {
-		    *r++ = chr;
-		    continue;
-		}
-	    }
-	    if (c_oct_unescape && IS_OCT_DIGIT(*p)) {
-		int chr = *p - '0';
-		p++;
-		if (p < maxend && IS_OCT_DIGIT(*p)) {
-		    chr = (chr * 8) + (*p - '0');
-		    p++;
-		    if (p < maxend && IS_OCT_DIGIT(*p)) {
-			chr = (chr * 8) + (*p - '0');
-			p++;
-		    }
-		}
-		p--;
-		*r++ = chr;
-		continue;
-	    }
-	    if (c_hex_unescape && *p == 'x') {
-		int chr;
-		const char *q = p+1;
-		if (q >= maxend
-			|| *q == '\0' 
-			|| !isxdigit(*(const unsigned char *)q))
-		    break;
-		q++;
-		p++;
-		chr = HEX_TO_INT(*p);
-		if (q < maxend && isxdigit(*(const unsigned char *)q)) {
-		    p++;
-		    chr = chr*16 + HEX_TO_INT(*p);
-		}
-		*r++ = chr;
-		continue;
-	    }
-	    *r++ = *p;
-	} else if (*p == '"') {
-	    quoted = !quoted;
-	} else {
-	    *r++ = *p;
-	}
+        if (*p == '\\') {
+            p++;
+            if (p >= maxend || *p == '\0')
+                break; /* also discards bogus trailing backslash */
+            if (c_simple_unescape) {
+                int chr = 0;
+                switch (*p) {
+                case 'a':
+                    chr = '\a';
+                    break;
+                case 'b':
+                    chr = '\b';
+                    break;
+                case 'f':
+                    chr = '\f';
+                    break;
+                case 'n':
+                    chr = '\n';
+                    break;
+                case 'r':
+                    chr = '\r';
+                    break;
+                case 't':
+                    chr = '\t';
+                    break;
+                case 'v':
+                    chr = '\v';
+                    break;
+                }
+                if (chr != 0) {
+                    *r++ = chr;
+                    continue;
+                }
+            }
+            if (c_oct_unescape && IS_OCT_DIGIT(*p)) {
+                int chr = *p - '0';
+                p++;
+                if (p < maxend && IS_OCT_DIGIT(*p)) {
+                    chr = (chr * 8) + (*p - '0');
+                    p++;
+                    if (p < maxend && IS_OCT_DIGIT(*p)) {
+                        chr = (chr * 8) + (*p - '0');
+                        p++;
+                    }
+                }
+                p--;
+                *r++ = chr;
+                continue;
+            }
+            if (c_hex_unescape && *p == 'x') {
+                int chr;
+                const char *q = p+1;
+                if (q >= maxend
+                        || *q == '\0'
+                        || !isxdigit(*(const unsigned char *)q))
+                    break;
+                q++;
+                p++;
+                chr = HEX_TO_INT(*p);
+                if (q < maxend && isxdigit(*(const unsigned char *)q)) {
+                    p++;
+                    chr = chr*16 + HEX_TO_INT(*p);
+                }
+                *r++ = chr;
+                continue;
+            }
+            *r++ = *p;
+        } else if (*p == '"') {
+            quoted = !quoted;
+        } else {
+            *r++ = *p;
+        }
     }
     *r = '\0';
 
@@ -345,20 +387,20 @@ find_unquoted_leading_char(const char *str, const char *maxend, char ch)
         } else if (*str == '"') {
             quoted = !quoted;
         } else if (!quoted) {
-	    if (strchr(whitespace, *str) != NULL) {
-		word = false;
-	    } else {
-		if (!word && *str == ch)
-		    return str;
-		word = true;
-	    }
+            if (strchr(whitespace, *str) != NULL) {
+                word = false;
+            } else {
+                if (!word && *str == ch)
+                    return str;
+                word = true;
+            }
         }
     }
 
     return NULL;
 }
 
-/* Get the word in STR that would be used for completion if 
+/* Get the word in STR that would be used for completion if
  * the user were to press tab at POS. This function may return
  * partial words in STR, or even the empty string.
  */
@@ -373,12 +415,12 @@ get_completion_word_dequoted(const char *str, int pos)
     for (index = 0; ; index++) {
         str = find_word_end(str, maxend);
         if (str >= maxend || *str == '\0') {
-	    start = find_word_start(start, maxend);
-	    if (start >= maxend || *start == '\0')
-		return xstrdup("");
-	    return dequote_words(start, false, maxend);
-	}
-	start = str;
+            start = find_word_start(start, maxend);
+            if (start >= maxend || *start == '\0')
+                return xstrdup("");
+            return dequote_words(start, false, maxend);
+        }
+        start = str;
     }
 }
 
@@ -393,12 +435,12 @@ find_completion_word_start(const char *str, int pos)
     for (index = 0; ; index++) {
         end = find_word_end(end, maxend);
         if (end >= maxend || *end == '\0') {
-	    start = find_word_start(start, maxend);
-	    if (start >= maxend || *start == '\0')
-		return pos;
-	    return start-str;
-	}
-	start = end;
+            start = find_word_start(start, maxend);
+            if (start >= maxend || *start == '\0')
+                return pos;
+            return start-str;
+        }
+        start = end;
     }
 }
 
@@ -462,7 +504,7 @@ get_subwords_dequoted_termchar(const char *str, const char *strend, int index, s
     int c;
 
     /*if (str == NULL) // This is not necessary any longer!
-	return NULL;*/
+    return NULL;*/
 
     if (strend == NULL)
         strend = (void *) UINTPTR_MAX;
@@ -483,7 +525,7 @@ get_subwords_dequoted_termchar(const char *str, const char *strend, int index, s
         if (end >= strend || *end == '\0' || *end == termchar)
             break;
     }
-    
+
     return dequote_words(str, false, end);
 }
 
@@ -497,22 +539,22 @@ char_is_quoted(char *string, int index)
     int c;
 
     for (c = 0; c <= index; c++) {
-	if (escaped) {
-	    if (c >= index)
-		return 1;
-	    escaped = false;
-	} else if (string[c] == '"') {
-	    char quote = string[c];
-	    c++;
-	    for (; c < index && string[c] != '\0' && string[c] != quote; c++) {
-		if (string[c] == '\\' && string[c+1] != '\0')
-		    c++;
-	    }
-	    if (c >= index)
-		return 1;
-	} else if (string[c] == '\\') {
-	    escaped = true;
-	}
+        if (escaped) {
+            if (c >= index)
+                return 1;
+            escaped = false;
+        } else if (string[c] == '"') {
+            char quote = string[c];
+            c++;
+            for (; c < index && string[c] != '\0' && string[c] != quote; c++) {
+                if (string[c] == '\\' && string[c+1] != '\0')
+                    c++;
+            }
+            if (c >= index)
+                return 1;
+        } else if (string[c] == '\\') {
+            escaped = true;
+        }
     }
 
     return 0;

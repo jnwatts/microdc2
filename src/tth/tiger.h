@@ -1,5 +1,5 @@
 /* (PD) 2001 The Bitzi Corporation
- * Please see file COPYING or http://bitzi.com/publicdomain 
+ * Please see file COPYING or http://bitzi.com/publicdomain
  * for more info.
  *
  * $Id: tiger.h,v 1.1 2006/11/16 11:21:20 chugunov Exp $
@@ -10,9 +10,9 @@
 #ifdef _WIN32
 
 #if defined (_INTEGRAL_MAX_BITS) && (_INTEGRAL_MAX_BITS >= 64)
-  typedef unsigned __int64 word64;
+typedef unsigned __int64 word64;
 #else
-  #error __int64 type not supported
+#error __int64 type not supported
 #endif
 typedef unsigned long int tword;
 
@@ -32,7 +32,7 @@ typedef unsigned char  byte;
 extern "C" {
 #endif
 
-void tiger(word64 *str, word64 length, word64 *res);
+    void tiger(word64 *str, word64 length, word64 *res);
 
 #if defined(__cplusplus)
 }

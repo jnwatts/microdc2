@@ -24,12 +24,12 @@
 #include "comparison.h"
 
 const void *bksearch(const void *key, const void *base, size_t nmemb,
-		    size_t size, size_t keyoffs, comparison_fn_t cmp);
+                     size_t size, size_t keyoffs, comparison_fn_t cmp);
 bool bksearchrange(const void *key, const void *base, size_t nmemb,
                    size_t size, size_t keyoffs, comparison_fn_t cmp,
-		   const void **first_match, const void **last_match);
+                   const void **first_match, const void **last_match);
 bool bsearchrange(const void *key, const void *base, size_t nmemb,
-                   size_t size, comparison_fn_t cmp,
-		   const void **first_match, const void **last_match);
+                  size_t size, comparison_fn_t cmp,
+                  const void **first_match, const void **last_match);
 
 #endif

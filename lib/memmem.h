@@ -26,7 +26,7 @@
 # if defined HAVE_DECL_MEMMEM && !HAVE_DECL_MEMMEM
 void *
 memmem (const void *haystack, size_t haystack_len,
-	const void *needle, size_t needle_len);
+        const void *needle, size_t needle_len);
 # endif
 
 #endif /* MEMMEM_H */

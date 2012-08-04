@@ -100,7 +100,7 @@ strbuf_new_with_capacity(uint32_t capacity)
     sb->capacity = capacity;
     sb->buf = xmalloc(sb->capacity * sizeof(char));
     if (sb->capacity > 0)
-    	sb->buf[0] = '\0';
+        sb->buf[0] = '\0';
     return sb;
 }
 
@@ -116,7 +116,7 @@ strbuf_new_from_substring_n(uint32_t times, const char *substr, int32_t subsp, i
     subsp = normalize_str_pos(substr, subsp);
     subep = normalize_str_pos(substr, subep);
     if (subsp > subep)
-    	SWAP_INT32(subsp, subep);
+        SWAP_INT32(subsp, subep);
 
     return strbuf_new_from_data_n(times, substr+subsp, subep-subsp);
 }
@@ -129,7 +129,7 @@ strbuf_new_from_data_n(uint32_t times, const void *mem, uint32_t len)
     sb = strbuf_new_with_capacity(len * times + 1);
     sb->len = len * times;
     for (; times > 0; times--)
-	memcpy(sb->buf + len*(times-1), mem, len);
+        memcpy(sb->buf + len*(times-1), mem, len);
     sb->buf[sb->len] = '\0';
 
     return sb;
@@ -168,8 +168,8 @@ void
 strbuf_free(StrBuf *sb)
 {
     if (sb != NULL) {
-    	free(sb->buf);
-	free(sb);
+        free(sb->buf);
+        free(sb);
     }
 }
 
@@ -181,14 +181,14 @@ strbuf_free_to_substring(StrBuf *sb, int32_t sp, int32_t ep)
     sp = normalize_strbuf_pos(sb, sp);
     ep = normalize_strbuf_pos(sb, ep);
     if (sp != 0)
-	memmove(sb->buf, sb->buf+sp, ep-sp);
+        memmove(sb->buf, sb->buf+sp, ep-sp);
     sb->buf[ep-sp] = '\0';
 
     /* Call realloc so that unused memory can be used for other purpose. */
     if (sp == 0 && ep == sb->len)
-	buf = sb->buf;
+        buf = sb->buf;
     else
-	buf = xrealloc(sb->buf, ep-sp+1);
+        buf = xrealloc(sb->buf, ep-sp+1);
     free(sb);
     return buf;
 }
@@ -208,20 +208,20 @@ strbuf_replace_data_n(StrBuf *sb, int32_t sp, int32_t ep, uint32_t times, const 
     sp = normalize_strbuf_pos(sb, sp);
     ep = normalize_strbuf_pos(sb, ep);
     if (sp > ep)
-    	SWAP_INT32(sp, ep);
+        SWAP_INT32(sp, ep);
 
     addlen = len * times;
     dellen = ep-sp;
     if (addlen != dellen) {
-    	strbuf_ensure_capacity(sb, sb->len+1-dellen+addlen);
-	memmove(sb->buf+sp+addlen, sb->buf+ep, sb->len+1-ep);
-	sb->len += addlen-dellen;
+        strbuf_ensure_capacity(sb, sb->len+1-dellen+addlen);
+        memmove(sb->buf+sp+addlen, sb->buf+ep, sb->len+1-ep);
+        sb->len += addlen-dellen;
     }
     if (addlen > 0) {
-    	for (; times > 0; times--) {
-    	    memcpy(sb->buf+sp, mem, len);
-	    sp += len;
-	}
+        for (; times > 0; times--) {
+            memcpy(sb->buf+sp, mem, len);
+            sp += len;
+        }
     }
 }
 
@@ -231,7 +231,7 @@ strbuf_replace_substring_n(StrBuf *sb, int32_t sp, int32_t ep, uint32_t times, c
     subsp = normalize_str_pos(substr, subsp);
     subep = normalize_str_pos(substr, subep);
     if (subsp > subep)
-    	SWAP_INT32(subsp, subep);
+        SWAP_INT32(subsp, subep);
 
     strbuf_replace_data_n(sb, sp, ep, times, substr+subsp, subep-subsp);
 }
@@ -258,7 +258,7 @@ strbuf_vreplacef_n(StrBuf *sb, int32_t sp, int32_t ep, uint32_t times, const cha
     sp = normalize_strbuf_pos(sb, sp);
     ep = normalize_strbuf_pos(sb, ep);
     if (sp > ep)
-    	SWAP_INT32(sp, ep);
+        SWAP_INT32(sp, ep);
 
     len = vasprintf(&str, fmt, ap);
     if (len < 0)
@@ -276,9 +276,9 @@ strbuf_reverse_substring(StrBuf *sb, int32_t sp, int32_t ep)
     ep = normalize_strbuf_pos(sb, ep);
 
     while (sp < ep) {
-    	SWAP_INT32(sb->buf[sp], sb->buf[ep]);
-    	sp++;
-	ep--;
+        SWAP_INT32(sb->buf[sp], sb->buf[ep]);
+        sp++;
+        ep--;
     }
 }
 
@@ -292,17 +292,17 @@ strbuf_repeat_substring(StrBuf *sb, int32_t sp, int32_t ep, uint32_t times)
 
     addlen = (ep-sp) * (times - 1);
     if (addlen != 0) {
-    	uint32_t p;
+        uint32_t p;
 
-    	strbuf_ensure_capacity(sb, sb->len+1+addlen);
-	memmove(sb->buf+sp+addlen, sb->buf+ep, sb->len+1-ep);
-	sb->len += addlen;
+        strbuf_ensure_capacity(sb, sb->len+1+addlen);
+        memmove(sb->buf+sp+addlen, sb->buf+ep, sb->len+1-ep);
+        sb->len += addlen;
 
-	p = ep;
-    	for (; times > 0; times--) {
-    	    memmove(sb->buf+p, sb->buf+sp, ep-sp);
-	    p += ep-sp;
-	}
+        p = ep;
+        for (; times > 0; times--) {
+            memmove(sb->buf+p, sb->buf+sp, ep-sp);
+            p += ep-sp;
+        }
     }
 }
 
@@ -334,7 +334,7 @@ strbuf_substring(StrBuf *sb, int32_t sp, int32_t ep)
     sp = normalize_strbuf_pos(sb, sp);
     ep = normalize_strbuf_pos(sb, ep);
     if (sp > ep)
-    	SWAP_INT32(sp, ep);
+        SWAP_INT32(sp, ep);
 
     str = xmalloc((ep-sp+1) * sizeof(char));
     memcpy(str, sb->buf+sp, (ep-sp+1) * sizeof(char));
@@ -363,7 +363,7 @@ strbuf_set_char_at(StrBuf *sb, int32_t sp, char chr)
         strbuf_ensure_capacity(sb, sb->len+1);
         str[sb->len] = '\0'
     }
-    return old;
+                   return old;
 }
 
 void

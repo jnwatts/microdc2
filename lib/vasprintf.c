@@ -29,14 +29,14 @@
 int
 vasprintf (char **resultp, const char *format, va_list args)
 {
-  size_t length;
-  char *result = vasnprintf (NULL, &length, format, args);
-  if (result == NULL)
-    return -1;
+    size_t length;
+    char *result = vasnprintf (NULL, &length, format, args);
+    if (result == NULL)
+        return -1;
 
-  *resultp = result;
-  /* Return the number of resulting bytes, excluding the trailing NUL.
-     If it wouldn't fit in an 'int', vasnprintf() would have returned NULL
-     and set errno to EOVERFLOW.  */
-  return length;
+    *resultp = result;
+    /* Return the number of resulting bytes, excluding the trailing NUL.
+       If it wouldn't fit in an 'int', vasnprintf() would have returned NULL
+       and set errno to EOVERFLOW.  */
+    return length;
 }

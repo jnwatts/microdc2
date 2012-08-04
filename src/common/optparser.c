@@ -183,24 +183,24 @@ handle_short_option(OptParser *p, OptParserState *s)
     }
     opt = p->short_opts[name - 32];
     if (opt == NULL) {
-        report_error(p, _("invalid option -- %c"), name); 
+        report_error(p, _("invalid option -- %c"), name);
         return OPTP_ERROR;
     }
 
     if (opt->arg == OPTP_NO_ARG) {
-	if (arg[s->cur_chr + 1] == '\0') {
-	    s->cur_chr = 0;
-	    s->cur_arg++;
+        if (arg[s->cur_chr + 1] == '\0') {
+            s->cur_chr = 0;
+            s->cur_arg++;
         } else {
             s->cur_chr++;
         }
-	s->value = NULL;
+        s->value = NULL;
     } else if (opt->arg == OPTP_OPT_ARG) {
-	s->cur_arg++;
+        s->cur_arg++;
         s->value = (arg[s->cur_chr + 1] == '\0' ? NULL : arg + s->cur_chr + 1);
         s->cur_chr = 0;
     } else if (opt->arg == OPTP_REQ_ARG) {
-	s->cur_arg++;
+        s->cur_arg++;
         if (arg[s->cur_chr + 1] == '\0') {
             if (s->cur_arg >= p->argc) {
                 report_error(p, _("option requires an argument -- %c"), name);
@@ -278,7 +278,7 @@ next_token(OptParser *p, OptParserState *s)
             }
         }
     }
-   
+
     s->value = arg;
     s->cur_arg++;
     return OPTP_ARG;
@@ -292,7 +292,7 @@ check_parsing_opts(OptParser *p, OptParserState *s, bool want_parsing_opts)
         s->cur_chr = 0;
         s->no_more_opts = false;
         s->value = NULL;
-	p->parse_state = *s;
+        p->parse_state = *s;
         p->parsing_opts = want_parsing_opts;
     }
 }

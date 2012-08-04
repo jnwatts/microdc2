@@ -46,7 +46,7 @@
 
 typedef enum {
     HUB_EXT_NOGETINFO	= 1 << 0,
-    HUB_EXT_NOHELLO	= 1 << 1, 
+    HUB_EXT_NOHELLO	= 1 << 1,
 } DCHubExtension;
 
 ByteQ *hub_recvq = NULL;
@@ -85,7 +85,7 @@ void check_hub_activity()
         } else if (hub_state == DC_HUB_DISCONNECTED &&
                    (hub_last_activity + hub_reconnect_interval) <= now &&
                    running && auto_reconnect) {
-	        warn(_("Automatically reconnecting to hub\n"));
+            warn(_("Automatically reconnecting to hub\n"));
             hub_connect(&hub_addr);
         }
     }
@@ -107,13 +107,13 @@ send_my_info(void)
 
     /* XXX: hm, H:1/0/0 should be Normal/Registered/Op, calculate this value. */
     res = hub_putf("$MyINFO $ALL %s %s<%s,M:%c,H:1/0/0,S:%d>$ $%s%c$%s$%" PRIu64 "$|", /* " */
-	  conv_nick,
-	  conv_desc,
-	  my_tag, is_active ? 'A':'P', my_ul_slots,
-	  my_speed,
-	  1, /* level, '1' means normal, see DCTC Documentation/Documentation/VAR */
-	  conv_email,
-	  my_share_size);
+                   conv_nick,
+                   conv_desc,
+                   my_tag, is_active ? 'A':'P', my_ul_slots,
+                   my_speed,
+                   1, /* level, '1' means normal, see DCTC Documentation/Documentation/VAR */
+                   conv_email,
+                   my_share_size);
     free(conv_nick);
     free(conv_desc);
     free(conv_email);
@@ -128,19 +128,19 @@ say_user_completion_generator(DCCompletionInfo *ci)
     /* XXX: perhaps hub_users should be made a tmap? to speed up things */
     hmap_iterator(hub_users, &it);
     while (it.has_next(&it)) {
-    	DCUserInfo *ui = it.next(&it);
+        DCUserInfo *ui = it.next(&it);
 
-	if (strleftcmp(ci->word, ui->nick) == 0) {
-	    DCCompletionEntry *entry;
-	    entry = new_completion_entry_full(
-	        quote_string(ui->nick, ci->word_full[0] == '"', true),
-	        xstrdup(ui->nick),
-	        "%s", "%s",
-	        false,
-	        true); /* entry->input and _single_fmt are already quoted */
-	    entry->input_single_fmt = "%s: ";
-	    ptrv_append(ci->results, entry);
-	}
+        if (strleftcmp(ci->word, ui->nick) == 0) {
+            DCCompletionEntry *entry;
+            entry = new_completion_entry_full(
+                        quote_string(ui->nick, ci->word_full[0] == '"', true),
+                        xstrdup(ui->nick),
+                        "%s", "%s",
+                        false,
+                        true); /* entry->input and _single_fmt are already quoted */
+            entry->input_single_fmt = "%s: ";
+            ptrv_append(ci->results, entry);
+        }
     }
     ptrv_sort(ci->results, completion_entry_display_compare);
 }
@@ -161,9 +161,9 @@ user_completion_generator(DCCompletionInfo *ci)
     /* XXX: what if we are self found in this list? conflict with user_or_myself_completion_generator */
     hmap_iterator(hub_users, &it);
     while (it.has_next(&it)) {
-    	DCUserInfo *ui = it.next(&it);
-	if (strleftcmp(ci->word, ui->nick) == 0)
-	    ptrv_append(ci->results, new_completion_entry(ui->nick, NULL));
+        DCUserInfo *ui = it.next(&it);
+        if (strleftcmp(ci->word, ui->nick) == 0)
+            ptrv_append(ci->results, new_completion_entry(ui->nick, NULL));
     }
     ptrv_sort(ci->results, completion_entry_display_compare);
 }
@@ -176,9 +176,9 @@ user_with_queue_completion_generator(DCCompletionInfo *ci)
     /* XXX: for completion speed, maintain a separate TMap for users with queue? */
     hmap_iterator(hub_users, &it);
     while (it.has_next(&it)) {
-    	DCUserInfo *ui = it.next(&it);
-	if (ui->download_queue->cur > 0 && strleftcmp(ci->word, ui->nick) == 0)
-	    ptrv_append(ci->results, new_completion_entry(ui->nick, NULL));
+        DCUserInfo *ui = it.next(&it);
+        if (ui->download_queue->cur > 0 && strleftcmp(ci->word, ui->nick) == 0)
+            ptrv_append(ci->results, new_completion_entry(ui->nick, NULL));
     }
     ptrv_sort(ci->results, completion_entry_display_compare);
 }
@@ -210,12 +210,12 @@ user_info_new(const char *nick)
     ucname = xasprintf("%s|%s", nick, _("UL"));
     info->conn[info->conn_count] = hmap_get(user_conns, ucname);
     if (info->conn[info->conn_count] != NULL)
-    	info->conn_count++;
+        info->conn_count++;
     free(ucname);
     ucname = xasprintf("%s|%s", nick, _("DL"));
     info->conn[info->conn_count] = hmap_get(user_conns, ucname);
     if (info->conn[info->conn_count] != NULL)
-    	info->conn_count++;
+        info->conn_count++;
     free(ucname);
     ucname = xasprintf("%s|", nick);
     info->conn[info->conn_count] = hmap_get(user_conns, ucname);
@@ -239,13 +239,13 @@ user_info_free(DCUserInfo *ui)
 {
     ui->refcount--;
     if (ui->refcount == 0) {
-	free(ui->nick);
-	free(ui->description);
-	free(ui->speed);
-	free(ui->email);
-	ptrv_foreach(ui->download_queue, (PtrVForeachCallback) free_queued_file);
-	ptrv_free(ui->download_queue);
-	free(ui);
+        free(ui->nick);
+        free(ui->description);
+        free(ui->speed);
+        free(ui->email);
+        ptrv_foreach(ui->download_queue, (PtrVForeachCallback) free_queued_file);
+        ptrv_free(ui->download_queue);
+        free(ui);
     }
 }
 
@@ -264,7 +264,7 @@ hub_putf(const char *format, ...)
     va_end(args);
 
     if (res < 0) {
-    	warn(_("Cannot append to hub send queue - %s\n"), errstr);
+        warn(_("Cannot append to hub send queue - %s\n"), errstr);
         hub_disconnect();
         return false;
     }
@@ -273,13 +273,13 @@ hub_putf(const char *format, ...)
 
     res = byteq_write(hub_sendq, hub_socket);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-    	warn_socket_error(res, true, _("hub"));
+        warn_socket_error(res, true, _("hub"));
         hub_disconnect();
         return false;
     }
 
     if (oldcur == 0 && hub_sendq->cur > 0)
-    	FD_SET(hub_socket, &write_fds);
+        FD_SET(hub_socket, &write_fds);
 
     update_hub_activity();
 
@@ -343,7 +343,7 @@ hub_connect(struct sockaddr_in *addr)
 
     screen_putf(_("Connecting to hub on %s.\n"), sockaddr_in_str(addr));
     if (connect(hub_socket, (struct sockaddr *) addr, sizeof(struct sockaddr_in)) < 0
-    	    && errno != EINPROGRESS) {
+            && errno != EINPROGRESS) {
         warn(_("%s: Cannot connect - %s\n"), sockaddr_in_str(addr), errstr);
         hub_disconnect();
         return;
@@ -365,24 +365,24 @@ hub_disconnect(void)
         hub_lookup = NULL;
     }
     if (hub_socket >= 0) {
-    	FD_CLR(hub_socket, &read_fds);
+        FD_CLR(hub_socket, &read_fds);
         FD_CLR(hub_socket, &write_fds);
-    	if (close(hub_socket) < 0)
-	    warn(_("Cannot close socket - %s\n"), errstr);
-    	hub_socket = -1;
+        if (close(hub_socket) < 0)
+            warn(_("Cannot close socket - %s\n"), errstr);
+        hub_socket = -1;
     }
     if (hub_users != NULL) {
         hmap_foreach_value(hub_users, user_info_free);
         hmap_clear(hub_users);
     }
     if (hub_sendq != NULL)
-    	byteq_clear(hub_sendq);
+        byteq_clear(hub_sendq);
     if (hub_recvq != NULL)
-    	byteq_clear(hub_recvq);
+        byteq_clear(hub_recvq);
     hub_recvq_last = 0;
     if (pending_userinfo != NULL) {
-    	hmap_foreach_value(pending_userinfo, user_info_free);
-    	hmap_clear(pending_userinfo);
+        hmap_foreach_value(pending_userinfo, user_info_free);
+        hmap_clear(pending_userinfo);
     }
     free(hub_name);
     hub_name = NULL;
@@ -395,9 +395,9 @@ static bool
 check_state(char *buf, DCUserState state)
 {
     if (hub_state != state) {
-	warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
-	hub_disconnect();
-	return false;
+        warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
+        hub_disconnect();
+        return false;
     }
     return true;
 }
@@ -445,27 +445,27 @@ hub_handle_command(char *buf, uint32_t len)
         char *key;
 
         if (!check_state(buf, DC_HUB_LOCK))
-	        goto hub_handle_command_cleanup;
+            goto hub_handle_command_cleanup;
 
         key = memmem(buf+6, len-6, " Pk=", 4);
         if (key == NULL) {
             warn(_("Invalid $Lock message: Missing Pk value\n"));
             key = buf+len;
-	    }
+        }
         key = decode_lock(buf+6, key-buf-6, DC_CLIENT_BASE_KEY);
         if (strleftcmp("EXTENDEDPROTOCOL", buf+6) == 0) {
             if (!hub_putf("$Supports TTHSearch NoGetINFO NoHello|")) {
-	            free(key);
-	            goto hub_handle_command_cleanup;
+                free(key);
+                goto hub_handle_command_cleanup;
             }
         }
         if (!hub_putf("$Key %s|", key)) {
             free(key);
-	        goto hub_handle_command_cleanup;
+            goto hub_handle_command_cleanup;
         }
         free(key);
         if (!hub_putf("$ValidateNick %s|", hub_my_nick))
-	        goto hub_handle_command_cleanup;
+            goto hub_handle_command_cleanup;
         hub_state = DC_HUB_HELLO;
     }
     else if (len >= 10 && strncmp(buf, "$Supports ", 10) == 0) {
@@ -524,15 +524,15 @@ hub_handle_command(char *buf, uint32_t len)
             if (strcmp(buf+7, hub_my_nick) == 0) {
                 screen_putf(_("Nick accepted. You are now logged in.\n"));
             } else {
-	    	    /* This probably won't happen, but better safe... */
+                /* This probably won't happen, but better safe... */
                 free(my_nick);
                 my_nick = xstrdup(conv_nick);
                 free(hub_my_nick);
                 hub_my_nick = xstrdup(buf + 7);
-    	    	screen_putf(_("Nick accepted but modified to %s. You are now logged in.\n"), quotearg(my_nick));
+                screen_putf(_("Nick accepted but modified to %s. You are now logged in.\n"), quotearg(my_nick));
             }
 
-    	    ui = user_info_new(conv_nick);
+            ui = user_info_new(conv_nick);
             ui->info_quered = true; /* Hub is sending this automaticly */
             hmap_put(hub_users, ui->nick, ui);
 
@@ -570,8 +570,8 @@ hub_handle_command(char *buf, uint32_t len)
         token = strsep(&work_buf, " ");
         if (strcmp(token, "$ALL") != 0) {
             warn(_("Invalid $MyINFO message: Missing $ALL parameter, ignoring\n"));
-	        free(conv_buf);
-	        goto hub_handle_command_cleanup;
+            free(conv_buf);
+            goto hub_handle_command_cleanup;
         }
 
         token = strsep(&work_buf, " ");
@@ -590,16 +590,16 @@ hub_handle_command(char *buf, uint32_t len)
             char *conv_nick = hub_to_main_string(token);
             if ((ui = hmap_get(hub_users, conv_nick)) == NULL) {
             */
-    	        ui = user_info_new(token);
-                ui->info_quered = true;
-                hmap_put(hub_users, ui->nick, ui);
+            ui = user_info_new(token);
+            ui->info_quered = true;
+            hmap_put(hub_users, ui->nick, ui);
             /*
             }
             free(conv_nick);
             */
         }
 
-    	token = strsep(&work_buf, "$");
+        token = strsep(&work_buf, "$");
         if (token == NULL) {
             warn(_("Invalid $MyINFO message: Missing description parameter, ignoring\n"));
             free(conv_buf);
@@ -608,14 +608,14 @@ hub_handle_command(char *buf, uint32_t len)
         free(ui->description);
         ui->description = xstrdup(token);
 
-    	token = strsep(&work_buf, "$");
+        token = strsep(&work_buf, "$");
         if (token == NULL) {
             warn(_("Invalid $MyINFO message: Missing description separator, ignoring\n"));
             free(conv_buf);
             goto hub_handle_command_cleanup;
         }
 
-    	token = strsep(&work_buf, "$");
+        token = strsep(&work_buf, "$");
         if (token == NULL) {
             warn(_("Invalid $MyINFO message: Missing connection speed, ignoring\n"));
             free(conv_buf);
@@ -631,7 +631,7 @@ hub_handle_command(char *buf, uint32_t len)
             ui->level = token[len-1];
         }
 
-    	token = strsep(&work_buf, "$");
+        token = strsep(&work_buf, "$");
         if (token == NULL) {
             warn(_("Invalid $MyINFO message: Missing e-mail address, ignoring\n"));
             free(conv_buf);
@@ -640,7 +640,7 @@ hub_handle_command(char *buf, uint32_t len)
         free(ui->email);
         ui->email = xstrdup(token);
 
-    	token = strsep(&work_buf, "$");
+        token = strsep(&work_buf, "$");
         if (token == NULL) {
             warn(_("Invalid $MyINFO message: Missing share size, ignoring\n"));
             free(conv_buf);
@@ -653,7 +653,7 @@ hub_handle_command(char *buf, uint32_t len)
         }
 
         if (ui->active_state == DC_ACTIVE_RECEIVED_PASSIVE
-            || ui->active_state == DC_ACTIVE_KNOWN_ACTIVE)
+                || ui->active_state == DC_ACTIVE_KNOWN_ACTIVE)
             ui->active_state = DC_ACTIVE_UNKNOWN;
 
         /* XXX: Now that user's active_state may have changed, try queue again? */
@@ -685,10 +685,10 @@ hub_handle_command(char *buf, uint32_t len)
         for (head = msg; (tail = strchr(head, '\n')) != NULL; head = tail+1) {
             /*PtrV *wrapped;*/
 
-        if (tail[-1] == '\r') /* end > buf here, buf[0] == '<' or ' ' */
-            tail[-1] = '\0';
-        else
-            tail[0] = '\0';
+            if (tail[-1] == '\r') /* end > buf here, buf[0] == '<' or ' ' */
+                tail[-1] = '\0';
+            else
+                tail[0] = '\0';
 
             /*wrapped = wordwrap(quotearg(buf), first ? firstlen : otherlen, otherlen);
             for (c = 0; c < wrapped->cur; c++)
@@ -719,7 +719,7 @@ hub_handle_command(char *buf, uint32_t len)
         /* FIXME: WTF is this? Remove multiple "From: "? Why!? */
         frm = buf+5;
         while ((tail = strstr(msg, "From: ")) != NULL && tail < msg)
-	        frm = tail+6;
+            frm = tail+6;
 
         msg = prepare_chat_string_for_display(msg);
         frm = prepare_chat_string_for_display(frm);
@@ -769,7 +769,7 @@ hub_handle_command(char *buf, uint32_t len)
             warn(_("Invalid $RevConnectToMe message: Missing nick parameter\n"));
             goto hub_handle_command_cleanup;
         }
-    	if (strcmp(nick, hub_my_nick) == 0) {
+        if (strcmp(nick, hub_my_nick) == 0) {
             warn(_("Invalid $RevConnectToMe message: Remote nick is our nick\n"));
             goto hub_handle_command_cleanup;
         }
@@ -790,15 +790,15 @@ hub_handle_command(char *buf, uint32_t len)
         if (!is_active) {
             if (ui->active_state == DC_ACTIVE_SENT_PASSIVE) {
                 warn(_("User %s is also passive. Cannot establish connection.\n"), quotearg(ui->nick));
-            /* We could set this to DC_ACTIVE_UNKNOWN too. This would mean
-             * we would keep sending RevConnectToMe next time the download
-             * queue is modified or some timer expired and told us to retry
-             * download. The remote would then send back RevConnectToMe
-             * and this would happen again. This way we would try again -
-             * maybe remote has become active since last time we checked?
-             * But no - DC++ only replies with RevConnectToMe to our first
-             * RevConnectToMe. After that it ignores them all.
-             */
+                /* We could set this to DC_ACTIVE_UNKNOWN too. This would mean
+                 * we would keep sending RevConnectToMe next time the download
+                 * queue is modified or some timer expired and told us to retry
+                 * download. The remote would then send back RevConnectToMe
+                 * and this would happen again. This way we would try again -
+                 * maybe remote has become active since last time we checked?
+                 * But no - DC++ only replies with RevConnectToMe to our first
+                 * RevConnectToMe. After that it ignores them all.
+                 */
                 ui->active_state = DC_ACTIVE_RECEIVED_PASSIVE;
                 if (hmap_remove(pending_userinfo, ui->nick) != NULL)
                     ui->refcount--;
@@ -808,7 +808,7 @@ hub_handle_command(char *buf, uint32_t len)
                 /* Inform remote that we are also passive. */
                 if (!hub_putf("$RevConnectToMe %s %s|", hub_my_nick, nick))
                     goto hub_handle_command_cleanup;
-                }
+            }
         }
         ui->active_state = DC_ACTIVE_RECEIVED_PASSIVE;
 
@@ -816,18 +816,18 @@ hub_handle_command(char *buf, uint32_t len)
             goto hub_handle_command_cleanup;
     }
     else if ( (len >= 10 && strncmp(buf, "$NickList ", 10) == 0)
-	    || (len >= 8 && strncmp(buf, "$OpList ", 8) == 0) ) {
+              || (len >= 8 && strncmp(buf, "$OpList ", 8) == 0) ) {
         char *nick;
         char *end;
         int oplist;
         char *conv_nick;
 
         if ( strncmp(buf, "$NickList ", 10) == 0) {
-	        nick = buf + 10;
-	        oplist = 0;
-        }else {
-	        nick = buf + 8;
-	        oplist = 1;
+            nick = buf + 10;
+            oplist = 0;
+        } else {
+            nick = buf + 8;
+            oplist = 1;
         }
 
         for (; (end = strstr(nick, "$$")) != NULL; nick = end+2) {
@@ -846,8 +846,8 @@ hub_handle_command(char *buf, uint32_t len)
 
             if (!ui->info_quered && (hub_extensions & HUB_EXT_NOGETINFO) == 0) {
                 if (!hub_putf("$GetINFO %s %s|", nick, hub_my_nick))  {
-	                goto hub_handle_command_cleanup;
-            }
+                    goto hub_handle_command_cleanup;
+                }
                 ui->info_quered = true;
             }
 
@@ -859,7 +859,7 @@ hub_handle_command(char *buf, uint32_t len)
         DCUserInfo *ui;
         char *conv_nick = hub_to_main_string(buf+6);
 
-    	flag_putf(DC_DF_JOIN_PART, "User %s quits.\n", quotearg(conv_nick));
+        flag_putf(DC_DF_JOIN_PART, "User %s quits.\n", quotearg(conv_nick));
         ui = hmap_remove(hub_users, conv_nick);
         if (ui == NULL) {
             /* Some hubs print quit messages for users that never joined,
@@ -871,20 +871,20 @@ hub_handle_command(char *buf, uint32_t len)
         free(conv_nick);
     }
     else if (len >= 8 && strncmp(buf, "$Search ", 8) == 0) {
-    	char *source;
+        char *source;
         int parse_result = 0;
-	    DCSearchSelection sel;
+        DCSearchSelection sel;
         sel.patterns = NULL;
 
-    	buf += 8;
-	    source = strsep(&buf, " ");
-	    if (source == NULL) {
-	        warn(_("Invalid $Search message: Missing source specification.\n"));
+        buf += 8;
+        source = strsep(&buf, " ");
+        if (source == NULL) {
+            warn(_("Invalid $Search message: Missing source specification.\n"));
             goto hub_handle_command_cleanup;
-	    }
-	    /* charset handling is in parse_search_selection */
+        }
+        /* charset handling is in parse_search_selection */
         parse_result = parse_search_selection(buf, &sel);
-	    if (parse_result != 1) {
+        if (parse_result != 1) {
             if (sel.patterns != NULL) {
                 int i = 0;
                 for (i = 0; i < sel.patterncount; i++) {
@@ -893,15 +893,15 @@ hub_handle_command(char *buf, uint32_t len)
                 free(sel.patterns);
             }
             if (parse_result == 0)
-	            warn(_("Invalid $Search message: %s: Invalid search specification.\n"), buf);
+                warn(_("Invalid $Search message: %s: Invalid search specification.\n"), buf);
             goto hub_handle_command_cleanup;
-	    }
-	    if (strncmp(source, "Hub:", 4) == 0) {
+        }
+        if (strncmp(source, "Hub:", 4) == 0) {
             DCUserInfo *ui;
             char *conv_nick = hub_to_main_string(source+4);
             ui = hmap_get(hub_users, conv_nick);
 
-	        if (ui == NULL) {
+            if (ui == NULL) {
                 warn(_("Invalid $Search message: Unknown user %s.\n"), quotearg(conv_nick));
                 if (sel.patterns != NULL) {
                     int i = 0;
@@ -912,7 +912,7 @@ hub_handle_command(char *buf, uint32_t len)
                 }
                 free(conv_nick);
                 goto hub_handle_command_cleanup;
-	        }
+            }
             free(conv_nick);
 
             if (strcmp(ui->nick, my_nick) == 0) {
@@ -925,7 +925,7 @@ hub_handle_command(char *buf, uint32_t len)
                 }
                 goto hub_handle_command_cleanup;
             }
-	        perform_inbound_search(&sel, ui, NULL);
+            perform_inbound_search(&sel, ui, NULL);
             if (sel.patterns != NULL) {
                 int i = 0;
                 for (i = 0; i < sel.patterncount; i++) {
@@ -933,10 +933,10 @@ hub_handle_command(char *buf, uint32_t len)
                 }
                 free(sel.patterns);
             }
-	    } else {
+        } else {
             struct sockaddr_in addr;
-    	    if (!parse_ip_and_port(source, &addr, DC_CLIENT_UDP_PORT)) {
-		        warn(_("Invalid $Search message: Invalid address specification.\n"));
+            if (!parse_ip_and_port(source, &addr, DC_CLIENT_UDP_PORT)) {
+                warn(_("Invalid $Search message: Invalid address specification.\n"));
                 if (sel.patterns != NULL) {
                     int i = 0;
                     for (i = 0; i < sel.patterncount; i++) {
@@ -945,7 +945,7 @@ hub_handle_command(char *buf, uint32_t len)
                     free(sel.patterns);
                 }
                 goto hub_handle_command_cleanup;
-	        }
+            }
             if (local_addr.sin_addr.s_addr == addr.sin_addr.s_addr && listen_port == ntohs(addr.sin_port)) {
                 if (sel.patterns != NULL) {
                     int i = 0;
@@ -956,7 +956,7 @@ hub_handle_command(char *buf, uint32_t len)
                 }
                 goto hub_handle_command_cleanup;
             }
-	        perform_inbound_search(&sel, NULL, &addr);
+            perform_inbound_search(&sel, NULL, &addr);
             if (sel.patterns != NULL) {
                 int i = 0;
                 for (i = 0; i < sel.patterncount; i++) {
@@ -964,11 +964,11 @@ hub_handle_command(char *buf, uint32_t len)
                 }
                 free(sel.patterns);
             }
-	    }
+        }
     } else if (len >= 4 && strncmp(buf, "$SR ", 4) == 0) {
-    	handle_search_result(buf, len);
+        handle_search_result(buf, len);
     } else if (len == 0) {
-    	/* Ignore empty commands. */
+        /* Ignore empty commands. */
     }
 hub_handle_command_cleanup:
     free(hub_my_nick);
@@ -986,7 +986,7 @@ hub_input_available(void)
 
     res = byteq_read(hub_recvq, hub_socket);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-    	warn_socket_error(res, false, _("hub"));
+        warn_socket_error(res, false, _("hub"));
         hub_disconnect();
         return;
     }
@@ -994,13 +994,13 @@ hub_input_available(void)
     for (c = hub_recvq_last; c < hub_recvq->cur; c++) {
         if (hub_recvq->buf[c] == '|') {
             /* Got a complete command. */
-	    if (c - start > 0)
-	    	dump_command(_("<--"), hub_recvq->buf + start, c - start + 1);
+            if (c - start > 0)
+                dump_command(_("<--"), hub_recvq->buf + start, c - start + 1);
             hub_recvq->buf[c] = '\0'; /* Just to be on the safe side... */
             hub_handle_command(hub_recvq->buf + start, c - start);
             start = c+1;
-	    if (hub_socket < 0)
-    	    	return;
+            if (hub_socket < 0)
+                return;
         }
     }
 
@@ -1041,19 +1041,19 @@ hub_now_writable(void)
         if (force_listen_addr.s_addr != INADDR_NONE)
             local_addr.sin_addr = force_listen_addr;
 
-    	screen_putf(_("Connected to hub from %s.\n"), sockaddr_in_str(&local_addr));
+        screen_putf(_("Connected to hub from %s.\n"), sockaddr_in_str(&local_addr));
         update_hub_activity();
 
-    	FD_CLR(hub_socket, &write_fds);
+        FD_CLR(hub_socket, &write_fds);
         FD_SET(hub_socket, &read_fds);
         hub_state = DC_HUB_LOCK;
     } else {
-    	int res;
-    
+        int res;
+
         if (hub_sendq->cur > 0) {
             res = byteq_write(hub_sendq, hub_socket);
             if (res == 0 || (res < 0 && errno != EAGAIN)) {
-    	    	warn_socket_error(res, true, _("hub"));
+                warn_socket_error(res, true, _("hub"));
                 hub_disconnect();
                 return;
             }
@@ -1065,7 +1065,7 @@ hub_now_writable(void)
 
 /* This function tries to make a connection to a user, or ask them to
  * connect to us.
- * 
+ *
  * Before calling this function, make sure we are not connected to the
  * user already.
  *
@@ -1087,33 +1087,33 @@ hub_connect_user(DCUserInfo *ui)
     hub_ui_nick = main_to_hub_string(ui->nick);
 
     if (is_active) {
-    	if (ui->active_state == DC_ACTIVE_SENT_ACTIVE) {
-    	    warn(_("ConnectToMe already sent to user %s. Waiting.\n"), ui->nick);
-	        connect =  true;
-	        goto cleanup;
-        }
-    	if (!hub_putf("$ConnectToMe %s %s:%u|", hub_ui_nick, inet_ntoa(local_addr.sin_addr), listen_port))
-	        goto cleanup;
-        ui->active_state = DC_ACTIVE_SENT_ACTIVE;
-    } else {
-    	if (ui->active_state == DC_ACTIVE_SENT_PASSIVE) {
-    	    warn(_("RevConnectToMe already sent to user %s. Waiting.\n"), quotearg(ui->nick));
+        if (ui->active_state == DC_ACTIVE_SENT_ACTIVE) {
+            warn(_("ConnectToMe already sent to user %s. Waiting.\n"), ui->nick);
             connect =  true;
             goto cleanup;
         }
-    	if (ui->active_state == DC_ACTIVE_RECEIVED_PASSIVE) {
-    	    warn(_("User %s is also passive. Cannot communicate.\n"), quotearg(ui->nick));
-	        connect =  true;
-	        goto cleanup;
+        if (!hub_putf("$ConnectToMe %s %s:%u|", hub_ui_nick, inet_ntoa(local_addr.sin_addr), listen_port))
+            goto cleanup;
+        ui->active_state = DC_ACTIVE_SENT_ACTIVE;
+    } else {
+        if (ui->active_state == DC_ACTIVE_SENT_PASSIVE) {
+            warn(_("RevConnectToMe already sent to user %s. Waiting.\n"), quotearg(ui->nick));
+            connect =  true;
+            goto cleanup;
         }
-    	if (!hub_putf("$RevConnectToMe %s %s|", hub_my_nick, hub_ui_nick)) {
-	        goto cleanup;
+        if (ui->active_state == DC_ACTIVE_RECEIVED_PASSIVE) {
+            warn(_("User %s is also passive. Cannot communicate.\n"), quotearg(ui->nick));
+            connect =  true;
+            goto cleanup;
         }
-   	    ui->active_state = DC_ACTIVE_SENT_PASSIVE;
+        if (!hub_putf("$RevConnectToMe %s %s|", hub_my_nick, hub_ui_nick)) {
+            goto cleanup;
+        }
+        ui->active_state = DC_ACTIVE_SENT_PASSIVE;
     }
     /* hmap_put returns the old value */
     if (hmap_put(pending_userinfo, ui->nick, ui) == NULL)
-    	ui->refcount++;
+        ui->refcount++;
     connect = true;
 cleanup:
     free(hub_ui_nick);

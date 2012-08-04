@@ -28,10 +28,10 @@ int
 strleftcmp(const char *base, const char *full)
 {
     while (*base) {
-	if (*base != *full)
-    	    return *base - *full;
-	base++;
-	full++;
+        if (*base != *full)
+            return *base - *full;
+        base++;
+        full++;
     }
     return 0;
 }

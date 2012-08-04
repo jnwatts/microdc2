@@ -30,14 +30,14 @@
 char *
 xvasprintf (const char *format, va_list args)
 {
-  char *result;
+    char *result;
 
-  if (vasprintf (&result, format, args) < 0)
+    if (vasprintf (&result, format, args) < 0)
     {
-      if (errno == ENOMEM)
-	xalloc_die ();
-      return NULL;
+        if (errno == ENOMEM)
+            xalloc_die ();
+        return NULL;
     }
 
-  return result;
+    return result;
 }

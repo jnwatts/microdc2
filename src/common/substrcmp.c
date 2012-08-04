@@ -23,11 +23,11 @@ int
 substrcmp(const char *s1, const char *s2, size_t s2len)
 {
     while (s2len > 0) {
-    	if (*s1 != *s2)
-	    return *s1 - *s2;
-	s1++;
-	s2++;
-	s2len--;
+        if (*s1 != *s2)
+            return *s1 - *s2;
+        s1++;
+        s2++;
+        s2len--;
     }
     return *s1; /* strncmp would return 0 here */
 }

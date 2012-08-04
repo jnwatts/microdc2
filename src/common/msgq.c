@@ -131,7 +131,7 @@ msgq_calc_put_args_size(MsgQ *mq, va_list args)
             size += sizeof(intval);
         } else if (type == MSGQ_INT64) {
             int64_t intval = va_arg(args, int64_t);
-	        size += sizeof(intval);
+            size += sizeof(intval);
         } else if (type == MSGQ_BOOL) {
             bool boolval = va_arg(args, int);
             size += sizeof(boolval);
@@ -251,65 +251,68 @@ msgq_vget(MsgQ *mq, va_list args)
     buf += sizeof(size);
 
     while ((type = va_arg(args, MsgQType)) != MSGQ_END) {
-	if (type == MSGQ_INT) {
-	    int *intptr = va_arg(args, int *);
-	    memcpy(intptr, buf, sizeof(*intptr));
-	    buf += sizeof(*intptr);
-	} else if (type == MSGQ_INT32) {
-	    int32_t *intptr = va_arg(args, int32_t *);
-	    memcpy(intptr, buf, sizeof(*intptr));
-	    buf += sizeof(*intptr);
-	} else if (type == MSGQ_INT64) {
-	    int64_t *intptr = va_arg(args, int64_t *);
-	    memcpy(intptr, buf, sizeof(*intptr));
-	    buf += sizeof(*intptr);
+        if (type == MSGQ_INT) {
+            int *intptr = va_arg(args, int *);
+            memcpy(intptr, buf, sizeof(*intptr));
+            buf += sizeof(*intptr);
+        } else if (type == MSGQ_INT32) {
+            int32_t *intptr = va_arg(args, int32_t *);
+            memcpy(intptr, buf, sizeof(*intptr));
+            buf += sizeof(*intptr);
+        } else if (type == MSGQ_INT64) {
+            int64_t *intptr = va_arg(args, int64_t *);
+            memcpy(intptr, buf, sizeof(*intptr));
+            buf += sizeof(*intptr);
         } else if (type == MSGQ_BOOL) {
             bool *boolptr = va_arg(args, bool *);
             memcpy(boolptr, buf, sizeof(*boolptr));
             buf += sizeof(*boolptr);
-	} else if (type == MSGQ_STR) {
-	    char **strptr = va_arg(args, char **);
-	    size_t len;
-	    memcpy(&len, buf, sizeof(len));
-	    buf += sizeof(len);
-	    if (len == SIZE_MAX) {
-		    *strptr = NULL;
-	    } else {
-		    *strptr = xstrdup(buf);
-		    buf += strlen(buf)+1;
-	    }
-	} else if (type == MSGQ_BLOB) {
-	    void **dataptr = va_arg(args, void **);
-	    size_t *sizeptr = va_arg(args, size_t *);
-	    size_t len;
-	    memcpy(&len, buf, sizeof(len));
-	    buf += sizeof(len);
-	    if (len == SIZE_MAX) {
-		*dataptr = NULL;
-		*sizeptr = 0;
-	    } else {
-		*dataptr = xmemdup(buf, len);
-		*sizeptr = len;
-		buf += len;
-	    }
-	} else if (type == MSGQ_STRARY) {
-	    char ***aryptr = va_arg(args, char ***);
-	    size_t c;
-	    size_t len;
+        } else if (type == MSGQ_STR) {
+            char **strptr = va_arg(args, char **);
+            size_t len;
+            memcpy(&len, buf, sizeof(len));
+            buf += sizeof(len);
+            if (len == SIZE_MAX) {
+                *strptr = NULL;
+            } else {
+                *strptr = xstrdup(buf);
+                buf += strlen(buf)+1;
+            }
+        } else if (type == MSGQ_BLOB) {
+            void **dataptr = va_arg(args, void **);
+            size_t *sizeptr = va_arg(args, size_t *);
+            size_t len;
+            memcpy(&len, buf, sizeof(len));
+            buf += sizeof(len);
+            if (len == SIZE_MAX) {
+                *dataptr = NULL;
+                *sizeptr = 0;
+            } else {
+                *dataptr = xmemdup(buf, len);
+                *sizeptr = len;
+                buf += len;
+            }
+        } else if (type == MSGQ_STRARY) {
+            char ***aryptr = va_arg(args, char ***);
+            size_t c;
+            size_t len;
 
-	    memcpy(&len, buf, sizeof(len)); buf += sizeof(len);
-	    if (len == SIZE_MAX) {
-		*aryptr = NULL;
-	    } else {
-		*aryptr = xmalloc((len+1) * sizeof(char *));
-		for (c = 0; c < len; c++) {
-		    size_t lenstr;
-		    memcpy(&lenstr, buf, sizeof(lenstr)); buf += sizeof(lenstr);
-		    (*aryptr)[c] = xmemdup(buf, lenstr); buf += lenstr;
-		}
-		(*aryptr)[c] = NULL;
-	    }
-	}
+            memcpy(&len, buf, sizeof(len));
+            buf += sizeof(len);
+            if (len == SIZE_MAX) {
+                *aryptr = NULL;
+            } else {
+                *aryptr = xmalloc((len+1) * sizeof(char *));
+                for (c = 0; c < len; c++) {
+                    size_t lenstr;
+                    memcpy(&lenstr, buf, sizeof(lenstr));
+                    buf += sizeof(lenstr);
+                    (*aryptr)[c] = xmemdup(buf, lenstr);
+                    buf += lenstr;
+                }
+                (*aryptr)[c] = NULL;
+            }
+        }
     }
 
     return sizeof(size)+size;
@@ -334,7 +337,7 @@ msgq_get(MsgQ *mq, ...)
     va_list args;
 
     va_start(args, mq);
-    count = msgq_vget(mq, args);    
+    count = msgq_vget(mq, args);
     va_end(args);
     byteq_remove(mq->queue, count);
 }
@@ -345,7 +348,7 @@ msgq_get_sync(MsgQ *mq, ...)
     int res;
     size_t count;
     va_list args;
-    
+
     res = msgq_read_complete_msg(mq);
     if (res <= 0)
         return res;

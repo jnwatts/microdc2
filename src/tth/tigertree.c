@@ -1,7 +1,7 @@
 /* (PD) 2001 The Bitzi Corporation
  * Copyright (C) 2006 Alexey Illarionov <littlesavage@rambler.ru>
  *
- * Please see file COPYING or http://bitzi.com/publicdomain 
+ * Please see file COPYING or http://bitzi.com/publicdomain
  * for more info.
  *
  * tigertree.c - Implementation of the TigerTree algorithm
@@ -49,23 +49,23 @@ void tt_endian(byte *s);
 /* Initialize the tigertree context */
 void tt_init(TT_CONTEXT *ctx, unsigned char *tthl, unsigned depth)
 {
-  ctx->count = 0;
-  ctx->node[0] = '\1'; // flag for inner node calculation -- never changed
-  ctx->index = 0;   // partial block pointer/block length
-  ctx->top = ctx->nodes;
-  ctx->tthl = tthl;
-  ctx->depth = depth;
+    ctx->count = 0;
+    ctx->node[0] = '\1'; // flag for inner node calculation -- never changed
+    ctx->index = 0;   // partial block pointer/block length
+    ctx->top = ctx->nodes;
+    ctx->tthl = tthl;
+    ctx->depth = depth;
 }
 
 static void tt_compose(TT_CONTEXT *ctx) {
-  byte *node = ctx->top - NODESIZE;
-  memmove((ctx->node)+1,node,NODESIZE); // copy to scratch area
-  tiger((word64*)(ctx->node),(word64)(NODESIZE+1),(word64*)(ctx->top)); // combine two nodes
+    byte *node = ctx->top - NODESIZE;
+    memmove((ctx->node)+1,node,NODESIZE); // copy to scratch area
+    tiger((word64*)(ctx->node),(word64)(NODESIZE+1),(word64*)(ctx->top)); // combine two nodes
 #if USE_BIG_ENDIAN
-  tt_endian((byte *)ctx->top);
+    tt_endian((byte *)ctx->top);
 #endif
-  memmove(node,ctx->top,TIGERSIZE);           // move up result
-  ctx->top -= TIGERSIZE;                      // update top ptr
+    memmove(node,ctx->top,TIGERSIZE);           // move up result
+    ctx->top -= TIGERSIZE;                      // update top ptr
 }
 
 void tt_block(TT_CONTEXT *ctx)
@@ -98,10 +98,10 @@ void tt_block(TT_CONTEXT *ctx)
 // no need to call this directly; tt_digest calls it for you
 static void tt_final(TT_CONTEXT *ctx)
 {
-  // do last partial block, unless index is 1 (empty leaf)
-  // AND we're past the first block
-  if((ctx->index>0)||(ctx->top==ctx->nodes))
-    tt_block(ctx);
+    // do last partial block, unless index is 1 (empty leaf)
+    // AND we're past the first block
+    if((ctx->index>0)||(ctx->top==ctx->nodes))
+        tt_block(ctx);
 }
 
 void tt_digest(TT_CONTEXT *ctx, byte *s)
@@ -157,30 +157,30 @@ void tt_digest(TT_CONTEXT *ctx, byte *s)
 #if USE_BIG_ENDIAN
 void tt_endian(byte *s)
 {
-  word64 *i;
-  byte   *b, btemp;
-  word16 *w, wtemp;
+    word64 *i;
+    byte   *b, btemp;
+    word16 *w, wtemp;
 
-  for(w = (word16 *)s; w < ((word16 *)s) + 12; w++)
-  {
-      b = (byte *)w;
-      btemp = *b;
-      *b = *(b + 1);
-      *(b + 1) = btemp;
-  }
+    for(w = (word16 *)s; w < ((word16 *)s) + 12; w++)
+    {
+        b = (byte *)w;
+        btemp = *b;
+        *b = *(b + 1);
+        *(b + 1) = btemp;
+    }
 
-  for(i = (word64 *)s; i < ((word64 *)s) + 3; i++)
-  {
-      w = (word16 *)i;
+    for(i = (word64 *)s; i < ((word64 *)s) + 3; i++)
+    {
+        w = (word16 *)i;
 
-      wtemp = *w;
-      *w = *(w + 3);
-      *(w + 3) = wtemp;
+        wtemp = *w;
+        *w = *(w + 3);
+        *(w + 3) = wtemp;
 
-      wtemp = *(w + 1);
-      *(w + 1) = *(w + 2);
-      *(w + 2) = wtemp;
-  }
+        wtemp = *(w + 1);
+        *(w + 1) = *(w + 2);
+        *(w + 2) = wtemp;
+    }
 }
 #endif
 

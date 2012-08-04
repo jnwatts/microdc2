@@ -72,21 +72,21 @@ int main(int argc, char* argv[])
     int opt = -1, long_idx = -1;
     while (!print_help && (-1 != (opt = getopt_long(argc, argv, short_opts, long_opts, &long_idx)))) {
         switch (opt) {
-            case 'r':
-                report = 1;
-                break;
-            case 'f':
-                print_files = 1;
-                break;
-            case VERSION_OPT:
-	            version_etc(stdout, NULL, base_name(argv[0]), VERSION, "Vladimir Chugunov", NULL);
-	            exit(EXIT_SUCCESS);
-            case HELP_OPT:
-                print_help = 1;
-                break;
-            default:
-                fprintf(stderr, "unknown option value %d\n", opt);
-                break;
+        case 'r':
+            report = 1;
+            break;
+        case 'f':
+            print_files = 1;
+            break;
+        case VERSION_OPT:
+            version_etc(stdout, NULL, base_name(argv[0]), VERSION, "Vladimir Chugunov", NULL);
+            exit(EXIT_SUCCESS);
+        case HELP_OPT:
+            print_help = 1;
+            break;
+        default:
+            fprintf(stderr, "unknown option value %d\n", opt);
+            break;
         }
     }
 
@@ -152,12 +152,12 @@ int process_directory(const char* path)
     dp = opendir(path);
     if (dp == NULL) {
         if (print_files) {
-    	    fprintf(stderr, "%s: Cannot open directory - %s\n", path, errstr);
+            fprintf(stderr, "%s: Cannot open directory - %s\n", path, errstr);
         }
         directory_failed ++;
-	    return errno;
+        return errno;
     }
-    
+
     directory_count ++;
 
     tth_path = catfiles(path, tth_directory_name);
@@ -167,43 +167,43 @@ int process_directory(const char* path)
             tth_dp = opendir(tth_path);
             if (tth_dp == NULL) {
                 if (print_files) {
-    	            fprintf(stderr, "%s: Cannot open directory - %s\n", tth_path, errstr);
+                    fprintf(stderr, "%s: Cannot open directory - %s\n", tth_path, errstr);
                 }
             }
         } else {
             if (print_files) {
-    	        fprintf(stderr, "%s: Cannot create directory - %s\n", tth_path, errstr);
+                fprintf(stderr, "%s: Cannot create directory - %s\n", tth_path, errstr);
             }
         }
         if (tth_dp == NULL) {
             free(tth_path);
             closedir(dp);
-	        return errno;
+            return errno;
         }
     }
 
     while ((ep = xreaddir(dp)) != NULL) {
-    	struct stat st;
-	    char *fullname;
+        struct stat st;
+        char *fullname;
 
         if (IS_SPECIAL_DIR(ep->d_name))
-	        continue;
+            continue;
 
-	    /* If we ran into looped symlinked dirs, stat will stop (errno=ELOOP). */
+        /* If we ran into looped symlinked dirs, stat will stop (errno=ELOOP). */
 
-    	fullname = catfiles(path, ep->d_name);
-    	if (stat(fullname, &st) < 0) {
+        fullname = catfiles(path, ep->d_name);
+        if (stat(fullname, &st) < 0) {
             if (print_files) {
-	            fprintf(stderr, "%s: Cannot get file status - %s\n", fullname, errstr);
+                fprintf(stderr, "%s: Cannot get file status - %s\n", fullname, errstr);
             }
-	        free(fullname);
-	        continue;
-	    }
+            free(fullname);
+            continue;
+        }
 
-	    if (S_ISDIR(st.st_mode)) {
-	        process_directory(fullname);
-	    }
-	    else if (S_ISREG(st.st_mode)) {
+        if (S_ISDIR(st.st_mode)) {
+            process_directory(fullname);
+        }
+        else if (S_ISREG(st.st_mode)) {
             struct stat tth_st;
             int create = 0, stat_result, tth_fd = -1;
             char *tth_fname = xasprintf("%s%s%s%s", tth_path, tth_path[0] == '\0' || tth_path[strlen(tth_path)-1] == '/' ? "" : "/", ep->d_name, ".tth");
@@ -219,10 +219,10 @@ int process_directory(const char* path)
                     uint64_t fsize;
                     time_t mtime, ctime;
                     char tth[39];
-                    if (read(tth_fd, &fsize, sizeof(fsize)) != sizeof(fsize) || st.st_size != fsize || 
-                        read(tth_fd, &mtime, sizeof(mtime)) != sizeof(mtime) || st.st_mtime != mtime || 
-                        read(tth_fd, &ctime, sizeof(ctime)) != sizeof(ctime) || st.st_ctime != ctime ||
-                        read(tth_fd, tth, sizeof(tth)) != sizeof(tth)) {
+                    if (read(tth_fd, &fsize, sizeof(fsize)) != sizeof(fsize) || st.st_size != fsize ||
+                            read(tth_fd, &mtime, sizeof(mtime)) != sizeof(mtime) || st.st_mtime != mtime ||
+                            read(tth_fd, &ctime, sizeof(ctime)) != sizeof(ctime) || st.st_ctime != ctime ||
+                            read(tth_fd, tth, sizeof(tth)) != sizeof(tth)) {
                         printf("%s: existing TTH is old or currupted\n", fullname);
                         create = 1;
                     }
@@ -253,9 +253,9 @@ int process_directory(const char* path)
                     time_t mtime = st.st_mtime,
                            ctime = st.st_ctime;
                     if (write(tth_fd, &fsize, sizeof(fsize)) != sizeof(fsize) ||
-                        write(tth_fd, &mtime, sizeof(mtime)) != sizeof(mtime) ||
-                        write(tth_fd, &ctime, sizeof(ctime)) != sizeof(ctime) ||
-                        write(tth_fd, p_tth, strlen(p_tth)) != strlen(p_tth)) {
+                            write(tth_fd, &mtime, sizeof(mtime)) != sizeof(mtime) ||
+                            write(tth_fd, &ctime, sizeof(ctime)) != sizeof(ctime) ||
+                            write(tth_fd, p_tth, strlen(p_tth)) != strlen(p_tth)) {
                         failed = 1;
                     }
                     close(tth_fd);
@@ -287,45 +287,45 @@ int process_directory(const char* path)
             free(tth_fname);
         } else {
             if (print_files) {
-	            fprintf(stderr, "%s: Not a regular file or directory, ignoring\n", fullname);
+                fprintf(stderr, "%s: Not a regular file or directory, ignoring\n", fullname);
             }
-	    }
-	    free(fullname);
+        }
+        free(fullname);
     }
 
     while ((ep = xreaddir(tth_dp)) != NULL) {
-    	struct stat st;
-	    char *fullname, *tth_name;
+        struct stat st;
+        char *fullname, *tth_name;
         int len = strlen(ep->d_name);
         if (len <= 4 || strcmp(ep->d_name+len-4, ".tth") != 0) {
             continue;
         }
 
-	    /* If we ran into looped symlinked dirs, stat will stop (errno=ELOOP). */
+        /* If we ran into looped symlinked dirs, stat will stop (errno=ELOOP). */
 
-    	tth_name = catfiles(tth_path, ep->d_name);
-    	if (stat(tth_name, &st) < 0) {
+        tth_name = catfiles(tth_path, ep->d_name);
+        if (stat(tth_name, &st) < 0) {
             if (print_files) {
-	            fprintf(stderr, "%s: Cannot get file status - %s\n", tth_name, errstr);
+                fprintf(stderr, "%s: Cannot get file status - %s\n", tth_name, errstr);
             }
-	        free(tth_name);
-	        continue;
-	    }
+            free(tth_name);
+            continue;
+        }
 
-    	fullname = catfiles(path, ep->d_name);
+        fullname = catfiles(path, ep->d_name);
 
         //ptintf("%s: TTH %s\n", fullname, tth_name)
         len = strlen(fullname);
         if (S_ISREG(st.st_mode) ) {
             fullname[len-4] = '\0';
-    	    if (stat(fullname, &st) < 0 && errno == ENOENT) {
+            if (stat(fullname, &st) < 0 && errno == ENOENT) {
                 if (print_files) {
-	                printf("%s: removed file. Removing TTH file %s\n", fullname, tth_name);
+                    printf("%s: removed file. Removing TTH file %s\n", fullname, tth_name);
                     fflush(stdout);
                 }
                 unlink(tth_name);
                 removed_files ++;
-	        }
+            }
         }
         free(tth_name);
         free(fullname);
@@ -341,8 +341,8 @@ char *
 catfiles(const char *p1, const char *p2)
 {
     return xasprintf("%s%s%s",
-	    p1, p1[0] == '\0' || p1[strlen(p1)-1] == '/' ? "" : "/",
-	    p2);
+                     p1, p1[0] == '\0' || p1[strlen(p1)-1] == '/' ? "" : "/",
+                     p2);
 }
 
 struct dirent *

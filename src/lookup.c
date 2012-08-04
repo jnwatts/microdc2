@@ -69,19 +69,26 @@ data_to_addrinfo(void *databuf, size_t size)
         else
             prev_ai->ai_next = ai;
 
-        memcpy(&ai->ai_flags, data, sizeof(ai->ai_flags)); data += sizeof(ai->ai_flags);
-        memcpy(&ai->ai_family, data, sizeof(ai->ai_family)); data += sizeof(ai->ai_family);
-        memcpy(&ai->ai_socktype, data, sizeof(ai->ai_socktype)); data += sizeof(ai->ai_socktype);
-        memcpy(&ai->ai_protocol, data, sizeof(ai->ai_protocol)); data += sizeof(ai->ai_protocol);
-        memcpy(&ai->ai_addrlen, data, sizeof(ai->ai_addrlen)); data += sizeof(ai->ai_addrlen);
-        memcpy(&has_sockaddr, data, sizeof(has_sockaddr)); data += sizeof(has_sockaddr);
+        memcpy(&ai->ai_flags, data, sizeof(ai->ai_flags));
+        data += sizeof(ai->ai_flags);
+        memcpy(&ai->ai_family, data, sizeof(ai->ai_family));
+        data += sizeof(ai->ai_family);
+        memcpy(&ai->ai_socktype, data, sizeof(ai->ai_socktype));
+        data += sizeof(ai->ai_socktype);
+        memcpy(&ai->ai_protocol, data, sizeof(ai->ai_protocol));
+        data += sizeof(ai->ai_protocol);
+        memcpy(&ai->ai_addrlen, data, sizeof(ai->ai_addrlen));
+        data += sizeof(ai->ai_addrlen);
+        memcpy(&has_sockaddr, data, sizeof(has_sockaddr));
+        data += sizeof(has_sockaddr);
         if (has_sockaddr) {
             ai->ai_addr = xmemdup(data, ai->ai_addrlen);
             data += ai->ai_addrlen;
         } else {
             ai->ai_addr = NULL;
         }
-        memcpy(&has_canon, data, sizeof(has_sockaddr)); data += sizeof(has_canon);
+        memcpy(&has_canon, data, sizeof(has_sockaddr));
+        data += sizeof(has_canon);
         if (has_canon) {
             ai->ai_canonname = xstrdup(data);
             data += strlen(ai->ai_canonname)+1;
@@ -121,17 +128,24 @@ addrinfo_to_data(const struct addrinfo *first_ai, void **dataptr, size_t *sizept
         bool has_sockaddr = ai->ai_addr != NULL;
         bool has_canon = ai->ai_canonname != NULL;
 
-        memcpy(data, &ai->ai_flags, sizeof(ai->ai_flags)); data += sizeof(ai->ai_flags);
-        memcpy(data, &ai->ai_family, sizeof(ai->ai_family)); data += sizeof(ai->ai_family);
-        memcpy(data, &ai->ai_socktype, sizeof(ai->ai_socktype)); data += sizeof(ai->ai_socktype);
-        memcpy(data, &ai->ai_protocol, sizeof(ai->ai_protocol)); data += sizeof(ai->ai_protocol);
-        memcpy(data, &ai->ai_addrlen, sizeof(ai->ai_addrlen)); data += sizeof(ai->ai_addrlen);
-        memcpy(data, &has_sockaddr, sizeof(has_sockaddr)); data += sizeof(has_sockaddr);
+        memcpy(data, &ai->ai_flags, sizeof(ai->ai_flags));
+        data += sizeof(ai->ai_flags);
+        memcpy(data, &ai->ai_family, sizeof(ai->ai_family));
+        data += sizeof(ai->ai_family);
+        memcpy(data, &ai->ai_socktype, sizeof(ai->ai_socktype));
+        data += sizeof(ai->ai_socktype);
+        memcpy(data, &ai->ai_protocol, sizeof(ai->ai_protocol));
+        data += sizeof(ai->ai_protocol);
+        memcpy(data, &ai->ai_addrlen, sizeof(ai->ai_addrlen));
+        data += sizeof(ai->ai_addrlen);
+        memcpy(data, &has_sockaddr, sizeof(has_sockaddr));
+        data += sizeof(has_sockaddr);
         if (has_sockaddr) {
             memcpy(data, ai->ai_addr, ai->ai_addrlen);
             data += ai->ai_addrlen;
         }
-        memcpy(data, &has_canon, sizeof(has_canon)); data += sizeof(has_canon);
+        memcpy(data, &has_canon, sizeof(has_canon));
+        data += sizeof(has_canon);
         if (has_canon) {
             memcpy(data, ai->ai_canonname, strlen(ai->ai_canonname)+1);
             data += strlen(ai->ai_canonname)+1;
@@ -143,14 +157,14 @@ static void
 free_read_addrinfo(struct addrinfo *ai)
 {
     while (ai != NULL) {
-	struct addrinfo *next_ai;
+        struct addrinfo *next_ai;
 
-	free(ai->ai_addr);
-	free(ai->ai_canonname);
+        free(ai->ai_addr);
+        free(ai->ai_canonname);
 
-	next_ai = ai->ai_next;
-	free(ai);
-	ai = next_ai;
+        next_ai = ai->ai_next;
+        free(ai);
+        ai = next_ai;
     }
 }
 
@@ -295,7 +309,7 @@ add_lookup_request(const char *node, const char *service, const struct addrinfo 
     lookup->data = userdata;
     lookup->cancelled = false;
     ptrv_append(pending_lookups, lookup);
-    
+
     return lookup;
 }
 

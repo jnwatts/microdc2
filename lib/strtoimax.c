@@ -67,14 +67,14 @@ INT
 strtoimax (char const *ptr, char **endptr, int base)
 {
 #if HAVE_LONG_LONG
-  verify (sizeof (INT) == sizeof (long int)
-	  || sizeof (INT) == sizeof (long long int));
+    verify (sizeof (INT) == sizeof (long int)
+            || sizeof (INT) == sizeof (long long int));
 
-  if (sizeof (INT) != sizeof (long int))
-    return strtoll (ptr, endptr, base);
+    if (sizeof (INT) != sizeof (long int))
+        return strtoll (ptr, endptr, base);
 #else
-  verify (sizeof (INT) == sizeof (long int));
+    verify (sizeof (INT) == sizeof (long int));
 #endif
 
-  return strtol (ptr, endptr, base);
+    return strtol (ptr, endptr, base);
 }

@@ -41,53 +41,53 @@ decode_lock(const char *lock, size_t locklen, uint32_t basekey)
     int d;
 
     if (locklen < 3) {
-    	screen_putf(_("Invalid $Lock message: Key to short\n"));
-    	return xstrdup("");
+        screen_putf(_("Invalid $Lock message: Key to short\n"));
+        return xstrdup("");
     }
 
     key[0] = lock[0] ^ basekey;
     key[0] = (key[0] << 4) | (key[0] >> 4);
     for (c = 1; c < locklen; c++) {
-    	key[c] = lock[c] ^ lock[c-1];
-    	key[c] = (key[c] << 4) | (key[c] >> 4);
+        key[c] = lock[c] ^ lock[c-1];
+        key[c] = (key[c] << 4) | (key[c] >> 4);
     }
     key[0] = key[0] ^ key[locklen-1];
 
     d = 1; /* 1 for nullbyte at end */
     for (c = 0; c < locklen; c++) {
-    	switch (key[c]) {
-	case 0:
-	case 5:
-	case 36:
-	case 96:
-	case 124:
-	case 126:
-	    d += 10;
-	    break;
-	default:
-	    d++;
-	    break;
-	}
+        switch (key[c]) {
+        case 0:
+        case 5:
+        case 36:
+        case 96:
+        case 124:
+        case 126:
+            d += 10;
+            break;
+        default:
+            d++;
+            break;
+        }
     }
 
     outkey = xmalloc(sizeof(char) * d);
 
     d = 0;
     for (c = 0; c < locklen; c++) {
-    	switch (key[c]) {
-	case 0:
-	case 5:
-	case 36:
-	case 96:
-	case 124:
-	case 126:
-	    sprintf(outkey+d, "/%%DCN%03d%%/", key[c]);
-	    d += 10;
-	    break;
-	default:
-	    outkey[d++] = key[c];
-	    break;
-	}
+        switch (key[c]) {
+        case 0:
+        case 5:
+        case 36:
+        case 96:
+        case 124:
+        case 126:
+            sprintf(outkey+d, "/%%DCN%03d%%/", key[c]);
+            d += 10;
+            break;
+        default:
+            outkey[d++] = key[c];
+            break;
+        }
     }
     outkey[d] = '\0';
 
@@ -100,7 +100,7 @@ unescape_message(const char *str)
 {
     char *out;
     char *cur;
-    
+
     cur = out = xmalloc(strlen(str)+1);
     while (*str != '\0') {
         if (str[0] == '&') {
@@ -135,20 +135,20 @@ escape_message(const char *str)
 
     out = strbuf_new();
     for (; *str != '\0'; str++) {
-    	switch (*str) {
-    	case '$':
-	    strbuf_append(out, "&#36;");
-	    break;
-	case '&':
-	    strbuf_append(out, "&amp;");
-	    break;
-	case '|':
-	    strbuf_append(out, "&#124;");
-	    break;
-	default:
-	    strbuf_append_char(out, *str);
-	    break;
-	}
+        switch (*str) {
+        case '$':
+            strbuf_append(out, "&#36;");
+            break;
+        case '&':
+            strbuf_append(out, "&amp;");
+            break;
+        case '|':
+            strbuf_append(out, "&#124;");
+            break;
+        default:
+            strbuf_append_char(out, *str);
+            break;
+        }
     }
 
     return strbuf_free_to_string(out);

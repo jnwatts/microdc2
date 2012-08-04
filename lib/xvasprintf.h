@@ -38,19 +38,19 @@
 extern "C" {
 #endif
 
-/* Write formatted output to a string dynamically allocated with malloc().
-   If the memory allocation succeeds, store the address of the string in
-   *RESULT and return the number of resulting bytes, excluding the trailing
-   NUL.  Upon [ENOMEM] memory allocation error, call xalloc_die.
-   On some other error
-     - [EOVERFLOW] resulting string length is > INT_MAX,
-     - [EINVAL] invalid format string,
-     - [EILSEQ] error during conversion between wide and multibyte characters,
-   return NULL.  */
-extern char *xasprintf (const char *format, ...)
-       __attribute__ ((__format__ (__printf__, 1, 2)));
-extern char *xvasprintf (const char *format, va_list args)
-       __attribute__ ((__format__ (__printf__, 1, 0)));
+    /* Write formatted output to a string dynamically allocated with malloc().
+       If the memory allocation succeeds, store the address of the string in
+       *RESULT and return the number of resulting bytes, excluding the trailing
+       NUL.  Upon [ENOMEM] memory allocation error, call xalloc_die.
+       On some other error
+         - [EOVERFLOW] resulting string length is > INT_MAX,
+         - [EINVAL] invalid format string,
+         - [EILSEQ] error during conversion between wide and multibyte characters,
+       return NULL.  */
+    extern char *xasprintf (const char *format, ...)
+    __attribute__ ((__format__ (__printf__, 1, 2)));
+    extern char *xvasprintf (const char *format, va_list args)
+    __attribute__ ((__format__ (__printf__, 1, 0)));
 
 #ifdef	__cplusplus
 }

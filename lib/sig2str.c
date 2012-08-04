@@ -41,8 +41,11 @@
 #define NUMNAME(name) { SIG##name, #name }
 
 /* Signal names and numbers.  Put the preferred name first.  */
-static struct numname { int num; char const name[8]; } numname_table[] =
-  {
+static struct numname {
+    int num;
+    char const name[8];
+} numname_table[] =
+{
     /* Signals required by POSIX 1003.1-2001 base, listed in
        traditional numeric order.  */
 #ifdef SIGHUP
@@ -242,7 +245,7 @@ static struct numname { int num; char const name[8]; } numname_table[] =
 
     /* Korn shell and Bash, of uncertain vintage.  */
     { 0, "EXIT" }
-  };
+};
 
 #define NUMNAME_ENTRIES (sizeof numname_table / sizeof numname_table[0])
 
@@ -261,41 +264,41 @@ static struct numname { int num; char const name[8]; } numname_table[] =
 static int
 str2signum (char const *signame)
 {
-  if (ISDIGIT (*signame))
+    if (ISDIGIT (*signame))
     {
-      char *endp;
-      long int n = strtol (signame, &endp, 10);
-      if (! *endp && n <= SIGNUM_BOUND)
-	return n;
+        char *endp;
+        long int n = strtol (signame, &endp, 10);
+        if (! *endp && n <= SIGNUM_BOUND)
+            return n;
     }
-  else
+    else
     {
-      unsigned int i;
-      for (i = 0; i < NUMNAME_ENTRIES; i++)
-	if (strcmp (numname_table[i].name, signame) == 0)
-	  return numname_table[i].num;
+        unsigned int i;
+        for (i = 0; i < NUMNAME_ENTRIES; i++)
+            if (strcmp (numname_table[i].name, signame) == 0)
+                return numname_table[i].num;
 
-      {
-	char *endp;
-	int rtmin = SIGRTMIN;
-	int rtmax = SIGRTMAX;
+        {
+            char *endp;
+            int rtmin = SIGRTMIN;
+            int rtmax = SIGRTMAX;
 
-	if (0 < rtmin && strncmp (signame, "RTMIN", 5) == 0)
-	  {
-	    long int n = strtol (signame + 5, &endp, 10);
-	    if (! *endp && 0 <= n && n <= rtmax - rtmin)
-	      return rtmin + n;
-	  }
-	else if (0 < rtmax && strncmp (signame, "RTMAX", 5) == 0)
-	  {
-	    long int n = strtol (signame + 5, &endp, 10);
-	    if (! *endp && rtmin - rtmax <= n && n <= 0)
-	      return rtmax + n;
-	  }
-      }
+            if (0 < rtmin && strncmp (signame, "RTMIN", 5) == 0)
+            {
+                long int n = strtol (signame + 5, &endp, 10);
+                if (! *endp && 0 <= n && n <= rtmax - rtmin)
+                    return rtmin + n;
+            }
+            else if (0 < rtmax && strncmp (signame, "RTMAX", 5) == 0)
+            {
+                long int n = strtol (signame + 5, &endp, 10);
+                if (! *endp && rtmin - rtmax <= n && n <= 0)
+                    return rtmax + n;
+            }
+        }
     }
 
-  return -1;
+    return -1;
 }
 
 /* Convert the signal name SIGNAME to the signal number *SIGNUM.
@@ -304,8 +307,8 @@ str2signum (char const *signame)
 int
 str2sig (char const *signame, int *signum)
 {
-  *signum = str2signum (signame);
-  return *signum < 0 ? -1 : 0;
+    *signum = str2signum (signame);
+    return *signum < 0 ? -1 : 0;
 }
 
 /* Convert SIGNUM to a signal name in SIGNAME.  SIGNAME must point to
@@ -315,32 +318,32 @@ str2sig (char const *signame, int *signum)
 int
 sig2str (int signum, char *signame)
 {
-  unsigned int i;
-  for (i = 0; i < NUMNAME_ENTRIES; i++)
-    if (numname_table[i].num == signum)
-      {
-	strcpy (signame, numname_table[i].name);
-	return 0;
-      }
+    unsigned int i;
+    for (i = 0; i < NUMNAME_ENTRIES; i++)
+        if (numname_table[i].num == signum)
+        {
+            strcpy (signame, numname_table[i].name);
+            return 0;
+        }
 
-  {
-    int rtmin = SIGRTMIN;
-    int rtmax = SIGRTMAX;
+    {
+        int rtmin = SIGRTMIN;
+        int rtmax = SIGRTMAX;
 
-    if (! (rtmin <= signum && signum <= rtmax))
-      return -1;
+        if (! (rtmin <= signum && signum <= rtmax))
+            return -1;
 
-    if (signum <= rtmin + (rtmax - rtmin) / 2)
-      {
-	int delta = signum - rtmin;
-	sprintf (signame, delta ? "RTMIN+%d" : "RTMIN", delta);
-      }
-    else
-      {
-	int delta = rtmax - signum;
-	sprintf (signame, delta ? "RTMAX-%d" : "RTMAX", delta);
-      }
+        if (signum <= rtmin + (rtmax - rtmin) / 2)
+        {
+            int delta = signum - rtmin;
+            sprintf (signame, delta ? "RTMIN+%d" : "RTMIN", delta);
+        }
+        else
+        {
+            int delta = rtmax - signum;
+            sprintf (signame, delta ? "RTMAX-%d" : "RTMAX", delta);
+        }
 
-    return 0;
-  }
+        return 0;
+    }
 }

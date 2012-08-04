@@ -58,43 +58,43 @@
    out the length of the output string.  */
 char *
 iconv_string (const char *str, const char *from_codeset,
-	      const char *to_codeset)
+              const char *to_codeset)
 {
-  char *dest = NULL;
+    char *dest = NULL;
 #if HAVE_ICONV
-  iconv_t cd;
+    iconv_t cd;
 #endif
 
-  if (strcmp (to_codeset, from_codeset) == 0)
-    return strdup (str);
+    if (strcmp (to_codeset, from_codeset) == 0)
+        return strdup (str);
 
 #if HAVE_ICONV
-  cd = iconv_open (to_codeset, from_codeset);
-  if (cd == (iconv_t) -1)
-    return NULL;
+    cd = iconv_open (to_codeset, from_codeset);
+    if (cd == (iconv_t) -1)
+        return NULL;
 
-  dest = iconv_alloc(cd, str);
+    dest = iconv_alloc(cd, str);
 
-  {
-    int save_errno = errno;
+    {
+        int save_errno = errno;
 
-    if (iconv_close (cd) < 0 && dest)
-      {
-	int save_errno2 = errno;
-	/* If we didn't have a real error before, make sure we restore
-	   the iconv_close error below. */
-	free (dest);
-	dest = NULL;
-	errno = save_errno2;
-      }
-    else
-      errno = save_errno;
-  }
+        if (iconv_close (cd) < 0 && dest)
+        {
+            int save_errno2 = errno;
+            /* If we didn't have a real error before, make sure we restore
+               the iconv_close error below. */
+            free (dest);
+            dest = NULL;
+            errno = save_errno2;
+        }
+        else
+            errno = save_errno;
+    }
 #else
-  errno = ENOSYS;
+    errno = ENOSYS;
 #endif
 
-  return dest;
+    return dest;
 }
 
 /* Convert a zero-terminated string STR using iconv descriptor CD.
@@ -108,92 +108,92 @@ iconv_string (const char *str, const char *from_codeset,
 char *
 iconv_alloc (iconv_t cd, const char *str)
 {
-  char *dest;
-  char *p = (char *) str;
-  char *outp;
+    char *dest;
+    char *p = (char *) str;
+    char *outp;
 
-  if ( (cd == (iconv_t)-1) || !str )
-      return NULL;
+    if ( (cd == (iconv_t)-1) || !str )
+        return NULL;
 
-  size_t inbytes_remaining = strlen (p);
-  /* Guess the maximum length the output string can have.  */
-  size_t outbuf_size = inbytes_remaining + 1;
-  size_t outbytes_remaining;
-  size_t err;
-  int have_error = 0;
+    size_t inbytes_remaining = strlen (p);
+    /* Guess the maximum length the output string can have.  */
+    size_t outbuf_size = inbytes_remaining + 1;
+    size_t outbytes_remaining;
+    size_t err;
+    int have_error = 0;
 
-  /* Use a worst-case output size guess, so long as that wouldn't be
-     too large for comfort.  It's OK if the guess is wrong so long as
-     it's nonzero.  */
-  size_t approx_sqrt_SIZE_MAX = SIZE_MAX >> (sizeof (size_t) * CHAR_BIT / 2);
-  if (outbuf_size <= approx_sqrt_SIZE_MAX / MB_LEN_MAX)
-    outbuf_size *= MB_LEN_MAX;
-  outbytes_remaining = outbuf_size - 1;
+    /* Use a worst-case output size guess, so long as that wouldn't be
+       too large for comfort.  It's OK if the guess is wrong so long as
+       it's nonzero.  */
+    size_t approx_sqrt_SIZE_MAX = SIZE_MAX >> (sizeof (size_t) * CHAR_BIT / 2);
+    if (outbuf_size <= approx_sqrt_SIZE_MAX / MB_LEN_MAX)
+        outbuf_size *= MB_LEN_MAX;
+    outbytes_remaining = outbuf_size - 1;
 
-  outp = dest = (char *) malloc (outbuf_size);
-  if (dest == NULL)
-    return NULL;
+    outp = dest = (char *) malloc (outbuf_size);
+    if (dest == NULL)
+        return NULL;
 
 again:
-  err = iconv (cd, &p, &inbytes_remaining, &outp, &outbytes_remaining);
+    err = iconv (cd, &p, &inbytes_remaining, &outp, &outbytes_remaining);
 
-  if (err == (size_t) -1)
+    if (err == (size_t) -1)
     {
-      switch (errno)
-	{
-	case EINVAL:
-	  /* Incomplete text, do not report an error */
-	  break;
+        switch (errno)
+        {
+        case EINVAL:
+            /* Incomplete text, do not report an error */
+            break;
 
-	case E2BIG:
-	  {
-	    size_t used = outp - dest;
-	    size_t newsize = outbuf_size * 2;
-	    char *newdest;
+        case E2BIG:
+        {
+            size_t used = outp - dest;
+            size_t newsize = outbuf_size * 2;
+            char *newdest;
 
-	    if (newsize <= outbuf_size)
-	      {
-		errno = ENOMEM;
-		have_error = 1;
-		goto out;
-	      }
-	    newdest = (char *) realloc (dest, newsize);
-	    if (newdest == NULL)
-	      {
-		have_error = 1;
-		goto out;
-	      }
-	    dest = newdest;
-	    outbuf_size = newsize;
+            if (newsize <= outbuf_size)
+            {
+                errno = ENOMEM;
+                have_error = 1;
+                goto out;
+            }
+            newdest = (char *) realloc (dest, newsize);
+            if (newdest == NULL)
+            {
+                have_error = 1;
+                goto out;
+            }
+            dest = newdest;
+            outbuf_size = newsize;
 
-	    outp = dest + used;
-	    outbytes_remaining = outbuf_size - used - 1;	/* -1 for NUL */
+            outp = dest + used;
+            outbytes_remaining = outbuf_size - used - 1;	/* -1 for NUL */
 
-	    goto again;
-	  }
-	  break;
+            goto again;
+        }
+        break;
 
-	case EILSEQ:
-	  have_error = 1;
-	  break;
+        case EILSEQ:
+            have_error = 1;
+            break;
 
-	default:
-	  have_error = 1;
-	  break;
-	}
+        default:
+            have_error = 1;
+            break;
+        }
     }
 
-  *outp = '\0';
+    *outp = '\0';
 
 out:
-  if (have_error && dest)
+    if (have_error && dest)
     {
-      int save_errno = errno;
-      free(dest);
-      errno = save_errno;
-      dest = NULL;
+        int save_errno = errno;
+        free(dest);
+        errno = save_errno;
+        dest = NULL;
     }
 
-  return dest;
+    return dest;
 }
 #endif

@@ -42,8 +42,8 @@ struct _TMap {
     TMapNode *root;
     size_t size;
     union {
-	comparison_fn_t simple;
-	complex_comparison_fn_t complex;
+        comparison_fn_t simple;
+        complex_comparison_fn_t complex;
     } comparator;
     bool complex; /* XXX: should really make this more general? */
     void *userdata;
@@ -73,7 +73,7 @@ static void
 tmap_clear_nodes(TMapNode *node)
 {
     if (node->left != &nil)
-    	tmap_clear_nodes(node->left);
+        tmap_clear_nodes(node->left);
     if (node->right != &nil)
         tmap_clear_nodes(node->right);
     free(node);
@@ -96,7 +96,7 @@ void
 tmap_free(TMap *map)
 {
     if (map->root != &nil)
-	tmap_clear_nodes(map->root);
+        tmap_clear_nodes(map->root);
     free(map);
 }
 
@@ -126,7 +126,7 @@ tmap_first_node(TMap *map)
 {
     TMapNode *node = map->root;
     while (node->left != &nil)
-    	node = node->left;
+        node = node->left;
     return node;
 }
 
@@ -135,7 +135,7 @@ tmap_last_node(TMap *map)
 {
     TMapNode *node = map->root;
     while (node->right != &nil)
-    	node = node->right;
+        node = node->right;
     return node;
 }
 
@@ -143,7 +143,7 @@ static int
 tmap_compare(TMap *map, const void *k1, const void *k2)
 {
     if (map->complex)
-	return map->comparator.complex(k1, k2, map->userdata);
+        return map->comparator.complex(k1, k2, map->userdata);
     return map->comparator.simple(k1, k2);
 }
 
@@ -154,12 +154,12 @@ tmap_get_node(TMap *map, const void *key)
 
     while (node != &nil) {
         int compare = tmap_compare(map, key, node->key);
-	if (compare > 0) {
-	    node = node->right;
-	} else if (compare < 0) {
-	    node = node->left;
-	} else {
-	    return node;
+        if (compare > 0) {
+            node = node->right;
+        } else if (compare < 0) {
+            node = node->left;
+        } else {
+            return node;
         }
     }
 
@@ -207,7 +207,7 @@ tmap_clear(TMap *map)
 {
     if (map->root != &nil) {
         tmap_clear_nodes(map->root);
-	map->root = &nil;
+        map->root = &nil;
     }
     map->size = 0;
 }
@@ -219,16 +219,16 @@ tmap_rotate_left(TMap *map, TMapNode *node)
 
     node->right = child->left;
     if (child->left != &nil)
-    	child->left->parent = node;
+        child->left->parent = node;
 
     child->parent = node->parent;
     if (node->parent != &nil) {
-    	if (node == node->parent->left)
-    	    node->parent->left = child;
-	else
-	    node->parent->right = child;
+        if (node == node->parent->left)
+            node->parent->left = child;
+        else
+            node->parent->right = child;
     } else {
-    	map->root = child;
+        map->root = child;
     }
 
     child->left = node;
@@ -242,16 +242,16 @@ tmap_rotate_right(TMap *map, TMapNode *node)
 
     node->left = child->right;
     if (child->right != &nil)
-	child->right->parent = node;
+        child->right->parent = node;
 
     child->parent = node->parent;
     if (node->parent != &nil) {
-    	if (node == node->parent->right)
-    	    node->parent->right = child;
-	else
-	    node->parent->left = child;
+        if (node == node->parent->right)
+            node->parent->right = child;
+        else
+            node->parent->left = child;
     } else {
-    	map->root = child;
+        map->root = child;
     }
 
     child->right = node;
@@ -263,60 +263,60 @@ tmap_delete_rebalance(TMap *map, TMapNode *node, TMapNode *parent)
 {
     while (node != map->root && !node->red) {
         if (node == parent->left) {
-	    TMapNode *sibling = parent->right;
-	    if (sibling->red) {
-		sibling->red = false;
-		parent->red = true;
-		tmap_rotate_left(map, parent);
-		sibling = parent->right;
+            TMapNode *sibling = parent->right;
+            if (sibling->red) {
+                sibling->red = false;
+                parent->red = true;
+                tmap_rotate_left(map, parent);
+                sibling = parent->right;
             }
 
             if (!sibling->left->red && !sibling->right->red) {
-		sibling->red = true;
-		node = parent;
-		parent = parent->parent;
+                sibling->red = true;
+                node = parent;
+                parent = parent->parent;
             } else {
-		if (!sibling->right->red) {
-	    	    sibling->left->red = false;
-	    	    sibling->red = true;
-	    	    tmap_rotate_right(map, sibling);
-		    sibling = parent->right;
-		}
+                if (!sibling->right->red) {
+                    sibling->left->red = false;
+                    sibling->red = true;
+                    tmap_rotate_right(map, sibling);
+                    sibling = parent->right;
+                }
 
-		sibling->red = parent->red;
-		parent->red = false;
-		sibling->right->red = false;
-		tmap_rotate_left(map, parent);
-		node = map->root;
+                sibling->red = parent->red;
+                parent->red = false;
+                sibling->right->red = false;
+                tmap_rotate_left(map, parent);
+                node = map->root;
             }
         } else {
             TMapNode *sibling = parent->left;
             if (sibling->red) {
-		sibling->red = false;
-		parent->red = true;
-		tmap_rotate_right(map, parent);
-		sibling = parent->left;
+                sibling->red = false;
+                parent->red = true;
+                tmap_rotate_right(map, parent);
+                sibling = parent->left;
             }
 
             if (!sibling->left->red && !sibling->right->red) {
-		sibling->red = true;
-		node = parent;
-		parent = parent->parent;
+                sibling->red = true;
+                node = parent;
+                parent = parent->parent;
             } else {
-		if (!sibling->left->red) {
-		    sibling->right->red = false;
-		    sibling->red = true;
-		    tmap_rotate_left(map, sibling);
-		    sibling = parent->left;
-		}
+                if (!sibling->left->red) {
+                    sibling->right->red = false;
+                    sibling->red = true;
+                    tmap_rotate_left(map, sibling);
+                    sibling = parent->left;
+                }
 
-		sibling->red = parent->red;
-		parent->red = false;
-		sibling->left->red = false;
-		tmap_rotate_right(map, parent);
-		node = map->root;
+                sibling->red = parent->red;
+                parent->red = false;
+                sibling->left->red = false;
+                tmap_rotate_right(map, parent);
+                node = map->root;
             }
-	}
+        }
     }
 
     node->red = false;
@@ -332,35 +332,35 @@ tmap_remove_node(TMap *map, TMapNode *node)
     map->size--;
 
     if (node->left == &nil) {
-	splice = node;
-	child = node->right;
+        splice = node;
+        child = node->right;
     } else if (node->right == &nil) {
-	splice = node;
-	child = node->left;
+        splice = node;
+        child = node->left;
     } else {
-	splice = node->left;
-	while (splice->right != &nil)
-	    splice = splice->right;
-	child = splice->left;
-	node->key = splice->key;
-	node->value = splice->value;
+        splice = node->left;
+        while (splice->right != &nil)
+            splice = splice->right;
+        child = splice->left;
+        node->key = splice->key;
+        node->value = splice->value;
     }
 
     parent = splice->parent;
     if (child != &nil)
-	child->parent = parent;
+        child->parent = parent;
     if (parent == &nil) {
         map->root = child;
-	free(splice);
+        free(splice);
         return;
     }
     if (splice == parent->left)
-	parent->left = child;
+        parent->left = child;
     else
-	parent->right = child;
+        parent->right = child;
 
     if (!splice->red)
-	tmap_delete_rebalance(map, child, parent);
+        tmap_delete_rebalance(map, child, parent);
 
     free(splice);
 }
@@ -370,9 +370,9 @@ tmap_remove(TMap *map, const void *key)
 {
     TMapNode *node = tmap_get_node(map, key);
     if (node != &nil) {
-    	void *value = node->value;
-    	tmap_remove_node(map, node);
-    	return value;
+        void *value = node->value;
+        tmap_remove_node(map, node);
+        return value;
     }
     return NULL;
 }
@@ -382,38 +382,38 @@ tmap_insert_rebalance(TMap *map, TMapNode *node)
 {
     while (node->parent->red && node->parent->parent != &nil) {
         if (node->parent == node->parent->parent->left) {
-	    TMapNode *uncle = node->parent->parent->right;
+            TMapNode *uncle = node->parent->parent->right;
             if (uncle->red) {
-		node->parent->red = false;
-		uncle->red = false;
-		uncle->parent->red = true;
-		node = uncle->parent;
+                node->parent->red = false;
+                uncle->red = false;
+                uncle->parent->red = true;
+                node = uncle->parent;
             } else {
-		if (node == node->parent->right) {
-	    	    node = node->parent;
-	    	    tmap_rotate_left(map, node);
-		}
-		node->parent->red = false;
-		node->parent->parent->red = true;
-		tmap_rotate_right(map, node->parent->parent);
+                if (node == node->parent->right) {
+                    node = node->parent;
+                    tmap_rotate_left(map, node);
+                }
+                node->parent->red = false;
+                node->parent->parent->red = true;
+                tmap_rotate_right(map, node->parent->parent);
             }
-	} else {
-	    TMapNode *uncle = node->parent->parent->left;
-	    if (uncle->red) {
-		node->parent->red = false;
-		uncle->red = false;
-		uncle->parent->red = true;
-		node = uncle->parent;
+        } else {
+            TMapNode *uncle = node->parent->parent->left;
+            if (uncle->red) {
+                node->parent->red = false;
+                uncle->red = false;
+                uncle->parent->red = true;
+                node = uncle->parent;
             } else {
-	    	if (node == node->parent->left) {
-	    	    node = node->parent;
-	    	    tmap_rotate_right(map, node);
-		}
-		node->parent->red = false;
-		node->parent->parent->red = true;
-		tmap_rotate_left(map, node->parent->parent);
+                if (node == node->parent->left) {
+                    node = node->parent;
+                    tmap_rotate_right(map, node);
+                }
+                node->parent->red = false;
+                node->parent->parent->red = true;
+                tmap_rotate_left(map, node->parent->parent);
             }
-	}
+        }
     }
 
     map->root->red = false;
@@ -427,17 +427,17 @@ tmap_put(TMap *map, void *key, void *value)
     int compare = 0;
 
     while (node != &nil) {
-    	parent = node;
-    	compare = tmap_compare(map, key, node->key);
-    	if (compare > 0) {
-    	    node = node->right;
-	} else if (compare < 0) {
-	    node = node->left;
-	} else {
-	    void *old_value = node->value;
-	    node->value = value;
-	    return old_value;
-	}
+        parent = node;
+        compare = tmap_compare(map, key, node->key);
+        if (compare > 0) {
+            node = node->right;
+        } else if (compare < 0) {
+            node = node->left;
+        } else {
+            void *old_value = node->value;
+            node->value = value;
+            return old_value;
+        }
     }
 
     node = xmalloc(sizeof(TMapNode));
@@ -452,12 +452,12 @@ tmap_put(TMap *map, void *key, void *value)
     if (parent == &nil) {
         map->root = node;
         node->red = false;
-    	return NULL;
+        return NULL;
     }
     if (compare > 0) {
-    	parent->right = node;
+        parent->right = node;
     } else {
-    	parent->left = node;
+        parent->left = node;
     }
 
     tmap_insert_rebalance(map, node);
@@ -479,7 +479,7 @@ successor(TMapNode *node)
     parent = node->parent;
     while (node == parent->right) {
         node = parent;
-	parent = parent->parent;
+        parent = parent->parent;
     }
 
     return parent;
@@ -492,16 +492,16 @@ predecessor(TMapNode *node)
     TMapNode *parent;
 
     if (node->left != &nil) {
-    	node = node->left;
-	while (node->right != &nil)
+        node = node->left;
+        while (node->right != &nil)
             node = node->right;
-	return node;
+        return node;
     }
 
     parent = node->parent;
     while (node == parent->left) {
-    	node = parent;
-    	parent = parent->parent;
+        node = parent;
+        parent = parent->parent;
     }
 
     return parent;
@@ -512,7 +512,7 @@ static void
 tmap_foreach_nodes_key(TMapNode *node, void (*iterator)())
 {
     if (node->left != &nil)
-    	tmap_foreach_nodes_key(node->left, iterator);
+        tmap_foreach_nodes_key(node->left, iterator);
     if (node->right != &nil)
         tmap_foreach_nodes_key(node->right, iterator);
     iterator(node->key);
@@ -522,7 +522,7 @@ static void
 tmap_foreach_nodes_value(TMapNode *node, void (*iterator)())
 {
     if (node->left != &nil)
-    	tmap_foreach_nodes_value(node->left, iterator);
+        tmap_foreach_nodes_value(node->left, iterator);
     if (node->right != &nil)
         tmap_foreach_nodes_value(node->right, iterator);
     iterator(node->value);
@@ -532,14 +532,14 @@ void
 tmap_foreach_key(TMap *map, void (*iterator)())
 {
     if (map->root != &nil)
-	tmap_foreach_nodes_key(map->root, iterator);
+        tmap_foreach_nodes_key(map->root, iterator);
 }
 
 void
 tmap_foreach_value(TMap *map, void (*iterator)())
 {
     if (map->root != &nil)
-	tmap_foreach_nodes_value(map->root, iterator);
+        tmap_foreach_nodes_value(map->root, iterator);
 }
 
 static bool
@@ -556,7 +556,7 @@ tmap_iterator_next(TMapIterator *it)
     void *data;
 
     if (itp->n0 == &nil)
-	return NULL;
+        return NULL;
     data = itp->n0->value;
     itp->n0 = (itp->n0 == itp->n1 ? &nil : successor(itp->n0));
     return data;
@@ -579,23 +579,23 @@ static bool
 tmap_node_verify(TMapNode *node, int *expect)
 {
     if (node == &nil)
-	return true;
+        return true;
     if (node->red) {
-	if (node->left->red || node->right->red)
-	    return false;
+        if (node->left->red || node->right->red)
+            return false;
     }
     if (node->left == &nil && node->right == &nil) {
-	int count = 0;
-	TMapNode *x;
-	for (x = node; x != &nil; x = x->parent) {
-	    if (!x->red)
-		count++;
-	}
-	if (*expect == -1) {
-	    *expect = count;
-	} else if (count != *expect) {
-	    return false;
-	}
+        int count = 0;
+        TMapNode *x;
+        for (x = node; x != &nil; x = x->parent) {
+            if (!x->red)
+                count++;
+        }
+        if (*expect == -1) {
+            *expect = count;
+        } else if (count != *expect) {
+            return false;
+        }
     }
     return tmap_node_verify(node->left, expect) && tmap_node_verify(node->right, expect);
 }
@@ -614,24 +614,24 @@ tmap_dump_node(TMapNode *n, FILE *out, int i)
     int c;
 
     if (n == &nil)
-	return;
+        return;
 
-    for (c=0;c<i;c++)
-	fprintf(out, " ");
+    for (c=0; c<i; c++)
+        fprintf(out, " ");
     fprintf(out, "N=(%s) %s\n", n->red ? "red" : "black", (char *) n->value);
 
     if (n->left != &nil) {
-	for (c=0;c<i;c++)
-	    fprintf(out, " ");
-	fprintf(out, "L:\n");
-	tmap_dump_node(n->left, out, i+1);
+        for (c=0; c<i; c++)
+            fprintf(out, " ");
+        fprintf(out, "L:\n");
+        tmap_dump_node(n->left, out, i+1);
     }
 
     if (n->right != &nil) {
-	for (c=0;c<i;c++)
-	    fprintf(out, " ");
-	fprintf(out, "R:\n");
-	tmap_dump_node(n->right, out, i+1);
+        for (c=0; c<i; c++)
+            fprintf(out, " ");
+        fprintf(out, "R:\n");
+        tmap_dump_node(n->right, out, i+1);
     }
 }
 
@@ -654,41 +654,41 @@ tmap_iterator_partial(TMap *map, TMapIterator *it, const void *match, comparison
     itp->next = tmap_iterator_next;
 
     while (n != &nil) {
-	int compare = comparator(match, n->key);
-	if (compare > 0) {
-	    n = n->right;
-	} else if (compare < 0) {
-	    n = n->left;
-	} else {
-	    TMapNode *nx;
-	    TMapNode *nn;
+        int compare = comparator(match, n->key);
+        if (compare > 0) {
+            n = n->right;
+        } else if (compare < 0) {
+            n = n->left;
+        } else {
+            TMapNode *nx;
+            TMapNode *nn;
 
-	    nx = n;
-	    for (nn = n->left; nn != &nil; ) {
-		if (comparator(match, nn->key) == 0) {
-		    nx = nn;
-		    nn = nn->left;
-		} else {
-		    nn = nn->right;
-		}
-	    }
-	    itp->n0 = nx;
+            nx = n;
+            for (nn = n->left; nn != &nil; ) {
+                if (comparator(match, nn->key) == 0) {
+                    nx = nn;
+                    nn = nn->left;
+                } else {
+                    nn = nn->right;
+                }
+            }
+            itp->n0 = nx;
 
-	    nx = n;
-	    for (nn = n->right; nn != &nil; ) {
-		if (comparator(match, nn->key) == 0) {
-		    nx = nn;
-		    nn = nn->right;
-		} else {
-		    nn = nn->left;
-		}
-	    }
-	    itp->n1 = nx;
+            nx = n;
+            for (nn = n->right; nn != &nil; ) {
+                if (comparator(match, nn->key) == 0) {
+                    nx = nn;
+                    nn = nn->right;
+                } else {
+                    nn = nn->left;
+                }
+            }
+            itp->n1 = nx;
 
-	    //printf("match=[%s] n=[%s] n0=[%s] n1=[%s]\n", match, n->value, itp->n0->value, itp->n1->value);
-	    
-	    return true;
-	}
+            //printf("match=[%s] n=[%s] n0=[%s] n1=[%s]\n", match, n->value, itp->n0->value, itp->n1->value);
+
+            return true;
+        }
     }
 
     itp->n0 = &nil;

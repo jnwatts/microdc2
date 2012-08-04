@@ -61,23 +61,23 @@
 size_t
 full_rw (int fd, const void *buf, size_t count)
 {
-  size_t total = 0;
-  const char *ptr = buf;
+    size_t total = 0;
+    const char *ptr = buf;
 
-  while (count > 0)
+    while (count > 0)
     {
-      size_t n_rw = safe_rw (fd, ptr, count);
-      if (n_rw == (size_t) -1)
-	break;
-      if (n_rw == 0)
-	{
-	  errno = ZERO_BYTE_TRANSFER_ERRNO;
-	  break;
-	}
-      total += n_rw;
-      ptr += n_rw;
-      count -= n_rw;
+        size_t n_rw = safe_rw (fd, ptr, count);
+        if (n_rw == (size_t) -1)
+            break;
+        if (n_rw == 0)
+        {
+            errno = ZERO_BYTE_TRANSFER_ERRNO;
+            break;
+        }
+        total += n_rw;
+        ptr += n_rw;
+        count -= n_rw;
     }
 
-  return total;
+    return total;
 }

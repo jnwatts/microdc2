@@ -161,8 +161,8 @@ static void
 free_command(DCCommand *cmd)
 {
     if (cmd->type == DC_CMD_ALIAS) {
-	DCAliasCommand *alias = (DCAliasCommand *) cmd;
-	free(alias->alias_spec);
+        DCAliasCommand *alias = (DCAliasCommand *) cmd;
+        free(alias->alias_spec);
     }
     free(cmd->name);
     free(cmd);
@@ -185,142 +185,142 @@ command_init(void)
      * Otherwise the last line will not be shown.
      */
     add_builtin_command("browse", cmd_browse, user_or_myself_completion_generator,
-        _("browse [USER]"),
-        _("If USER is specified, queue the file list for that user for download and "
-          "start browsing the user's files as soon as the list is downloaded. With no "
-          "arguments, stop browsing.\n"));
+                        _("browse [USER]"),
+                        _("If USER is specified, queue the file list for that user for download and "
+                          "start browsing the user's files as soon as the list is downloaded. With no "
+                          "arguments, stop browsing.\n"));
     add_builtin_command("cancel", cmd_cancel, transfer_completion_generator,
-        _("cancel CONNECTION ..."),
-        _("Close a user connection. Use the `transfers' command to get a list of "
-          "connections.\n"));
+                        _("cancel CONNECTION ..."),
+                        _("Close a user connection. Use the `transfers' command to get a list of "
+                          "connections.\n"));
     add_builtin_command("cd", cmd_cd, remote_dir_completion_generator,
-        _("cd [DIRECTORY]"),
-        _("Change directory when browsing another user's files. If DIRECTORY is not "
-          "specified, change to the root directory (`/').\n"));
+                        _("cd [DIRECTORY]"),
+                        _("Change directory when browsing another user's files. If DIRECTORY is not "
+                          "specified, change to the root directory (`/').\n"));
     add_builtin_command("connect", cmd_connect, NULL,
-        _("connect HOST[:PORT]"),
-        _("Connect to a hub. If PORT is not specified, assume port 411.\n"));
+                        _("connect HOST[:PORT]"),
+                        _("Connect to a hub. If PORT is not specified, assume port 411.\n"));
     add_builtin_command("disconnect", cmd_disconnect, NULL,
-        _("disconnect"),
-        _("Disconnect from the hub.\n"));
+                        _("disconnect"),
+                        _("Disconnect from the hub.\n"));
     add_builtin_command("exit", cmd_exit, NULL,
-        _("exit"),
-        _("Quit the program.\n"));
+                        _("exit"),
+                        _("Quit the program.\n"));
     add_builtin_command("find", cmd_find, remote_path_completion_generator,
-        _("find [FILE ...]"),
-        _("List files and directories recursively. Assume current directory if FILE is "
-          "not specified. Must be browsing a user's files to use this command.\n"));
+                        _("find [FILE ...]"),
+                        _("List files and directories recursively. Assume current directory if FILE is "
+                          "not specified. Must be browsing a user's files to use this command.\n"));
     add_builtin_command("get", cmd_get, remote_path_completion_generator,
-        _("get FILE ..."),
-        _("Queue file for download. Must be browsing a user's files to use this "
-          "command.\n"));
+                        _("get FILE ..."),
+                        _("Queue file for download. Must be browsing a user's files to use this "
+                          "command.\n"));
     add_builtin_command("grantslot", cmd_grantslot, user_completion_generator,
-        _("grantslot [USER ...]"),
-        _("Grant a download slot for the specified users, or remove granted slot if the "
-          "user was already granted one. Without arguments, display a list of users with "
-          "granted slots.\n"));
+                        _("grantslot [USER ...]"),
+                        _("Grant a download slot for the specified users, or remove granted slot if the "
+                          "user was already granted one. Without arguments, display a list of users with "
+                          "granted slots.\n"));
     add_builtin_command("help", cmd_help, command_completion_generator,
-        _("help [COMMAND ...]"),
-        _("If COMMAND is specified, display help for that command. Otherwise list all "
-          "available commands.\n"));
+                        _("help [COMMAND ...]"),
+                        _("If COMMAND is specified, display help for that command. Otherwise list all "
+                          "available commands.\n"));
     add_builtin_command("ls", cmd_ls, remote_path_completion_generator,
-        _("ls [OPTION...] [FILE...]"),
-        _("List files and directories. Assume current directory if FILE is not\n"
-          "specified.\n"
-          "\n"
-          "Options:\n"
-          "  -l, --long    use a long listing format\n"));
+                        _("ls [OPTION...] [FILE...]"),
+                        _("List files and directories. Assume current directory if FILE is not\n"
+                          "specified.\n"
+                          "\n"
+                          "Options:\n"
+                          "  -l, --long    use a long listing format\n"));
     add_builtin_command("retry", cmd_retry, user_with_queue_completion_generator,
-        _("retry USER ..."),
-        _("Try to connect and download files from the specified users.\n"));
+                        _("retry USER ..."),
+                        _("Try to connect and download files from the specified users.\n"));
     add_builtin_command("msg", cmd_msg, user_completion_generator,
-        _("msg USER MESSAGE..."),
-        _("Send a private message to USER. Note that characters such as semicolon "
-          "(`;'), double quote (`\"') and number sign (`#') in MESSAGE need to be "
-          "escaped or quoted. Therefore it is recommended to put MESSAGE in double "
-          "quotes.\n"
-          "\n"
-          "Example:\n"
-          "  msg some_user \"hello, how are you?\"\n"));
+                        _("msg USER MESSAGE..."),
+                        _("Send a private message to USER. Note that characters such as semicolon "
+                          "(`;'), double quote (`\"') and number sign (`#') in MESSAGE need to be "
+                          "escaped or quoted. Therefore it is recommended to put MESSAGE in double "
+                          "quotes.\n"
+                          "\n"
+                          "Example:\n"
+                          "  msg some_user \"hello, how are you?\"\n"));
     add_builtin_command("pwd", cmd_pwd, NULL,
-        _("pwd"),
-        _("Display user being browsed and current directory.\n"));
+                        _("pwd"),
+                        _("Display user being browsed and current directory.\n"));
     add_builtin_command("queue", cmd_queue, user_with_queue_completion_generator,
-        _("queue [USER ...]"),
-        _("Display files queued for download from the specified users. Without "
-          "arguments, display a list of users we have queued files for.\n"));
+                        _("queue [USER ...]"),
+                        _("Display files queued for download from the specified users. Without "
+                          "arguments, display a list of users we have queued files for.\n"));
     add_builtin_command("raw", cmd_raw, NULL,
-        _("raw DATA..."),
-        _("Send some raw data to the hub. Note that characters such as semicolon "
-          "(`;'), double quote (`\"') and number sign (`#') in DATA need to be "
-          "escaped or quoted. Therefore it is recommended to put DATA in double "
-          "quotes.\n"));
+                        _("raw DATA..."),
+                        _("Send some raw data to the hub. Note that characters such as semicolon "
+                          "(`;'), double quote (`\"') and number sign (`#') in DATA need to be "
+                          "escaped or quoted. Therefore it is recommended to put DATA in double "
+                          "quotes.\n"));
     add_builtin_command("results", cmd_results, NULL,
-        _("results [INDEX ...]"),
-        _("If INDEX is specified, display results for the search by that index. "
-          "Otherwise, display a list of searches and statistics over those searches.\n"));
+                        _("results [INDEX ...]"),
+                        _("If INDEX is specified, display results for the search by that index. "
+                          "Otherwise, display a list of searches and statistics over those searches.\n"));
     add_builtin_command("say", cmd_say, say_user_completion_generator,
-        _("say MESSAGE..."),
-        _("Send a public message to users on the hub. Note that characters such as "
-          "semicolon (`;'), double quote (`\"') and number sign (`#') in MESSAGE need "
-          "to be escaped or quoted. Therefore it is recommended to put MESSAGE in "
-          "double quotes.\n"
-          "\n"
-          "Example:\n"
-          "  say \"hi everyone!\"\n"));
+                        _("say MESSAGE..."),
+                        _("Send a public message to users on the hub. Note that characters such as "
+                          "semicolon (`;'), double quote (`\"') and number sign (`#') in MESSAGE need "
+                          "to be escaped or quoted. Therefore it is recommended to put MESSAGE in "
+                          "double quotes.\n"
+                          "\n"
+                          "Example:\n"
+                          "  say \"hi everyone!\"\n"));
     add_builtin_command("search", cmd_search, NULL,
-        _("search WORD..."),
-        _("Issue a search for the specified search words.\n"));
+                        _("search WORD..."),
+                        _("Issue a search for the specified search words.\n"));
     add_builtin_command("set", cmd_set, set_command_completion_selector,
-        _("set [NAME [VALUE...]]"),
-        _("Without arguments, display a list of variables and their current values. With "
-          "only NAME argument, display the value of that variable. With NAME and VALUE "
-          "arguments, change the value of a variable.\n"));
+                        _("set [NAME [VALUE...]]"),
+                        _("Without arguments, display a list of variables and their current values. With "
+                          "only NAME argument, display the value of that variable. With NAME and VALUE "
+                          "arguments, change the value of a variable.\n"));
     add_builtin_command("status", cmd_status, NULL,
-        _("status"),
-        _("Display status information and some statistics.\n"));
+                        _("status"),
+                        _("Display status information and some statistics.\n"));
     add_builtin_command("transfers", cmd_transfers, NULL,
-        _("transfers"),
-        _("Display a list of user connections.\n"));
+                        _("transfers"),
+                        _("Display a list of user connections.\n"));
     add_builtin_command("unqueue", cmd_unqueue, user_with_queue_completion_generator,
-        _("unqueue USER [RANGE]"),
-        _("Remove all or a range of queued files for USER. If RANGE is not specified, "
-          "remove all files from the queue. Use dash (`-') and comma (`,') in RANGE. "
-          "Open ranges are accepted (e.g. `1-' or `-2').\n"));
+                        _("unqueue USER [RANGE]"),
+                        _("Remove all or a range of queued files for USER. If RANGE is not specified, "
+                          "remove all files from the queue. Use dash (`-') and comma (`,') in RANGE. "
+                          "Open ranges are accepted (e.g. `1-' or `-2').\n"));
     add_builtin_command("unsearch", cmd_unsearch, NULL,
-        _("unsearch INDEX ..."),
-        _("Remove a previously issued search and all results for that search.\n"));
+                        _("unsearch INDEX ..."),
+                        _("Remove a previously issued search and all results for that search.\n"));
     add_builtin_command("who", cmd_who, user_completion_generator,
-        _("who [USER ...]"),
-        _("If USER is specified, display information on that user. Otherwise, "
-          "display a table of users with some user details.\n"));
+                        _("who [USER ...]"),
+                        _("If USER is specified, display information on that user. Otherwise, "
+                          "display a table of users with some user details.\n"));
     add_builtin_command("alias", cmd_alias, alias_command_completion_selector,
-        _("alias [NAME[=VALUE] ...]"),
-        _("Without arguments, display the list of aliases. With NAME argument, "
-          "display what value (command) that alias is set to. With both NAME and "
-          "VALUE argument, change alias. Note that VALUE is a single argument - "
-          "you need to use quotes for more complex commands.\n"
-          "\n"
-          "Example:\n"
-          "  alias ll \"ls -l\"\n"));
+                        _("alias [NAME[=VALUE] ...]"),
+                        _("Without arguments, display the list of aliases. With NAME argument, "
+                          "display what value (command) that alias is set to. With both NAME and "
+                          "VALUE argument, change alias. Note that VALUE is a single argument - "
+                          "you need to use quotes for more complex commands.\n"
+                          "\n"
+                          "Example:\n"
+                          "  alias ll \"ls -l\"\n"));
     add_builtin_command("unalias", cmd_unalias, alias_completion_generator,
-        _("unalias NAME ..."),
-        _("Remove aliases.\n"));
+                        _("unalias NAME ..."),
+                        _("Remove aliases.\n"));
     add_builtin_command("shell", cmd_shell, shell_command_completion_selector,
-        _("shell [COMMAND [ARGUMENTS...]]"),
-        _("Execute a system command. If no arguments are specified, the current "
-          "shell will be started (SHELL environment variable or `/bin/sh' if that "
-          "is not set). microdc will continue in the background while the command "
-          "is executing.\n"));
+                        _("shell [COMMAND [ARGUMENTS...]]"),
+                        _("Execute a system command. If no arguments are specified, the current "
+                          "shell will be started (SHELL environment variable or `/bin/sh' if that "
+                          "is not set). microdc will continue in the background while the command "
+                          "is executing.\n"));
     add_builtin_command("lookup", cmd_lookup, NULL,
-        _("lookup HOST ..."),
-        _("Lookup the IP address of specified hosts.\n"));
+                        _("lookup HOST ..."),
+                        _("Lookup the IP address of specified hosts.\n"));
     add_builtin_command("share", cmd_share, local_path_completion_generator,
-        _("share DIR"),
-        _("Add share directory to the processing list\n"));
+                        _("share DIR"),
+                        _("Add share directory to the processing list\n"));
     add_builtin_command("unshare", cmd_unshare, local_path_completion_generator,
-        _("unshare DIR"),
-        _("Remove share directory from the processing list\n"));
+                        _("unshare DIR"),
+                        _("Remove share directory from the processing list\n"));
 
     add_alias_command("ll", "ls -l");
 }
@@ -332,15 +332,15 @@ default_completion_selector(DCCompletionInfo *ci)
     const char *newline;
 
     if (find_unquoted_leading_char(ci->line, ci->line + ci->we, '#') != NULL)
-	return; /* completing in commented out text */
+        return; /* completing in commented out text */
 
     newline = find_last_unquoted_char(ci->line, ci->line + ci->we, ';');
     if (newline != NULL) {
-	ci2.line = find_word_start(newline+1, ci->line + ci->we);
-	ci2.ws = ci->ws - (ci2.line - ci->line);
-	ci2.we = ci->we - (ci2.line - ci->line);
-	ci2.results = ci->results;
-	fill_completion_info(&ci2);
+        ci2.line = find_word_start(newline+1, ci->line + ci->we);
+        ci2.ws = ci->ws - (ci2.line - ci->line);
+        ci2.we = ci->we - (ci2.line - ci->line);
+        ci2.results = ci->results;
+        fill_completion_info(&ci2);
     } else {
         ci2 = *ci;
     }
@@ -357,8 +357,8 @@ default_completion_selector(DCCompletionInfo *ci)
         if (cmd != NULL) {
             if (cmd->type == DC_CMD_BUILTIN) {
                 DCBuiltinCommand *builtin = (DCBuiltinCommand *) cmd;
-		if (builtin->completor != NULL)
-		    builtin->completor(&ci2);
+                if (builtin->completor != NULL)
+                    builtin->completor(&ci2);
             } else if (cmd->type == DC_CMD_ALIAS) {
                 DCAliasCommand *alias = (DCAliasCommand *) cmd;
                 int sizemod;
@@ -384,7 +384,7 @@ default_completion_selector(DCCompletionInfo *ci)
 static void
 alias_command_completion_selector(DCCompletionInfo *ci)
 {
-/* XXX not implemented yet */
+    /* XXX not implemented yet */
 #if 0
     char *newline;
     char *newword;
@@ -474,55 +474,55 @@ command_execute(const char *line)
 {
     for (;;) {
         PtrV *args;
-	DCCommand *cmd;
-	char *name;
+        DCCommand *cmd;
+        char *name;
 
-	line = find_word_start(line, NULL);
-	if (*line == '\0' || *line == '#')
-	    break;
-	if (*line == ';') {
-	    line++;
-	    continue;
-	}
+        line = find_word_start(line, NULL);
+        if (*line == '\0' || *line == '#')
+            break;
+        if (*line == ';') {
+            line++;
+            continue;
+        }
 
-	name = get_word_dequoted_termchar(line, 0, ';'); /* won't return NULL */
-	cmd = tmap_get(commands, name);
-	if (cmd != NULL && cmd->type == DC_CMD_ALIAS) {
-	    DCAliasCommand *alias = (DCAliasCommand *) cmd;
-	    char *newline;
+        name = get_word_dequoted_termchar(line, 0, ';'); /* won't return NULL */
+        cmd = tmap_get(commands, name);
+        if (cmd != NULL && cmd->type == DC_CMD_ALIAS) {
+            DCAliasCommand *alias = (DCAliasCommand *) cmd;
+            char *newline;
 
-	    newline = xasprintf("%s%s", alias->alias_spec, find_word_end(line, NULL));
-	    free(name);
-	    command_execute(newline);
-	    free(newline);
-	    return;
-	}
+            newline = xasprintf("%s%s", alias->alias_spec, find_word_end(line, NULL));
+            free(name);
+            command_execute(newline);
+            free(newline);
+            return;
+        }
 
-	/* Process arguments until ";" or "#" or end of line. */
+        /* Process arguments until ";" or "#" or end of line. */
         args = ptrv_new();
-	ptrv_append(args, name);
-	for (;;) {
-	    line = find_word_start(find_word_end_termchar(line, NULL, ';'), NULL);
-	    if (*line == '\0' || *line == '#' || *line == ';')
-		break;
-	    ptrv_append(args, get_word_dequoted_termchar(line, 0, ';'));
-	}
-	ptrv_append(args, NULL);
+        ptrv_append(args, name);
+        for (;;) {
+            line = find_word_start(find_word_end_termchar(line, NULL, ';'), NULL);
+            if (*line == '\0' || *line == '#' || *line == ';')
+                break;
+            ptrv_append(args, get_word_dequoted_termchar(line, 0, ';'));
+        }
+        ptrv_append(args, NULL);
 
-	if (cmd == NULL) {
-	    warn(_("%s: Unknown command.\n"), quotearg(name));
-	} else {
-	    DCBuiltinCommand *builtin = (DCBuiltinCommand *) cmd;
-	    /*int c;
-	    screen_putf("Execute: <%s>", cmd->name);
-	    for (c = 0; c < args->cur-1; c++)
-		screen_putf(" [%s]", (char *) args->buf[c]);
-	    screen_putf("\n");*/
-	    builtin->handler(args->cur-1, (char **) args->buf);
-	}
+        if (cmd == NULL) {
+            warn(_("%s: Unknown command.\n"), quotearg(name));
+        } else {
+            DCBuiltinCommand *builtin = (DCBuiltinCommand *) cmd;
+            /*int c;
+            screen_putf("Execute: <%s>", cmd->name);
+            for (c = 0; c < args->cur-1; c++)
+            screen_putf(" [%s]", (char *) args->buf[c]);
+            screen_putf("\n");*/
+            builtin->handler(args->cur-1, (char **) args->buf);
+        }
 
-	ptrv_foreach(args, free); /* will free(name) as that is args->buf[0] */
-	ptrv_free(args);
+        ptrv_foreach(args, free); /* will free(name) as that is args->buf[0] */
+        ptrv_free(args);
     }
 }
 
@@ -532,7 +532,7 @@ command_execute(const char *line)
  *      last resort, when there are no exefile matches).
  *  [2] When a dir has been completed (dirpath!=NULL, line contains at
  *      least one /), then allow completion of any dirs+exefiles relative
- *      to that dir. 
+ *      to that dir.
  *  [3] Only allow completion of exefiles relative to CWD if PATH
  *      contains `.'.
  *
@@ -583,10 +583,10 @@ executable_completion_generator(DCCompletionInfo *ci)
                         if (stat(full, &sb) >= 0 && S_ISREG(sb.st_mode)) {
                             DCCompletionEntry *ce;
                             char *conv_fname;
-                            
+
                             conv_fname = fs_to_main_string(ent->d_name);
                             ce = new_completion_entry(conv_fname, conv_fname);
-			                free(conv_fname);
+                            free(conv_fname);
                             ce->sorting.file_type = DC_TYPE_REG;
                             ptrv_append(ci->results, ce);
                         }
@@ -701,8 +701,8 @@ cmd_shell(int argc, char **argv)
     screen_suspend();
     shell_child = fork();
     if (shell_child < 0) {
-	warn(_("Cannot create child process - %s\n"), errstr);
-	return;
+        warn(_("Cannot create child process - %s\n"), errstr);
+        return;
     }
     if (shell_child == 0) {
         warn_writer = default_warn_writer;
@@ -716,10 +716,10 @@ cmd_shell(int argc, char **argv)
             else
                 args[0] = "/bin/sh";
             if (execvp(args[0], args) < 0)
-	        die(_("%s: cannot execute - %s\n"), quotearg(args[0]), errstr); /* die OK */
+                die(_("%s: cannot execute - %s\n"), quotearg(args[0]), errstr); /* die OK */
         } else {
             if (execvp(argv[1], argv+1) < 0)
-	        die(_("%s: cannot execute - %s\n"), quotearg(argv[1]), errstr); /* die OK */
+                die(_("%s: cannot execute - %s\n"), quotearg(argv[1]), errstr); /* die OK */
         }
         exit(EXIT_FAILURE); /* shouldn't get here */
     }
@@ -734,23 +734,23 @@ cmd_status(int argc, char **argv)
 
     switch (hub_state) {
     case DC_HUB_DISCONNECTED:
-	screen_putf(_("Hub state: %s\n"), _("Not connected"));
-	break;
+        screen_putf(_("Hub state: %s\n"), _("Not connected"));
+        break;
     case DC_HUB_LOOKUP:
         screen_putf(_("Hub state: %s\n"), _("Looking up IP address"));
         break;
     case DC_HUB_CONNECT:
-	screen_putf(_("Hub state: %s\n"), _("Waiting for complete connection"));
-	break;
+        screen_putf(_("Hub state: %s\n"), _("Waiting for complete connection"));
+        break;
     case DC_HUB_LOCK:
-	screen_putf(_("Hub state: %s\n"), _("Waiting for $Lock"));
-	break;
+        screen_putf(_("Hub state: %s\n"), _("Waiting for $Lock"));
+        break;
     case DC_HUB_HELLO:
-	screen_putf(_("Hub state: %s\n"), _("Waiting for $Hello"));
-	break;
+        screen_putf(_("Hub state: %s\n"), _("Waiting for $Hello"));
+        break;
     case DC_HUB_LOGGED_IN:
-	screen_putf(_("Hub state: %s\n"), _("Logged in"));
-	break;
+        screen_putf(_("Hub state: %s\n"), _("Logged in"));
+        break;
     }
 
     if (hub_state >= DC_HUB_LOGGED_IN) {
@@ -818,8 +818,8 @@ static void
 cmd_exit(int argc, char **argv)
 {
     /*if (argc > 1) {
-	warn(_("%s: too many arguments\n"), argv[0]);
-	return;
+    warn(_("%s: too many arguments\n"), argv[0]);
+    return;
     }*/
     running = false;
 }
@@ -834,23 +834,23 @@ cmd_say(int argc, char **argv)
     bool utf8 = false;
 
     if (argc <= 1) {
-    	screen_putf(_("Usage: %s MESSAGE..\n"), argv[0]);
-	return;
+        screen_putf(_("Usage: %s MESSAGE..\n"), argv[0]);
+        return;
     }
     if (hub_state < DC_HUB_LOGGED_IN) {
-    	screen_putf(_("Not connected.\n"));
-	return;
+        screen_putf(_("Not connected.\n"));
+        return;
     }
     t1 = join_strings(argv+1, argc-1, ' ');
 
     if (t1 == NULL)
-	return;
+        return;
 
     t2 = escape_message(t1);
     free(t1);
 
     if (t2 == NULL)
-	return;
+        return;
 
     /* Don't print on screen - hub will send us the message back. */
     /*
@@ -881,24 +881,24 @@ cmd_msg(int argc, char **argv)
     DCUserInfo *ui;
 
     if (argc <= 2) {
-    	screen_putf(_("Usage: %s USER MESSAGE..\n"), argv[0]);
-	return;
+        screen_putf(_("Usage: %s USER MESSAGE..\n"), argv[0]);
+        return;
     }
     if (hub_state < DC_HUB_LOGGED_IN) {
-    	screen_putf(_("Not connected.\n"));
-	return;
+        screen_putf(_("Not connected.\n"));
+        return;
     }
     ui = hmap_get(hub_users, argv[1]);
     if (ui == NULL) {
-    	screen_putf(_("%s: No such user on this hub\n"), quotearg(argv[1]));
-	return;
+        screen_putf(_("%s: No such user on this hub\n"), quotearg(argv[1]));
+        return;
     }
 
 
     t1 = join_strings(argv+2, argc-2, ' ');
 
     if ( t1 == NULL)
-	return;
+        return;
 
     screen_putf("Private to %s: <%s> %s\n", quotearg_n(0, ui->nick), quotearg_n(1, my_nick), t1); /* XXX: quotearg_n(2, t1)? */
 
@@ -906,7 +906,7 @@ cmd_msg(int argc, char **argv)
     free(t1);
 
     if (t2 == NULL)
-	return;
+        return;
 
     char *hub_my_nick = main_to_hub_string(my_nick);
     char *hub_to_nick = main_to_hub_string(ui->nick);
@@ -922,14 +922,14 @@ static void
 cmd_raw(int argc, char **argv)
 {
     char *msg;
-    
+
     if (argc <= 1) {
-    	screen_putf(_("Usage: %s DATA...\n"), argv[0]);
-	return;
+        screen_putf(_("Usage: %s DATA...\n"), argv[0]);
+        return;
     }
     if (hub_state < DC_HUB_LOCK) {
-    	screen_putf(_("Not connected.\n"));
-	return;
+        screen_putf(_("Not connected.\n"));
+        return;
     }
     msg = join_strings(argv+1, argc-1, ' ');
     screen_putf("Raw to hub: %s\n", msg);
@@ -954,11 +954,11 @@ cmd_connect(int argc, char **argv)
 
     portstr = strchr(argv[1], ':');
     if (portstr != NULL) {
-    	*portstr = '\0';
-    	if (!parse_uint16(portstr+1, &port)) {
-	    screen_putf(_("Invalid port number %s\n"), quote(portstr+1));
-	    return;
-	}
+        *portstr = '\0';
+        if (!parse_uint16(portstr+1, &port)) {
+            screen_putf(_("Invalid port number %s\n"), quote(portstr+1));
+            return;
+        }
     } else {
         port = DC_HUB_TCP_PORT;
     }
@@ -984,8 +984,8 @@ cmd_grantslot(int argc, char **argv)
     uint32_t c;
 
     if (hub_state != DC_HUB_LOGGED_IN) {
-    	screen_putf(_("Not connected.\n"));
-	return;
+        screen_putf(_("Not connected.\n"));
+        return;
     }
     if (argc == 1) {
         HMapIterator it;
@@ -1003,8 +1003,8 @@ cmd_grantslot(int argc, char **argv)
 
         ui = hmap_get(hub_users, argv[c]);
         if (ui == NULL) {
-    	    screen_putf(_("%s: No such user on this hub\n"), quotearg(argv[c]));
-    	    return;
+            screen_putf(_("%s: No such user on this hub\n"), quotearg(argv[c]));
+            return;
         }
         if (ui->slot_granted) {
             screen_putf(_("%s has been granted a slot.\n"), ui->nick);
@@ -1022,16 +1022,16 @@ browse_none(void)
     /* Clean up previous browse. */
     if (browse_list != NULL) {
         if (!browsing_myself)
-	    filelist_free(browse_list);
+            filelist_free(browse_list);
         browse_list = NULL;
-	free(browse_path);
-	browse_path = NULL;
-	free(browse_path_previous);
-	browse_path_previous = NULL;
+        free(browse_path);
+        browse_path = NULL;
+        free(browse_path_previous);
+        browse_path_previous = NULL;
     }
     if (browse_user != NULL) {
-	user_info_free(browse_user);
-	browse_user = NULL;
+        user_info_free(browse_user);
+        browse_user = NULL;
     }
     browsing_myself = false;
 }
@@ -1054,16 +1054,16 @@ browse_list_parsed(DCFileList *node, void *data)
      */
     if (browse_list == NULL && browse_user != NULL
             && strcmp(nick, browse_user->nick) == 0) {
-	browse_list = node;
-	browse_path = xstrdup("/");
-	browse_path_previous = NULL;
-	update_prompt();
-	/* browse_list_parsed will never be called when browsing ourselves,
-	 * because our filelist is already parsed and always available.
-	 */
-	screen_putf(_("Now browsing %s.\n"), quotearg(browse_user->nick));
+        browse_list = node;
+        browse_path = xstrdup("/");
+        browse_path_previous = NULL;
+        update_prompt();
+        /* browse_list_parsed will never be called when browsing ourselves,
+         * because our filelist is already parsed and always available.
+         */
+        screen_putf(_("Now browsing %s.\n"), quotearg(browse_user->nick));
     } else {
-	filelist_free(node);
+        filelist_free(node);
     }
 
     free(nick);
@@ -1117,8 +1117,8 @@ cmd_browse(int argc, char **argv)
         unlink(filename);
     }
     if (stat(filename, &st) < 0 &&
-        stat(xml_filename, &st) < 0 &&
-        stat(bzxml_filename, &st) < 0) {
+            stat(xml_filename, &st) < 0 &&
+            stat(bzxml_filename, &st) < 0) {
         if (errno != ENOENT) {
             screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
             free(filename);
@@ -1131,8 +1131,8 @@ cmd_browse(int argc, char **argv)
         free(xml_filename);
         free(bzxml_filename);
         if (ptrv_find(ui->download_queue, "/MyList.DcLst", (comparison_fn_t) queued_file_cmp) < 0 &&
-            ptrv_find(ui->download_queue, "/files.xml", (comparison_fn_t) queued_file_cmp) < 0 &&
-            ptrv_find(ui->download_queue, "/files.xml.bz2", (comparison_fn_t) queued_file_cmp) < 0) {
+                ptrv_find(ui->download_queue, "/files.xml", (comparison_fn_t) queued_file_cmp) < 0 &&
+                ptrv_find(ui->download_queue, "/files.xml.bz2", (comparison_fn_t) queued_file_cmp) < 0) {
             DCQueuedFile *queued = xmalloc(sizeof(DCQueuedFile));
 
             TRACE(("%s:%d: enqueue a new file list to download\n", __FUNCTION__, __LINE__));
@@ -1176,15 +1176,15 @@ static void
 cmd_pwd(int argc, char **argv)
 {
     if (browse_list == NULL) {
-	if (browse_user == NULL) {
-	    screen_putf(_("Not browsing any user.\n"));
-	} else {
-	    screen_putf(_("(%s) Waiting for file list.\n"), quotearg(browse_user->nick));
-	}
+        if (browse_user == NULL) {
+            screen_putf(_("Not browsing any user.\n"));
+        } else {
+            screen_putf(_("(%s) Waiting for file list.\n"), quotearg(browse_user->nick));
+        }
     } else {
-	screen_putf(_("(%s) %s\n"),
-		quotearg_n(0, browsing_myself ? my_nick : browse_user->nick),
-		quotearg_n(1, browse_path)); /* XXX: print as %s:%s instead */
+        screen_putf(_("(%s) %s\n"),
+                    quotearg_n(0, browsing_myself ? my_nick : browse_user->nick),
+                    quotearg_n(1, browse_path)); /* XXX: print as %s:%s instead */
     }
 }
 
@@ -1193,8 +1193,8 @@ static void
 cmd_cd(int argc, char **argv)
 {
     if (browse_list == NULL) {
-	screen_putf(_("Not browsing any user.\n"));
-	return;
+        screen_putf(_("Not browsing any user.\n"));
+        return;
     }
 
     if (argc == 1) {
@@ -1203,12 +1203,12 @@ cmd_cd(int argc, char **argv)
         browse_path = filelist_get_path(browse_list);
         update_prompt();
     } else if (strcmp(argv[1], "-") == 0) {
-	if (browse_path_previous == NULL) {
-	    warn(_("No previous path.\n"));
-	} else {
-	    swap(browse_path, browse_path_previous);
-	    update_prompt();
-	}
+        if (browse_path_previous == NULL) {
+            warn(_("No previous path.\n"));
+        } else {
+            swap(browse_path, browse_path_previous);
+            update_prompt();
+        }
     } else {
         bool quoted = false;
         PtrV *results;
@@ -1226,7 +1226,7 @@ cmd_cd(int argc, char **argv)
         remote_wildcard_expand(argv[1], &quoted, basedir, basenode, results);
         if (results->cur >= 1) {
             char *name = results->buf[0];
-            char *fullname;  
+            char *fullname;
             DCFileList *node;
 
             fullname = apply_cwd(name);
@@ -1256,8 +1256,8 @@ cmd_find(int argc, char **argv)
     uint32_t c;
 
     if (browse_list == NULL) {
-	screen_putf(_("Not browsing any user.\n"));
-	return;
+        screen_putf(_("Not browsing any user.\n"));
+        return;
     }
 
     if (argc == 1) {
@@ -1269,11 +1269,11 @@ cmd_find(int argc, char **argv)
             filelist_list_recursively(node, "");
     }
     for (c = 1; c < argc; c++) {
-	bool quoted = false;
-	PtrV *results;
-	DCFileList *basenode;
-	char *basedir;
-	uint32_t d;
+        bool quoted = false;
+        PtrV *results;
+        DCFileList *basenode;
+        char *basedir;
+        uint32_t d;
 
         results = ptrv_new();
         if (has_leading_slash(argv[c])) {
@@ -1307,9 +1307,9 @@ static void
 cmd_ls(int argc, char **argv)
 {
     OptDetail long_opts[] = {
-	{ "l", OPTP_NO_ARG, 'l' },
-	{ "t", OPTP_NO_ARG, 'l' },
-	{ NULL },
+        { "l", OPTP_NO_ARG, 'l' },
+        { "t", OPTP_NO_ARG, 'l' },
+        { NULL },
     };
     OptParser *p;
     int mode = 0;
@@ -1363,14 +1363,14 @@ cmd_ls(int argc, char **argv)
         remote_wildcard_expand(arg, &quoted, basedir, basenode, results);
         for (d = 0; d < results->cur; d++) {
             char *name = results->buf[d];
-            char *fullname;  
+            char *fullname;
             DCFileList *node;
-                                       
+
             fullname = apply_cwd(name);
             node = filelist_lookup(browse_list, fullname);
             if (node != NULL) /* Technically, this shouldn't fail */
                 filelist_list(node, mode);
-            free(fullname);                       
+            free(fullname);
             free(name);
         }
         if (d == 0)
@@ -1386,8 +1386,8 @@ cmd_retry(int argc, char **argv)
     uint32_t c;
 
     if (hub_state < DC_HUB_LOGGED_IN) {
-    	screen_putf(_("Not connected.\n"));
-	return;
+        screen_putf(_("Not connected.\n"));
+        return;
     }
 
     for (c = 1; c < argc; c++) {
@@ -1414,11 +1414,11 @@ cmd_queue(int argc, char **argv)
 
     /*if (argc == 1) {
     	screen_putf(_("Usage: %s USER\n"), argv[0]);
-	return;
+    return;
     }*/
     if (hub_state < DC_HUB_LOGGED_IN) {
-    	screen_putf(_("Not connected.\n"));
-	return;
+        screen_putf(_("Not connected.\n"));
+        return;
     }
     if (argc == 1) {
         HMapIterator it;
@@ -1463,10 +1463,10 @@ cmd_queue(int argc, char **argv)
             }
 
             screen_putf("%d. (%s) [%s] %s\n",
-                    c+1,
-                    status,
-                    quotearg_n(0, queued->base_path),
-                    quotearg_n(1, queued->filename + strlen(queued->base_path)));
+                        c+1,
+                        status,
+                        quotearg_n(0, queued->base_path),
+                        quotearg_n(1, queued->filename + strlen(queued->base_path)));
         }
     }
 }
@@ -1479,10 +1479,10 @@ removed_queued_by_range(uint32_t sp, uint32_t ep, void *userdata)
     uint32_t c;
 
     for (c = sp-1; c < ep; c++) {
-	if (user->download_queue->buf[c] != NULL) {
-	    free_queued_file(user->download_queue->buf[c]);
-	    user->download_queue->buf[c] = NULL;
-	}
+        if (user->download_queue->buf[c] != NULL) {
+            free_queued_file(user->download_queue->buf[c]);
+            user->download_queue->buf[c] = NULL;
+        }
     }
 }
 
@@ -1494,24 +1494,24 @@ compact_queue_ptrv(DCUserInfo *user)
     uint32_t c;
 
     for (c = 0; c < user->download_queue->cur; c++) {
-	if (user->download_queue->buf[c] == NULL) {
-	    if (first_free == -1)
-		first_free = c;
-	} else {
-	    if (first_free != -1) {
-		user->download_queue->buf[first_free] = user->download_queue->buf[c];
-		user->download_queue->buf[c] = NULL;
-		for (first_free++; first_free < c; first_free++) {
-		    if (user->download_queue->buf[first_free] == NULL)
-			break;
-		}
-	    }
-	}
+        if (user->download_queue->buf[c] == NULL) {
+            if (first_free == -1)
+                first_free = c;
+        } else {
+            if (first_free != -1) {
+                user->download_queue->buf[first_free] = user->download_queue->buf[c];
+                user->download_queue->buf[c] = NULL;
+                for (first_free++; first_free < c; first_free++) {
+                    if (user->download_queue->buf[first_free] == NULL)
+                        break;
+                }
+            }
+        }
     }
 
     if (first_free != -1)
-	user->download_queue->cur = first_free;
-}    
+        user->download_queue->cur = first_free;
+}
 
 /* XXX: move to download.c/queue.c/browse.c? */
 static void
@@ -1521,20 +1521,20 @@ cmd_unqueue(int argc, char **argv)
     const char *range;
 
     if (argc == 1) {
-    	screen_putf(_("Usage: %s USER [RANGE]\n"), argv[0]);
-	return;
+        screen_putf(_("Usage: %s USER [RANGE]\n"), argv[0]);
+        return;
     }
 
     /* XXX: parse each argument, allow RANGE RANGE2 .. */
     if (argc > 2) {
         range = argv[2];
     } else {
-	range = "1-";
+        range = "1-";
     }
 
     if (hub_state < DC_HUB_LOGGED_IN) {
-    	screen_putf(_("Not connected.\n"));
-	return;
+        screen_putf(_("Not connected.\n"));
+        return;
     }
     user = hmap_get(hub_users, argv[1]);
     if (user == NULL) {
@@ -1542,8 +1542,8 @@ cmd_unqueue(int argc, char **argv)
         return;
     }
     if (!foreach_in_range(range, 1, user->download_queue->cur, NULL, NULL)) {
-	screen_putf(_("%s: Invalid range, or index out of range (1-%d)\n"), quotearg(range), user->download_queue->cur);
-	return;
+        screen_putf(_("%s: Invalid range, or index out of range (1-%d)\n"), quotearg(range), user->download_queue->cur);
+        return;
     }
     foreach_in_range(range, 1, user->download_queue->cur, removed_queued_by_range, user);
 
@@ -1608,8 +1608,8 @@ cmd_who(int argc, char **argv)
     StrBuf *out;
 
     if (hub_state < DC_HUB_LOGGED_IN) {
-    	screen_putf(_("Not connected.\n"));
-	return;
+        screen_putf(_("Not connected.\n"));
+        return;
     }
 
     if (argc > 1) {
@@ -1628,45 +1628,45 @@ cmd_who(int argc, char **argv)
                 screen_putf(_("E-mail: %s\n"), quotearg(IFNULL(ui->email, "")));
                 screen_putf(_("Operator: %d\n"), ui->is_operator);
                 screen_putf(_("Share Size: %" PRIu64 " %s (%" PRIu64 " MB)\n"), /* " */
-                    ui->share_size, fmt1, ui->share_size/(1024*1024));
+                            ui->share_size, fmt1, ui->share_size/(1024*1024));
             }
         }
-    	return;
+        return;
     }
 
     maxlen = 0;
     for (hmap_iterator(hub_users, &it); it.has_next(&it); ) {
-    	DCUserInfo *ui = it.next(&it);
-	maxlen = max(maxlen, strlen(quotearg(ui->nick)));
+        DCUserInfo *ui = it.next(&it);
+        maxlen = max(maxlen, strlen(quotearg(ui->nick)));
     }
 
     count = hmap_size(hub_users);
     items = xmalloc(count * sizeof(DCUserInfo *));
     hmap_iterator(hub_users, &it);
     for (c = 0; c < count; c++)
-	items[c] = it.next(&it);
+        items[c] = it.next(&it);
     qsort(items, count, sizeof(DCUserInfo *), user_info_compare);
 
     screen_get_size(NULL, &cols);
 
     out = strbuf_new();
     for (c = 0; c < count; c++) {
-    	DCUserInfo *ui = items[c];
-	char *nick = quotearg(ui->nick);
+        DCUserInfo *ui = items[c];
+        char *nick = quotearg(ui->nick);
 
-	strbuf_clear(out);
-	strbuf_append(out, nick);
-	strbuf_append_char_n(out, maxlen+1-strlen(nick), ' ');
-	strbuf_appendf(out, "  %7" PRIu64 "M", ui->share_size / (1024*1024)); /* " */
-	strbuf_append(out, ui->is_operator ? " op" : "   ");
-	if (ui->download_queue->cur > 0)
-	    strbuf_appendf(out, " (%3d)", ui->download_queue->cur);
-	else
-	    strbuf_append(out, "      ");
-	strbuf_appendf(out, " %s", quotearg(ui->description ? ui->description : ""));
-	if (strbuf_length(out) > cols)
-	    strbuf_set_length(out, cols);
-	screen_putf("%s\n", strbuf_buffer(out));
+        strbuf_clear(out);
+        strbuf_append(out, nick);
+        strbuf_append_char_n(out, maxlen+1-strlen(nick), ' ');
+        strbuf_appendf(out, "  %7" PRIu64 "M", ui->share_size / (1024*1024)); /* " */
+        strbuf_append(out, ui->is_operator ? " op" : "   ");
+        if (ui->download_queue->cur > 0)
+            strbuf_appendf(out, " (%3d)", ui->download_queue->cur);
+        else
+            strbuf_append(out, "      ");
+        strbuf_appendf(out, " %s", quotearg(ui->description ? ui->description : ""));
+        if (strbuf_length(out) > cols)
+            strbuf_set_length(out, cols);
+        screen_putf("%s\n", strbuf_buffer(out));
     }
     free(items);
     strbuf_free(out);
@@ -1682,23 +1682,23 @@ cmd_transfers(int argc, char **argv)
 
     hmap_iterator(user_conns, &it);
     while (it.has_next(&it)) {
-    	DCUserConn *uc = it.next(&it);
-	maxlen = max(maxlen, strlen(uc->name));
+        DCUserConn *uc = it.next(&it);
+        maxlen = max(maxlen, strlen(uc->name));
     }
     format = xasprintf("%%-%ds  %%s\n", maxlen);
 
     now = time(NULL);
     if (now == (time_t) -1)
-    	warn(_("Cannot get current time - %s\n"), errstr);
+        warn(_("Cannot get current time - %s\n"), errstr);
 
     hmap_iterator(user_conns, &it);
     while (it.has_next(&it)) {
-    	DCUserConn *uc = it.next(&it);
-	char *status;
+        DCUserConn *uc = it.next(&it);
+        char *status;
 
-	status = user_conn_status_to_string(uc, now);
-	screen_putf(format, quotearg(uc->name), status);
-	free(status);
+        status = user_conn_status_to_string(uc, now);
+        screen_putf(format, quotearg(uc->name), status);
+        free(status);
     }
 
     screen_putf(_("Upload slots: %d/%d  Download slots: %d/unlimited\n"), used_ul_slots, my_ul_slots, used_dl_slots);
@@ -1711,8 +1711,8 @@ cmd_cancel(int argc, char **argv)
     uint32_t c;
 
     if (argc == 1) {
-    	screen_putf(_("Usage: %s CONNECTION ...\n"), argv[0]);
-	return;
+        screen_putf(_("Usage: %s CONNECTION ...\n"), argv[0]);
+        return;
     }
 
     for (c = 1; c < argc; c++) {
@@ -1720,10 +1720,10 @@ cmd_cancel(int argc, char **argv)
 
         uc = hmap_get(user_conns, argv[c]);
         if (uc == NULL) {
-    	    screen_putf(_("%s: No such user connection.\n"), quotearg(argv[c]));
+            screen_putf(_("%s: No such user connection.\n"), quotearg(argv[c]));
         } else {
             user_conn_cancel(uc);
-        } 
+        }
     }
 
 }
@@ -1732,16 +1732,16 @@ static void
 cmd_search(int argc, char **argv)
 {
     char *tmp;
-    
+
     if (argc == 1) {
-    	screen_putf(_("Usage: %s STRING...\n"), argv[0]);
-	return;
+        screen_putf(_("Usage: %s STRING...\n"), argv[0]);
+        return;
     }
     if (hub_state < DC_HUB_LOGGED_IN) {
-    	screen_putf(_("Not connected.\n"));
-	return;
+        screen_putf(_("Not connected.\n"));
+        return;
     }
-    
+
     tmp = join_strings(argv+1, argc-1, ' ');
     add_search_request(tmp); /* Ignore errors */
     free(tmp);
@@ -1754,24 +1754,24 @@ cmd_results(int argc, char **argv)
 
     if (argc == 1) {
         time_t now;
-    
-	if (time(&now) == (time_t) -1) {
+
+        if (time(&now) == (time_t) -1) {
             warn(_("Cannot get current time - %s\n"), errstr);
             return;
         }
 
-    	for (d = 0; d < our_searches->cur; d++) {
-    	    DCSearchRequest *sd = our_searches->buf[d];
-    	    char *status;
-    	    char *spec;
+        for (d = 0; d < our_searches->cur; d++) {
+            DCSearchRequest *sd = our_searches->buf[d];
+            char *status;
+            char *spec;
 
             spec = search_selection_to_string(&sd->selection);
             status = sd->issue_time + SEARCH_TIME_THRESHOLD <= now
-                   ? _("Closed") : _("Open");
-	    screen_putf(_("%d. %s (%s) Results: %d\n"), d+1, quotearg(spec),
-                   status, sd->responses->cur);
-	}
-	return;
+                     ? _("Closed") : _("Open");
+            screen_putf(_("%d. %s (%s) Results: %d\n"), d+1, quotearg(spec),
+                        status, sd->responses->cur);
+        }
+        return;
     }
 
     for (d = 1; d < argc; d++) {
@@ -1806,8 +1806,8 @@ cmd_unsearch(int argc, char **argv)
     uint32_t c;
 
     if (argc == 1) {
-    	screen_putf(_("Usage: %s INDEX\n"), argv[0]);
-	return;
+        screen_putf(_("Usage: %s INDEX\n"), argv[0]);
+        return;
     }
     for (c = 1; c < argc; c++) {
         DCSearchRequest *sd;
@@ -1820,7 +1820,7 @@ cmd_unsearch(int argc, char **argv)
 
         sd = our_searches->buf[index-1];
         ptrv_remove_range(our_searches, index-1, index);
-        free_search_request(sd);    
+        free_search_request(sd);
     }
 }
 
@@ -1830,16 +1830,16 @@ cmd_alias(int argc, char **argv)
     uint32_t c;
 
     if (argc == 1) {
-	TMapIterator it;
+        TMapIterator it;
 
-	for (tmap_iterator(commands, &it); it.has_next(&it); ) {
-	    DCCommand *cmd = it.next(&it);
-	    if (cmd->type == DC_CMD_ALIAS) {
-		DCAliasCommand *alias = (DCAliasCommand *) cmd;
-		screen_putf("alias %s \"%s\"\n" /*no translation */, cmd->name, quotearg(alias->alias_spec));
-	    }
-	}
-	return;
+        for (tmap_iterator(commands, &it); it.has_next(&it); ) {
+            DCCommand *cmd = it.next(&it);
+            if (cmd->type == DC_CMD_ALIAS) {
+                DCAliasCommand *alias = (DCAliasCommand *) cmd;
+                screen_putf("alias %s \"%s\"\n" /*no translation */, cmd->name, quotearg(alias->alias_spec));
+            }
+        }
+        return;
     }
 
     for (c = 1; c < argc; c++) {
@@ -1887,21 +1887,21 @@ cmd_unalias(int argc, char **argv)
     uint32_t c;
 
     if (argc == 1) {
-    	screen_putf(_("Usage: %s NAME ...\n"), argv[0]);
-    	return;
+        screen_putf(_("Usage: %s NAME ...\n"), argv[0]);
+        return;
     }
 
     for (c = 0; c < argc; c++) {
-	DCCommand *cmd = tmap_get(commands, argv[c]);
-	if (cmd == NULL || cmd->type != DC_CMD_ALIAS) {
-	    warn(_("%s: No such alias.\n"), quotearg(argv[c]));
-	} else {
-	    DCAliasCommand *alias = (DCAliasCommand *) cmd;
-	    tmap_remove(commands, cmd->name);
-	    free(alias->cmd.name);
-	    free(alias->alias_spec);
-	    free(alias);
-	}
+        DCCommand *cmd = tmap_get(commands, argv[c]);
+        if (cmd == NULL || cmd->type != DC_CMD_ALIAS) {
+            warn(_("%s: No such alias.\n"), quotearg(argv[c]));
+        } else {
+            DCAliasCommand *alias = (DCAliasCommand *) cmd;
+            tmap_remove(commands, cmd->name);
+            free(alias->cmd.name);
+            free(alias->alias_spec);
+            free(alias);
+        }
     }
 }
 
@@ -1909,15 +1909,15 @@ void
 update_prompt(void)
 {
     if (browsing_myself || browse_user != NULL) {
-	char *nick = browsing_myself ? my_nick : browse_user->nick;
-	
-	if (browse_list == NULL) {
-	    set_screen_prompt("%s:(%s)> ", PACKAGE, quotearg(nick));
-	} else {
-	    set_screen_prompt("%s:%s:%s> ", PACKAGE, quotearg_n(0, nick), quotearg_n(1, browse_path));
-	}
+        char *nick = browsing_myself ? my_nick : browse_user->nick;
+
+        if (browse_list == NULL) {
+            set_screen_prompt("%s:(%s)> ", PACKAGE, quotearg(nick));
+        } else {
+            set_screen_prompt("%s:%s:%s> ", PACKAGE, quotearg_n(0, nick), quotearg_n(1, browse_path));
+        }
     } else {
-	set_screen_prompt("%s> ", PACKAGE);
+        set_screen_prompt("%s> ", PACKAGE);
     }
 }
 
@@ -2001,7 +2001,7 @@ cmd_get(int argc, char **argv)
         remote_wildcard_expand(argv[c], &quoted, basedir, basenode, results);
         for (d = 0; d < results->cur; d++) {
             char *name = results->buf[d];
-            char *fullname;  
+            char *fullname;
             DCFileList *node;
 
             fullname = apply_cwd(name);
@@ -2010,15 +2010,15 @@ cmd_get(int argc, char **argv)
                 screen_putf(_("Matched %s\n"), quotearg(name));
                 append_download_file(browse_user, node, basenode, &file_count, &byte_count);
             }
-            free(fullname);                       
+            free(fullname);
             free(name);
         }
         ptrv_free(results);
 
         if (file_count > 0) {
             screen_putf(_("Downloading %" PRIu64 " %s in %" PRIu32 " %s\n"),
-                byte_count, ngettext("byte", "bytes", byte_count),
-                file_count, ngettext("file", "files", file_count));
+                        byte_count, ngettext("byte", "bytes", byte_count),
+                        file_count, ngettext("file", "files", file_count));
             dl_some = true;
         } else {
             screen_putf(_("%s: No files to download.\n"), quotearg(argv[c]));
@@ -2087,12 +2087,12 @@ cmd_share(int argc, char **argv)
 
     dir_fs = main_to_fs_string(argv[1]);
     if (stat(dir_fs, &st) < 0) {
-    	screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(argv[1]), errstr);
+        screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(argv[1]), errstr);
         free(dir_fs);
         return;
     }
     if (!S_ISDIR(st.st_mode)) {
-    	screen_putf(_("%s: Not a directory\n"), quotearg(argv[1]));
+        screen_putf(_("%s: Not a directory\n"), quotearg(argv[1]));
         free(dir_fs);
         return;
     }
@@ -2122,12 +2122,12 @@ cmd_unshare(int argc, char **argv)
 
     dir_fs = main_to_fs_string(argv[1]);
     if (stat(dir_fs, &st) < 0) {
-    	screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(argv[1]), errstr);
+        screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(argv[1]), errstr);
         free(dir_fs);
         return;
     }
     if (!S_ISDIR(st.st_mode)) {
-    	screen_putf(_("%s: Not a directory\n"), quotearg(argv[1]));
+        screen_putf(_("%s: Not a directory\n"), quotearg(argv[1]));
         free(dir_fs);
         return;
     }

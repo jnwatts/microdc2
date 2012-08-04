@@ -73,203 +73,203 @@ INT_STR_FUNC(uint8_hexustr, uint8_t, PRIX8);
 bool
 parse_int8(const char *instr, int8_t *outint)
 {
-	int8_t value = 0;
+    int8_t value = 0;
 
-	if (*instr == '-') {
-		if (instr[1] == '\0')
-			return false;
-		for (instr++; *instr != '\0'; instr++) {
-			int8_t c = *instr - '0';
-			if (c < 0 || c > 9)
-				return false;
-			if (value < INT8_MIN/10 || (value == INT8_MIN/10 && c > -(INT8_MIN%10)))
-				return false;
-			value = value*10 - c;
-		}
-	} else {
-		if (*instr == '\0')
-			return false;
-		for (; *instr != '\0'; instr++) {
-			int8_t c = *instr - '0';
-			if (c < 0 || c > 9)
-				return false;
-			if (value > INT8_MAX/10 || (value == INT8_MAX/10 && c > INT8_MAX%10))
-				return false;
-			value = value*10 + c;
-		}
-	}
-	*outint = value;
+    if (*instr == '-') {
+        if (instr[1] == '\0')
+            return false;
+        for (instr++; *instr != '\0'; instr++) {
+            int8_t c = *instr - '0';
+            if (c < 0 || c > 9)
+                return false;
+            if (value < INT8_MIN/10 || (value == INT8_MIN/10 && c > -(INT8_MIN%10)))
+                return false;
+            value = value*10 - c;
+        }
+    } else {
+        if (*instr == '\0')
+            return false;
+        for (; *instr != '\0'; instr++) {
+            int8_t c = *instr - '0';
+            if (c < 0 || c > 9)
+                return false;
+            if (value > INT8_MAX/10 || (value == INT8_MAX/10 && c > INT8_MAX%10))
+                return false;
+            value = value*10 + c;
+        }
+    }
+    *outint = value;
 
-	return true;
+    return true;
 }
 
 bool
 parse_int16(const char *instr, int16_t *outint)
 {
-	int16_t value = 0;
+    int16_t value = 0;
 
-	if (*instr == '-') {
-		if (instr[1] == '\0')
-			return false;
-		for (instr++; *instr != '\0'; instr++) {
-			int8_t c = *instr - '0';
-			if (c < 0 || c > 9)
-				return false;
-			if (value < INT16_MIN/10 || (value == INT16_MIN/10 && c > -(INT16_MIN%10)))
-				return false;
-			value = value*10 - c;
-		}
-	} else {
-		if (*instr == '\0')
-			return false;
-		for (; *instr != '\0'; instr++) {
-			int8_t c = *instr - '0';
-			if (c < 0 || c > 9)
-				return false;
-			if (value > INT16_MAX/10 || (value == INT16_MAX/10 && c > INT16_MAX%10))
-				return false;
-			value = value*10 + c;
-		}
-	}
-	*outint = value;
+    if (*instr == '-') {
+        if (instr[1] == '\0')
+            return false;
+        for (instr++; *instr != '\0'; instr++) {
+            int8_t c = *instr - '0';
+            if (c < 0 || c > 9)
+                return false;
+            if (value < INT16_MIN/10 || (value == INT16_MIN/10 && c > -(INT16_MIN%10)))
+                return false;
+            value = value*10 - c;
+        }
+    } else {
+        if (*instr == '\0')
+            return false;
+        for (; *instr != '\0'; instr++) {
+            int8_t c = *instr - '0';
+            if (c < 0 || c > 9)
+                return false;
+            if (value > INT16_MAX/10 || (value == INT16_MAX/10 && c > INT16_MAX%10))
+                return false;
+            value = value*10 + c;
+        }
+    }
+    *outint = value;
 
-	return true;
+    return true;
 }
 
 bool
 parse_int32(const char *instr, int32_t *outint)
 {
-	int32_t value = 0;
+    int32_t value = 0;
 
-	if (*instr == '-') {
-		if (instr[1] == '\0')
-			return false;
-		for (instr++; *instr != '\0'; instr++) {
-			int8_t c = *instr - '0';
-			if (c < 0 || c > 9)
-				return false;
-			if (value < INT32_MIN/10L || (value == INT32_MIN/10L && c > -(INT32_MIN%10L)))
-				return false;
-			value = value*10L - c;
-		}
-	} else {
-		if (*instr == '\0')
-			return false;
-		for (; *instr != '\0'; instr++) {
-			int8_t c = *instr - '0';
-			if (c < 0 || c > 9)
-				return false;
-			if (value > INT32_MAX/10L || (value == INT32_MAX/10L && c > INT32_MAX%10L))
-				return false;
-			value = value*10L + c;
-		}
-	}
-	*outint = value;
+    if (*instr == '-') {
+        if (instr[1] == '\0')
+            return false;
+        for (instr++; *instr != '\0'; instr++) {
+            int8_t c = *instr - '0';
+            if (c < 0 || c > 9)
+                return false;
+            if (value < INT32_MIN/10L || (value == INT32_MIN/10L && c > -(INT32_MIN%10L)))
+                return false;
+            value = value*10L - c;
+        }
+    } else {
+        if (*instr == '\0')
+            return false;
+        for (; *instr != '\0'; instr++) {
+            int8_t c = *instr - '0';
+            if (c < 0 || c > 9)
+                return false;
+            if (value > INT32_MAX/10L || (value == INT32_MAX/10L && c > INT32_MAX%10L))
+                return false;
+            value = value*10L + c;
+        }
+    }
+    *outint = value;
 
-	return true;
+    return true;
 }
 
 bool
 parse_int64(const char *instr, int64_t *outint)
 {
-	int64_t value = 0;
+    int64_t value = 0;
 
-	if (*instr == '-') {
-		if (instr[1] == '\0')
-			return false;
-		for (instr++; *instr != '\0'; instr++) {
-			int8_t c = *instr - '0';
-			if (c < 0 || c > 9)
-				return false;
-			if (value < INT64_MIN/10LL || (value == INT64_MIN/10LL && c > -(INT64_MIN%10LL)))
-				return false;
-			value = value*10LL - c;
-		}
-	} else {
-		if (*instr == '\0')
-			return false;
-		for (; *instr != '\0'; instr++) {
-			int8_t c = *instr - '0';
-			if (c < 0 || c > 9)
-				return false;
-			if (value > INT64_MAX/10LL || (value == INT64_MAX/10LL && c > INT64_MAX%10LL))
-				return false;
-			value = value*10LL + c;
-		}
-	}
-	*outint = value;
+    if (*instr == '-') {
+        if (instr[1] == '\0')
+            return false;
+        for (instr++; *instr != '\0'; instr++) {
+            int8_t c = *instr - '0';
+            if (c < 0 || c > 9)
+                return false;
+            if (value < INT64_MIN/10LL || (value == INT64_MIN/10LL && c > -(INT64_MIN%10LL)))
+                return false;
+            value = value*10LL - c;
+        }
+    } else {
+        if (*instr == '\0')
+            return false;
+        for (; *instr != '\0'; instr++) {
+            int8_t c = *instr - '0';
+            if (c < 0 || c > 9)
+                return false;
+            if (value > INT64_MAX/10LL || (value == INT64_MAX/10LL && c > INT64_MAX%10LL))
+                return false;
+            value = value*10LL + c;
+        }
+    }
+    *outint = value;
 
-	return true;
+    return true;
 }
 
 bool
 parse_uint8(const char *instr, uint8_t *outint)
 {
-	uint8_t value = 0;
+    uint8_t value = 0;
 
-	for (; *instr != '\0'; instr++) {
-		int8_t c = *instr - '0';
-		if (c < 0 || c > 9)
-			return false;
-		if (value > UINT8_MAX/10 || (value == UINT8_MAX/10 && c > UINT8_MAX%10))
-			return false;
-		value = value*10 + c;
-	}
-	*outint = value;
+    for (; *instr != '\0'; instr++) {
+        int8_t c = *instr - '0';
+        if (c < 0 || c > 9)
+            return false;
+        if (value > UINT8_MAX/10 || (value == UINT8_MAX/10 && c > UINT8_MAX%10))
+            return false;
+        value = value*10 + c;
+    }
+    *outint = value;
 
-	return true;
+    return true;
 }
 
 bool
 parse_uint16(const char *instr, uint16_t *outint)
 {
-	uint16_t value = 0;
+    uint16_t value = 0;
 
-	for (; *instr != '\0'; instr++) {
-		int8_t c = *instr - '0';
-		if (c < 0 || c > 9)
-			return false;
-		if (value > UINT16_MAX/10 || (value == UINT16_MAX/10 && c > UINT16_MAX%10))
-			return false;
-		value = value*10 + c;
-	}
-	*outint = value;
+    for (; *instr != '\0'; instr++) {
+        int8_t c = *instr - '0';
+        if (c < 0 || c > 9)
+            return false;
+        if (value > UINT16_MAX/10 || (value == UINT16_MAX/10 && c > UINT16_MAX%10))
+            return false;
+        value = value*10 + c;
+    }
+    *outint = value;
 
-	return true;
+    return true;
 }
 
 bool
 parse_uint32(const char *instr, uint32_t *outint)
 {
-	uint32_t value = 0;
+    uint32_t value = 0;
 
-	for (; *instr != '\0'; instr++) {
-		int8_t c = *instr - '0';
-		if (c < 0 || c > 9)
-			return false;
-		if (value > UINT32_MAX/10L || (value == UINT32_MAX/10L && c > UINT32_MAX%10))
-			return false;
-		value = value*10L + c;
-	}
-	*outint = value;
+    for (; *instr != '\0'; instr++) {
+        int8_t c = *instr - '0';
+        if (c < 0 || c > 9)
+            return false;
+        if (value > UINT32_MAX/10L || (value == UINT32_MAX/10L && c > UINT32_MAX%10))
+            return false;
+        value = value*10L + c;
+    }
+    *outint = value;
 
-	return true;
+    return true;
 }
 
 bool
 parse_uint64(const char *instr, uint64_t *outint)
 {
-	uint64_t value = 0;
+    uint64_t value = 0;
 
-	for (; *instr != '\0'; instr++) {
-		int8_t c = *instr - '0';
-		if (c < 0 || c > 9)
-			return false;
-		if (value > UINT64_MAX/10LL || (value == UINT64_MAX/10LL && c > UINT64_MAX%10LL))
-			return false;
-		value = value*10LL + c;
-	}
-	*outint = value;
+    for (; *instr != '\0'; instr++) {
+        int8_t c = *instr - '0';
+        if (c < 0 || c > 9)
+            return false;
+        if (value > UINT64_MAX/10LL || (value == UINT64_MAX/10LL && c > UINT64_MAX%10LL))
+            return false;
+        value = value*10LL + c;
+    }
+    *outint = value;
 
-	return true;
+    return true;
 }

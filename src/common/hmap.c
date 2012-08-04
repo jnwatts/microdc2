@@ -63,7 +63,7 @@ strhash(const char *str)
     uint32_t hash = 0;
 
     for (; *str != '\0'; str++)
-	hash = (hash << 5) - hash + *str;
+        hash = (hash << 5) - hash + *str;
 
     return hash;
 }
@@ -74,7 +74,7 @@ strcasehash(const char *str)
     uint32_t hash = 0;
 
     for (; *str != '\0'; str++)
-	hash = (hash << 5) - hash + tolower(*str);
+        hash = (hash << 5) - hash + tolower(*str);
 
     return hash;
 }
@@ -93,20 +93,20 @@ hmap_iterator_next(HMapIterator *it)
     void *data;
 
     if (itp->entry == NULL)
-    	return NULL;
+        return NULL;
 
     data = itp->entry->value;
     itp->previous_entry = itp->entry;
 
     itp->entry = itp->entry->next;
     if (itp->entry == NULL) {
-	uint32_t i;
+        uint32_t i;
 
-    	i = itp->index+1;
-	while (i < map->buckets_length && map->buckets[i] == NULL)
-	    i++;
-	itp->index = i;
-	itp->entry = (i < map->buckets_length ? map->buckets[i] : NULL);
+        i = itp->index+1;
+        while (i < map->buckets_length && map->buckets[i] == NULL)
+            i++;
+        itp->index = i;
+        itp->entry = (i < map->buckets_length ? map->buckets[i] : NULL);
     }
 
     return data;
@@ -121,7 +121,7 @@ hmap_iterator_has_next(HMapIterator *it)
 
 static inline void
 hmap_rehash(HMap *map)
-{	
+{
     HMapEntry **old_buckets = map->buckets;
     uint32_t old_capacity = map->buckets_length;
     uint32_t i;
@@ -132,24 +132,24 @@ hmap_rehash(HMap *map)
     memset(map->buckets, 0, map->buckets_length * sizeof(HMapEntry *));
 
     for (i = 0; i < old_capacity; i++) {
-	HMapEntry *entry = old_buckets[i];
-	while (entry != NULL) {
-	    uint32_t index = hmap_hash(map, entry->key);
-	    HMapEntry *dest = map->buckets[index];
-	    HMapEntry *next;
+        HMapEntry *entry = old_buckets[i];
+        while (entry != NULL) {
+            uint32_t index = hmap_hash(map, entry->key);
+            HMapEntry *dest = map->buckets[index];
+            HMapEntry *next;
 
-	    if (dest != NULL) {
-		    while (dest->next != NULL)
-			    dest = dest->next;
-		    dest->next = entry;
-	    } else {
-		    map->buckets[index] = entry;
-	    }
+            if (dest != NULL) {
+                while (dest->next != NULL)
+                    dest = dest->next;
+                dest->next = entry;
+            } else {
+                map->buckets[index] = entry;
+            }
 
-	    next = entry->next;
-	    entry->next = NULL;
-	    entry = next;
-	}
+            next = entry->next;
+            entry->next = NULL;
+            entry = next;
+        }
     }
 
     free(old_buckets);
@@ -189,9 +189,9 @@ void
 hmap_free(HMap *map)
 {
     if (map != NULL) {
-	hmap_clear(map);
-	free(map->buckets);
-	free(map);
+        hmap_clear(map);
+        free(map->buckets);
+        free(map);
     }
 }
 
@@ -204,15 +204,15 @@ hmap_get_entry_custom(HMap *map, const void *key, HMapCustomComparator *cmp, voi
     HMapEntry *entry = map->buckets[hmap_hash(map, key)];
 
     if (key == NULL) {
-	for (; entry != NULL; entry = entry->next) {
-	    if (entry->key == NULL)
-		return entry;
-	}
+        for (; entry != NULL; entry = entry->next) {
+            if (entry->key == NULL)
+                return entry;
+        }
     } else {
-	for (; entry != NULL; entry = entry->next) {
-	    if (cmp(key, entry->key, data) == 0)
-		return entry;
-	}
+        for (; entry != NULL; entry = entry->next) {
+            if (cmp(key, entry->key, data) == 0)
+                return entry;
+        }
     }
 
     return NULL;
@@ -242,15 +242,15 @@ hmap_get_entry(HMap *map, const void *key)
     HMapEntry *entry = map->buckets[hmap_hash(map, key)];
 
     if (key == NULL) {
-	for (; entry != NULL; entry = entry->next) {
-	    if (entry->key == NULL)
-		return entry;
-	}
+        for (; entry != NULL; entry = entry->next) {
+            if (entry->key == NULL)
+                return entry;
+        }
     } else {
-	for (; entry != NULL; entry = entry->next) {
-	    if (map->compare(key, entry->key) == 0)
-		return entry;
-	}
+        for (; entry != NULL; entry = entry->next) {
+            if (map->compare(key, entry->key) == 0)
+                return entry;
+        }
     }
 
     return NULL;
@@ -271,27 +271,27 @@ hmap_put(HMap *map, void *key, void *value)
 
     index = hmap_hash(map, key);
     if (key == NULL) {
-	for (entry = map->buckets[index]; entry != NULL; entry = entry->next) {
-	    if (entry->key == NULL) {
-		void *old_value = entry->value;
-		entry->value = value;
-		return old_value;
-	    }
-	}
+        for (entry = map->buckets[index]; entry != NULL; entry = entry->next) {
+            if (entry->key == NULL) {
+                void *old_value = entry->value;
+                entry->value = value;
+                return old_value;
+            }
+        }
     } else {
-	for (entry = map->buckets[index]; entry != NULL; entry = entry->next) {
-	    if (map->compare(key, entry->key) == 0) {
-		void *old_value = entry->value;
-		entry->value = value;
-		return old_value;
-	    }
-	}
+        for (entry = map->buckets[index]; entry != NULL; entry = entry->next) {
+            if (map->compare(key, entry->key) == 0) {
+                void *old_value = entry->value;
+                entry->value = value;
+                return old_value;
+            }
+        }
     }
 
     map->size++;
     if (map->size > map->threshold) {
-	hmap_rehash(map);
-	index = hmap_hash(map, key);
+        hmap_rehash(map);
+        index = hmap_hash(map, key);
     }
 
     entry = xmalloc(sizeof(HMapEntry));
@@ -323,7 +323,7 @@ hmap_remove(HMap *map, const void *key)
                 return value;
             }
             last = entry;
-	    }
+        }
     } else {
         for (entry = map->buckets[index]; entry != NULL; entry = entry->next) {
             if (map->compare(key, entry->key) == 0) {
@@ -368,12 +368,12 @@ hmap_foreach_value(HMap *map, void (*iterator)())
     uint32_t c;
 
     for (c = 0; c < map->buckets_length; c++) {
-	HMapEntry *entry;
-	for (entry = map->buckets[c]; entry != NULL; ) {
-	    HMapEntry *next = entry->next;
-	    iterator(entry->value);
-	    entry = next;
-	}
+        HMapEntry *entry;
+        for (entry = map->buckets[c]; entry != NULL; ) {
+            HMapEntry *next = entry->next;
+            iterator(entry->value);
+            entry = next;
+        }
     }
 }
 
@@ -383,12 +383,12 @@ hmap_foreach_key(HMap *map, void (*iterator)())
     uint32_t c;
 
     for (c = 0; c < map->buckets_length; c++) {
-	HMapEntry *entry;
-	for (entry = map->buckets[c]; entry != NULL; ) {
-	    HMapEntry *next = entry->next;
-	    iterator(entry->key);
-	    entry = next;
-	}
+        HMapEntry *entry;
+        for (entry = map->buckets[c]; entry != NULL; ) {
+            HMapEntry *next = entry->next;
+            iterator(entry->key);
+            entry = next;
+        }
     }
 }
 
@@ -398,13 +398,13 @@ hmap_clear(HMap *map)
     uint32_t c;
 
     for (c = 0; c < map->buckets_length; c++) {
-	HMapEntry *entry = map->buckets[c];
-	while (entry != NULL) {
-	    HMapEntry *next = entry->next;
-	    free(entry);
-	    entry = next;
-	}
-	map->buckets[c] = NULL;
+        HMapEntry *entry = map->buckets[c];
+        while (entry != NULL) {
+            HMapEntry *next = entry->next;
+            free(entry);
+            entry = next;
+        }
+        map->buckets[c] = NULL;
     }
 
     map->size = 0;

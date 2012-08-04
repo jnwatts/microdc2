@@ -114,13 +114,13 @@ void
 warn_file_error(int res, bool write, const char *filename)
 {
     if (write) {
-	warn(_("%s: Cannot write to file - %s\n"), quotearg(filename), errstr);
+        warn(_("%s: Cannot write to file - %s\n"), quotearg(filename), errstr);
     } else {
-	if (res < 0) {
-	    warn(_("%s: Cannot read from file - %s\n"), quotearg(filename), errstr);
-	} else {
-	    warn(_("%s: Premature end of file\n"), quotearg(filename));
-	}
+        if (res < 0) {
+            warn(_("%s: Cannot read from file - %s\n"), quotearg(filename), errstr);
+        } else {
+            warn(_("%s: Premature end of file\n"), quotearg(filename));
+        }
     }
 }
 
@@ -157,8 +157,8 @@ has_user_conn(DCUserInfo *ui, DCTransferDirection dir)
 {
     int c;
     for (c = 0; c < ui->conn_count; c++) {
-	if (ui->conn[c]->dir == dir)
-    	    return true;
+        if (ui->conn[c]->dir == dir)
+            return true;
     }
     return false;
 }
@@ -168,7 +168,7 @@ update_user_connection_name(DCUserConn *uc, const char *format, ...)
 {
     char *newname;
     va_list args;
-    
+
     va_start(args, format);
     newname = xvasprintf(format, args);
     va_end(args);
@@ -190,29 +190,29 @@ validate_nick(DCUserConn *uc, const char *nick)
 
     ui = hmap_remove(pending_userinfo, nick);
     if (ui != NULL) {
-    	if (ui->conn_count < DC_USER_MAX_CONN) {
-	    uc->info = ui;
-	    uc->info->refcount++;
-	    uc->info->conn[uc->info->conn_count++] = uc;
-	    hmap_remove(pending_userinfo, ui->nick);
-	    user_info_free(ui);
-	    update_user_connection_name(uc, "%s|", uc->info->nick);
-	    return true;
-	}
+        if (ui->conn_count < DC_USER_MAX_CONN) {
+            uc->info = ui;
+            uc->info->refcount++;
+            uc->info->conn[uc->info->conn_count++] = uc;
+            hmap_remove(pending_userinfo, ui->nick);
+            user_info_free(ui);
+            update_user_connection_name(uc, "%s|", uc->info->nick);
+            return true;
+        }
         warn(_("No more connections to user %s allowed.\n"), quotearg(nick));
-	user_info_free(ui);
-	return false;
+        user_info_free(ui);
+        return false;
     }
 
     ui = hmap_get(hub_users, nick);
     if (ui != NULL) {
-    	if (ui->conn_count < DC_USER_MAX_CONN) {
-    	    uc->info = ui;
-	    uc->info->refcount++;
-	    uc->info->conn[uc->info->conn_count++] = uc;
-	    update_user_connection_name(uc, "%s|", uc->info->nick);
-	    return true;
-	}
+        if (ui->conn_count < DC_USER_MAX_CONN) {
+            uc->info = ui;
+            uc->info->refcount++;
+            uc->info->conn[uc->info->conn_count++] = uc;
+            update_user_connection_name(uc, "%s|", uc->info->nick);
+            return true;
+        }
         warn(_("No more connections to user %s allowed.\n"), quotearg(nick));
         return false;
     }
@@ -224,10 +224,10 @@ static bool
 validate_direction(DCUserConn *uc, DCTransferDirection dir)
 {
     if (uc->dir != DC_DIR_UNKNOWN)
-    	return false; /* Shouldn't happen, but better be sure */
+        return false; /* Shouldn't happen, but better be sure */
 
     if (has_user_conn(uc->info, dir))
-    	return false;
+        return false;
 
     uc->dir = dir;
     update_user_connection_name(uc, "%s|%s", uc->info->nick, dir == DC_DIR_SEND ? _("UL") : _("DL"));
@@ -235,10 +235,10 @@ validate_direction(DCUserConn *uc, DCTransferDirection dir)
 
     /* Make new connection if we want to download but couldn't. */
     if (dir == DC_DIR_SEND
-	    && uc->info->conn_count < DC_USER_MAX_CONN
-    	    && !has_user_conn(uc->info, DC_DIR_RECEIVE)
-	    && uc->info->download_queue->cur > 0)
-	hub_connect_user(uc->info);
+            && uc->info->conn_count < DC_USER_MAX_CONN
+            && !has_user_conn(uc->info, DC_DIR_RECEIVE)
+            && uc->info->download_queue->cur > 0)
+        hub_connect_user(uc->info);
 
     return true;
 }
@@ -260,18 +260,18 @@ display_transfer_ended_msg(bool upload, DCUserConn *uc, bool success, const char
     if (uc->transfer_time == (time_t) -1) {
         str2 = xstrdup("");
     } else {
-	time(&now);
-	if (now == (time_t) -1) {
-	    warn(_("Cannot get current time - %s\n"), errstr);
+        time(&now);
+        if (now == (time_t) -1) {
+            warn(_("Cannot get current time - %s\n"), errstr);
             str2 = xstrdup("");
-	} else {
-	    str2 = xasprintf(_(" in %s (%s/s)"),
-	                elapsed_time_to_string(now - uc->transfer_time, timebuf),
-	                human_readable(
-	                    len/MAX(now - uc->transfer_time, 1), ratebuf,
-                            human_suppress_point_zero|human_autoscale|human_base_1024|human_SI|human_B,
-                            1, 1));
-	}
+        } else {
+            str2 = xasprintf(_(" in %s (%s/s)"),
+                             elapsed_time_to_string(now - uc->transfer_time, timebuf),
+                             human_readable(
+                                 len/MAX(now - uc->transfer_time, 1), ratebuf,
+                                 human_suppress_point_zero|human_autoscale|human_base_1024|human_SI|human_B,
+                                 1, 1));
+        }
     }
 
     va_start(args, extras_fmt);
@@ -279,15 +279,15 @@ display_transfer_ended_msg(bool upload, DCUserConn *uc, bool success, const char
     va_end(args);
 
     flag_putf(upload ? DC_DF_UPLOAD : DC_DF_DOWNLOAD,
-	_("%s: %s of %s %s%s. %s %s%s.\n"),
-	quotearg_n(0, uc->info->nick),
-	upload ? _("Upload") : _("Download"),
-	quote_n(1, base_name(uc->transfer_file)),
-	success ? _("succeeded") : _("failed"),
-	str1,
-        human_readable(len, sizebuf, human_suppress_point_zero|human_autoscale|human_base_1024|human_SI|human_B, 1, 1),
-	ngettext("transferred", "transferred", len),
-	str2);
+              _("%s: %s of %s %s%s. %s %s%s.\n"),
+              quotearg_n(0, uc->info->nick),
+              upload ? _("Upload") : _("Download"),
+              quote_n(1, base_name(uc->transfer_file)),
+              success ? _("succeeded") : _("failed"),
+              str1,
+              human_readable(len, sizebuf, human_suppress_point_zero|human_autoscale|human_base_1024|human_SI|human_B, 1, 1),
+              ngettext("transferred", "transferred", len),
+              str2);
 
     free(str1);
     free(str2);
@@ -312,7 +312,7 @@ handle_ended_upload(DCUserConn *uc, bool success, const char *reason)
         /* Only display "Upload failed" if "Starting upload" was
          * displayed previously.
          */
-	    display_transfer_ended_msg(true, uc, success, " (%s)", reason);
+        display_transfer_ended_msg(true, uc, success, " (%s)", reason);
         if (uc->occupied_slot) {
             used_ul_slots--;
             uc->occupied_slot = false;
@@ -398,11 +398,11 @@ user_connection_new(struct sockaddr_in *addr, int user_socket)
 
     pid = fork();
     if (pid < 0) {
-    	warn(_("Cannot create process - %s\n"), errstr);
-    	goto cleanup;
+        warn(_("Cannot create process - %s\n"), errstr);
+        goto cleanup;
     }
     if (pid == 0)
-	user_main(put_fd, get_fd, addr, user_socket);
+        user_main(put_fd, get_fd, addr, user_socket);
 
     if (close(get_fd[1]) != 0 || close(put_fd[0]) != 0)
         warn(_("Cannot close pipe - %s\n"), errstr);
@@ -411,7 +411,7 @@ user_connection_new(struct sockaddr_in *addr, int user_socket)
         warn(_("Cannot set non-blocking flag - %s\n"), errstr);
     /* The user socket is only used by the newly created user process. */
     if (user_socket >= 0 && close(user_socket) < 0)
-    	warn(_("Cannot close socket - %s\n"), errstr);
+        warn(_("Cannot close socket - %s\n"), errstr);
 
     uc = xmalloc(sizeof(DCUserConn));
     uc->pid = pid;
@@ -446,7 +446,7 @@ user_connection_new(struct sockaddr_in *addr, int user_socket)
     hmap_put(user_conns, uc->name, uc);
     return uc;
 
-  cleanup:
+cleanup:
     if (get_fd[0] != -1)
         close(get_fd[0]);
     if (get_fd[1] != -1)
@@ -474,23 +474,23 @@ user_disconnect(DCUserConn *uc)
     }
 
     if (uc->info != NULL) {
-    	int c;
-	for (c = 0; c < uc->info->conn_count; c++) {
-	    if (uc->info->conn[c] == uc)
-		break;
-	}
-	assert(c < uc->info->conn_count);
-	uc->info->conn[c] = NULL;
-    	uc->info->conn_count--;
-	for (; c < uc->info->conn_count; c++)
-	    uc->info->conn[c] = uc->info->conn[c+1];
-	user_info_free(uc->info);
+        int c;
+        for (c = 0; c < uc->info->conn_count; c++) {
+            if (uc->info->conn[c] == uc)
+                break;
+        }
+        assert(c < uc->info->conn_count);
+        uc->info->conn[c] = NULL;
+        uc->info->conn_count--;
+        for (; c < uc->info->conn_count; c++)
+            uc->info->conn[c] = uc->info->conn[c+1];
+        user_info_free(uc->info);
     }
 
     FD_CLR(uc->get_mq->fd, &read_fds);
     FD_CLR(uc->put_mq->fd, &write_fds);
     if (close(uc->get_mq->fd) != 0 || close(uc->put_mq->fd) != 0)
-	warn(_("Cannot close pipe - %s\n"), errstr);
+        warn(_("Cannot close pipe - %s\n"), errstr);
     msgq_free(uc->get_mq);
     uc->get_mq = NULL;
     msgq_free(uc->put_mq);
@@ -508,18 +508,18 @@ user_conn_status_to_string(DCUserConn *uc, time_t now)
     char *status;
 
     if (uc->transferring) {
-    	int percent = (uc->transfer_pos * 100) / MAX(uc->transfer_total, 1);
-	int rate = 0;
+        int percent = (uc->transfer_pos * 100) / MAX(uc->transfer_total, 1);
+        int rate = 0;
 
-	if (now != (time_t) -1 && uc->transfer_time != (time_t) -1)
-	    rate = (uc->transfer_pos-uc->transfer_start)/1024/MAX(now-uc->transfer_time, 1);
-	status = xasprintf(
-	        uc->dir == DC_DIR_RECEIVE
-		    ? _("Downloading %3d%% (at %5d kb/s) %s")
-		    : _("Uploading   %3d%% (at %5d kb/s) %s"),
-                percent, rate, base_name(uc->transfer_file));
+        if (now != (time_t) -1 && uc->transfer_time != (time_t) -1)
+            rate = (uc->transfer_pos-uc->transfer_start)/1024/MAX(now-uc->transfer_time, 1);
+        status = xasprintf(
+                     uc->dir == DC_DIR_RECEIVE
+                     ? _("Downloading %3d%% (at %5d kb/s) %s")
+                     : _("Uploading   %3d%% (at %5d kb/s) %s"),
+                     percent, rate, base_name(uc->transfer_file));
     } else {
-	status = xasprintf(_("Idle"));
+        status = xasprintf(_("Idle"));
     }
 
     return status;
@@ -575,46 +575,46 @@ user_result_fd_readable(DCUserConn *uc)
             break;
         }
         case DC_MSG_WANT_DOWNLOAD: {
-    	    bool reply;
+            bool reply;
 
-    	    msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_END);
-    	    reply = !has_user_conn(uc->info, DC_DIR_RECEIVE)
-    	            && (uc->queue_pos < uc->info->download_queue->cur);
+            msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_END);
+            reply = !has_user_conn(uc->info, DC_DIR_RECEIVE)
+                    && (uc->queue_pos < uc->info->download_queue->cur);
             msgq_put(uc->put_mq, MSGQ_BOOL, reply, MSGQ_END);
             FD_SET(uc->put_mq->fd, &write_fds);
             break;
         }
         case DC_MSG_VALIDATE_DIR: {
-    	    DCTransferDirection dir;
-    	    bool reply;
+            DCTransferDirection dir;
+            bool reply;
 
-    	    msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_INT, &dir, MSGQ_END);
-    	    reply = validate_direction(uc, dir);
-    	    msgq_put(uc->put_mq, MSGQ_BOOL, reply, MSGQ_END);
-    	    FD_SET(uc->put_mq->fd, &write_fds);
-    	    break;
+            msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_INT, &dir, MSGQ_END);
+            reply = validate_direction(uc, dir);
+            msgq_put(uc->put_mq, MSGQ_BOOL, reply, MSGQ_END);
+            FD_SET(uc->put_mq->fd, &write_fds);
+            break;
         }
         case DC_MSG_VALIDATE_NICK: {
-    	    char *nick;
-    	    bool reply;
-    
-    	    msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_STR, &nick, MSGQ_END);
-    	    reply = validate_nick(uc, nick);
-    	    free(nick);
+            char *nick;
+            bool reply;
+
+            msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_STR, &nick, MSGQ_END);
+            reply = validate_nick(uc, nick);
+            free(nick);
             if (uc->info != NULL) {
-	        /* The user can only be DC_ACTIVE_SENT_PASSIVE if we are passive.
-	         * So if we managed to connect to them even though we were passive,
-	         * they must be active.
-	         */
-	        if (uc->info->active_state == DC_ACTIVE_SENT_PASSIVE)
-		    uc->info->active_state = DC_ACTIVE_KNOWN_ACTIVE;
+                /* The user can only be DC_ACTIVE_SENT_PASSIVE if we are passive.
+                 * So if we managed to connect to them even though we were passive,
+                 * they must be active.
+                 */
+                if (uc->info->active_state == DC_ACTIVE_SENT_PASSIVE)
+                    uc->info->active_state = DC_ACTIVE_KNOWN_ACTIVE;
                 /* The user can only be DC_ACTIVE_SENT_ACTIVE if we are active.
                  * We must set to DC_ACTIVE_UNKNOWN because otherwise
                  * hub.c:hub_connect_user might say "ConnectToMe already sent to
                  * user" next time we're trying to connect to them.
                  */
-                 if (uc->info->active_state == DC_ACTIVE_SENT_ACTIVE)
-                     uc->info->active_state = DC_ACTIVE_UNKNOWN;
+                if (uc->info->active_state == DC_ACTIVE_SENT_ACTIVE)
+                    uc->info->active_state = DC_ACTIVE_UNKNOWN;
             }
             msgq_put(uc->put_mq, MSGQ_BOOL, reply, MSGQ_END);
             FD_SET(uc->put_mq->fd, &write_fds);
@@ -626,12 +626,12 @@ user_result_fd_readable(DCUserConn *uc)
             FD_SET(uc->put_mq->fd, &write_fds);
             break;
         case DC_MSG_TRANSFER_STATUS:
-    	    msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_INT64, &uc->transfer_pos, MSGQ_END);
-    	    break;
+            msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_INT64, &uc->transfer_pos, MSGQ_END);
+            break;
         case DC_MSG_TRANSFER_START: {
             char *share_filename, *local_filename;
-    	    msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_STR, &local_filename, MSGQ_STR, &share_filename, MSGQ_INT64, &uc->transfer_start, MSGQ_INT64, &uc->transfer_total, MSGQ_END);
-    	    if (uc->transfer_start != 0) {
+            msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_STR, &local_filename, MSGQ_STR, &share_filename, MSGQ_INT64, &uc->transfer_start, MSGQ_INT64, &uc->transfer_total, MSGQ_END);
+            if (uc->transfer_start != 0) {
                 flag_putf(DC_DF_CONNECTIONS, _("%s: Starting %s of %s (%" PRIu64 " of %" PRIu64 " %s).\n"),
                           quotearg_n(0, uc->info->nick),
                           uc->dir == DC_DIR_SEND ? _("upload") : _("download"),
@@ -746,8 +746,8 @@ user_result_fd_readable(DCUserConn *uc)
         case DC_MSG_TERMINATING:
             /* The TERMINATING message will be sent from users when they're about to
              * shut down properly.
-	     * XXX: This message may contain the reason it was terminated in the future.
-	     */
+            * XXX: This message may contain the reason it was terminated in the future.
+            */
             msgq_get(uc->get_mq, MSGQ_INT, &id, MSGQ_END);
             user_disconnect(uc); /* MSG: reason from DC_MSG_TERMINATING */
             return; /* not break! this is the last message. */
@@ -767,9 +767,9 @@ transfer_completion_generator(DCCompletionInfo *ci)
     /* XXX: perhaps use a tmap for transfers as well? to speed up this */
     hmap_iterator(user_conns, &it);
     while (it.has_next(&it)) {
-    	DCUserConn *uc = it.next(&it);
-	if (strleftcmp(ci->word, uc->name) == 0)
-	    ptrv_append(ci->results, new_completion_entry(uc->name, NULL));
+        DCUserConn *uc = it.next(&it);
+        if (strleftcmp(ci->word, uc->name) == 0)
+            ptrv_append(ci->results, new_completion_entry(uc->name, NULL));
     }
     ptrv_sort(ci->results, completion_entry_display_compare);
 }
@@ -791,12 +791,12 @@ signal_received(int signal)
 
     signal_char = signal;
     if (write(signal_pipe[1], &signal, sizeof(uint8_t)) < sizeof(uint8_t)) {
-	/* Die only if the signal is fatal.
-         * If SIGCHLD is not delivered, we would be stuck in a
-         * state where the user cannot enter any commands.
-         */
-	if (signal == SIGTERM || signal == SIGINT || signal == SIGCHLD)
-	    die(_("Cannot write to signal pipe - %s\n"), errstr); /* die OK */
+        /* Die only if the signal is fatal.
+             * If SIGCHLD is not delivered, we would be stuck in a
+             * state where the user cannot enter any commands.
+             */
+        if (signal == SIGTERM || signal == SIGINT || signal == SIGCHLD)
+            die(_("Cannot write to signal pipe - %s\n"), errstr); /* die OK */
         warn(_("Cannot write to signal pipe - %s\n"), errstr);
     }
 }
@@ -812,9 +812,9 @@ read_signal_input(void)
      * was data).
      */
     if (read(signal_pipe[0], &signal, sizeof(uint8_t)) < 0) {
-	warn(_("Cannot read from signal pipe - %s\n"), errstr);
-	running = false;
-	return;
+        warn(_("Cannot read from signal pipe - %s\n"), errstr);
+        running = false;
+        return;
     }
 
     if (signal == SIGTERM) {
@@ -877,25 +877,25 @@ run_script(const char *filename, bool allow_missing)
 
     file = fopen(filename, "r");
     if (file == NULL) {
-    	if (!allow_missing || errno != ENOENT)
-    	    warn(_("%s: Cannot open file - %s\n"), quotearg(filename), errstr);
-    	return;
+        if (!allow_missing || errno != ENOENT)
+            warn(_("%s: Cannot open file - %s\n"), quotearg(filename), errstr);
+        return;
     }
     while (getline(&line, &line_len, file) > 0) {
-    	int c;
-	for (c = strlen(line)-1; c > 0 && (line[c] == '\n' || line[c] == '\r'); c--)
-	    line[c] = '\0';
-    	command_execute(line);
+        int c;
+        for (c = strlen(line)-1; c > 0 && (line[c] == '\n' || line[c] == '\r'); c--)
+            line[c] = '\0';
+        command_execute(line);
     }
     free(line);
     if (ferror(file)) {
-    	warn(_("%s: Cannot read from file - %s\n"), quotearg(filename), errstr);
-	if (fclose(file) < 0)
-	    warn(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
-	return;
+        warn(_("%s: Cannot read from file - %s\n"), quotearg(filename), errstr);
+        if (fclose(file) < 0)
+            warn(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
+        return;
     }
     if (fclose(file) < 0)
-	warn(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
+        warn(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
 }
 
 bool
@@ -916,11 +916,11 @@ add_search_result(struct sockaddr_in *addr, char *results, uint32_t resultlen)
     if (search_udpmsg_out->cur == 0) {
     	res = sendto(search_socket, results, resultlen, 0, (struct sockaddr *) addr, sizeof(struct sockaddr_in));
         if (res == 0 || (res < 0 && errno != EAGAIN)) {
-	        warn_socket_error(res, true, _("user (search result)"));
-	        return;
-	    }
-	    if (res == resultlen)
-	        return;
+            warn_socket_error(res, true, _("user (search result)"));
+            return;
+        }
+        if (res == resultlen)
+            return;
     }
     */
 
@@ -948,7 +948,7 @@ search_input_available(void)
     addrlen = sizeof(addr);
     res = byteq_recvfrom(search_recvq, search_socket, 0, (struct sockaddr *) &addr, &addrlen);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-    	warn_socket_error(res, false, _("user (search result)"));
+        warn_socket_error(res, false, _("user (search result)"));
         return;
     }
 
@@ -965,14 +965,14 @@ search_now_writable(void)
         DCUDPMessage *msg = search_udpmsg_out->buf[0];
         int res;
 
-    	/* <Erwin> I don't think you can send off half a UDP packet, no.
-    	 * Therefore we don't attempt to use non-blocking I/O on search_socket.
-	    */
-    	dump_command(_("==>"), msg->data, msg->len);
+        /* <Erwin> I don't think you can send off half a UDP packet, no.
+         * Therefore we don't attempt to use non-blocking I/O on search_socket.
+        */
+        dump_command(_("==>"), msg->data, msg->len);
 
         res = sendto(search_socket, msg->data, msg->len, 0, (struct sockaddr *) &msg->addr, sizeof(struct sockaddr_in));
         if (res == 0 || (res < 0 && errno != EAGAIN))
-	        warn_socket_error(res, true, _("user (search result)"));
+            warn_socket_error(res, true, _("user (search result)"));
         if (res < 0 && errno == EAGAIN)
             break;
 
@@ -987,10 +987,10 @@ static void
 disable_active(void)
 {
     if (listen_socket >= 0) {
-	if (close(listen_socket) < 0)
-	    warn(_("Cannot close socket - %s\n"), errstr); /* XXX: (user connections server/listen socket) */
-	FD_CLR(listen_socket, &read_fds);
-	listen_socket = -1;
+        if (close(listen_socket) < 0)
+            warn(_("Cannot close socket - %s\n"), errstr); /* XXX: (user connections server/listen socket) */
+        FD_CLR(listen_socket, &read_fds);
+        listen_socket = -1;
     }
 }
 
@@ -1003,28 +1003,28 @@ enable_search(void)
 
     search_socket = socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
     if (search_socket < 0) {
-	warn(_("Cannot create socket - %s\n"), errstr);
-	return false;
+        warn(_("Cannot create socket - %s\n"), errstr);
+        return false;
     }
 
     if (!fd_set_nonblock_flag(search_socket, true)) {
-    	warn(_("Cannot set non-blocking flag - %s\n"), errstr);
-	return false;
+        warn(_("Cannot set non-blocking flag - %s\n"), errstr);
+        return false;
     }
 
     val = 1;
     if (setsockopt(search_socket, SOL_SOCKET, SO_REUSEADDR, &val, sizeof(val)) < 0)
-	warn(_("Cannot enable address reusing - %s\n"), errstr);
+        warn(_("Cannot enable address reusing - %s\n"), errstr);
 
     if (listen_port != 0) {
-    	addr_len = sizeof(addr);
-	addr.sin_family = AF_INET;
-	addr.sin_port = htons(listen_port);
-	addr.sin_addr.s_addr = htonl(INADDR_ANY);
-	if (bind(search_socket, (struct sockaddr *) &addr, addr_len) < 0) {
-	    warn(_("Cannot bind to address - %s\n"), errstr);
-	    return false;
-	}
+        addr_len = sizeof(addr);
+        addr.sin_family = AF_INET;
+        addr.sin_port = htons(listen_port);
+        addr.sin_addr.s_addr = htonl(INADDR_ANY);
+        if (bind(search_socket, (struct sockaddr *) &addr, addr_len) < 0) {
+            warn(_("Cannot bind to address - %s\n"), errstr);
+            return false;
+        }
     }
 
     FD_SET(search_socket, &read_fds);
@@ -1049,7 +1049,7 @@ enable_active(uint16_t port)
 
     /* Set non-blocking */
     if (!fd_set_nonblock_flag(listen_socket, true)) {
-    	warn(_("Cannot set non-blocking flag - %s\n"), errstr);
+        warn(_("Cannot set non-blocking flag - %s\n"), errstr);
         disable_active();
         return false;
     }
@@ -1062,14 +1062,14 @@ enable_active(uint16_t port)
     /* Bind to address. If not binding, port is selected randomly. */
     addr_len = sizeof(addr);
     if (port != 0) {
-    	addr.sin_family = AF_INET;
+        addr.sin_family = AF_INET;
         addr.sin_port = htons(port);
         if (force_listen_addr.s_addr != INADDR_NONE) {
             addr.sin_addr.s_addr = force_listen_addr.s_addr;
         } else {
             addr.sin_addr.s_addr = htonl(INADDR_ANY);
         }
-    	if (bind(listen_socket, (struct sockaddr *) &addr, addr_len) < 0) {
+        if (bind(listen_socket, (struct sockaddr *) &addr, addr_len) < 0) {
             warn(_("Cannot bind to address - %s\n"), errstr);
             disable_active();
             return false;
@@ -1085,7 +1085,7 @@ enable_active(uint16_t port)
 
     /* Find port we are listening on. */
     if (getsockname(listen_socket, (struct sockaddr *) &addr, &addr_len) < 0) {
-    	warn(_("Cannot get socket address - %s\n"), errstr);
+        warn(_("Cannot get socket address - %s\n"), errstr);
         disable_active();
         return false;
     }
@@ -1101,17 +1101,17 @@ set_active(bool newactive, uint16_t port)
 {
     if (newactive) {
         disable_active();
-    	if (!enable_active(port))
-	        return false;
+        if (!enable_active(port))
+            return false;
     } else {
-    	disable_active();
+        disable_active();
         listen_port = port;
     }
     /* Start of disable_search. */
     if (search_socket >= 0) {
-	    if (close(search_socket) < 0)
+        if (close(search_socket) < 0)
             warn(_("Cannot close socket - %s\n"), errstr);
-	    search_socket = -1;
+        search_socket = -1;
     }
     /* End of disable_search. */
     enable_search();
@@ -1129,8 +1129,8 @@ handle_listen_connection(void)
     addr_len = sizeof(addr);
     socket = accept(listen_socket, (struct sockaddr *) &addr, &addr_len);
     if (socket < 0) {
-	warn(_("Cannot accept user connection - %s\n"), errstr);
-	return;
+        warn(_("Cannot accept user connection - %s\n"), errstr);
+        return;
     }
 
     flag_putf(DC_DF_CONNECTIONS, _("User from %s connected.\n"), sockaddr_in_str(&addr));
@@ -1147,12 +1147,12 @@ main (int argc, char **argv)
     struct sigaction sigact;
 
     set_quoting_style(NULL, escape_quoting_style);
-    
+
     if (setlocale(LC_ALL, "") == NULL)
-       warn(_("%s: Cannot set locale: %s\n"), argv[0], errstr);
+        warn(_("%s: Cannot set locale: %s\n"), argv[0], errstr);
 #ifdef ENABLE_NLS
     if (bindtextdomain(PACKAGE, LOCALEDIR) == NULL)
-       warn(_("%s: Cannot bind message domain: %s\n"), argv[0], errstr);
+        warn(_("%s: Cannot bind message domain: %s\n"), argv[0], errstr);
     if (textdomain(PACKAGE) == NULL)
         warn(_("%s: Cannot set message domain: %s\n"), argv[0], errstr);
 #endif
@@ -1161,46 +1161,46 @@ main (int argc, char **argv)
     get_package_file("config", &config_file);
 
     while (true) {
-	    c = getopt_long(argc, argv, short_opts, long_opts, NULL);
-	    if (c == -1)
-	        break;
+        c = getopt_long(argc, argv, short_opts, long_opts, NULL);
+        if (c == -1)
+            break;
 
-	    switch (c) {
-	    case 'c': /* --config */
-	        custom_config = true;
-	        free(config_file);
-	        config_file = xstrdup(optarg);
-	        break;
-	    case 'n': /* --no-config */
-	        free(config_file);
-	        config_file = NULL;
-	        break;
-	    case HELP_OPT: /* --help */
-	        printf(_("Usage: %s [OPTION]...\n"), quotearg(argv[0]));
-	        puts(_("Start microdc, a command-line based Direct Connect client.\n"));
-	        printf(_("  -n, --no-config  do not read config file on startup\n"));
-	        printf(_("      --help       display this help and exit\n"));
-	        printf(_("      --version    output version information and exit\n"));
-	        printf(_("\nReport bugs to <%s>.\n"), PACKAGE_BUGREPORT);
-	        exit(EXIT_SUCCESS);
-	    case VERSION_OPT: /* --version */
-	        version_etc(stdout, NULL, PACKAGE, VERSION, /*"Oskar Liljeblad",*/ "Vladimir Chugunov", NULL);
-	        exit(EXIT_SUCCESS);
+        switch (c) {
+        case 'c': /* --config */
+            custom_config = true;
+            free(config_file);
+            config_file = xstrdup(optarg);
+            break;
+        case 'n': /* --no-config */
+            free(config_file);
+            config_file = NULL;
+            break;
+        case HELP_OPT: /* --help */
+            printf(_("Usage: %s [OPTION]...\n"), quotearg(argv[0]));
+            puts(_("Start microdc, a command-line based Direct Connect client.\n"));
+            printf(_("  -n, --no-config  do not read config file on startup\n"));
+            printf(_("      --help       display this help and exit\n"));
+            printf(_("      --version    output version information and exit\n"));
+            printf(_("\nReport bugs to <%s>.\n"), PACKAGE_BUGREPORT);
+            exit(EXIT_SUCCESS);
+        case VERSION_OPT: /* --version */
+            version_etc(stdout, NULL, PACKAGE, VERSION, /*"Oskar Liljeblad",*/ "Vladimir Chugunov", NULL);
+            exit(EXIT_SUCCESS);
         default:
             exit(EXIT_FAILURE);
-	    }
+        }
     }
-    
+
     if (pipe(signal_pipe) < 0) {
-    	warn(_("Cannot create pipe pair - %s\n"), errstr);
-	    goto cleanup;
+        warn(_("Cannot create pipe pair - %s\n"), errstr);
+        goto cleanup;
     }
 
     main_process_id = getpid();
     sigact.sa_handler = signal_received;
     if (sigemptyset(&sigact.sa_mask) < 0) {
         warn(_("Cannot empty signal set - %s\n"), errstr);
-	    goto cleanup;
+        goto cleanup;
     }
     sigact.sa_flags = SA_RESTART;
 #ifdef HAVE_STRUCT_SIGACTION_SA_RESTORER
@@ -1210,16 +1210,16 @@ main (int argc, char **argv)
      * also be registered in user.c, either with an action or as ignored.
      */
     if (sigaction(SIGINT,  &sigact, NULL) < 0 ||
-        sigaction(SIGTERM, &sigact, NULL) < 0 ||
-        sigaction(SIGUSR1, &sigact, NULL) < 0 ||
-        sigaction(SIGCHLD, &sigact, NULL) < 0) {
+            sigaction(SIGTERM, &sigact, NULL) < 0 ||
+            sigaction(SIGUSR1, &sigact, NULL) < 0 ||
+            sigaction(SIGCHLD, &sigact, NULL) < 0) {
         warn(_("Cannot register signal handler - %s\n"), errstr);
-	    goto cleanup;
+        goto cleanup;
     }
     sigact.sa_handler = SIG_IGN;
     if (sigaction(SIGPIPE, &sigact, NULL) < 0) {
         warn(_("Cannot register signal handler - %s\n"), errstr);
-	    goto cleanup;
+        goto cleanup;
     }
 
     FD_ZERO(&read_fds);
@@ -1251,8 +1251,8 @@ main (int argc, char **argv)
     download_dir = xstrdup(".");
     tmpdir = tempdir();
     if (tmpdir == NULL) {
-	    warn(_("Cannot find directory for temporary files - %s\n"), errstr);
-	    goto cleanup;
+        warn(_("Cannot find directory for temporary files - %s\n"), errstr);
+        goto cleanup;
     }
     {
         char *filename = xasprintf("%s.%d", PACKAGE, getpid());
@@ -1265,9 +1265,9 @@ main (int argc, char **argv)
     if (!local_file_list_update_init())
         goto cleanup;
     if (!set_active(false, listen_port))
-    	goto cleanup;
+        goto cleanup;
     if (!enable_search())
-    	goto cleanup;
+        goto cleanup;
     my_ul_slots = 3;
 
     if (!lookup_init())
@@ -1289,39 +1289,39 @@ main (int argc, char **argv)
     screen_prepare();
 
     while (running) {
-    	fd_set res_read_fds;
-	    fd_set res_write_fds;
-    	int res;
+        fd_set res_read_fds;
+        fd_set res_write_fds;
+        int res;
         struct timeval tv;
         tv.tv_sec = 1;
         tv.tv_usec = 0;
 
         screen_redisplay_prompt();
 
-	    res_read_fds = read_fds;
-	    res_write_fds = write_fds;
-    	res = TEMP_FAILURE_RETRY(select(FD_SETSIZE, &res_read_fds, &res_write_fds, NULL, &tv));
-	    if (res < 0) {
-	        warn(_("Cannot select - %s\n"), errstr);
-	        break;
-	    }
+        res_read_fds = read_fds;
+        res_write_fds = write_fds;
+        res = TEMP_FAILURE_RETRY(select(FD_SETSIZE, &res_read_fds, &res_write_fds, NULL, &tv));
+        if (res < 0) {
+            warn(_("Cannot select - %s\n"), errstr);
+            break;
+        }
 
-    	if (running && FD_ISSET(signal_pipe[0], &res_read_fds))
-	        read_signal_input();
-    	if (running && FD_ISSET(STDIN_FILENO, &res_read_fds))
-    	    screen_read_input();
-    	if (running && listen_socket >= 0 && FD_ISSET(listen_socket, &res_read_fds))
-	        handle_listen_connection();
-	    if (running && hub_socket >= 0 && FD_ISSET(hub_socket, &res_read_fds))
-	        hub_input_available();
-	    if (running && hub_socket >= 0 && FD_ISSET(hub_socket, &res_write_fds))
-	        hub_now_writable();
+        if (running && FD_ISSET(signal_pipe[0], &res_read_fds))
+            read_signal_input();
+        if (running && FD_ISSET(STDIN_FILENO, &res_read_fds))
+            screen_read_input();
+        if (running && listen_socket >= 0 && FD_ISSET(listen_socket, &res_read_fds))
+            handle_listen_connection();
+        if (running && hub_socket >= 0 && FD_ISSET(hub_socket, &res_read_fds))
+            hub_input_available();
+        if (running && hub_socket >= 0 && FD_ISSET(hub_socket, &res_write_fds))
+            hub_now_writable();
         if (running)
             check_hub_activity();
-	    if (running && search_socket >= 0 && FD_ISSET(search_socket, &res_read_fds))
-    	    search_input_available();
-	    if (running && search_socket >= 0 && FD_ISSET(search_socket, &res_write_fds))
-	        search_now_writable();
+        if (running && search_socket >= 0 && FD_ISSET(search_socket, &res_read_fds))
+            search_input_available();
+        if (running && search_socket >= 0 && FD_ISSET(search_socket, &res_write_fds))
+            search_now_writable();
         if (running && FD_ISSET(lookup_request_mq->fd, &res_write_fds))
             lookup_request_fd_writable();
         if (running && FD_ISSET(lookup_result_mq->fd, &res_read_fds))
@@ -1335,18 +1335,18 @@ main (int argc, char **argv)
         if (running && FD_ISSET(update_result_mq->fd, &res_read_fds))
             update_result_fd_readable();
 
-	    if (running) {
-	        HMapIterator it;
+        if (running) {
+            HMapIterator it;
 
-	        hmap_iterator(user_conns, &it);
-	        while (running && it.has_next(&it)) {
-	    	    DCUserConn *uc = it.next(&it);
-	    	    if (uc->put_mq != NULL && FD_ISSET(uc->put_mq->fd, &res_write_fds))
-	    	        user_request_fd_writable(uc);
-                    if (uc->get_mq != NULL && FD_ISSET(uc->get_mq->fd, &res_read_fds))
-                        user_result_fd_readable(uc);
-	        }
-	    }
+            hmap_iterator(user_conns, &it);
+            while (running && it.has_next(&it)) {
+                DCUserConn *uc = it.next(&it);
+                if (uc->put_mq != NULL && FD_ISSET(uc->put_mq->fd, &res_write_fds))
+                    user_request_fd_writable(uc);
+                if (uc->get_mq != NULL && FD_ISSET(uc->get_mq->fd, &res_read_fds))
+                    user_result_fd_readable(uc);
+            }
+        }
     }
 
 cleanup:
@@ -1379,7 +1379,7 @@ cleanup:
     hmap_free(user_conns);
 
     if (our_filelist != NULL)
-    	filelist_free(our_filelist);
+        filelist_free(our_filelist);
 
     set_main_charset(NULL);
     set_hub_charset(NULL);
@@ -1395,49 +1395,49 @@ cleanup:
     free(listing_dir);
 
     if (delete_files != NULL) {
-	    for (c = 0; c < delete_files->cur; c++) {
-    	        char *filename = delete_files->buf[c];
-    	        struct stat st;
+        for (c = 0; c < delete_files->cur; c++) {
+            char *filename = delete_files->buf[c];
+            struct stat st;
 
-	        if (stat(filename, &st) < 0) {
-		        if (errno != ENOENT)
-	    	        warn(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
-		        free(filename);
-		        continue;
-	        }
-    	    if (unlink(filename) < 0)
-		        warn(_("%s: Cannot remove file - %s\n"), quotearg(filename), errstr);
-	        free(filename);
-	    }
-	    ptrv_free(delete_files);
+            if (stat(filename, &st) < 0) {
+                if (errno != ENOENT)
+                    warn(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
+                free(filename);
+                continue;
+            }
+            if (unlink(filename) < 0)
+                warn(_("%s: Cannot remove file - %s\n"), quotearg(filename), errstr);
+            free(filename);
+        }
+        ptrv_free(delete_files);
     }
 
     if (delete_dirs != NULL) {
-	    for (c = 0; c < delete_dirs->cur; c++) {
-    	        char *filename = delete_dirs->buf[c];
-    	        struct stat st;
+        for (c = 0; c < delete_dirs->cur; c++) {
+            char *filename = delete_dirs->buf[c];
+            struct stat st;
 
-	        if (stat(filename, &st) < 0) {
-		        if (errno != ENOENT)
-	    	        warn(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
-		        free(filename);
-		        continue;
-	        }
-    	    if (rmdir(filename) < 0)
-		        warn(_("%s: Cannot remove file - %s\n"), quotearg(filename), errstr);
-	        free(filename);
-	    }
-	    ptrv_free(delete_dirs);
+            if (stat(filename, &st) < 0) {
+                if (errno != ENOENT)
+                    warn(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
+                free(filename);
+                continue;
+            }
+            if (rmdir(filename) < 0)
+                warn(_("%s: Cannot remove file - %s\n"), quotearg(filename), errstr);
+            free(filename);
+        }
+        ptrv_free(delete_dirs);
     }
 
     if (search_socket >= 0 && close(search_socket) < 0)
-    	warn(_("Cannot close search results socket - %s\n"), errstr);
+        warn(_("Cannot close search results socket - %s\n"), errstr);
     if (listen_socket >= 0 && close(listen_socket) < 0)
-    	warn(_("Cannot close user connections socket - %s\n"), errstr);
+        warn(_("Cannot close user connections socket - %s\n"), errstr);
     if (signal_pipe[0] >= 0 && close(signal_pipe[0]) < 0)
-    	warn(_("Cannot close signal pipe - %s\n"), errstr);
+        warn(_("Cannot close signal pipe - %s\n"), errstr);
     if (signal_pipe[1] >= 0 && close(signal_pipe[1]) < 0)
-    	warn(_("Cannot close signal pipe - %s\n"), errstr);
+        warn(_("Cannot close signal pipe - %s\n"), errstr);
 
     free(config_file);
 

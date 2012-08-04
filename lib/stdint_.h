@@ -35,17 +35,17 @@
 #endif
 #if defined(__sun) && HAVE_SYS_INTTYPES_H
 # include <sys/inttypes.h>
-  /* Solaris 7 <sys/inttypes.h> has the types except the *_fast*_t types, and
-     the macros except for *_FAST*_*, INTPTR_MIN, PTRDIFF_MIN, PTRDIFF_MAX.
-     But note that <sys/int_types.h> contains only the type definitions!  */
+/* Solaris 7 <sys/inttypes.h> has the types except the *_fast*_t types, and
+   the macros except for *_FAST*_*, INTPTR_MIN, PTRDIFF_MIN, PTRDIFF_MAX.
+   But note that <sys/int_types.h> contains only the type definitions!  */
 # define _STDINT_H_HAVE_SYSTEM_INTTYPES
 #endif
 #if (defined(__hpux) || defined(_AIX)) && HAVE_INTTYPES_H
 # include <inttypes.h>
-  /* HP-UX 10 <inttypes.h> has nearly everything, except UINT_LEAST8_MAX,
-     UINT_FAST8_MAX, PTRDIFF_MIN, PTRDIFF_MAX.  */
-  /* AIX 4 <inttypes.h> has nearly everything, except INTPTR_MIN, INTPTR_MAX,
-     UINTPTR_MAX, PTRDIFF_MIN, PTRDIFF_MAX.  */
+/* HP-UX 10 <inttypes.h> has nearly everything, except UINT_LEAST8_MAX,
+   UINT_FAST8_MAX, PTRDIFF_MIN, PTRDIFF_MAX.  */
+/* AIX 4 <inttypes.h> has nearly everything, except INTPTR_MIN, INTPTR_MAX,
+   UINTPTR_MAX, PTRDIFF_MIN, PTRDIFF_MAX.  */
 # define _STDINT_H_HAVE_SYSTEM_INTTYPES
 #endif
 #if !(defined(UNIX_CYGWIN32) && defined(__BIT_TYPES_DEFINED__))

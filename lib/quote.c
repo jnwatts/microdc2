@@ -29,7 +29,7 @@
 char const *
 quote_n (int n, char const *name)
 {
-  return quotearg_n_style (n, locale_quoting_style, name);
+    return quotearg_n_style (n, locale_quoting_style, name);
 }
 
 /* Return an unambiguous printable representation of NAME,
@@ -37,5 +37,5 @@ quote_n (int n, char const *name)
 char const *
 quote (char const *name)
 {
-  return quote_n (0, name);
+    return quote_n (0, name);
 }

@@ -29,41 +29,41 @@
 static char *
 copy_string_result (char *dest, char const *src)
 {
-  if (! src)
-    return 0;
-  return strcpy (dest, src);
+    if (! src)
+        return 0;
+    return strcpy (dest, src);
 }
 
 static struct tm *
 copy_tm_result (struct tm *dest, struct tm const *src)
 {
-  if (! src)
-    return 0;
-  *dest = *src;
-  return dest;
+    if (! src)
+        return 0;
+    *dest = *src;
+    return dest;
 }
 
 
 char *
 asctime_r (struct tm const * restrict tm, char * restrict buf)
 {
-  return copy_string_result (buf, asctime (tm));
+    return copy_string_result (buf, asctime (tm));
 }
 
 char *
 ctime_r (time_t const *t, char *buf)
 {
-  return copy_string_result (buf, ctime (t));
+    return copy_string_result (buf, ctime (t));
 }
 
 struct tm *
 gmtime_r (time_t const * restrict t, struct tm * restrict tp)
 {
-  return copy_tm_result (tp, gmtime (t));
+    return copy_tm_result (tp, gmtime (t));
 }
 
 struct tm *
 localtime_r (time_t const * restrict t, struct tm * restrict tp)
 {
-  return copy_tm_result (tp, localtime (t));
+    return copy_tm_result (tp, localtime (t));
 }

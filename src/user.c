@@ -84,24 +84,24 @@ struct _DCUserConnLocal {
     PtrV*  supports;
 
     //union {
-      //struct {
-        char *share_file;	/* complete filename in shared file namespace. */
-        char *local_file;	/* complete filename in local physical file namespace. */
-        int transfer_fd;	/* file descriptor for opened local_file */
-        uint64_t file_pos;	/* how much of local_file that has been written */
-        uint64_t final_pos;	/* how much of local_file shuld be written */
-        uint64_t file_size;	/* the final size of local_file */
-        uint64_t transfer_pos;	/* how much that has been read (but not necessarily written yet) */
-        bool local_exists;	/* does local_file exist already? */
-      //} dl;
-      //struct {
-        //char *share_file;	/* complete filename in shared file namespace. */
-        //char *local_file;	/* complete filename in local physical file namespace. */
-        //int fd;			/* file descriptor for opened local_file */
-        //uint64_t file_pos;	/* how much of local_file that has been read */
-        //uint64_t file_size;	/* the size of local_file */
-        //uint64_t transfer_pos;	/* how much of what's been read that has been sent to remote */
-      //} ul;
+    //struct {
+    char *share_file;	/* complete filename in shared file namespace. */
+    char *local_file;	/* complete filename in local physical file namespace. */
+    int transfer_fd;	/* file descriptor for opened local_file */
+    uint64_t file_pos;	/* how much of local_file that has been written */
+    uint64_t final_pos;	/* how much of local_file shuld be written */
+    uint64_t file_size;	/* the final size of local_file */
+    uint64_t transfer_pos;	/* how much that has been read (but not necessarily written yet) */
+    bool local_exists;	/* does local_file exist already? */
+    //} dl;
+    //struct {
+    //char *share_file;	/* complete filename in shared file namespace. */
+    //char *local_file;	/* complete filename in local physical file namespace. */
+    //int fd;			/* file descriptor for opened local_file */
+    //uint64_t file_pos;	/* how much of local_file that has been read */
+    //uint64_t file_size;	/* the size of local_file */
+    //uint64_t transfer_pos;	/* how much of what's been read that has been sent to remote */
+    //} ul;
     //};
 };
 
@@ -157,9 +157,9 @@ static bool
 check_state(DCUserConnLocal *ucl, char *buf, DCUserState state)
 {
     if (ucl->user_state != state) {
-	warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
-	terminate_process(ucl); /* protocol error */
-	return false;
+        warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
+        terminate_process(ucl); /* protocol error */
+        return false;
     }
     return true;
 }
@@ -208,8 +208,8 @@ user_putf(DCUserConnLocal *ucl, const char *format, ...)
     /* byteq_vappendf cannot fail. */
     /*if (res < 0) {
     	warn(_("Cannot append to user send queue - %s\n"), errstr);
-	terminate_process(ucl);
-	return false;
+    terminate_process(ucl);
+    return false;
     }*/
 
     if (ucl->data_size/*DL*/ == 0)
@@ -217,13 +217,13 @@ user_putf(DCUserConnLocal *ucl, const char *format, ...)
 
     res = byteq_write(ucl->user_sendq, ucl->user_socket);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
-	warn_socket_error(res, true, _("user"));
-	terminate_process(ucl); /* MSG: socket error above */
-	return false;
+        warn_socket_error(res, true, _("user"));
+        terminate_process(ucl); /* MSG: socket error above */
+        return false;
     }
 
     if (oldcur == 0 && ucl->user_sendq->cur > 0)
-    	FD_SET(ucl->user_socket, &ucl->user_write_fds);
+        FD_SET(ucl->user_socket, &ucl->user_write_fds);
 
     return true;
 }
@@ -263,9 +263,9 @@ direction_validate(DCUserConnLocal *ucl, DCTransferDirection dir)
         return false;
     }
     if (!reply) {
-	warn(_("Too many connections to user, or no free slots.\n"));
-	terminate_process(ucl); /* MSG: msg above */
-	return false;
+        warn(_("Too many connections to user, or no free slots.\n"));
+        terminate_process(ucl); /* MSG: msg above */
+        return false;
     }
     return true;
 }
@@ -305,9 +305,9 @@ nick_validate(DCUserConnLocal *ucl, const char *str)
         return false;
     }
     if (!reply) {
-	warn(_("User %s not on hub, or too many connections to user.\n"), quotearg(str));/*XXX: move main.c */
-	terminate_process(ucl); /* MSG: msg above */
-    	return false;
+        warn(_("User %s not on hub, or too many connections to user.\n"), quotearg(str));/*XXX: move main.c */
+        terminate_process(ucl); /* MSG: msg above */
+        return false;
     }
     return true;
 }
@@ -384,7 +384,7 @@ download_next_file(DCUserConnLocal *ucl)
     int i = 0;
     for (i = 0; ucl->supports != NULL && i < ucl->supports->cur; i++) {
         if (ucl->supports->buf[i] != NULL) {
-	        flag_putf(DC_DF_DEBUG, _("%s\n"), (char*)ucl->supports->buf[i]); 
+            flag_putf(DC_DF_DEBUG, _("%s\n"), (char*)ucl->supports->buf[i]);
         }
     }
     */
@@ -407,7 +407,7 @@ download_next_file(DCUserConnLocal *ucl)
 
     conv_local_file = fs_to_main_string(local_file);
     ucl->share_file/*DL*/ = share_file;
-	ucl->local_file = conv_local_file;
+    ucl->local_file = conv_local_file;
 
     /* XXX: what if file without ".part" exists and is complete? */
     /* Check if file already exists, and if it need to be resumed. */
@@ -436,7 +436,7 @@ download_next_file(DCUserConnLocal *ucl)
             resume_pos = sb.st_size;
         }
     }
-	free(local_file);
+    free(local_file);
 
     remote_file = translate_local_to_remote(share_file);
     if (remote_file == NULL) {
@@ -473,8 +473,8 @@ open_download_file(DCUserConnLocal *ucl, uint64_t file_size)
         ucl->file_size = file_size;
     } else if (file_size < ucl->file_size) {
         end_download(ucl, false,
-            _("remote file is smaller than local (expected %" PRIu64 ", got %" PRIu64 " %s)"),
-            ucl->file_size, file_size, ngettext("byte", "bytes", file_size));
+                     _("remote file is smaller than local (expected %" PRIu64 ", got %" PRIu64 " %s)"),
+                     ucl->file_size, file_size, ngettext("byte", "bytes", file_size));
         /* We're probably left in a weird state here. It is possible that
          * some clients (at least DC++ 0.700) won't let us download more
          * files from here.
@@ -567,10 +567,10 @@ open_upload_file_main(DCUserConnLocal *ucl, const char *str, uint64_t offset, DC
     if (strlen(str) > 0) {
 #if 0
         if ( type == DC_ADCGET_TTHL) {
-	        if (offset == 0)
+            if (offset == 0)
                 offset = /*fsize*/ sizeof(uint64_t) + /*mtime*/sizeof(time_t)
-                   + /*ctime*/ sizeof(time_t) + /*tth base32*/39;
-	        else {
+                                   + /*ctime*/ sizeof(time_t) + /*tth base32*/39;
+            else {
                 flag_putf(DC_DF_CONNECTIONS, _("%s: Incorrect offset in tthl request\n"), quotearg(ucl->local_file/*UL*/));
                 user_putf(ucl, "$Error Incorrect offset in tthl request|");
                 end_upload(ucl, false, _("Incorrect offset in tthl request"));
@@ -631,7 +631,7 @@ open_upload_file_main(DCUserConnLocal *ucl, const char *str, uint64_t offset, DC
 #if 0
     if ( type == DC_ADCGET_TTHL) {
         if ( (offset + 2*TIGERSIZE > st.st_size)
-            || ( (st.st_size - offset) % TIGERSIZE)) {
+                || ( (st.st_size - offset) % TIGERSIZE)) {
             free (conv_local_file);
             flag_putf(DC_DF_CONNECTIONS, _("%s: Resume offset %" PRIu64 " outside tthl file\n"), quotearg(ucl->local_file/*UL*/), offset);
             user_putf(ucl, "$Error File Not Available|");
@@ -688,33 +688,33 @@ static void
 open_upload_file(DCUserConnLocal *ucl, const char *str, uint64_t offset)
 {
     if ( open_upload_file_main(ucl, str, offset, DC_ADCGET_FILE) < 0 )
-	return;
+        return;
 
     ucl->final_pos = ucl->file_size;
 
     if (!user_putf(ucl, "$FileLength %" PRIu64 "|", ucl->file_size)) {
         end_upload(ucl, false, _("communication error"));
-            return;
-        }
+        return;
+    }
 
 }
 
 #if defined(HAVE_LIBXML2)
 
 static void
-open_upload_file_block(DCUserConnLocal *ucl, const char *str, uint64_t offset, uint64_t numbytes) 
+open_upload_file_block(DCUserConnLocal *ucl, const char *str, uint64_t offset, uint64_t numbytes)
 {
 
     if ( open_upload_file_main(ucl, str, offset, DC_ADCGET_FILE) < 0)
         return;
 
     if ((numbytes == (uint64_t)-1) ||
-        (offset + numbytes >= ucl->file_size))
+            (offset + numbytes >= ucl->file_size))
         ucl->final_pos = ucl->file_size;
     else
         ucl->final_pos = offset + numbytes;
 
-    if (!user_putf(ucl, "$Sending %" PRIu64 "|", ucl->final_pos - ucl->file_pos)){
+    if (!user_putf(ucl, "$Sending %" PRIu64 "|", ucl->final_pos - ucl->file_pos)) {
         end_upload(ucl, false, _("communication error"));
         return;
     }
@@ -734,35 +734,35 @@ open_upload_file_adcget(DCUserConnLocal *ucl, const char *type, const char *str,
     else if ( strcmp(type, "tthl") == 0)
         t = DC_ADCGET_TTHL;
     else {
-	    if ( !user_putf(ucl, "$Error Unknown ADCGET type: %s|", type) ){
-	        end_upload(ucl, false, _("communication error"));
-	        return;
+        if ( !user_putf(ucl, "$Error Unknown ADCGET type: %s|", type) ) {
+            end_upload(ucl, false, _("communication error"));
+            return;
         }
     }
 
     if ((strlen(str) == 4 + 39)
-	    && (str[0] == 'T')
-	    && (str[1] == 'T')
-	    && (str[2] == 'H')
-	    && (str[3] == '/')) {
+            && (str[0] == 'T')
+            && (str[1] == 'T')
+            && (str[2] == 'H')
+            && (str[3] == '/')) {
         filename = xstrdup(str+4);
 
         if (t != DC_ADCGET_TTHL)
-	        t = DC_ADCGET_TTH;
+            t = DC_ADCGET_TTH;
     } else {
         char *s1, *s2;
 
         // name must be converted from UTF-8 to local charset
         filename = utf8_to_main_string(str);
         if (filename == NULL)
-	        return;
+            return;
 
         /* unescape filename */
         s1 = s2 = filename;
         while  ( *s1 != '\0' ) {
-	        if ( *s2 == '\\')
+            if ( *s2 == '\\')
                 s2++;
-	        *s1++ = *s2++;
+            *s1++ = *s2++;
         }
     }
 
@@ -824,37 +824,37 @@ static void
 user_handle_command(DCUserConnLocal *ucl, char *buf, uint32_t len)
 {
     if (ucl->user_state == DC_USER_DATA_RECV) {
-    	ssize_t res;
+        ssize_t res;
 
-    	res = full_write(ucl->transfer_fd/*DL*/, buf, len);
-	    if (res < len) {
-	        /* We cannot expect to synchronize with remote at this point, so shut down. */
-	        warn_file_error(res, true, ucl->share_file/*DL*/);
-	        end_download(ucl, false, _("local error"));
-	        terminate_process(ucl); /* MSG: local error */
-	        return;
-	    }
-	    ucl->file_pos += len;
-	    ucl->transfer_pos += len;
-	    ucl->data_size/*DL*/ -= len;
-    	send_user_status(ucl, ucl->file_pos);
-    	if (ucl->file_pos == ucl->file_size) {
-	        end_download(ucl, true, _("transfer complete"));
-	        download_next_file(ucl);
-	        return;
-	    }
+        res = full_write(ucl->transfer_fd/*DL*/, buf, len);
+        if (res < len) {
+            /* We cannot expect to synchronize with remote at this point, so shut down. */
+            warn_file_error(res, true, ucl->share_file/*DL*/);
+            end_download(ucl, false, _("local error"));
+            terminate_process(ucl); /* MSG: local error */
+            return;
+        }
+        ucl->file_pos += len;
+        ucl->transfer_pos += len;
+        ucl->data_size/*DL*/ -= len;
+        send_user_status(ucl, ucl->file_pos);
+        if (ucl->file_pos == ucl->file_size) {
+            end_download(ucl, true, _("transfer complete"));
+            download_next_file(ucl);
+            return;
+        }
     }
     else if (len >= 8 && strncmp(buf, "$MyNick ", 8) == 0) {
-	    char *local_nick;
+        char *local_nick;
 
         if (!check_state(ucl, buf, DC_USER_MYNICK))
-	        return;
-	    local_nick = hub_to_main_string(buf+8);
+            return;
+        local_nick = hub_to_main_string(buf+8);
 
-	    if (!nick_validate(ucl, local_nick)){
+        if (!nick_validate(ucl, local_nick)) {
             free(local_nick);
-	        return;
-	    }
+            return;
+        }
 
         ucl->user_nick = local_nick;
 
@@ -868,56 +868,56 @@ user_handle_command(DCUserConnLocal *ucl, char *buf, uint32_t len)
             hub_my_nick = main_to_hub_string(our_nick);
 
             if (!user_putf(ucl, "$MyNick %s|", hub_my_nick)) {
-	            free(our_nick);
+                free(our_nick);
                 free(hub_my_nick);
-		        return;
+                return;
             }
             free(our_nick);
             free(hub_my_nick);
-    	    if (!user_putf(ucl, "$Lock %s Pk=%s|", LOCK_STRING, LOCK_PK_STRING))
-		        return;
-	    }
-	    ucl->user_state = DC_USER_LOCK;
+            if (!user_putf(ucl, "$Lock %s Pk=%s|", LOCK_STRING, LOCK_PK_STRING))
+                return;
+        }
+        ucl->user_state = DC_USER_LOCK;
     }
     else if (len >= 6 && strncmp(buf, "$Lock ", 6) == 0) {
         char *key;
-	    bool download;
+        bool download;
 
         if (!check_state(ucl, buf, DC_USER_LOCK))
-	        return;
+            return;
         key = memmem(buf+6, len-6, " Pk=", 4);
         if (key == NULL) {
             warn(_("Invalid $Lock message: Missing Pk value\n"));
-	        key = buf+len;
-	    }
+            key = buf+len;
+        }
         key = decode_lock(buf+6, key-buf-6, DC_CLIENT_BASE_KEY);
         if (!wants_to_download(ucl, &download)) {
             free(key);
-	        return;
+            return;
         }
 #if defined(HAVE_LIBXML2)
-	    /*if (!user_putf(ucl, "$Supports XmlBZList|")) {*/
-	    /*if (!user_putf(ucl, "$Supports XmlBZList ADCGet TTHF TTHL|")) {*/
-	    if (!user_putf(ucl, "$Supports MiniSlots XmlBZList ADCGet TTHF|")) {
-	        free(key);
-	        return;
-	    }
+        /*if (!user_putf(ucl, "$Supports XmlBZList|")) {*/
+        /*if (!user_putf(ucl, "$Supports XmlBZList ADCGet TTHF TTHL|")) {*/
+        if (!user_putf(ucl, "$Supports MiniSlots XmlBZList ADCGet TTHF|")) {
+            free(key);
+            return;
+        }
 #endif
-	    if (!user_putf(ucl, "$Direction %s %d|", download ? "Download" : "Upload", ucl->dir_rand)) {
-	        free(key);
-	        return;
-	    }
+        if (!user_putf(ucl, "$Direction %s %d|", download ? "Download" : "Upload", ucl->dir_rand)) {
+            free(key);
+            return;
+        }
         if (!user_putf(ucl, "$Key %s|", key)) {
-	        free(key);
-	        return;
-	    }
-	    free(key);
-	    ucl->user_state = DC_USER_SUPPORTS;
+            free(key);
+            return;
+        }
+        free(key);
+        ucl->user_state = DC_USER_SUPPORTS;
     }
     else if (len >= 10 && strncmp(buf, "$Supports ", 10) == 0) {
         char* p = buf+10;
         if (!check_state(ucl, buf, DC_USER_SUPPORTS))
-	        return;
+            return;
 
         if (ucl->supports != NULL) {
             ptrv_foreach(ucl->supports, free);
@@ -928,174 +928,174 @@ user_handle_command(DCUserConnLocal *ucl, char *buf, uint32_t len)
             if (token != NULL)
                 ptrv_append(ucl->supports, strdup(token));
         } while (p != NULL);
-	    ucl->user_state = DC_USER_DIRECTION;
+        ucl->user_state = DC_USER_DIRECTION;
     }
     else if (len >= 11 && strncmp(buf, "$Direction ", 11) == 0) {
-    	char *token;
-    	uint16_t remote_rand;
-	    bool they_download;
-	    bool we_download;
+        char *token;
+        uint16_t remote_rand;
+        bool they_download;
+        bool we_download;
 
         if (!check_state(ucl, buf, DC_USER_DIRECTION))
-	        return;
+            return;
 
-    	token = strtok(buf+11, " ");
-	    if (token == NULL) {
-	        warn(_("Invalid $Direction message: Missing direction parameter\n"));
-	        terminate_process(ucl); /* MSG: protocol error */
-	        return;
-	    }
-    	if (strcmp(token, "Upload") == 0) {
-	        they_download = false;
-	    } else if (strcmp(token, "Download") == 0) {
-	        they_download = true;
-	    } else {
-	        warn(_("Invalid $Direction message: Invalid direction parameter\n"));
-	        terminate_process(ucl); /* MSG: protocol error */
-	        return;
-	    }
+        token = strtok(buf+11, " ");
+        if (token == NULL) {
+            warn(_("Invalid $Direction message: Missing direction parameter\n"));
+            terminate_process(ucl); /* MSG: protocol error */
+            return;
+        }
+        if (strcmp(token, "Upload") == 0) {
+            they_download = false;
+        } else if (strcmp(token, "Download") == 0) {
+            they_download = true;
+        } else {
+            warn(_("Invalid $Direction message: Invalid direction parameter\n"));
+            terminate_process(ucl); /* MSG: protocol error */
+            return;
+        }
 
-	    token = strtok(NULL, " ");
-	    if (token == NULL) {
-	        warn(_("Invalid $Direction message: Missing challenge parameter\n"));
-	        terminate_process(ucl); /* MSG: protocol error */
-	        return;
-	    }
-	    if (!parse_uint16(token, &remote_rand)) {
-	        warn(_("Invalid $Direction message: Invalid challenge parameter\n"));
-	        terminate_process(ucl); /* MSG: protocol error */
-	        return;
-	    }
+        token = strtok(NULL, " ");
+        if (token == NULL) {
+            warn(_("Invalid $Direction message: Missing challenge parameter\n"));
+            terminate_process(ucl); /* MSG: protocol error */
+            return;
+        }
+        if (!parse_uint16(token, &remote_rand)) {
+            warn(_("Invalid $Direction message: Invalid challenge parameter\n"));
+            terminate_process(ucl); /* MSG: protocol error */
+            return;
+        }
 
-	    if (!wants_to_download(ucl, &we_download))
-	        return;
+        if (!wants_to_download(ucl, &we_download))
+            return;
 
-    	if (they_download) { /* Remote wants to download. Do we want to download too? */
-	        if (we_download) {
-		        if (remote_rand >= ucl->dir_rand) { /* We lost. Let them download. */
-		            ucl->our_dir = DC_DIR_SEND;
-		        } else { /* We won. */
-		            ucl->our_dir = DC_DIR_RECEIVE;
-		        }
+        if (they_download) { /* Remote wants to download. Do we want to download too? */
+            if (we_download) {
+                if (remote_rand >= ucl->dir_rand) { /* We lost. Let them download. */
+                    ucl->our_dir = DC_DIR_SEND;
+                } else { /* We won. */
+                    ucl->our_dir = DC_DIR_RECEIVE;
+                }
                 /* XXX: what should happen if remote_rand == dir_rand!? */
-	        } else { /* We don't want to download anything. Let remote download. */
-		        ucl->our_dir = DC_DIR_SEND;
-	        }
-	    } else { /* Remote wants to upload. Do we want to upload too? */
-	        if (!we_download) {
-		        warn(_("User does not want to download, nor do we.\n"));
-		        terminate_process(ucl); /* MSG: no one wants to exchange files */
-		        return;
-	        }
-	        ucl->our_dir = DC_DIR_RECEIVE;
-	    }
-	    if (!direction_validate(ucl, ucl->our_dir))
-	        return;
-	    ucl->user_state = DC_USER_KEY;
+            } else { /* We don't want to download anything. Let remote download. */
+                ucl->our_dir = DC_DIR_SEND;
+            }
+        } else { /* Remote wants to upload. Do we want to upload too? */
+            if (!we_download) {
+                warn(_("User does not want to download, nor do we.\n"));
+                terminate_process(ucl); /* MSG: no one wants to exchange files */
+                return;
+            }
+            ucl->our_dir = DC_DIR_RECEIVE;
+        }
+        if (!direction_validate(ucl, ucl->our_dir))
+            return;
+        ucl->user_state = DC_USER_KEY;
     }
     else if (len >= 5 && strncmp(buf, "$Key ", 5) == 0) {
-   	    char *key;
+        char *key;
 
         if (!check_state(ucl, buf, DC_USER_KEY))
-	        return;
-    	key = decode_lock(LOCK_STRING, LOCK_STRING_LEN, DC_CLIENT_BASE_KEY);
-	    if (strcmp(buf+5, key) != 0)
-	        warn(_("Invalid $Key message: Incorrect key, ignoring\n"));
-	    free(key);
-    	if (ucl->our_dir == DC_DIR_SEND) {
-	        ucl->user_state = DC_USER_GET;
-	    } else {
-	        download_next_file(ucl);
-	    }
+            return;
+        key = decode_lock(LOCK_STRING, LOCK_STRING_LEN, DC_CLIENT_BASE_KEY);
+        if (strcmp(buf+5, key) != 0)
+            warn(_("Invalid $Key message: Incorrect key, ignoring\n"));
+        free(key);
+        if (ucl->our_dir == DC_DIR_SEND) {
+            ucl->user_state = DC_USER_GET;
+        } else {
+            download_next_file(ucl);
+        }
     }
     else if (len >= 5 && strncmp(buf, "$Get ", 5) == 0) {
-	    char *token;
-	    uint64_t offset = 0;
+        char *token;
+        uint64_t offset = 0;
         int filename_len = 0;
 
-	    if (ucl->user_state != DC_USER_SEND_GET && ucl->user_state != DC_USER_GET) {
-	        warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
-	        terminate_process(ucl); /* MSG: protocol error */
-	        return;
-	    }
+        if (ucl->user_state != DC_USER_SEND_GET && ucl->user_state != DC_USER_GET) {
+            warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
+            terminate_process(ucl); /* MSG: protocol error */
+            return;
+        }
 
         token = strtok(buf+5, "$");
         if (*(buf+5) != '$') {
             filename_len = strlen(buf+5);
         }
 
-	    if (token == NULL) {
-	        warn(_("Invalid $Get message: Missing offset, assuming start\n"));
-	        offset = 0;
-	    } else if (filename_len > 0) {
-	        token = strtok(NULL, ""); /* Cannot fail! */
+        if (token == NULL) {
+            warn(_("Invalid $Get message: Missing offset, assuming start\n"));
+            offset = 0;
+        } else if (filename_len > 0) {
+            token = strtok(NULL, ""); /* Cannot fail! */
 
             if (token == NULL || !parse_uint64(token, &offset)) {
-	    	    warn(_("Invalid $Get message: Offset not integer\n"));
-            
-		        terminate_process(ucl); /* MSG: protocol error */
-		        return;
-	        }
+                warn(_("Invalid $Get message: Offset not integer\n"));
+
+                terminate_process(ucl); /* MSG: protocol error */
+                return;
+            }
 
             if (offset > 0)
-	    	    offset--;
-	    }
+                offset--;
+        }
 
         /* Maybe the remote user did not want the file after all? */
-	    if (ucl->user_state == DC_USER_SEND_GET)
-	        end_upload(ucl, false, _("remote did not want file"));
+        if (ucl->user_state == DC_USER_SEND_GET)
+            end_upload(ucl, false, _("remote did not want file"));
 
         if (filename_len > 0) {
             /* Convert filename from hub to local charset
              * Try utf-8 if it fails
              */
             char *s =
-            /*
-                hub_to_main_string(buf+5);
-            */
+                /*
+                    hub_to_main_string(buf+5);
+                */
                 utf8_to_main_string(buf+5);
             /*
             if (s == NULL)
-	            s = iconv_alloc(from_utf8, buf+5);
+                s = iconv_alloc(from_utf8, buf+5);
             */
             open_upload_file(ucl, s, offset); /* Changes state */
             free(s);
         }
     }
     else if (len == 9 && strcmp(buf, "$MaxedOut") == 0) {
-    	if (!check_state(ucl, buf, DC_USER_FILE_LENGTH))
-	        return;
-	    end_download(ucl, false, _("remote is maxed out"));
-	    terminate_process(ucl); /* MSG: msg above */
+        if (!check_state(ucl, buf, DC_USER_FILE_LENGTH))
+            return;
+        end_download(ucl, false, _("remote is maxed out"));
+        terminate_process(ucl); /* MSG: msg above */
     }
     else if (len >= 12 && strncmp(buf, "$FileLength ", 12) == 0) {
         uint64_t file_size;
 
-    	if (!check_state(ucl, buf, DC_USER_FILE_LENGTH))
-	        return;
-	    if (!parse_uint64(buf+12, &file_size)) {
-	        end_download(ucl, false, _("protocol error: invalid $FileLength message"));
-	        download_next_file(ucl);
-	        return;
-	    }
-    	open_download_file(ucl, file_size); /* Will change state */
+        if (!check_state(ucl, buf, DC_USER_FILE_LENGTH))
+            return;
+        if (!parse_uint64(buf+12, &file_size)) {
+            end_download(ucl, false, _("protocol error: invalid $FileLength message"));
+            download_next_file(ucl);
+            return;
+        }
+        open_download_file(ucl, file_size); /* Will change state */
     }
     else if (len >= 7 && strncmp(buf, "$Error ", 7) == 0) {
-	    if (ucl->user_state == DC_USER_FILE_LENGTH) {
-    	    if (strcmp(buf+7, "File Not Available") == 0) {
-	    	    end_download(ucl, false, _("file not available on remote"));
-	        } else {
-	            end_download(ucl, false, _("remote error: %s"), quotearg(buf+7));
-	        }
+        if (ucl->user_state == DC_USER_FILE_LENGTH) {
+            if (strcmp(buf+7, "File Not Available") == 0) {
+                end_download(ucl, false, _("file not available on remote"));
+            } else {
+                end_download(ucl, false, _("remote error: %s"), quotearg(buf+7));
+            }
             download_next_file(ucl);
-	        return;
-	    }
-	    warn(_("Received error from user: %s\n"), quotearg(buf+7));
-	    terminate_process(ucl); /* MSG: remote replied with error (including msg above) */
+            return;
+        }
+        warn(_("Received error from user: %s\n"), quotearg(buf+7));
+        terminate_process(ucl); /* MSG: remote replied with error (including msg above) */
     }
     else if (len >= 5 && strncmp(buf, "$Send ", 5) == 0) {
-    	if (!check_state(ucl, buf, DC_USER_SEND_GET))
-	        return;
+        if (!check_state(ucl, buf, DC_USER_SEND_GET))
+            return;
         upload_file(ucl);
     }
 #if defined(HAVE_LIBXML2)
@@ -1105,20 +1105,20 @@ user_handle_command(DCUserConnLocal *ucl, char *buf, uint32_t len)
         uint64_t offset = 0, block_size = 0;
 
         if (!check_state(ucl, buf, DC_USER_GET)) {
-	        warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
-	        terminate_process(ucl); /* MSG: protocol error */
-	        return;
-	    }
+            warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
+            terminate_process(ucl); /* MSG: protocol error */
+            return;
+        }
 
         if (3 != sscanf(buf+11, "%" PRIu64 "%" PRIu64 "%*c%[^\n]", &offset, &block_size, filename)) {
             warn(_("Invalid $UGetBlock message\n"));
             terminate_process(ucl); /* MSG: protocol error */
             return;
-	    }
+        }
 
         p_filename = utf8_to_main_string(filename);
-  
-	    flag_putf(DC_DF_DEBUG, _("User requests %" PRIu64 " bytes of <%s> starting from %" PRIu64 "\n"), block_size, p_filename, offset); 
+
+        flag_putf(DC_DF_DEBUG, _("User requests %" PRIu64 " bytes of <%s> starting from %" PRIu64 "\n"), block_size, p_filename, offset);
 
         open_upload_file_block(ucl, p_filename, offset, block_size);
 
@@ -1128,7 +1128,7 @@ user_handle_command(DCUserConnLocal *ucl, char *buf, uint32_t len)
     else if (len >= 8 && strncmp(buf, "$ADCGET ", 8) == 0) {
         char *type, *filename, *startpos, *numbytes, *flags;
         uint64_t n_startpos, n_numbytes;
-  
+
         if (!check_state(ucl, buf, DC_USER_GET)) {
             warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
             terminate_process(ucl); /* MSG: protocol error */
@@ -1138,10 +1138,10 @@ user_handle_command(DCUserConnLocal *ucl, char *buf, uint32_t len)
         filename = buf + 8;
         type = strsep(&filename, " ");
 
-        if ( (type[0] == '\0') 
-            || (filename == NULL)
-            || (filename == '\0')
-            || (filename[0] == ' ' )) {
+        if ( (type[0] == '\0')
+                || (filename == NULL)
+                || (filename == '\0')
+                || (filename[0] == ' ' )) {
             warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
             terminate_process(ucl); /* MSG: protocol error */
             return;
@@ -1150,8 +1150,8 @@ user_handle_command(DCUserConnLocal *ucl, char *buf, uint32_t len)
         /* search for first non-escaped space */
         for ( startpos = filename + 1; *startpos; startpos++) {
             if ( ( startpos[0] == ' ')
-            && ( startpos[-1] != '\\' ) )
-	            break;
+                    && ( startpos[-1] != '\\' ) )
+                break;
         }
 
         if (*startpos == '\0') {
@@ -1165,7 +1165,7 @@ user_handle_command(DCUserConnLocal *ucl, char *buf, uint32_t len)
         startpos = strsep(&numbytes, " ");
 
         if ( (numbytes == NULL)
-            || (!parse_uint64(startpos, &n_startpos))) {
+                || (!parse_uint64(startpos, &n_startpos))) {
             warn(_("Received %s message in wrong state.\n"), strtok(buf, " "));
             terminate_process(ucl); /* MSG: protocol error */
             return;
@@ -1200,32 +1200,32 @@ user_input_available(DCUserConnLocal *ucl)
     alarm(0); /* cannot fail */
     res = byteq_read(ucl->user_recvq, ucl->user_socket);
     if (res == 0 || (res < 0 && errno != EAGAIN && errno != EINTR)) {
- 	    warn_socket_error(res, false, _("user"));
-	    terminate_process(ucl); /* MSG: socket error above */
-	    return;
+        warn_socket_error(res, false, _("user"));
+        terminate_process(ucl); /* MSG: socket error above */
+        return;
     }
 
     for (c = ucl->user_recvq_last; c < ucl->user_recvq->cur; c++) {
-	if (ucl->data_size/*DL*/ > 0) {
-	    uint32_t size;
+        if (ucl->data_size/*DL*/ > 0) {
+            uint32_t size;
 
-	    /* Handle what've got, but never more than data_size */
-	    size = MIN(ucl->data_size/*DL*/, ucl->user_recvq->cur - start);
-    	    user_handle_command(ucl, ucl->user_recvq->buf + start, size);
-	    start += size;
-	    if (!ucl->user_running)
-	    	break;
-	    c += size - 1;
-	}
+            /* Handle what've got, but never more than data_size */
+            size = MIN(ucl->data_size/*DL*/, ucl->user_recvq->cur - start);
+            user_handle_command(ucl, ucl->user_recvq->buf + start, size);
+            start += size;
+            if (!ucl->user_running)
+                break;
+            c += size - 1;
+        }
         else if (ucl->user_recvq->buf[c] == '|') {
             /* Got a complete command. */
-	    if (c - start > 0)
-	    	dump_command(_("<--"), ucl->user_recvq->buf + start, c - start + 1);
+            if (c - start > 0)
+                dump_command(_("<--"), ucl->user_recvq->buf + start, c - start + 1);
             ucl->user_recvq->buf[c] = '\0'; /* Just to be on the safe side... */
             user_handle_command(ucl, ucl->user_recvq->buf + start, c - start);
             start = c+1;
-	    if (!ucl->user_running)
-	    	break;
+            if (!ucl->user_running)
+                break;
         }
     }
 
@@ -1259,10 +1259,10 @@ user_now_writable(DCUserConnLocal *ucl)
         FD_SET(ucl->user_socket, &ucl->user_read_fds);
         ucl->user_state = DC_USER_MYNICK;
 
-    	if (ucl->we_connected) {
+        if (ucl->we_connected) {
             char *our_nick;
             char *hub_my_nick;
-    	    
+
             if (!get_our_nick(ucl, &our_nick))
                 return;
             hub_my_nick = main_to_hub_string(our_nick);
@@ -1274,16 +1274,16 @@ user_now_writable(DCUserConnLocal *ucl)
             }
             free(our_nick);
             free(hub_my_nick);
-    	    if (!user_putf(ucl, "$Lock %s Pk=%s|", LOCK_STRING, LOCK_PK_STRING))
-        		return;
+            if (!user_putf(ucl, "$Lock %s Pk=%s|", LOCK_STRING, LOCK_PK_STRING))
+                return;
         }
     }
     else if (ucl->user_state == DC_USER_DATA_SEND) {
         size_t block;
-    	ssize_t res;
+        ssize_t res;
 
-    	assert(ucl->file_size != 0);
-    	block = MIN(DEFAULT_SENDQ_SIZE, ucl->final_pos - ucl->file_pos);
+        assert(ucl->file_size != 0);
+        block = MIN(DEFAULT_SENDQ_SIZE, ucl->final_pos - ucl->file_pos);
         if (block > 0 && ucl->user_sendq->cur == 0) { //if (ucl->user_sendq->cur < ucl->user_sendq->max) {
             res = byteq_full_read_upto(ucl->user_sendq, ucl->transfer_fd/*UL*/, block);
             if (res < block) {
@@ -1313,7 +1313,7 @@ user_now_writable(DCUserConnLocal *ucl)
         }
     }
     else {
-    	int res;
+        int res;
 
         if (ucl->user_sendq->cur > 0) {
             res = byteq_write(ucl->user_sendq, ucl->user_socket);
@@ -1338,13 +1338,13 @@ signal_received(int signal)
     signal_char = signal;
     /* We don't care if this blocks - since we can't postpone this. */
     if (write(ucl->signal_pipe[1], &signal_char, sizeof(uint8_t)) < sizeof(uint8_t)) {
-	/* Die only if the signal is fatal.
-	 * SIGALRM is sent when the connection has been idle too long.
-	 * It will result in the connection shutting down, so if we
-	 * can't deliver it we might just shut down here.
-	 */
-	if (signal == SIGTERM || signal == SIGALRM)
-	    die(_("Cannot write to signal pipe - %s\n"), errstr); /* die OK */
+        /* Die only if the signal is fatal.
+         * SIGALRM is sent when the connection has been idle too long.
+         * It will result in the connection shutting down, so if we
+         * can't deliver it we might just shut down here.
+         */
+        if (signal == SIGTERM || signal == SIGALRM)
+            die(_("Cannot write to signal pipe - %s\n"), errstr); /* die OK */
         warn(_("Cannot write to signal pipe - %s\n"), errstr);
     }
 }
@@ -1360,9 +1360,9 @@ read_signal_input(DCUserConnLocal *ucl)
      * was data).
      */
     if (read(ucl->signal_pipe[0], &signal, sizeof(uint8_t)) < 0) {
-	warn(_("Cannot read from signal pipe - %s\n"), errstr);
-	terminate_process(ucl); /* MSG: local error */
-	return;
+        warn(_("Cannot read from signal pipe - %s\n"), errstr);
+        terminate_process(ucl); /* MSG: local error */
+        return;
     }
 
     if (signal == SIGTERM) {
@@ -1370,7 +1370,7 @@ read_signal_input(DCUserConnLocal *ucl)
         terminate_process(ucl); /* MSG: terminating by signal */
     } else if (signal == SIGALRM) {
         warn(_("Idle timeout (%d seconds)\n"), USER_CONN_IDLE_TIMEOUT);
-	terminate_process(ucl); /* MSG: idle timeout msg above */
+        terminate_process(ucl); /* MSG: idle timeout msg above */
     } else if (signal == SIGUSR1) {
         /* Not implemented yet, do nothing for now. */
     }
@@ -1431,20 +1431,20 @@ user_main(int get_fd[2], int put_fd[2], struct sockaddr_in *addr, int sock)
     ucl->get_mq = msgq_new(get_fd[0]);
     ucl->put_mq = msgq_new(put_fd[1]);
     ucl->supports = ptrv_new();
-    
+
     screen_writer = user_screen_writer;
 
     if (close(get_fd[1]) != 0 || close(put_fd[0]) != 0)
         warn(_("Cannot close pipe - %s\n"), errstr);
 
     if (pipe(ucl->signal_pipe) < 0) {
-    	warn(_("Cannot create pipe pair - %s\n"), errstr);
-	goto cleanup;
+        warn(_("Cannot create pipe pair - %s\n"), errstr);
+        goto cleanup;
     }
     sigact.sa_handler = signal_received;
     if (sigemptyset(&sigact.sa_mask) < 0) {
         warn(_("Cannot empty signal set - %s\n"), errstr);
-	goto cleanup;
+        goto cleanup;
     }
     sigact.sa_flags = SA_RESTART;
 #ifdef HAVE_STRUCT_SIGACTION_SA_RESTORER
@@ -1457,29 +1457,29 @@ user_main(int get_fd[2], int put_fd[2], struct sockaddr_in *addr, int sock)
             || sigaction(SIGUSR1, &sigact, NULL) < 0
             || sigaction(SIGALRM, &sigact, NULL) < 0) {
         warn(_("Cannot register signal handler - %s\n"), errstr);
-	goto cleanup;
+        goto cleanup;
     }
     sigact.sa_handler = SIG_IGN;
     if (sigaction(SIGINT, &sigact, NULL) < 0
-          || sigaction(SIGCHLD, &sigact, NULL) < 0
-          || sigaction(SIGPIPE, &sigact, NULL) < 0) {
+            || sigaction(SIGCHLD, &sigact, NULL) < 0
+            || sigaction(SIGPIPE, &sigact, NULL) < 0) {
         warn(_("Cannot register signal handler - %s\n"), errstr);
-	goto cleanup;
+        goto cleanup;
     }
 
     ucl->user_recvq = byteq_new(DEFAULT_RECVQ_SIZE);
     ucl->user_sendq = byteq_new(DEFAULT_SENDQ_SIZE);
     ucl->dir_rand = rand() % 0x8000;
     if (sock < 0) {
-	ucl->user_socket = socket(PF_INET, SOCK_STREAM, 0);
-	if (ucl->user_socket < 0) {
+        ucl->user_socket = socket(PF_INET, SOCK_STREAM, 0);
+        if (ucl->user_socket < 0) {
             warn(_("Cannot create socket - %s\n"), errstr);
-	    goto cleanup;
-	}
-    	ucl->we_connected = true;
+            goto cleanup;
+        }
+        ucl->we_connected = true;
     } else {
-    	ucl->user_socket = sock;
-    	ucl->we_connected = false;
+        ucl->user_socket = sock;
+        ucl->we_connected = false;
     }
 
     /* Set non-blocking I/O on socket. */
@@ -1489,15 +1489,15 @@ user_main(int get_fd[2], int put_fd[2], struct sockaddr_in *addr, int sock)
     }
 
     if (sock < 0) {
-	/* Connect to host, non-blocking manner. Even if connect would return
-	 * success, we would catch the successful connection after select -
-	 * when socket_fd is writable.
-	 */
-	if (connect(ucl->user_socket, (struct sockaddr *) addr, sizeof(struct sockaddr_in)) < 0
-	    	&& errno != EINPROGRESS) {
+        /* Connect to host, non-blocking manner. Even if connect would return
+         * success, we would catch the successful connection after select -
+         * when socket_fd is writable.
+         */
+        if (connect(ucl->user_socket, (struct sockaddr *) addr, sizeof(struct sockaddr_in)) < 0
+                && errno != EINPROGRESS) {
             warn(_("Cannot connect - %s\n"), errstr);
-	    goto cleanup;
-	}
+            goto cleanup;
+        }
     }
 
     FD_ZERO(&ucl->user_read_fds);
@@ -1507,30 +1507,30 @@ user_main(int get_fd[2], int put_fd[2], struct sockaddr_in *addr, int sock)
     FD_SET(ucl->get_mq->fd, &ucl->user_read_fds);
 
     while (ucl->user_running) {
-    	fd_set res_read_fds;
-	fd_set res_write_fds;
+        fd_set res_read_fds;
+        fd_set res_write_fds;
 
-	res_read_fds = ucl->user_read_fds;
-	res_write_fds = ucl->user_write_fds;
-	if (TEMP_FAILURE_RETRY(select(FD_SETSIZE, &res_read_fds, &res_write_fds, NULL, NULL)) < 0) {
-	    warn(_("Cannot select - %s\n"), errstr);
-	    break;
-	}
+        res_read_fds = ucl->user_read_fds;
+        res_write_fds = ucl->user_write_fds;
+        if (TEMP_FAILURE_RETRY(select(FD_SETSIZE, &res_read_fds, &res_write_fds, NULL, NULL)) < 0) {
+            warn(_("Cannot select - %s\n"), errstr);
+            break;
+        }
 
-    	/* We must check for user writable prior to readable, to detect
-	 * connect() completion before any data is received and handled.
-	 */
+        /* We must check for user writable prior to readable, to detect
+        * connect() completion before any data is received and handled.
+        */
 
-    	if (ucl->user_running && FD_ISSET(ucl->signal_pipe[0], &res_read_fds))
-	    read_signal_input(ucl);
+        if (ucl->user_running && FD_ISSET(ucl->signal_pipe[0], &res_read_fds))
+            read_signal_input(ucl);
         if (ucl->user_running && FD_ISSET(ucl->put_mq->fd, &res_write_fds))
             main_request_fd_writable(ucl);
         if (ucl->user_running && FD_ISSET(ucl->get_mq->fd, &res_read_fds))
             main_result_fd_readable(ucl);
-	if (ucl->user_running && FD_ISSET(ucl->user_socket, &res_write_fds))
-	    user_now_writable(ucl);
-	if (ucl->user_running && FD_ISSET(ucl->user_socket, &res_read_fds))
-	    user_input_available(ucl);
+        if (ucl->user_running && FD_ISSET(ucl->user_socket, &res_write_fds))
+            user_now_writable(ucl);
+        if (ucl->user_running && FD_ISSET(ucl->user_socket, &res_read_fds))
+            user_input_available(ucl);
     }
 
 cleanup:
@@ -1542,17 +1542,17 @@ cleanup:
     byteq_free(ucl->user_sendq);
 
     if (ucl->transfer_fd >= 0 && close(ucl->transfer_fd) < 0)
-    	warn(_("Cannot close transfer file - %s\n"), errstr); /* XXX: should print WHAT file - then remove " transfer" */
+        warn(_("Cannot close transfer file - %s\n"), errstr); /* XXX: should print WHAT file - then remove " transfer" */
     if (ucl->signal_pipe[0] >= 0 && close(ucl->signal_pipe[0]) < 0)
-    	warn(_("Cannot close signal pipe - %s\n"), errstr);
+        warn(_("Cannot close signal pipe - %s\n"), errstr);
     if (ucl->signal_pipe[1] >= 0 && close(ucl->signal_pipe[1]) < 0)
-    	warn(_("Cannot close signal pipe - %s\n"), errstr);
+        warn(_("Cannot close signal pipe - %s\n"), errstr);
     if (ucl->get_mq != NULL && close(ucl->get_mq->fd) != 0)
-    	warn(_("Cannot close pipe - %s\n"), errstr);
+        warn(_("Cannot close pipe - %s\n"), errstr);
     if (ucl->put_mq != NULL && close(ucl->put_mq->fd) != 0)
-    	warn(_("Cannot close pipe - %s\n"), errstr);
+        warn(_("Cannot close pipe - %s\n"), errstr);
     if (ucl->user_socket >= 0 && close(ucl->user_socket) < 0)
-    	warn(_("Cannot close user connection - %s\n"), errstr);
+        warn(_("Cannot close user connection - %s\n"), errstr);
 
     msgq_free(ucl->get_mq);
     msgq_free(ucl->put_mq);

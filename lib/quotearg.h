@@ -26,7 +26,7 @@
 
 /* Basic quoting styles.  */
 enum quoting_style
-  {
+{
     /* Output names as-is (ls --quoting-style=literal).  */
     literal_quoting_style,
 
@@ -52,7 +52,7 @@ enum quoting_style
     /* Like c_quoting_style except use quotation marks appropriate for
        the locale (ls --quoting-style=clocale).  */
     clocale_quoting_style
-  };
+};
 
 /* For now, --quoting-style=literal is the default, but this may change.  */
 # ifndef DEFAULT_QUOTING_STYLE
@@ -96,13 +96,13 @@ int set_char_quoting (struct quoting_options *o, char c, int i);
    value that would have been returned had BUFFERSIZE been large enough.
    If ARGSIZE is -1, use the string length of the argument for ARGSIZE.  */
 size_t quotearg_buffer (char *buffer, size_t buffersize,
-			char const *arg, size_t argsize,
-			struct quoting_options const *o);
+                        char const *arg, size_t argsize,
+                        struct quoting_options const *o);
 
 /* Like quotearg_buffer, except return the result in a newly allocated
    buffer.  It is the caller's responsibility to free the result.  */
 char *quotearg_alloc (char const *arg, size_t argsize,
-		      struct quoting_options const *o);
+                      struct quoting_options const *o);
 
 /* Use storage slot N to return a quoted version of the string ARG.
    Use the default quoting options.
@@ -123,7 +123,7 @@ char *quotearg_n_style (int n, enum quoting_style s, char const *arg);
    argument ARG of size ARGSIZE.  This is like quotearg_n_style
    (N, S, ARG), except it can quote null bytes.  */
 char *quotearg_n_style_mem (int n, enum quoting_style s,
-			    char const *arg, size_t argsize);
+                            char const *arg, size_t argsize);
 
 /* Equivalent to quotearg_n_style (0, S, ARG).  */
 char *quotearg_style (enum quoting_style s, char const *arg);

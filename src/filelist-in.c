@@ -86,7 +86,7 @@ copy_filelist_to_data(DCFileList *node, char *data)
 
     if (node->type == DC_TYPE_REG) {
         memcpy(data, &node->size, sizeof(uint64_t));
-	    data += sizeof(uint64_t);
+        data += sizeof(uint64_t);
         *data = node->reg.has_tth;
         data += 1;
         memcpy(data, node->reg.tth, sizeof(node->reg.tth));
@@ -124,9 +124,9 @@ filelist_to_data(DCFileList *node, void **dataptr, size_t *sizeptr)
     char *data;
 
     if (node == NULL) {
-	*dataptr = NULL;
-	*sizeptr = 0;
-	return;
+        *dataptr = NULL;
+        *sizeptr = 0;
+        return;
     }
 
     size = calculate_filelist_data_size(node);
@@ -150,7 +150,7 @@ data_to_filelist(void *dataptr, DCFileList **outnode)
         *outnode = NULL;
         return NULL;
     }
-    
+
     memcpy(&node_type, data, sizeof(node_type));
     data += sizeof(node_type);
     node_name = data;
@@ -204,64 +204,64 @@ parse_decoded_dclst(char *decoded, uint32_t decoded_len)
     node = new_file_node("", DC_TYPE_DIR, NULL);
     ptrv_append(dirs, node);
     for (c = 0; c < decoded_len; c++) {
-    	DCFileList *oldnode;
-	char *name;
-    	int depth;
+        DCFileList *oldnode;
+        char *name;
+        int depth;
 
-	for (; c < decoded_len && decoded[c] == '\n'; c++);
-    	depth = 1;
-	for (; c < decoded_len && decoded[c] == '\t'; c++)
-	    depth++;
-	if (c >= decoded_len)
-	    break; /* Premature end */
-	if (decoded[c] == '\r') {
-	    c++; /* skip LF */
-	    continue; /* Skipping bad line */
-	}
+        for (; c < decoded_len && decoded[c] == '\n'; c++);
+        depth = 1;
+        for (; c < decoded_len && decoded[c] == '\t'; c++)
+            depth++;
+        if (c >= decoded_len)
+            break; /* Premature end */
+        if (decoded[c] == '\r') {
+            c++; /* skip LF */
+            continue; /* Skipping bad line */
+        }
 
-    	name = decoded + c;
-    	for (; c < decoded_len && decoded[c] != '\r' && decoded[c] != '|'; c++);
-	if (c >= decoded_len)
-	    break;
+        name = decoded + c;
+        for (; c < decoded_len && decoded[c] != '\r' && decoded[c] != '|'; c++);
+        if (c >= decoded_len)
+            break;
 
-	if (depth < dirs->cur)
-	    ptrv_remove_range(dirs, depth, dirs->cur);
+        if (depth < dirs->cur)
+            ptrv_remove_range(dirs, depth, dirs->cur);
 
-	oldnode = dirs->buf[dirs->cur-1];
-	if (decoded[c] == '|') {
-	    char *sizestr;
-	    uint64_t size;
+        oldnode = dirs->buf[dirs->cur-1];
+        if (decoded[c] == '|') {
+            char *sizestr;
+            uint64_t size;
 
-	    decoded[c] = '\0';
-    	    sizestr = decoded+c+1;
-    	    for (c++; c < decoded_len && decoded[c] != '\r'; c++);
-	    if (c >= decoded_len)
-	    	break; /* Premature end */
-	    decoded[c] = '\0';
-    	    decoded[++c]='\0'; /* skip LF */ /*?????????????????????????*/
-	    if (!parse_uint64(sizestr, &size))
-	    	continue; /* Skipping bad line */
+            decoded[c] = '\0';
+            sizestr = decoded+c+1;
+            for (c++; c < decoded_len && decoded[c] != '\r'; c++);
+            if (c >= decoded_len)
+                break; /* Premature end */
+            decoded[c] = '\0';
+            decoded[++c]='\0'; /* skip LF */ /*?????????????????????????*/
+            if (!parse_uint64(sizestr, &size))
+                continue; /* Skipping bad line */
 
-	    /* convert name from hub (other clients) charset to local charset*/
-	    conv_name = hub_to_main_string(name);
-	    node = new_file_node(conv_name, DC_TYPE_REG, oldnode);
-	    free(conv_name);
-	    node->size = size;
-	} else {
-	    decoded[c] = '\0';
-    	    decoded[++c]='\0'; /* skip LF */ /*????????????????????????????????????*/
-	    conv_name = hub_to_main_string(name);
-	    node = new_file_node( conv_name, DC_TYPE_DIR, oldnode);
-	    free(conv_name);
-	}
+            /* convert name from hub (other clients) charset to local charset*/
+            conv_name = hub_to_main_string(name);
+            node = new_file_node(conv_name, DC_TYPE_REG, oldnode);
+            free(conv_name);
+            node->size = size;
+        } else {
+            decoded[c] = '\0';
+            decoded[++c]='\0'; /* skip LF */ /*????????????????????????????????????*/
+            conv_name = hub_to_main_string(name);
+            node = new_file_node( conv_name, DC_TYPE_DIR, oldnode);
+            free(conv_name);
+        }
 
-	if (node->type == DC_TYPE_REG) {
-	    DCFileList *up_node;
-	    for (up_node = oldnode; up_node != NULL; up_node = up_node->parent)
-	    	up_node->size += node->size;
-	}
-	if (node->type == DC_TYPE_DIR)
-	    ptrv_append(dirs, node);
+        if (node->type == DC_TYPE_REG) {
+            DCFileList *up_node;
+            for (up_node = oldnode; up_node != NULL; up_node = up_node->parent)
+                up_node->size += node->size;
+        }
+        if (node->type == DC_TYPE_DIR)
+            ptrv_append(dirs, node);
     }
 
     node = dirs->buf[0];
@@ -281,37 +281,37 @@ filelist_open(const char *filename)
     ssize_t res;
 
     if (stat(filename, &st) < 0) {
-    	screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
-	return NULL;
+        screen_putf(_("%s: Cannot get file status - %s\n"), quotearg(filename), errstr);
+        return NULL;
     }
     contents = malloc(st.st_size);
     if (contents == NULL) {
-    	screen_putf("%s: %s\n", quotearg(filename), errstr);
-	return NULL;
+        screen_putf("%s: %s\n", quotearg(filename), errstr);
+        return NULL;
     }
     fd = open(filename, O_RDONLY);
     if (fd < 0) {
-    	screen_putf(_("%s: Cannot open file for reading - %s\n"), quotearg(filename), errstr);
-	return NULL;
+        screen_putf(_("%s: Cannot open file for reading - %s\n"), quotearg(filename), errstr);
+        return NULL;
     }
     res = full_read(fd, contents, st.st_size);
     if (res < st.st_size) {
-    	if (res < 0)
-    	    screen_putf(_("%s: Cannot read from file - %s\n"), quotearg(filename), errstr);
-	else
-	    screen_putf(_("%s: Premature end of file\n"), quotearg(filename));	/* XXX: really: file was truncated? */
-	free(contents);
-	if (close(fd) < 0)
-    	    screen_putf(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
-	return NULL;
+        if (res < 0)
+            screen_putf(_("%s: Cannot read from file - %s\n"), quotearg(filename), errstr);
+        else
+            screen_putf(_("%s: Premature end of file\n"), quotearg(filename));	/* XXX: really: file was truncated? */
+        free(contents);
+        if (close(fd) < 0)
+            screen_putf(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
+        return NULL;
     }
     if (close(fd) < 0)
-    	screen_putf(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
+        screen_putf(_("%s: Cannot close file - %s\n"), quotearg(filename), errstr);
     decoded = huffman_decode(contents, st.st_size, &decoded_len);
     free(contents);
     if (decoded == NULL) {
-    	screen_putf(_("%s: Invalid data, cannot decode\n"), quotearg(filename));
-	return NULL;
+        screen_putf(_("%s: Invalid data, cannot decode\n"), quotearg(filename));
+        return NULL;
     }
     root = parse_decoded_dclst(decoded, decoded_len);
     free(decoded);
@@ -325,7 +325,7 @@ parse_main(int request_fd[2], int result_fd[2])
     MsgQ *request_mq;
     MsgQ *result_mq;
     struct sigaction sigact;
-    
+
     close(request_fd[1]);
     close(result_fd[0]);
     request_mq = msgq_new(request_fd[0]);
@@ -342,7 +342,7 @@ parse_main(int request_fd[2], int result_fd[2])
     sigaction(SIGUSR1, &sigact, NULL);
     sigaction(SIGCHLD, &sigact, NULL);
     sigaction(SIGPIPE, &sigact, NULL);
-    
+
     while (msgq_read_complete_msg(request_mq) > 0) {
         DCFileList *node;
         char *filename;
@@ -353,8 +353,8 @@ parse_main(int request_fd[2], int result_fd[2])
 
         msgq_get(request_mq, MSGQ_STR, &filename, MSGQ_STR, &main_hub_charset, MSGQ_END);
 
-	    set_hub_charset(main_hub_charset);
-	    free(main_hub_charset);
+        set_hub_charset(main_hub_charset);
+        free(main_hub_charset);
 
         filename_len = strlen(filename);
         if (strcmp(filename+filename_len-6, ".DcLst") == 0) {
@@ -367,7 +367,7 @@ parse_main(int request_fd[2], int result_fd[2])
             node = NULL;
         }
         filelist_to_data(node, &data, &size);
-	    filelist_free(node);
+        filelist_free(node);
         free(filename);
         msgq_put(result_mq, MSGQ_BLOB, data, size, MSGQ_END);
         free(data);
@@ -392,7 +392,7 @@ void
 parse_request_fd_writable(void)
 {
     int res;
-    
+
     res = msgq_write(parse_request_mq);
     if (res == 0 || (res < 0 && errno != EAGAIN)) {
         warn_socket_error(res, true, "parse request pipe");
@@ -427,8 +427,8 @@ parse_result_fd_readable(void)
             data_to_filelist(data, &node); /* XXX: error reporting! */
             parse->callback(node, parse->data);
             /* It is the responsibility of the callback to free node
-	     * when appropriate.
-	     */
+            * when appropriate.
+            */
         }
         free(data);
         free(parse);
@@ -465,13 +465,13 @@ add_parse_request(DCFileListParseCallback callback, const char *filename, void *
 
     msgq_put(parse_request_mq, MSGQ_STR, filename, MSGQ_STR, hub_charset ? hub_charset : "", MSGQ_END);
     FD_SET(parse_request_mq->fd, &write_fds);
-    
+
     parse = xmalloc(sizeof(DCFileListParse));
     parse->callback = callback;
     parse->data = userdata;
     parse->cancelled = false;
     ptrv_append(pending_parses, parse);
-    
+
     return parse;
 }
 
@@ -480,7 +480,7 @@ file_list_parse_init(void)
 {
     int request_fd[2];
     int result_fd[2];
-    
+
     if (pipe(request_fd) != 0 || pipe(result_fd) != 0) {
         warn(_("Cannot create pipe pair - %s\n"), errstr);
         return false;
@@ -498,7 +498,7 @@ file_list_parse_init(void)
     }
     if (parse_child == 0)
         parse_main(request_fd, result_fd);
-    
+
     pending_parses = ptrv_new();
     close(request_fd[0]);
     close(result_fd[1]);

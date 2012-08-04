@@ -20,7 +20,7 @@
 # define ICONVME_H
 
 extern char *iconv_string (const char *string, const char *from_code,
-			   const char *to_code);
+                           const char *to_code);
 
 #if HAVE_ICONV
 # include <iconv.h>

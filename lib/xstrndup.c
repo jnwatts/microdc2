@@ -32,8 +32,8 @@
 char *
 xstrndup (const char *string, size_t n)
 {
-  char *s = strndup (string, n);
-  if (! s)
-    xalloc_die ();
-  return s;
+    char *s = strndup (string, n);
+    if (! s)
+        xalloc_die ();
+    return s;
 }

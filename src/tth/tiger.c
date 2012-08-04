@@ -1,5 +1,5 @@
 /* (PD) 2001 The Bitzi Corporation
- * Please see file COPYING or http://bitzi.com/publicdomain 
+ * Please see file COPYING or http://bitzi.com/publicdomain
  * for more info.
  *
  * Created and released into the public domain by Eli Biham
@@ -184,7 +184,7 @@ extern word64 table[4*256];
 /* The compress function is a function. Requires smaller cache?    */
 void tiger_compress(word64 *str, word64 state[3])
 {
-  tiger_compress_macro(((word64*)str), ((word64*)state));
+    tiger_compress_macro(((word64*)str), ((word64*)state));
 }
 
 #ifdef OPTIMIZE_FOR_ALPHA
@@ -197,51 +197,51 @@ void tiger_compress(word64 *str, word64 state[3])
 
 void tiger(word64 *str, word64 length, word64 res[3])
 {
-  register word64 i, j;
-  unsigned char temp[64];
+    register word64 i, j;
+    unsigned char temp[64];
 
-  res[0]=_ULL(0x0123456789ABCDEF);
-  res[1]=_ULL(0xFEDCBA9876543210);
-  res[2]=_ULL(0xF096A5B4C3B2E187);
+    res[0]=_ULL(0x0123456789ABCDEF);
+    res[1]=_ULL(0xFEDCBA9876543210);
+    res[2]=_ULL(0xF096A5B4C3B2E187);
 
-  for(i=length; i>=64; i-=64)
+    for(i=length; i>=64; i-=64)
     {
 #if USE_BIG_ENDIAN
-      for(j=0; j<64; j++)
-	temp[j^7] = ((byte*)str)[j];
-      tiger_compress(((word64*)temp), res);
+        for(j=0; j<64; j++)
+            temp[j^7] = ((byte*)str)[j];
+        tiger_compress(((word64*)temp), res);
 #else
-      tiger_compress(str, res);
+        tiger_compress(str, res);
 #endif
-      str += 8;
+        str += 8;
     }
 
 #if USE_BIG_ENDIAN
-  for(j=0; j<i; j++)
-    temp[j^7] = ((byte*)str)[j];
+    for(j=0; j<i; j++)
+        temp[j^7] = ((byte*)str)[j];
 
-  temp[j^7] = 0x01;
-  j++;
-  for(; j&7; j++)
-    temp[j^7] = 0;
+    temp[j^7] = 0x01;
+    j++;
+    for(; j&7; j++)
+        temp[j^7] = 0;
 #else
-  for(j=0; j<i; j++)
-    temp[j] = ((byte*)str)[j];
+    for(j=0; j<i; j++)
+        temp[j] = ((byte*)str)[j];
 
-  temp[j++] = 0x01;
-  for(; j&7; j++)
-    temp[j] = 0;
+    temp[j++] = 0x01;
+    for(; j&7; j++)
+        temp[j] = 0;
 #endif
-  if(j>56)
+    if(j>56)
     {
-      for(; j<64; j++)
-	temp[j] = 0;
-      tiger_compress(((word64*)temp), res);
-      j=0;
+        for(; j<64; j++)
+            temp[j] = 0;
+        tiger_compress(((word64*)temp), res);
+        j=0;
     }
 
-  for(; j<56; j++)
-    temp[j] = 0;
-  ((word64*)(&(temp[56])))[0] = ((word64)length)<<3;
-  tiger_compress(((word64*)temp), res);
+    for(; j<56; j++)
+        temp[j] = 0;
+    ((word64*)(&(temp[56])))[0] = ((word64)length)<<3;
+    tiger_compress(((word64*)temp), res);
 }

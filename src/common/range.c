@@ -76,8 +76,8 @@ foreach_in_range(const char *range, uint32_t start, uint32_t end, RangeCallback 
 
     for (;;) {
         if (t.type == '-') {
-	    pop_token(&range, &t);
-	    if (t.type != '#')
+            pop_token(&range, &t);
+            if (t.type != '#')
                 return false;
             if (t.num < start || t.num > end)
                 return false;
@@ -92,19 +92,19 @@ foreach_in_range(const char *range, uint32_t start, uint32_t end, RangeCallback 
             RangeToken t2;
 
             if (t.num < start || t.num > end)
-	        return false;
-	    pop_token(&range, &t2);
-	    if (t2.type == 0) {
+                return false;
+            pop_token(&range, &t2);
+            if (t2.type == 0) {
                 if (callback != NULL)
                     callback(t.num, t.num, userdata);
-	        return true;
-	    }
-	    if (t2.type == ',') {
+                return true;
+            }
+            if (t2.type == ',') {
                 if (callback != NULL)
                     callback(t.num, t.num, userdata);
-	    } else if (t2.type == '-') {
-	        pop_token(&range, &t2);
-	        if (t2.type == 0) {
+            } else if (t2.type == '-') {
+                pop_token(&range, &t2);
+                if (t2.type == 0) {
                     if (callback != NULL)
                         callback(t.num, end, userdata);
                     return true;
@@ -112,20 +112,20 @@ foreach_in_range(const char *range, uint32_t start, uint32_t end, RangeCallback 
                 if (t2.type == ',') {
                     if (callback != NULL)
                         callback(t.num, end, userdata);
-	        } else if (t2.type == '#') {
+                } else if (t2.type == '#') {
                     if (t2.num < start || t2.num > end)
-	                return false;
+                        return false;
                     if (callback != NULL)
                         callback(t.num, t2.num, userdata);
                     pop_token(&range, &t);
                     if (t.type == 0)
-		        return true;
-		    if (t.type != ',')
+                        return true;
+                    if (t.type != ',')
                         return false;
                 } else {
                     return false;
                 }
-	    }
+            }
         } else {
             return false;
         }

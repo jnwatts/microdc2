@@ -7,7 +7,7 @@ extern "C" {
 
 // user must call free() funtion on pointer returned from these functions
 
-char* base32_encode(const unsigned char* in, int inlen);
+    char* base32_encode(const unsigned char* in, int inlen);
 
 #if defined(__cplusplus)
 }

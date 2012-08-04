@@ -33,14 +33,14 @@
 /* Structure to contain information about address of a service provider.  */
 struct addrinfo
 {
-  int ai_flags;			/* Input flags.  */
-  int ai_family;		/* Protocol family for socket.  */
-  int ai_socktype;		/* Socket type.  */
-  int ai_protocol;		/* Protocol for socket.  */
-  socklen_t ai_addrlen;		/* Length of socket address.  */
-  struct sockaddr *ai_addr;	/* Socket address for socket.  */
-  char *ai_canonname;		/* Canonical name for service location.  */
-  struct addrinfo *ai_next;	/* Pointer to next in list.  */
+    int ai_flags;			/* Input flags.  */
+    int ai_family;		/* Protocol family for socket.  */
+    int ai_socktype;		/* Socket type.  */
+    int ai_protocol;		/* Protocol for socket.  */
+    socklen_t ai_addrlen;		/* Length of socket address.  */
+    struct sockaddr *ai_addr;	/* Socket address for socket.  */
+    char *ai_canonname;		/* Canonical name for service location.  */
+    struct addrinfo *ai_next;	/* Pointer to next in list.  */
 };
 # endif
 
@@ -52,7 +52,7 @@ struct addrinfo
 #  define AI_V4MAPPED	0x0008	/* IPv4 mapped addresses are acceptable.  */
 #  define AI_ALL	0x0010	/* Return IPv4 mapped and IPv6 addresses.  */
 #  define AI_ADDRCONFIG	0x0020	/* Use configuration of this host to choose
-				   returned address type..  */
+returned address type..  */
 # endif
 
 /* Error values for `getaddrinfo' function.  */
@@ -88,9 +88,9 @@ struct addrinfo
    For more details, see the POSIX:2001 specification
    <http://www.opengroup.org/susv3xsh/getaddrinfo.html>.  */
 extern int getaddrinfo (const char *restrict nodename,
-			const char *restrict servname,
-			const struct addrinfo *restrict hints,
-			struct addrinfo **restrict res);
+                        const char *restrict servname,
+                        const struct addrinfo *restrict hints,
+                        struct addrinfo **restrict res);
 # endif
 
 # ifndef HAVE_DECL_FREEADDRINFO

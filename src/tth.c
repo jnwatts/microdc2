@@ -41,15 +41,15 @@ int main(int argc, char* argv[])
     int opt = -1, long_idx = -1;
     while (!print_help && (-1 != (opt = getopt_long(argc, argv, short_opts, long_opts, &long_idx)))) {
         switch (opt) {
-            case VERSION_OPT:
-	            version_etc(stdout, NULL, base_name(argv[0]), VERSION, "Vladimir Chugunov", NULL);
-	            exit(EXIT_SUCCESS);
-            case HELP_OPT:
-                print_help = 1;
-                break;
-            default:
-                fprintf(stderr, "unknown option value %d\n", opt);
-                break;
+        case VERSION_OPT:
+            version_etc(stdout, NULL, base_name(argv[0]), VERSION, "Vladimir Chugunov", NULL);
+            exit(EXIT_SUCCESS);
+        case HELP_OPT:
+            print_help = 1;
+            break;
+        default:
+            fprintf(stderr, "unknown option value %d\n", opt);
+            break;
         }
     }
 

@@ -45,38 +45,38 @@
 /* Options for human_readable.  */
 enum
 {
-  /* Unless otherwise specified these options may be ORed together.  */
+    /* Unless otherwise specified these options may be ORed together.  */
 
-  /* The following three options are mutually exclusive.  */
-  /* Round to plus infinity (default).  */
-  human_ceiling = 0,
-  /* Round to nearest, ties to even.  */
-  human_round_to_nearest = 1,
-  /* Round to minus infinity.  */
-  human_floor = 2,
+    /* The following three options are mutually exclusive.  */
+    /* Round to plus infinity (default).  */
+    human_ceiling = 0,
+    /* Round to nearest, ties to even.  */
+    human_round_to_nearest = 1,
+    /* Round to minus infinity.  */
+    human_floor = 2,
 
-  /* Group digits together, e.g. `1,000,000'.  This uses the
-     locale-defined grouping; the traditional C locale does not group,
-     so this has effect only if some other locale is in use.  */
-  human_group_digits = 4,
+    /* Group digits together, e.g. `1,000,000'.  This uses the
+       locale-defined grouping; the traditional C locale does not group,
+       so this has effect only if some other locale is in use.  */
+    human_group_digits = 4,
 
-  /* When autoscaling, suppress ".0" at end.  */
-  human_suppress_point_zero = 8,
+    /* When autoscaling, suppress ".0" at end.  */
+    human_suppress_point_zero = 8,
 
-  /* Scale output and use SI-style units, ignoring the output block size.  */
-  human_autoscale = 16,
+    /* Scale output and use SI-style units, ignoring the output block size.  */
+    human_autoscale = 16,
 
-  /* Prefer base 1024 to base 1000.  */
-  human_base_1024 = 32,
+    /* Prefer base 1024 to base 1000.  */
+    human_base_1024 = 32,
 
-  /* Prepend " " before unit symbol.  */
-  human_space_before_unit = 64,
+    /* Prepend " " before unit symbol.  */
+    human_space_before_unit = 64,
 
-  /* Append SI prefix, e.g. "k" or "M".  */
-  human_SI = 128,
+    /* Append SI prefix, e.g. "k" or "M".  */
+    human_SI = 128,
 
-  /* Append "B" (if base 1000) or "iB" (if base 1024) to SI prefix.  */
-  human_B = 256
+    /* Append "B" (if base 1000) or "iB" (if base 1024) to SI prefix.  */
+    human_B = 256
 };
 
 char *human_readable (uintmax_t, char *, int, uintmax_t, uintmax_t);

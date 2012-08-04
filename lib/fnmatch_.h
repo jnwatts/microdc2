@@ -22,13 +22,13 @@
 extern "C" {
 # endif
 
-/* We #undef these before defining them because some losing systems
-   (HP-UX A.08.07 for example) define these in <unistd.h>.  */
+    /* We #undef these before defining them because some losing systems
+       (HP-UX A.08.07 for example) define these in <unistd.h>.  */
 # undef	FNM_PATHNAME
 # undef	FNM_NOESCAPE
 # undef	FNM_PERIOD
 
-/* Bits set in the FLAGS argument to `fnmatch'.  */
+    /* Bits set in the FLAGS argument to `fnmatch'.  */
 # define FNM_PATHNAME	(1 << 0) /* No wildcard can ever match `/'.  */
 # define FNM_NOESCAPE	(1 << 1) /* Backslashes don't quote special chars.  */
 # define FNM_PERIOD	(1 << 2) /* Leading `.' is matched only explicitly.  */
@@ -40,21 +40,21 @@ extern "C" {
 #  define FNM_EXTMATCH	 (1 << 5)	/* Use ksh-like extended matching. */
 # endif
 
-/* Value returned by `fnmatch' if STRING does not match PATTERN.  */
+    /* Value returned by `fnmatch' if STRING does not match PATTERN.  */
 # define FNM_NOMATCH	1
 
-/* This value is returned if the implementation does not support
-   `fnmatch'.  Since this is not the case here it will never be
-   returned but the conformance test suites still require the symbol
-   to be defined.  */
+    /* This value is returned if the implementation does not support
+       `fnmatch'.  Since this is not the case here it will never be
+       returned but the conformance test suites still require the symbol
+       to be defined.  */
 # ifdef _XOPEN_SOURCE
 #  define FNM_NOSYS	(-1)
 # endif
 
-/* Match NAME against the file name pattern PATTERN,
-   returning zero if it matches, FNM_NOMATCH if not.  */
-extern int fnmatch (const char *__pattern, const char *__name,
-		    int __flags);
+    /* Match NAME against the file name pattern PATTERN,
+       returning zero if it matches, FNM_NOMATCH if not.  */
+    extern int fnmatch (const char *__pattern, const char *__name,
+                        int __flags);
 
 # ifdef	__cplusplus
 }

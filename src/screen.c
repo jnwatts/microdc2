@@ -122,25 +122,25 @@ bool
 set_log_file(const char *new_filename, bool verbose)
 {
     if (log_fh != NULL) {
-	if (fclose(log_fh) != 0)
-	    warn(_("%s: Cannot close file - %s\n"), quotearg(log_filename), errstr);
-	log_fh = NULL;
-	free(log_filename);
-	log_filename = NULL;
+        if (fclose(log_fh) != 0)
+            warn(_("%s: Cannot close file - %s\n"), quotearg(log_filename), errstr);
+        log_fh = NULL;
+        free(log_filename);
+        log_filename = NULL;
     }
     if (new_filename == NULL) {
-	if (verbose)
-	    screen_putf(_("No longer logging to file.\n"));
-	return true;
+        if (verbose)
+            screen_putf(_("No longer logging to file.\n"));
+        return true;
     }
     log_fh = fopen(new_filename, "a");
     if (log_fh == NULL) {
-	screen_putf(_("%s: Cannot open file for appending - %s\n"), quotearg(new_filename), errstr);
-	return false;
+        screen_putf(_("%s: Cannot open file for appending - %s\n"), quotearg(new_filename), errstr);
+        return false;
     }
     log_filename = xstrdup(new_filename);
     if (verbose)
-	screen_putf(_("Logging to `%s'.\n"), quotearg(new_filename));
+        screen_putf(_("Logging to `%s'.\n"), quotearg(new_filename));
     return true;
 }
 
@@ -154,8 +154,8 @@ fix_winch(void)
     struct sigaction action;
 
     if (sigaction(SIGWINCH, NULL, &action) >= 0) {
-    	action.sa_flags |= SA_RESTART;
-    	sigaction(SIGWINCH, &action, NULL); /* Ignore errors */
+        action.sa_flags |= SA_RESTART;
+        sigaction(SIGWINCH, &action, NULL); /* Ignore errors */
     }
     return 0;
 }
@@ -168,13 +168,13 @@ get_file_dir_part(const char *word, char **dir_part, const char **file_part)
 
     fp = strrchr(word, '/');
     if (fp == NULL) {
-	*dir_part = xstrdup("");
-	*file_part = word;
+        *dir_part = xstrdup("");
+        *file_part = word;
     } else {
-	for (; fp > word && fp[-1] == '/'; fp--);
-	*dir_part = xstrndup(word, fp - word + 1);
-	for (fp++; *fp == '/'; fp++);
-	*file_part = fp;
+        for (; fp > word && fp[-1] == '/'; fp--);
+        *dir_part = xstrndup(word, fp - word + 1);
+        for (fp++; *fp == '/'; fp++);
+        *file_part = fp;
     }
 }
 
@@ -287,21 +287,21 @@ user_input(char *line)
         if (NULL != localtime_r(&now, &_tm) && 0 != strftime(c_time, 1023, "%d.%m.%Y %H:%M:%S", &_tm)) {
             fprintf(log_fh, "%s ", c_time);
         }
-	    fprintf(log_fh, "> %s\n", line == NULL ? "(null)" : line);
+        fprintf(log_fh, "> %s\n", line == NULL ? "(null)" : line);
         fflush(log_fh);
     }
-    
+
     if (line == NULL) {
         /* Ctrl+D was pressed on an empty line. */
         screen_putf("exit\n");
         running = false;
     } else if (line[0] != '\0') {
         add_history(line);
-	/* XXX: handle input differently
-	 * !shell_cmd
-	 * /cmd
-	 * depending on context: msg, say, cmd
-	 */
+        /* XXX: handle input differently
+         * !shell_cmd
+         * /cmd
+         * depending on context: msg, say, cmd
+         */
         command_execute(line);
     }
 
@@ -343,11 +343,11 @@ screen_suspend(void)
 {
     if (screen_state == SCREEN_RL_DISPLAYED || screen_state == SCREEN_RL_CLEARED) {
         rl_callback_handler_remove();
-	FD_CLR(STDIN_FILENO, &read_fds);
+        FD_CLR(STDIN_FILENO, &read_fds);
         if (screen_state == SCREEN_RL_DISPLAYED)
             putchar('\n');
-	suspend_msgs = ptrv_new();
-	screen_state = SCREEN_SUSPENDED;
+        suspend_msgs = ptrv_new();
+        screen_state = SCREEN_SUSPENDED;
     }
 }
 
@@ -362,8 +362,8 @@ screen_wakeup(bool print_newline_first)
             putchar('\n');
         for (c = 0; c < suspend_msgs->cur; c++)
             fputs((char *) suspend_msgs->buf[c], stdout);
-	ptrv_foreach(suspend_msgs, free);
-	ptrv_free(suspend_msgs);
+        ptrv_foreach(suspend_msgs, free);
+        ptrv_free(suspend_msgs);
         screen_state = SCREEN_NO_HANDLER;
     }
 }
@@ -377,8 +377,8 @@ screen_finish(void)
         int c;
         for (c = 0; c < suspend_msgs->cur; c++)
             fputs((char *) suspend_msgs->buf[c], stdout);
-	ptrv_foreach(suspend_msgs, free);
-	ptrv_free(suspend_msgs);
+        ptrv_foreach(suspend_msgs, free);
+        ptrv_free(suspend_msgs);
     } else if (screen_state > SCREEN_NO_HANDLER) {
         rl_callback_handler_remove();
         if (screen_state == SCREEN_RL_DISPLAYED)
@@ -387,11 +387,11 @@ screen_finish(void)
     }
 
     if (screen_state >= SCREEN_NO_HANDLER) {
-    	char *path;
+        char *path;
 
-	/* Save history */
-    	get_package_file("history", &path);
-    	if (mkdirs_for_file(path) >= 0) {
+        /* Save history */
+        get_package_file("history", &path);
+        if (mkdirs_for_file(path) >= 0) {
             if (write_history(path) != 0)
                 warn(_("%s: Cannot write history - %s\n"), quotearg(path), errstr);
         }
@@ -579,7 +579,7 @@ screen_prepare(void)
         return;
 
     if (screen_state == SCREEN_UNINITIALIZED) {
-    	char *path;
+        char *path;
 
         screen_state = SCREEN_NO_HANDLER;
         warn_writer = screen_warn_writer;
@@ -640,7 +640,7 @@ set_screen_prompt(const char *prompt, ...)
     va_list args;
 
     if (screen_prompt != NULL)
-	free(screen_prompt);
+        free(screen_prompt);
     va_start(args, prompt);
     screen_prompt = xvasprintf(prompt, args);
     va_end(args);
@@ -659,12 +659,12 @@ sorted_list_completion_generator(const char *base, PtrV *results, void *items,
     const void *last_item;
 
     if (bksearchrange(base, items, item_count, item_size,
-	              key_offset, (comparison_fn_t) strleftcmp,
-	              &item, &last_item)) {
+                      key_offset, (comparison_fn_t) strleftcmp,
+                      &item, &last_item)) {
         while (item <= last_item) {
-	    char *key = xstrdup(*(const char **) (((const char *) item) + key_offset));
-	    ptrv_append(results, new_completion_entry(key, NULL));
-	    item = (const void *) (((const char *) item) + item_size);
+            char *key = xstrdup(*(const char **) (((const char *) item) + key_offset));
+            ptrv_append(results, new_completion_entry(key, NULL));
+            item = (const void *) (((const char *) item) + item_size);
         }
     }
 }

@@ -35,27 +35,27 @@
 /* A parsed directive.  */
 typedef struct
 {
-  const char* dir_start;
-  const char* dir_end;
-  int flags;
-  const char* width_start;
-  const char* width_end;
-  size_t width_arg_index;
-  const char* precision_start;
-  const char* precision_end;
-  size_t precision_arg_index;
-  char conversion; /* d i o u x X f e E g G c s p n U % but not C S */
-  size_t arg_index;
+    const char* dir_start;
+    const char* dir_end;
+    int flags;
+    const char* width_start;
+    const char* width_end;
+    size_t width_arg_index;
+    const char* precision_start;
+    const char* precision_end;
+    size_t precision_arg_index;
+    char conversion; /* d i o u x X f e E g G c s p n U % but not C S */
+    size_t arg_index;
 }
 char_directive;
 
 /* A parsed format string.  */
 typedef struct
 {
-  size_t count;
-  char_directive *dir;
-  size_t max_width_length;
-  size_t max_precision_length;
+    size_t count;
+    char_directive *dir;
+    size_t max_width_length;
+    size_t max_precision_length;
 }
 char_directives;
 

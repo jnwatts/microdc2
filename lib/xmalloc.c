@@ -45,16 +45,16 @@ enum { HAVE_GNU_CALLOC = 0 };
 static inline void *
 xnmalloc_inline (size_t n, size_t s)
 {
-  void *p;
-  if (xalloc_oversized (n, s) || (! (p = malloc (n * s)) && n != 0))
-    xalloc_die ();
-  return p;
+    void *p;
+    if (xalloc_oversized (n, s) || (! (p = malloc (n * s)) && n != 0))
+        xalloc_die ();
+    return p;
 }
 
 void *
 xnmalloc (size_t n, size_t s)
 {
-  return xnmalloc_inline (n, s);
+    return xnmalloc_inline (n, s);
 }
 
 /* Allocate N bytes of memory dynamically, with error checking.  */
@@ -62,7 +62,7 @@ xnmalloc (size_t n, size_t s)
 void *
 xmalloc (size_t n)
 {
-  return xnmalloc_inline (n, 1);
+    return xnmalloc_inline (n, 1);
 }
 
 /* Change the size of an allocated block of memory P to an array of N
@@ -71,15 +71,15 @@ xmalloc (size_t n)
 static inline void *
 xnrealloc_inline (void *p, size_t n, size_t s)
 {
-  if (xalloc_oversized (n, s) || (! (p = realloc (p, n * s)) && n != 0))
-    xalloc_die ();
-  return p;
+    if (xalloc_oversized (n, s) || (! (p = realloc (p, n * s)) && n != 0))
+        xalloc_die ();
+    return p;
 }
 
 void *
 xnrealloc (void *p, size_t n, size_t s)
 {
-  return xnrealloc_inline (p, n, s);
+    return xnrealloc_inline (p, n, s);
 }
 
 /* Change the size of an allocated block of memory P to N bytes,
@@ -88,7 +88,7 @@ xnrealloc (void *p, size_t n, size_t s)
 void *
 xrealloc (void *p, size_t n)
 {
-  return xnrealloc_inline (p, n, 1);
+    return xnrealloc_inline (p, n, 1);
 }
 
 
@@ -150,37 +150,37 @@ xrealloc (void *p, size_t n)
 static inline void *
 x2nrealloc_inline (void *p, size_t *pn, size_t s)
 {
-  size_t n = *pn;
+    size_t n = *pn;
 
-  if (! p)
+    if (! p)
     {
-      if (! n)
-	{
-	  /* The approximate size to use for initial small allocation
-	     requests, when the invoking code specifies an old size of
-	     zero.  64 bytes is the largest "small" request for the
-	     GNU C library malloc.  */
-	  enum { DEFAULT_MXFAST = 64 };
+        if (! n)
+        {
+            /* The approximate size to use for initial small allocation
+               requests, when the invoking code specifies an old size of
+               zero.  64 bytes is the largest "small" request for the
+               GNU C library malloc.  */
+            enum { DEFAULT_MXFAST = 64 };
 
-	  n = DEFAULT_MXFAST / s;
-	  n += !n;
-	}
+            n = DEFAULT_MXFAST / s;
+            n += !n;
+        }
     }
-  else
+    else
     {
-      if (SIZE_MAX / 2 / s < n)
-	xalloc_die ();
-      n *= 2;
+        if (SIZE_MAX / 2 / s < n)
+            xalloc_die ();
+        n *= 2;
     }
 
-  *pn = n;
-  return xrealloc (p, n * s);
+    *pn = n;
+    return xrealloc (p, n * s);
 }
 
 void *
 x2nrealloc (void *p, size_t *pn, size_t s)
 {
-  return x2nrealloc_inline (p, pn, s);
+    return x2nrealloc_inline (p, pn, s);
 }
 
 /* If P is null, allocate a block of at least *PN bytes; otherwise,
@@ -192,7 +192,7 @@ x2nrealloc (void *p, size_t *pn, size_t s)
 void *
 x2realloc (void *p, size_t *pn)
 {
-  return x2nrealloc_inline (p, pn, 1);
+    return x2nrealloc_inline (p, pn, 1);
 }
 
 /* Allocate S bytes of zeroed memory dynamically, with error checking.
@@ -202,7 +202,7 @@ x2realloc (void *p, size_t *pn)
 void *
 xzalloc (size_t s)
 {
-  return memset (xmalloc (s), 0, s);
+    return memset (xmalloc (s), 0, s);
 }
 
 /* Allocate zeroed memory for N elements of S bytes, with error
@@ -211,15 +211,15 @@ xzalloc (size_t s)
 void *
 xcalloc (size_t n, size_t s)
 {
-  void *p;
-  /* Test for overflow, since some calloc implementations don't have
-     proper overflow checks.  But omit overflow and size-zero tests if
-     HAVE_GNU_CALLOC, since GNU calloc catches overflow and never
-     returns NULL if successful.  */
-  if ((! HAVE_GNU_CALLOC && xalloc_oversized (n, s))
-      || (! (p = calloc (n, s)) && (HAVE_GNU_CALLOC || n != 0)))
-    xalloc_die ();
-  return p;
+    void *p;
+    /* Test for overflow, since some calloc implementations don't have
+       proper overflow checks.  But omit overflow and size-zero tests if
+       HAVE_GNU_CALLOC, since GNU calloc catches overflow and never
+       returns NULL if successful.  */
+    if ((! HAVE_GNU_CALLOC && xalloc_oversized (n, s))
+            || (! (p = calloc (n, s)) && (HAVE_GNU_CALLOC || n != 0)))
+        xalloc_die ();
+    return p;
 }
 
 /* Clone an object P of size S, with error checking.  There's no need
@@ -229,7 +229,7 @@ xcalloc (size_t n, size_t s)
 void *
 xmemdup (void const *p, size_t s)
 {
-  return memcpy (xmalloc (s), p, s);
+    return memcpy (xmalloc (s), p, s);
 }
 
 /* Clone STRING.  */
@@ -237,5 +237,5 @@ xmemdup (void const *p, size_t s)
 char *
 xstrdup (char const *string)
 {
-  return xmemdup (string, strlen (string) + 1);
+    return xmemdup (string, strlen (string) + 1);
 }
