@@ -1747,6 +1747,20 @@ cmd_search(int argc, char **argv)
     free(tmp);
 }
 
+static char *size_units[] = { "B", "KiB", "MiB", "GiB", "TiB" };
+
+static void
+filesize_to_char(uint64_t filesize, StrBuf *size_str)
+{
+    int i;
+    for (i = 0; i < 5 && filesize >= 1000; filesize /= 1024, i++);
+    
+    char temp[50];
+    snprintf(temp, sizeof(temp), "%" PRIu64 " %s", filesize, size_units[i]);
+    
+    strbuf_append(size_str, temp);
+}
+
 static void
 cmd_results(int argc, char **argv)
 {
@@ -1794,7 +1808,12 @@ cmd_results(int argc, char **argv)
                 t = "/";
             else
                 t = "";
-            screen_putf("%d. %s %s%s\n", c+1, quotearg(sr->userinfo->nick), n, t);
+                
+            StrBuf *size_str = strbuf_new();
+            filesize_to_char(sr->filesize, size_str);
+            
+            screen_putf("%d. %s %s%s (%s)\n", c+1, quotearg(sr->userinfo->nick), n, t, strbuf_buffer(size_str));
+            strbuf_free(size_str);
             free(n);
         }
     }
