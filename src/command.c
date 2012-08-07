@@ -215,7 +215,7 @@ command_init(void)
                         _("get FILE ..."),
                         _("Queue file for download. Must be browsing a user's files to use this "
                           "command.\n"));
-    add_builtin_command("getresult", cmd_getresult, remote_path_completion_generator,
+    add_builtin_command("getresult", cmd_getresult, NULL,
                         _("getresult RESULTINDEX FILEINDEX"),
                         _("Queue file from result list for download. The result list and the file are "
                           "both specified as indexes.\n"));
