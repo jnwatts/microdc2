@@ -218,7 +218,7 @@ command_init(void)
     add_builtin_command("getresult", cmd_getresult, NULL,
                         _("getresult RESULTINDEX FILEINDEX"),
                         _("Queue file from result list for download. The result list and the file are "
-                          "both specified as indexes.\n"));
+                          "both specified as indexes. Works only with regular files.\n"));
     add_builtin_command("grantslot", cmd_grantslot, user_completion_generator,
                         _("grantslot [USER ...]"),
                         _("Grant a download slot for the specified users, or remove granted slot if the "
@@ -2040,13 +2040,16 @@ cmd_get(int argc, char **argv)
 }
 
 static DCFileList *
-path_to_node(char *path)
+path_to_node(char *path, DCFileType filetype)
 {
     DCFileList *node = new_file_node("", DC_TYPE_DIR, NULL);
     char *start;
     char *end = path;
     int sub_len;
-    for (start = (*path == '/' ? path + 1 : path); end != NULL; start = end + 1) {
+
+    for (start = path; *start == '/'; start++);
+
+    for (; end != NULL; start = end + 1) {
         char *sub;
         DCFileType type;
         end = strchr(start, '/');
@@ -2056,7 +2059,7 @@ path_to_node(char *path)
             type = DC_TYPE_DIR;
         } else {
             sub_len = strlen(start);
-            type = DC_TYPE_REG;
+            type = filetype;
         }
         
         sub = strndup(start, sub_len);
@@ -2095,7 +2098,12 @@ cmd_getresult(int argc, char **argv)
         
     DCSearchResponse *sr = sd->responses->buf[file_idx-1];
     
-    DCFileList *node_ptr = path_to_node(translate_remote_to_local(sr->filename));
+    if (sr->filetype == DC_TYPE_DIR) {
+        screen_putf(_("getresult works only with regular files, not with directories.\n"));
+        return;
+    }
+
+    DCFileList *node_ptr = path_to_node(translate_remote_to_local(sr->filename), sr->filetype);
     node_ptr->size = sr->filesize;
     
     uint64_t byte_count = 0;
