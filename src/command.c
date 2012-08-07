@@ -76,6 +76,7 @@ static void cmd_find(int argc, char **argv);
 static void cmd_ls(int argc, char **argv);
 static void cmd_cd(int argc, char **argv);
 static void cmd_get(int argc, char **argv);
+static void cmd_getresult(int argc, char **argv);
 static void cmd_queue(int argc, char **argv);
 static void cmd_unqueue(int argc, char **argv);
 static void cmd_who(int argc, char **argv);
@@ -214,6 +215,10 @@ command_init(void)
                         _("get FILE ..."),
                         _("Queue file for download. Must be browsing a user's files to use this "
                           "command.\n"));
+    add_builtin_command("getresult", cmd_getresult, NULL,
+                        _("getresult RESULTINDEX FILEINDEX"),
+                        _("Queue file from result list for download. The result list and the file are "
+                          "both specified as indexes. Works only with regular files.\n"));
     add_builtin_command("grantslot", cmd_grantslot, user_completion_generator,
                         _("grantslot [USER ...]"),
                         _("Grant a download slot for the specified users, or remove granted slot if the "
@@ -2032,6 +2037,85 @@ cmd_get(int argc, char **argv)
             screen_putf(_("No free connections. Queued files for download.\n"));
         }
     }
+}
+
+static DCFileList *
+path_to_node(char *path, DCFileType filetype)
+{
+    DCFileList *node = new_file_node("", DC_TYPE_DIR, NULL);
+    char *start;
+    char *end = path;
+    int sub_len;
+
+    for (start = path; *start == '/'; start++);
+
+    for (; end != NULL; start = end + 1) {
+        char *sub;
+        DCFileType type;
+        end = strchr(start, '/');
+        
+        if (end != NULL) {
+            sub_len = end - start;
+            type = DC_TYPE_DIR;
+        } else {
+            sub_len = strlen(start);
+            type = filetype;
+        }
+        
+        sub = strndup(start, sub_len);
+        node = new_file_node(sub, type, node);
+        free(sub);
+    }
+    
+    return node;
+}
+
+static void
+cmd_getresult(int argc, char **argv)
+{
+    if (argc != 3) {
+        screen_putf(_("Usage: %s RESULTINDEX FILEINDEX\n"), argv[0]);
+        return;
+    }
+    
+
+    DCSearchRequest *sd;
+    uint32_t result_idx;
+
+    if (!parse_uint32(argv[1], &result_idx) || result_idx == 0 || result_idx-1 >= our_searches->cur) {
+        screen_putf(_("%s: Invalid result index.\n"), quotearg(argv[1]));
+        return;
+    }
+
+    sd = our_searches->buf[result_idx-1];    
+    
+    uint32_t file_idx;
+    
+    if (!parse_uint32(argv[2], &file_idx) || file_idx == 0 || file_idx-1 >= sd->responses->cur) {
+        screen_putf(_("%s: Invalid file index.\n"), quotearg(argv[2]));
+        return;
+    }
+        
+    DCSearchResponse *sr = sd->responses->buf[file_idx-1];
+    
+    if (sr->filetype == DC_TYPE_DIR) {
+        screen_putf(_("getresult works only with regular files, not with directories.\n"));
+        return;
+    }
+
+    DCFileList *node_ptr = path_to_node(translate_remote_to_local(sr->filename), sr->filetype);
+    node_ptr->size = sr->filesize;
+    
+    uint64_t byte_count = 0;
+    uint32_t file_count = 0;
+    
+    append_download_file(sr->userinfo, node_ptr, node_ptr->parent, &file_count, &byte_count);
+    if (!has_user_conn(sr->userinfo, DC_DIR_RECEIVE) && sr->userinfo->conn_count < DC_USER_MAX_CONN) {
+        hub_connect_user(sr->userinfo); /* Ignore errors */
+    } else {
+        screen_putf(_("No free connections. Queued files for download.\n"));
+    }
+    filelist_free(node_ptr);
 }
 
 static void
