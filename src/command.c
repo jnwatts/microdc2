@@ -1947,7 +1947,6 @@ append_download_file(DCUserInfo *ui, DCFileList *node, DCFileList *basenode, uin
             queued->flag = DC_TF_NORMAL;
             queued->status = DC_QS_QUEUED;
             queued->length = node->size;
-screen_putf(_("DEBUG: %s, %s\n"), queued->filename, queued->base_path);
             ptrv_append(ui->download_queue, queued);
         }
 
