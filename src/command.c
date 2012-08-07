@@ -1750,15 +1750,23 @@ cmd_search(int argc, char **argv)
 static char *size_units[] = { "B", "KiB", "MiB", "GiB", "TiB" };
 
 static void
-filesize_to_char(uint64_t filesize, StrBuf *size_str)
+filesize_to_strbuf(uint64_t filesize, StrBuf *size_str)
 {
+    uint8_t tenths = 0;
     int i;
-    for (i = 0; i < 5 && filesize >= 1000; filesize /= 1024, i++);
+    for (i = 0; i < 5 && filesize >= 1024; filesize /= 1024, i++) {
+        tenths = (filesize < 1024*10 ? (filesize*10/1024)%10 : 0);
+    }
     
-    char temp[50];
-    snprintf(temp, sizeof(temp), "%" PRIu64 " %s", filesize, size_units[i]);
+    char tenths_str[3] = "";
+    if (tenths > 0) {
+        snprintf(tenths_str, sizeof(tenths_str), ".%" PRIu8, tenths);
+    }
     
-    strbuf_append(size_str, temp);
+    char all[50];
+    snprintf(all, sizeof(all), "%" PRIu64 "%s %s", filesize, tenths_str, size_units[i]);
+    
+    strbuf_append(size_str, all);
 }
 
 static void
@@ -1810,9 +1818,13 @@ cmd_results(int argc, char **argv)
                 t = "";
                 
             StrBuf *size_str = strbuf_new();
-            filesize_to_char(sr->filesize, size_str);
+            if (sr->filetype == DC_TYPE_REG) {
+                filesize_to_strbuf(sr->filesize, size_str);
+                strbuf_prepend(size_str, " (");
+                strbuf_append(size_str, ")");
+            }
             
-            screen_putf("%d. %s %s%s (%s)\n", c+1, quotearg(sr->userinfo->nick), n, t, strbuf_buffer(size_str));
+            screen_putf("%d. %s %s%s%s\n", c+1, quotearg(sr->userinfo->nick), n, t, strbuf_buffer(size_str));
             strbuf_free(size_str);
             free(n);
         }
