@@ -1747,28 +1747,6 @@ cmd_search(int argc, char **argv)
     free(tmp);
 }
 
-static char *size_units[] = { "B", "KiB", "MiB", "GiB", "TiB" };
-
-static void
-filesize_to_strbuf(uint64_t filesize, StrBuf *size_str)
-{
-    uint8_t tenths = 0;
-    int i;
-    for (i = 0; i < 5 && filesize >= 1024; filesize /= 1024, i++) {
-        tenths = (filesize < 1024*10 ? (filesize*10/1024)%10 : 0);
-    }
-    
-    char tenths_str[3] = "";
-    if (tenths > 0) {
-        snprintf(tenths_str, sizeof(tenths_str), ".%" PRIu8, tenths);
-    }
-    
-    char all[50];
-    snprintf(all, sizeof(all), "%" PRIu64 "%s %s", filesize, tenths_str, size_units[i]);
-    
-    strbuf_append(size_str, all);
-}
-
 static void
 cmd_results(int argc, char **argv)
 {

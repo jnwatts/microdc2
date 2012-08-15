@@ -25,6 +25,7 @@
 #include <fcntl.h>		/* ? */
 #include <string.h>		/* C89 */
 #include <arpa/inet.h>		/* ? */
+#include <inttypes.h>		/* POSIX.1 (CX): PRI* */
 #include "xalloc.h"		/* Gnulib */
 #include "xstrndup.h"		/* Gnulib */
 #include "xvasprintf.h"		/* Gnulib */
@@ -311,4 +312,27 @@ elapsed_time_to_string(time_t elapsed, char *buf)
     if (elapsed > 0 || s == buf)
         s += sprintf(s, "%lus", (long) elapsed);
     return buf;
+}
+
+
+static char *size_units[] = { "B", "KiB", "MiB", "GiB", "TiB" };
+
+void
+filesize_to_strbuf(uint64_t filesize, StrBuf *size_str)
+{
+    uint8_t tenths = 0;
+    int i;
+    for (i = 0; i < 5 && filesize >= 1024; filesize /= 1024, i++) {
+        tenths = (filesize < 1024*10 ? (filesize*10/1024)%10 : 0);
+    }
+
+    char tenths_str[3] = "";
+    if (tenths > 0) {
+        snprintf(tenths_str, sizeof(tenths_str), ".%" PRIu8, tenths);
+    }
+
+    char all[50];
+    snprintf(all, sizeof(all), "%" PRIu64 "%s %s", filesize, tenths_str, size_units[i]);
+
+    strbuf_append(size_str, all);
 }
