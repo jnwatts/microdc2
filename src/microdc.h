@@ -34,7 +34,6 @@
 #include "common/error.h"
 #include "common/hmap.h"
 #include "common/msgq.h"
-#include "common/strbuf.h"
 
 #define DC_CLIENT_BASE_KEY 5
 #define DC_HUB_TCP_PORT 411
@@ -534,7 +533,7 @@ char *catfiles_with_trailing_slash(const char *p1, const char *p2);
 bool fd_set_status_flags(int fd, bool set, int modflags);
 #define fd_set_nonblock_flag(f,s) fd_set_status_flags(f,s,O_NONBLOCK)
 char *getenv_default(const char *name, char *defvalue);
-void filesize_to_strbuf(uint64_t filesize, StrBuf *size_str);
+char *bytes_to_units(uint64_t filesize);
 
 #include "tth_file.h"
 

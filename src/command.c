@@ -1788,22 +1788,23 @@ cmd_results(int argc, char **argv)
             DCSearchResponse *sr = sd->responses->buf[c];
             char *n;
             char *t;
+            char *size_str;
 
             n = translate_remote_to_local(sr->filename);
-            if (sr->filetype == DC_TYPE_DIR) /* XXX: put into some function */
+            if (sr->filetype == DC_TYPE_DIR) {/* XXX: put into some function */
                 t = "/";
-            else
+                size_str = "";
+            } else {
                 t = "";
-                
-            StrBuf *size_str = strbuf_new();
-            if (sr->filetype == DC_TYPE_REG) {
-                filesize_to_strbuf(sr->filesize, size_str);
-                strbuf_prepend(size_str, " (");
-                strbuf_append(size_str, ")");
+                char *units = bytes_to_units(sr->filesize);
+                size_str = xasprintf(" (%s)", units);
+                free(units);
             }
-            
-            screen_putf("%d. %s %s%s%s\n", c+1, quotearg(sr->userinfo->nick), n, t, strbuf_buffer(size_str));
-            strbuf_free(size_str);
+
+            screen_putf("%d. %s %s%s%s\n", c+1, quotearg(sr->userinfo->nick), n, t, size_str);
+            if (strlen(size_str) != 0) {
+            	free(size_str);
+            }
             free(n);
         }
     }

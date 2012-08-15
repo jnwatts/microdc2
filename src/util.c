@@ -315,10 +315,10 @@ elapsed_time_to_string(time_t elapsed, char *buf)
 }
 
 
-static char *size_units[] = { "B", "KiB", "MiB", "GiB", "TiB" };
+char *size_units[] = { "B", "KiB", "MiB", "GiB", "TiB" };
 
-void
-filesize_to_strbuf(uint64_t filesize, StrBuf *size_str)
+char *
+bytes_to_units(uint64_t filesize)
 {
     uint8_t tenths = 0;
     int i;
@@ -331,8 +331,5 @@ filesize_to_strbuf(uint64_t filesize, StrBuf *size_str)
         snprintf(tenths_str, sizeof(tenths_str), ".%" PRIu8, tenths);
     }
 
-    char all[50];
-    snprintf(all, sizeof(all), "%" PRIu64 "%s %s", filesize, tenths_str, size_units[i]);
-
-    strbuf_append(size_str, all);
+    return xasprintf("%" PRIu64 "%s %s", filesize, tenths_str, size_units[i]);
 }
