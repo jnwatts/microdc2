@@ -1791,15 +1791,25 @@ cmd_results(int argc, char **argv)
         screen_putf(_("Search %d:\n"), c);
         for (c = 0; c < sd->responses->cur; c++) {
             DCSearchResponse *sr = sd->responses->buf[c];
-            char *n;
-            char *t;
+            char *n = NULL;
+            const char *t = "";
+            char *size_str = NULL;
 
             n = translate_remote_to_local(sr->filename);
-            if (sr->filetype == DC_TYPE_DIR) /* XXX: put into some function */
+            if (sr->filetype == DC_TYPE_DIR) {/* XXX: put into some function */
                 t = "/";
-            else
-                t = "";
-            screen_putf("%d. %s %s%s\n", c+1, quotearg(sr->userinfo->nick), n, t);
+            } else {
+                char *units = bytes_to_units(sr->filesize);
+                size_str = xasprintf(" (%s)", units);
+                free(units);
+            }
+
+            screen_putf("%d. %s %s%s%s\n", c+1, quotearg(sr->userinfo->nick), n, t, (size_str)?size_str:"");
+
+            if (size_str) {
+                free(size_str);
+            }
+
             free(n);
         }
     }
