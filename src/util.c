@@ -315,7 +315,7 @@ elapsed_time_to_string(time_t elapsed, char *buf)
 }
 
 
-char *size_units[] = { "B", "KiB", "MiB", "GiB", "TiB" };
+const char *size_units[] = { "B", "KiB", "MiB", "GiB", "TiB" };
 
 char *
 bytes_to_units(uint64_t filesize)
