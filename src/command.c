@@ -1611,6 +1611,7 @@ cmd_who(int argc, char **argv)
     uint32_t count;
     int cols;
     StrBuf *out;
+    char sizebuf[LONGEST_HUMAN_READABLE+1];
 
     if (hub_state < DC_HUB_LOGGED_IN) {
         screen_putf(_("Not connected.\n"));
@@ -1632,8 +1633,10 @@ cmd_who(int argc, char **argv)
                 screen_putf(_("Level: %d\n"), ui->level);
                 screen_putf(_("E-mail: %s\n"), quotearg(IFNULL(ui->email, "")));
                 screen_putf(_("Operator: %d\n"), ui->is_operator);
-                screen_putf(_("Share Size: %" PRIu64 " %s (%" PRIu64 " MB)\n"), /* " */
-                            ui->share_size, fmt1, ui->share_size/(1024*1024));
+                screen_putf(_("Share Size: %" PRIu64 " %s (%s)\n"), /* " */
+                        ui->share_size, fmt1, 
+                        human_readable(ui->share_size, sizebuf, human_suppress_point_zero|human_autoscale|human_base_1024|human_SI|human_B|human_space_before_unit, 1, 1)
+                        );
             }
         }
         return;
@@ -1662,7 +1665,9 @@ cmd_who(int argc, char **argv)
         strbuf_clear(out);
         strbuf_append(out, nick);
         strbuf_append_char_n(out, maxlen+1-strlen(nick), ' ');
-        strbuf_appendf(out, "  %7" PRIu64 "M", ui->share_size / (1024*1024)); /* " */
+        strbuf_appendf(out, "  %7s", 
+                human_readable(ui->share_size, sizebuf, human_suppress_point_zero|human_autoscale|human_base_1024|human_SI|human_space_before_unit, 1, 1)
+                ); /* " */
         strbuf_append(out, ui->is_operator ? " op" : "   ");
         if (ui->download_queue->cur > 0)
             strbuf_appendf(out, " (%3d)", ui->download_queue->cur);
@@ -1756,6 +1761,7 @@ static void
 cmd_results(int argc, char **argv)
 {
     uint32_t d;
+    char sizebuf[LONGEST_HUMAN_READABLE+1];
 
     if (argc == 1) {
         time_t now;
@@ -1799,9 +1805,7 @@ cmd_results(int argc, char **argv)
             if (sr->filetype == DC_TYPE_DIR) {/* XXX: put into some function */
                 t = "/";
             } else {
-                char *units = bytes_to_units(sr->filesize);
-                size_str = xasprintf(" (%s)", units);
-                free(units);
+                size_str = xasprintf(" (%s)", human_readable(sr->filesize, sizebuf, human_suppress_point_zero|human_autoscale|human_base_1024|human_SI|human_B|human_space_before_unit, 1, 1));
             }
 
             screen_putf("%d. %s %s%s%s\n", c+1, quotearg(sr->userinfo->nick), n, t, (size_str)?size_str:"");
