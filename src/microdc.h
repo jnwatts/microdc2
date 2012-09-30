@@ -132,7 +132,7 @@ typedef enum {
 } DCUserMsgId;
 
 typedef enum {
-    DC_SEARCH_ANY,
+    DC_SEARCH_ANY = 1,		/* search type values start at 1 according to the protocol*/
     DC_SEARCH_AUDIO,
     DC_SEARCH_COMPRESSED,
     DC_SEARCH_DOCUMENTS,
@@ -556,6 +556,7 @@ int parse_search_selection(char *str, DCSearchSelection *data);
 bool perform_inbound_search(DCSearchSelection *data, DCUserInfo *ui, struct sockaddr_in *addr);
 extern PtrV *our_searches;
 bool add_search_request(char *args);
+bool add_search_request_type(char *args, DCSearchDataType datatype);
 void handle_search_result(char *buf, uint32_t len);
 void free_search_request(DCSearchRequest *sr);
 char *search_selection_to_string(DCSearchSelection *sr);

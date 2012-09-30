@@ -574,6 +574,26 @@ free_search_response(DCSearchResponse *sr)
 }
 
 static bool
+match_tth(DCSearchSelection *ss, char *str)
+{
+	// Note: Hub name field is used for TTH
+	if (ss->patterncount != 1 || ss->patterns[0].len <= 4) {
+		return false;
+	}
+
+	char *tth_search = ss->patterns[0].str;
+	char *tth_result = str;
+
+	// Trim
+	for (; *tth_search == ' '; tth_search++);
+	*strchrnul(tth_search, ' ') = '\0';
+	for (; *tth_result == ' '; tth_result++);
+	*strchrnul(tth_result, ' ') = '\0';
+
+	return (strcasecmp(tth_search, tth_result) == 0);
+}
+
+static bool
 match_selection_against_response(DCSearchSelection *ss, DCSearchResponse *sr)
 {
     if (sr->filetype == DC_TYPE_DIR) {
@@ -587,11 +607,10 @@ match_selection_against_response(DCSearchSelection *ss, DCSearchResponse *sr)
     } else {
         if (ss->datatype == DC_SEARCH_FOLDERS)
             return false;
-
-//	if (ss->datatype == DC_SEARCH_CHECKSUM) /* TTH not supported yet */
-//	    return false;
         if (sr->filesize < ss->size_min || sr->filesize > ss->size_max)
             return false;
+        if (ss->datatype == DC_SEARCH_CHECKSUM)
+        	return match_tth(ss, sr->hub_name);
         if (!match_search_patterns(sr->filename, ss))
             return false;
         if (!match_file_extension(sr->filename, ss->datatype))
@@ -618,7 +637,7 @@ compare_search_selection(DCSearchSelection *s1, DCSearchSelection *s2)
 }
 
 bool
-add_search_request(char *args)
+add_search_request_type(char *args, DCSearchDataType datatype)
 {
     DCSearchSelection sel;
     DCSearchRequest *sr = NULL;
@@ -633,7 +652,7 @@ add_search_request(char *args)
 
     sel.size_min = 0;
     sel.size_max = UINT64_MAX;
-    sel.datatype = DC_SEARCH_ANY;
+    sel.datatype = datatype;
     if (!parse_search_strings(args, &sel)) {
         int i = 0;
         if (sel.patterns != NULL) {
@@ -689,17 +708,23 @@ add_search_request(char *args)
     hub_args = main_to_hub_string(args);
 
     if (is_active) {
-        hub_putf("$Search %s:%u F?F?0?1?%s|", inet_ntoa(local_addr.sin_addr), listen_port, hub_args);
+        hub_putf("$Search %s:%u F?F?0?%d?%s|", inet_ntoa(local_addr.sin_addr), listen_port, datatype, hub_args);
     } else {
         char *hub_my_nick;
         hub_my_nick = main_to_hub_string(my_nick);
-        hub_putf("$Search Hub:%s F?F?0?1?%s|", hub_my_nick, hub_args);
+        hub_putf("$Search Hub:%s F?F?0?%d?%s|", hub_my_nick, datatype, hub_args);
         free(hub_my_nick);
     }
 
     free(hub_args);
 
     return true;
+}
+
+bool
+add_search_request(char *args)
+{
+	return add_search_request_type(args, DC_SEARCH_ANY);
 }
 
 void
