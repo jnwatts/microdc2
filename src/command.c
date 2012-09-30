@@ -83,6 +83,7 @@ static void cmd_who(int argc, char **argv);
 static void cmd_transfers(int argc, char **argv);
 static void cmd_cancel(int argc, char **argv);
 static void cmd_search(int argc, char **argv);
+static void cmd_searchtth(int argc, char **argv);
 static void cmd_status(int argc, char **argv);
 static void cmd_results(int argc, char **argv);
 static void cmd_unsearch(int argc, char **argv);
@@ -276,6 +277,10 @@ command_init(void)
     add_builtin_command("search", cmd_search, NULL,
                         _("search WORD..."),
                         _("Issue a search for the specified search words.\n"));
+    add_builtin_command("searchtth", cmd_searchtth, NULL,
+                            _("searchtth [TTH:]TIGERTREEHASH"),
+                            _("Issue a search for files whose base32 encoded tiger tree hash equals "
+                              "TIGERTREEHASH.\n"));
     add_builtin_command("set", cmd_set, set_command_completion_selector,
                         _("set [NAME [VALUE...]]"),
                         _("Without arguments, display a list of variables and their current values. With "
@@ -1754,6 +1759,31 @@ cmd_search(int argc, char **argv)
 
     tmp = join_strings(argv+1, argc-1, ' ');
     add_search_request(tmp); /* Ignore errors */
+    free(tmp);
+}
+
+static void
+cmd_searchtth(int argc, char **argv)
+{
+    char *tmp;
+
+    if (argc != 2) {
+        screen_putf(_("Usage: %s TTH...\n"), argv[0]);
+        return;
+    }
+    if (hub_state < DC_HUB_LOGGED_IN) {
+        screen_putf(_("Not connected.\n"));
+        return;
+    }
+
+    // Check if TTH: was specified before hash
+    char *prefix = "";
+    if (strncmp("TTH:", argv[1], 4)) {
+    	prefix = "TTH:";
+    }
+
+    tmp = xasprintf("%s%s", prefix, argv[1]);
+    add_search_request_type(tmp, DC_SEARCH_CHECKSUM); /* Ignore errors */
     free(tmp);
 }
 
