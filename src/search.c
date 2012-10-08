@@ -50,6 +50,7 @@
 PtrV *our_searches;
 
 static char *extensions[] = { // NULL means match any extension
+    /* 0 is not a valid search type */ NULL,
     /* ANY */ NULL,
     /* AUDIO */ "mp3/mp2/wav/au/rm/mid/sm",
     /* COMPRESSED */ "zip/arj/rar/lzh/gz/z/arc/pak",
