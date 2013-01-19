@@ -56,6 +56,7 @@ DCHubState hub_state = DC_HUB_DISCONNECTED;
 HMap *hub_users = NULL;  /* all users on the current hub (UserInfo->nick => UserInfo) */
 DCLookup *hub_lookup = NULL;
 struct sockaddr_in hub_addr;
+char *hub_hostname = NULL;
 static uint32_t hub_recvq_last = 0;
 char *hub_name = NULL;
 static DCHubExtension hub_extensions = 0;
@@ -86,7 +87,11 @@ void check_hub_activity()
                    (hub_last_activity + hub_reconnect_interval) <= now &&
                    running && auto_reconnect) {
             warn(_("Automatically reconnecting to hub\n"));
-            hub_connect(&hub_addr);
+            if (hub_hostname != NULL) {
+            	hub_new(hub_hostname, ntohs(hub_addr.sin_port));
+            } else {
+            	hub_connect(&hub_addr);
+            }
         }
     }
 }
@@ -317,6 +322,12 @@ hub_new(const char *hostname, uint16_t port)
     } else {
         char portstr[6];
 
+        if (hub_hostname != NULL) {
+        	free(hub_hostname);
+        	hub_hostname = NULL;
+        }
+    	hub_hostname = xstrdup(hostname);
+
         sprintf(portstr, "%" PRIu16, port);
         screen_putf(_("Looking up IP address for %s\n"), quotearg(hostname));
         hub_lookup = add_lookup_request(hostname, portstr, NULL, hub_address_looked_up, xstrdup(hostname));
@@ -386,6 +397,8 @@ hub_disconnect(void)
     }
     free(hub_name);
     hub_name = NULL;
+    free(hub_hostname);
+    hub_hostname = NULL;
     hub_extensions = 0;
     hub_state = DC_HUB_DISCONNECTED;
     update_hub_activity();
