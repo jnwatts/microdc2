@@ -322,9 +322,11 @@ hub_new(const char *hostname, uint16_t port)
     } else {
         char portstr[6];
 
-        if (hub_hostname == NULL) {
-        	hub_hostname = xstrdup(hostname);
+        if (hub_hostname != NULL) {
+        	free(hub_hostname);
+        	hub_hostname = NULL;
         }
+    	hub_hostname = xstrdup(hostname);
 
         sprintf(portstr, "%" PRIu16, port);
         screen_putf(_("Looking up IP address for %s\n"), quotearg(hostname));
