@@ -228,9 +228,9 @@ screen_warn_writer(const char *format, va_list args)
 static void
 flag_vputf(DCDisplayFlag flag, const char *format, va_list args)
 {
-    //va_list args2;
+    va_list args_copy;
 
-    //va_copy(args2, args);
+    va_copy(args_copy, args);
 
     if (display_flags & flag) {
         if (screen_state == SCREEN_SUSPENDED) {
@@ -251,14 +251,14 @@ flag_vputf(DCDisplayFlag flag, const char *format, va_list args)
         if (NULL != localtime_r(&now, &_tm) && 0 != strftime(c_time, 1023, "%d.%m.%Y %H:%M:%S", &_tm)) {
             fprintf(log_fh, "%s ", c_time);
         }
-        char* msg = xvasprintf(format, args);
-        //va_end(args2);
+        char* msg = xvasprintf(format, args_copy);
         char* log_msg = main_to_log_string(msg);
         free(msg);
         fprintf(log_fh, log_msg);
         free(log_msg);
         fflush(log_fh);
     }
+    va_end(args_copy);
 }
 
 void
