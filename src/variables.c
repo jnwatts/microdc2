@@ -27,6 +27,7 @@
 #include <arpa/inet.h>
 #include <iconv.h>
 #include <langinfo.h>		/* POSIX (XSI) */
+#include <inttypes.h>       /* POSIX.1 (CX): PRI* */
 #include "xalloc.h"		/* Gnulib */
 #include "quotearg.h"		/* Gnulib */
 #include "minmax.h"		/* Gnulib */
@@ -88,6 +89,8 @@ static void var_set_display_flags(DCVariable *var, int argc, char **argv);
 static void var_set_log_file(DCVariable *var, int argc, char **argv);
 static char *var_get_time(DCVariable *var);
 static void var_set_filelist_refresh_interval(DCVariable *var, int argc, char **argv);
+static char *var_get_user_sort_order(DCVariable *var);
+static void var_set_user_sort_order(DCVariable *var, int argc, char **argv);
 
 static void speed_completion_generator(DCCompletionInfo *ci);
 static void bool_completion_generator(DCCompletionInfo *ci);
@@ -123,6 +126,7 @@ uint32_t display_flags = ~(DC_DF_DEBUG); /* All flags except debug set */
 uint32_t log_flags = ~(DC_DF_DEBUG);
 struct in_addr force_remote_addr = { INADDR_NONE };
 struct in_addr force_listen_addr = { INADDR_NONE };
+DCUserSortType user_sort_order = DC_SORT_NAME|DC_SORT_ASC;
 
 /* This list must be sorted according to strcmp. */
 DCDisplayFlagDetails display_flag_details[] =  {
@@ -307,6 +311,13 @@ static DCVariable variables[] = {
         NULL,
         NULL,
         "The user agent tag the hub uses to detect features"
+    },
+    {
+        "usersortorder",
+        var_get_user_sort_order, var_set_user_sort_order, &user_sort_order,
+        NULL,
+        NULL,
+        "The metric to sort the user-list by: [+-]name, [+-]share"
     },
 };
 static const int variables_count = sizeof(variables)/sizeof(*variables);
@@ -863,6 +874,54 @@ var_set_filelist_refresh_interval(DCVariable *var, int argc, char **argv)
     filelist_refresh_timeout = interval;
 
     update_request_set_filelist_refresh_timeout(filelist_refresh_timeout);
+}
+
+static char *var_get_user_sort_order(DCVariable *var) {
+    const char *sort_criteria[] = {
+        "name",
+        "share"
+    };
+    DCUserSortType sort = user_sort_order & DC_SORT_MASK;
+    if (sort >= DC_SORT_MAX) {
+        return xasprintf("");
+    } else {
+        return xasprintf("%c%s",
+                (user_sort_order & DC_SORT_ASC ? '+' : '-'),
+                sort_criteria[sort]);
+    }
+}
+
+static void var_set_user_sort_order(DCVariable *var, int argc, char **argv) {
+    int i = 0;
+    bool sort_order_asc = false;
+    if (argc > 2) {
+        warn(_("too many arguments\n"));
+        return;
+    }
+    for (i = 1; i < argc; ++i) {
+        char *arg = argv[i];
+        if (arg[0] == '-') {
+            arg++;
+            sort_order_asc = false;
+        } else if (arg[0] == '+') {
+            arg++;
+            sort_order_asc = true;
+        } else { // Default to original sort order
+            sort_order_asc = true;
+        }
+        if (strncmp(arg, "share", 5) == 0) {
+            user_sort_order = DC_SORT_SHARE;
+        } else if (strncmp(arg, "name", 4) == 0) {
+            user_sort_order = DC_SORT_NAME;
+        } else { // Default to original sort criteria
+            user_sort_order = DC_SORT_NAME;
+        }
+        if (sort_order_asc) {
+            user_sort_order |= (DC_SORT_ASC);
+        } else {
+            user_sort_order &= ~(DC_SORT_ASC);
+        }
+    }
 }
 
 /* The following completers could be improved by doing a modified

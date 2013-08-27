@@ -1600,8 +1600,24 @@ user_info_compare(const void *i1, const void *i2)
 {
     const DCUserInfo *f1 = *(const DCUserInfo **) i1;
     const DCUserInfo *f2 = *(const DCUserInfo **) i2;
+    int ret = 0;
 
-    return strcoll(f1->nick, f2->nick);
+    DCUserSortType sort = user_sort_order & DC_SORT_MASK;
+    if (sort == DC_SORT_SHARE) {
+        if (f1->share_size > f2->share_size)
+            ret = 1;
+        else if (f1->share_size < f2->share_size)
+            ret = -1;
+    } else if (sort == DC_SORT_NAME) {
+        ret = strcoll(f1->nick, f2->nick);
+    }
+    if (ret != 0 && !(user_sort_order & DC_SORT_ASC)) {
+        if (ret > 0)
+            ret = -1;
+        else
+            ret = 1;
+    }
+    return ret;
 }
 
 #define IFNULL(a,x) ((a) == NULL ? (x) : (a))

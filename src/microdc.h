@@ -156,6 +156,14 @@ typedef enum {
     DC_ADCGET_TTHL	/* Upload tth leaves */
 } DCAdcgetType;
 
+typedef enum {
+    DC_SORT_NAME = 0,
+    DC_SORT_SHARE = 1,
+    DC_SORT_MAX, // DC_SORT_MAX must be less than or equal to DC_SORT_ASC
+    DC_SORT_ASC = ((uint64_t)1<<63),
+    DC_SORT_MASK = (~DC_SORT_ASC)
+} DCUserSortType;
+
 typedef struct _DCUserConn DCUserConn;
 typedef struct _DCUserInfo DCUserInfo;
 typedef struct _DCFileList DCFileList;
@@ -370,6 +378,7 @@ extern bool running;
 extern HMap *pending_userinfo;
 extern uint32_t display_flags;
 extern uint32_t log_flags;
+extern DCUserSortType user_sort_order;
 
 extern uint16_t listen_port;
 extern char *my_tag;
