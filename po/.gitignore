@@ -1,0 +1,6 @@
+*.po
+*.gmo
+*.pot
+Makefile.in
+POTFILES
+remove-potcdate.sed

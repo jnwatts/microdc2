@@ -1,1 +1,12 @@
 CVS/
+*.o
+*.a
+*~
+Makefile
+config.h
+config.log
+config.status
+rpm/microdc.spec
+slackware/microdc.SlackBuild
+.deps/
+stamp-h1
